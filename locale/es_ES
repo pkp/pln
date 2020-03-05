@@ -1,0 +1,291 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: Español\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
+"PO-Revision-Date: 2020-03-03T23:08:22+00:00\n"
+"Language: es_ES\n"
+
+msgid "plugins.generic.pln"
+msgstr "Módulo PKP PLN"
+
+msgid "plugins.generic.pln.description"
+msgstr "El módulo PKP PLN depositará su contenido publicado en la red PKP Private LOCKSS para su preservación."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr "<strong>Red PKP Private LOCKSS</strong><br /><br />Lea la <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\">descripción general de PKP PLN</a> y complete <a href=\"{$plnPluginURL}\">este formulario</a>. Esta opción permitirá la inclusión de su publicación en la red Public Knowledge Project Private LOCKSS Network (PKP PLN)."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "El módulo PKP PLN ha sido habilitado."
+
+msgid "plugins.generic.pln.disabled"
+msgstr "El módulo PKP PLN ha sido deshabilitado."
+
+msgid "plugins.generic.pln.settings_page"
+msgstr "Módulo PKP PLN - Configuración"
+
+msgid "plugins.generic.pln.settings"
+msgstr "Configuración"
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr "El módulo PLN requiere del módulo Acron o una herramienta de programación periódica como 'cron.'"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "Configuración de PKP PLN guardada."
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Términos de uso"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr "Como Administrador de la publicación, en mi nombre, de buena fe, acepto y confirmo los siguientes términos y condiciones para participar en la red Public Knowledge Project’s Private LOCKSS Network (PKP-PLN):"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Estoy de acuerdo"
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Identificador de la publicación"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr "Este es el único identificador de su publicación para PKP PLN. Puede que necesite compartirlo con los administradores de PKP PLN con fines de asistencia."
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Actualizar"
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr "Si por alguna razón los términos enumerados anteriormente no aparecen o sabe que los mismos se han actualizado, haga clic en Actualizar."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Por favor, elija un objeto para depósito."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Por favor, elija un límite para el depósito de objetos."
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr "Se requiere un acuerdo con las condiciones de uso de la red para poder depositar en PLN."
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Artículo"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Edición"
+
+msgid "plugins.generic.pln.status_page"
+msgstr "Módulo PKP PLN - Estado"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Estado de la red: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Depósitos"
+
+msgid "plugins.generic.pln.status"
+msgstr "Estado"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Identificador de tipo de objeto"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr "Los estados del depósito <a href=\"{$statusDocsUrl}\">se describen aquí</a>."
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Tipo"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Elementos"
+
+msgid "plugins.generic.pln.status.checked"
+msgstr "Verificado"
+
+msgid "plugins.generic.pln.status.local_status"
+msgstr "Estado nativo"
+
+msgid "plugins.generic.pln.status.processing_status"
+msgstr "Estado del procesamiento"
+
+msgid "plugins.generic.pln.status.lockss_status"
+msgstr "Estado LOCKSS"
+
+msgid "plugins.generic.pln.status.complete"
+msgstr "Completo"
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr "¿Está seguro que desea restablecer este depósito? Será reempaquetado y reenviado al servidor de procesamiento."
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Desconocido"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Nuevo"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Presentado"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Transferido"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Recibido"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Validado"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Enviar a LOCKSS"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Sincronizando"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Acuerdo"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Actualizado"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Error local"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Error remoto"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Error en la presentación"
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "Tarea del depositante PKP PLN"
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Depositante procesando {$title}."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Obtención de documento de servicio."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "El PKP PLN no acepta actualmente depósitos."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PLN está aceptando depósitos."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Verifique el estado de sus depósitos."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "Su publicación debe poseer un ISSN para permitirle depositar contenido en PKP PLN."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr "Se ha producido un error al conectarse con PKP PLN: póngase en contacto con el administrador del sistema."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr "Las condiciones de uso PKP PLN se han actualizado. Es necesario un consentimiento de estas nuevas disposiciones para continuar depositando."
+
+msgid "plugins.generic.pln.notifications.curl_missing"
+msgstr "Es necesario que se habilite el respaldo CURL para continuar"
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "El soporte de ZipArchive debe estar habilitado para continuar."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr "Su publicación debe poseer un ISSN antes de que pueda aceptar los términos del servicio. Puede introducir el ISSN en la página Configuración de la publicación. Una vez que se ingresó el ISSN, los términos de servicio se mostrarán a continuación."
+
+msgid "plugins.generic.pln.notifications.tar_missing"
+msgstr "Su sistema debe poseer un archivo tar ejecutable."
+
+msgid "plugins.generic.pln.notifications.archive_tar_missing"
+msgstr "La extensión PHP Archive_Tar debe instalarse antes de que se pueda habilitar PKP PLN."
+
+msgid "plugins.generic.pln.error.include.bagit"
+msgstr "La biblioteca BagIt, que se incluye con OJS, no se pudo cargar, probablemente debido a un requisito previo que falta."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr "Error en la red {$error} al conectarse con PLN para obtener un documento de servicio."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr "Error en la red {$error} al conectarse con PLN durante el envío de un depósito."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr "Error en la red {$error} al conectarse con PLN para obtener una actualización del estado del depósito."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr "El servidor PLN devolvió un error HTTP {$error} al intentar recuperar documento de servicio."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "El servidor PLN devolvió un error HTTP {$error} al enviar el depósito."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr "El servidor PLN devolvió un error HTTP {$error} al comprobar el estado de un depósito."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "No se pudo encontrar el archivo empaquetado {$file}."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr "Se produjo un error al exportar artículos. El registro de errores del servidor puede ofrecer más información."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr "Se produjo un error al exportar una edición. El registro de errores del servidor puede ofrecer más información."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "El UUID solicitado no es válido o está en un formato incorrecto."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "No existe un depósito con el UUID solicitado."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr "El archivo de depósito no se pudo encontrar. Puede que aun no haya sido empaquetado o haber sido removido."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Procesando actualizaciones de estados de depósitos."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Procesando contenido actualizado."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Procesando nuevo contenido."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Empaquetando contenido para depósito."
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Enviando depósitos a PLN."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr "Intentando actualizar estado de {$depositId} ({$objectType}: {$objectId}) (estado local: [{$statusLocal}], estado del procesamiento: [{$statusProcessing}], estado Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "Procesando estado de {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr "Intentando empaquetar depósito {$depositId} ({$objectType}: {$objectId}) (estado local: [{$statusLocal}], estado del procesamiento: [{$statusProcessing}], estado Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr "Módulo de importación/exportación nativa falló para su depósito {$depositId}, cuando se intentaba empaquetarlo"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Falló el empaquetamiento del depósito {$depositId}"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "El empaquetamiento del depósito {$depositId} resultó exitoso"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr "Intentando transferir depósito {$depositId} ({$objectType}: {$objectId}) (estado local: [{$statusLocal}], estado del procesamiento: [{$statusProcessing}], estado Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr "El envío de un archivo Atom a un servidor provisional para su depósito {$depositId} (estado local: [{$statusLocal}], estado del procesamiento: [{$statusProcessing}], estado Lockss: [{$statusLockss}]) - (Url: [{$url}], ruta Atom: [{$atomPath}], método: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr "El envío de un archivo Atom a un servidor provisional para su depósito {$depositId} resultó satisfactorio"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr "Falló el envío de un archivo Atom a un servidor provisional para su depósito {$depositId} (Error: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "Portal PLN"
+
+msgid "plugins.generic.plngateway.description"
+msgstr "Informa del estado PLN y los recientes títulos de artículos en el servidor provisional."
