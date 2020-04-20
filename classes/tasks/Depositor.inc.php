@@ -250,7 +250,8 @@ class Depositor extends ScheduledTask {
 		$newObjects = $depositObjectDao->getNew($journal->getId(), $objectType);
 
 		switch ($objectType) {
-			case PLN_PLUGIN_DEPOSIT_OBJECT_ARTICLE:
+			case 'PublishedArticle': // Legacy (OJS pre-3.2)
+			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
 
 				// get the new object threshold per deposit and split the objects into arrays of that size
 				$objectThreshold = $this->_plugin->getSetting($journal->getId(), 'object_threshold');

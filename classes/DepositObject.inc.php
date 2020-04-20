@@ -14,32 +14,33 @@
 class DepositObject extends DataObject {
 	/**
 	 * Get the content object that's referenced by this deposit object
-	 * @return Object (Issue,Article)
+	 * @return Object (Issue,Submission)
 	 */
 	public function getContent() {
 		switch ($this->getObjectType()) {
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
-				$issueDao = DAORegistry::getDAO('IssueDAO');
+				$issueDao = DAORegistry::getDAO('IssueDAO'); /** @var $issueDao IssueDAO */
 				return $issueDao->getIssueById($this->getObjectId(),$this->getJournalId());
-			case PLN_PLUGIN_DEPOSIT_OBJECT_ARTICLE:
-				$articleDao = DAORegistry::getDAO('ArticleDAO');
-				return $articleDao->getArticle($this->getObjectId(),$this->getJournalId());
-			default: assert(false);
+			case 'PublishedArticle': // Legacy (OJS pre-3.2)
+			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
+				$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /** @var $submissionDao SubmissionDAO */
+				$submission = $submissionDao->getById($this->getObjectId());
+				if ($submission->getContextId() != $this->getJournalId()) throw new Exception('Submission context and context ID do not agree!');
+				return $submission;
 		}
+		throw new Exception('Unknown object type!');
 	}
 
 	/**
 	 * Set the content object that's referenced by this deposit object
-	 * @param $content Object (Issue,Article)
+	 * @param $content Object (Issue,Submission)
 	 */
 	public function setContent($content) {
-		switch (get_class($content)) {
-			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
-			case PLN_PLUGIN_DEPOSIT_OBJECT_ARTICLE:
-				$this->setObjectId($content->getId());
-				$this->setObjectType(get_class($content));
-				break;
-			default: assert(false);
+		if (is_a($content, PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE) || is_a($content, PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION)) {
+			$this->setObjectId($content->getId());
+			$this->setObjectType(get_class($content));
+		} else {
+			throw new Exception('Unknown content type!');
 		}
 	}
 

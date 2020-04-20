@@ -162,7 +162,8 @@ class DepositPackage {
 		$objectPublicationDate = 0;
 
 		switch ($this->_deposit->getObjectType()) {
-			case PLN_PLUGIN_DEPOSIT_OBJECT_ARTICLE:
+			case 'PublishedArticle': // Legacy (OJS pre-3.2)
+			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
 				$depositObjects = $this->_deposit->getDepositObjects();
 				$submissionDao = DAORegistry::getDAO('SubmissionDAO');
 				while ($depositObject = $depositObjects->next()) {
@@ -277,7 +278,8 @@ class DepositPackage {
 		$fileManager = new FileManager();
 
 		switch ($this->_deposit->getObjectType()) {
-			case PLN_PLUGIN_DEPOSIT_OBJECT_ARTICLE:
+			case 'PublishedArticle': // Legacy (OJS pre-3.2)
+			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
 				$submissionIds = array();
 
 				// we need to add all of the relevant submissions to an array to export as a batch

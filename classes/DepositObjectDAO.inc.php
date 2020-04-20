@@ -81,7 +81,8 @@ class DepositObjectDAO extends DAO {
 		$depositDao = DAORegistry::getDAO('DepositDAO');
 
 		switch ($objectType) {
-			case PLN_PLUGIN_DEPOSIT_OBJECT_ARTICLE:
+			case 'PublishedArticle': // Legacy (OJS pre-3.2)
+			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
 				$result = $this->retrieve(
 					'SELECT pdo.deposit_object_id, a.last_modified FROM pln_deposit_objects pdo
 					JOIN submissions s ON pdo.object_id = s.submission_id
@@ -161,8 +162,9 @@ class DepositObjectDAO extends DAO {
 		$objects = array();
 
 		switch ($objectType) {
-			case PLN_PLUGIN_DEPOSIT_OBJECT_ARTICLE:
-				$submissionDao = DAORegistry::getDAO('SubmissionDAO');
+			case 'PublishedArticle': // Legacy (OJS pre-3.2)
+			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
+				$submissionDao = DAORegistry::getDAO('SubmissionDAO'); // Constants
 				$result = $this->retrieve(
 					'SELECT p.submission_id FROM publications p
 					JOIN submissions s ON s.current_publication_id = p.publication_id
