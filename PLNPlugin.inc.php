@@ -580,7 +580,8 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function curlGet($url, $headers=array()) {
 
-		$curl = curl_init();
+		import('lib.pkp.classes.helpers.PKPCurlHelper');
+		$curl = PKPCurlHelper::getCurlObject();
 
 		curl_setopt_array($curl, array(
 			CURLOPT_RETURNTRANSFER => true,
@@ -589,13 +590,6 @@ class PLNPlugin extends GenericPlugin {
 			), $headers),
 			CURLOPT_URL => $url
 		));
-		if ($httpProxyHost = Config::getVar('proxy', 'http_host')) {
-			curl_setopt($curl, CURLOPT_PROXY, $httpProxyHost);
-			curl_setopt($curl, CURLOPT_PROXYPORT, Config::getVar('proxy', 'http_port', '80'));
-			if ($username = Config::getVar('proxy', 'username')) {
-				curl_setopt($curl, CURLOPT_PROXYUSERPWD, $username . ':' . Config::getVar('proxy', 'password'));
-			}
-		}
 
 		$httpResult = curl_exec($curl);
 		$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -617,7 +611,8 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function curlPostFile($url, $filename) {
 
-		$curl = curl_init();
+		import('lib.pkp.classes.helpers.PKPCurlHelper');
+		$curl = PKPCurlHelper::getCurlObject();
 
 		curl_setopt_array($curl, array(
 			CURLOPT_RETURNTRANSFER => true,
@@ -630,13 +625,6 @@ class PLNPlugin extends GenericPlugin {
 			CURLOPT_INFILESIZE => filesize($filename),
 			CURLOPT_URL => $url
 		));
-		if ($httpProxyHost = Config::getVar('proxy', 'http_host')) {
-			curl_setopt($curl, CURLOPT_PROXY, $httpProxyHost);
-			curl_setopt($curl, CURLOPT_PROXYPORT, Config::getVar('proxy', 'http_port', '80'));
-			if ($username = Config::getVar('proxy', 'username')) {
-				curl_setopt($curl, CURLOPT_PROXYUSERPWD, $username . ':' . Config::getVar('proxy', 'password'));
-			}
-		}
 
 		$httpResult = curl_exec($curl);
 		$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
@@ -657,7 +645,8 @@ class PLNPlugin extends GenericPlugin {
 	 * @return array
 	 */
 	public function curlPutFile($url, $filename) {
-		$curl = curl_init();
+		import('lib.pkp.classes.helpers.PKPCurlHelper');
+		$curl = PKPCurlHelper::getCurlObject();
 
 		curl_setopt_array($curl, array(
 			CURLOPT_RETURNTRANSFER => true,
@@ -671,13 +660,6 @@ class PLNPlugin extends GenericPlugin {
 			CURLOPT_INFILESIZE => filesize($filename),
 			CURLOPT_URL => $url
 		));
-		if ($httpProxyHost = Config::getVar('proxy', 'http_host')) {
-			curl_setopt($curl, CURLOPT_PROXY, $httpProxyHost);
-			curl_setopt($curl, CURLOPT_PROXYPORT, Config::getVar('proxy', 'http_port', '80'));
-			if ($username = Config::getVar('proxy', 'username')) {
-				curl_setopt($curl, CURLOPT_PROXYUSERPWD, $username . ':' . Config::getVar('proxy', 'password'));
-			}
-		}
 
 		$httpResult = curl_exec($curl);
 		$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
