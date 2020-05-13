@@ -46,7 +46,7 @@
 
 			{fbvFormSection title="plugins.generic.pln.settings.journal_uuid" list=true}
 				<p>{translate key="plugins.generic.pln.settings.journal_uuid_help"}</p>
-				<input type="text" id="journal_uuid" name="journal_uuid"  size="36" maxlength="36" class="textField" value="{$journal_uuid|escape}" disabled="disabled"/>
+				<input type="text" id="journal_uuid" name="journal_uuid"  size="36" maxlength="36" class="textField" value="{$journal_uuid|escape}" readonly="readonly"/>
 			{/fbvFormSection}
 
 			{fbvFormSection title="plugins.generic.pln.settings.refresh" list=true}
