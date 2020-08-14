@@ -182,9 +182,6 @@ msgstr "حدث خطأ ما عند الاتصال بـ PKP PN لمشروع الم
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "لقد تم تعديل شروط الاستعمال لـ PKP PN لمشروع المعرفة العامة. الموافقة على الشروط الجديدة مطلوب لمواصلة الإيداع فيها."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "دعم CURL ينبغي تمكينه للمتابعة."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "دعم ZipArchive ينبغي تمكينه للمتابعة."
 

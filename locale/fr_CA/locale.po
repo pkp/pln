@@ -137,9 +137,6 @@ msgstr "Une erreur est survenue pendant la connexion à PKP PN - veuillez contac
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "Les conditions d'utilisation de PKP PN ont été mises à jour. L'acceptation des nouvelles conditions sont requises avant de continuer à déposer."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "Le support CURL doit être activé avant de procéder."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "Le support ZipArchive doit être activé avant de procéder."
 

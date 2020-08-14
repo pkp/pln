@@ -173,9 +173,6 @@ msgstr "Si è verificato un errore di connessione con la PKP PN - contatta l'amm
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "Le condizioni d'uso della PKP PN sono state aggiornate. Devi accettare le nuove condizioni per poter continuare a versare."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "Per continuare devi abilitare il supporto CURL."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "Per continuare devi abilitare il supporto ZipArchive."
 

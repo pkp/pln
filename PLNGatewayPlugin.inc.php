@@ -123,14 +123,8 @@ class PLNGatewayPlugin extends GatewayPlugin {
 
 		$application = PKPApplication::getApplication();
 		$products = $application->getEnabledProducts('plugins.generic');
-		$curlVersion = 'not installed';
-		if(function_exists('curl_version')) {
-			$versionArray = curl_version();
-			$curlVersion = $versionArray['version'];
-		}
 		$prerequisites = array(
 			'phpVersion' => PHP_VERSION,
-			'curlVersion' => $curlVersion,
 			'zipInstalled' => class_exists('ZipArchive') ? 'yes' : 'no',
 			'tarInstalled' => class_exists('Archive_Tar') ? 'yes' : 'no',
 			'acron' => isset($products['acron']) ? 'yes' : 'no',

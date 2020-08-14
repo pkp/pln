@@ -173,9 +173,6 @@ msgstr "Произошла ошибка при подключении к PKP PN 
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "Условия использования PKP PN были обновлены. Принятие новых условий является обязательным для продолжения депонирования."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "Для работы необходимо включить поддержку CURL."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "Для работы необходимо включить поддержку ZipArchive."
 

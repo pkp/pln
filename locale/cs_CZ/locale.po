@@ -137,8 +137,5 @@ msgstr "Při připojování k PKP PN nastala chyba - kontaktujte, prosím, syst�
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "Zásady používání PKP PN byly aktualizovány. Je vyžadován souhlas s novými podmínkami používání před pokračování v ukládání."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "Podpora CURL musí být povolena, aby proběhlo zpracování."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "Podpora ZipArchive musí být povolena, aby proběhlo zpracování."

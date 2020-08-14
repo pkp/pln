@@ -173,9 +173,6 @@ msgstr "Es gab einen Fehler bei der Verbindung zum PKP PN - bitte benachrichten 
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "Die Nutzungsbedingungen des PKP PN sind aktualisiert worden. Die Zustimmung zu den neuen Bedingungen ist notwendig, um weiter abliefern zu können."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "Die Unterstützung von CURL muss aktiviert werden, um fortfahren zu können."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "Die Unterstützung von ZipArchive muss aktiviert werden, um fortfahren zu können."
 
