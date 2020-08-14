@@ -137,8 +137,5 @@ msgstr "De verbinding met het PKP PN is mislukt - neem contact op met uw systeem
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "De PKP PN gebruiksvoorwaarden zijn verander. Inzenden is pas weer mogelijk na uw akkoord daarmee."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "CURL support moet ingeschakeld zijn om verder te gaan."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "ZipArchive support moet ingeschakeld zijn om verder te gaan."

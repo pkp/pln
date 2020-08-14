@@ -137,8 +137,5 @@ msgstr "链接PKP PLN时出现错误。请联系你的系统管理员。"
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "PKP PLN的使用条款需要更新。在继续存储前须同意网络的使用条款。"
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "开启CURL支持以继续进行。"
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "开启ZipArchive 支持以继续进行。"

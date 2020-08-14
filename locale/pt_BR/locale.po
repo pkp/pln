@@ -173,9 +173,6 @@ msgstr "Erro ao conectar à PKP PN do PKP - entre em contato com o administrador
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "Os termos de uso da PKP PN do PKP foram atualizados. É necessário aceitar os novos termos para continuar depositando."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "Suporte ao CURL deve estar habilitado para continuar."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "Suporte ao ZipArchive deve estar habilitado para continuar."
 

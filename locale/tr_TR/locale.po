@@ -212,9 +212,6 @@ msgstr "There was an error connecting to the PKP PN - please contact your system
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "The PKP PN terms of use have been updated. Agreement with new terms is required to continue depositing."
 
-msgid "plugins.generic.pln.notifications.curl_missing"
-msgstr "CURL support must be enabled to proceed."
-
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "ZipArchive support must be enabled to proceed."
 

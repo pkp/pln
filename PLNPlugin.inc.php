@@ -61,13 +61,13 @@ define('PLN_PLUGIN_DEPOSIT_STATUS_UPDATE',				0x100);
 define('PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION', 'Submission');
 define('PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE', 'Issue');
 
-define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE',		NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE',	NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000001);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING',		PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000002);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR',		PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000003);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_CURL_MISSING',		PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000004);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING',		PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000005);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_TAR_MISSING',		PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000006);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000002);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000003);
+// define('PLN_PLUGIN_NOTIFICATION_TYPE_CURL_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000004); DEPRECATED
+define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000005);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_TAR_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000006);
 
 class PLNPlugin extends GenericPlugin {
 	/**
@@ -371,11 +371,6 @@ class PLNPlugin extends GenericPlugin {
 					break;
 				}
 
-				if(!$this->curlInstalled()) {
-					$message = NOTIFICATION_TYPE_ERROR;
-					$messageParams = array('contents' => __('plugins.generic.pln.notifications.curl_missing'));
-					break;
-				}
 				if(!$this->zipInstalled()) {
 					$message = NOTIFICATION_TYPE_ERROR;
 					$messageParams = array('contents' => __('plugins.generic.pln.notifications.zip_missing'));
@@ -453,11 +448,11 @@ class PLNPlugin extends GenericPlugin {
 		// retrieve the service document
 		$result = $this->curlGet(
 			$network . PLN_PLUGIN_SD_IRI,
-			array(
-				'On-Behalf-Of: ' . $this->getSetting($contextId, 'journal_uuid'),
-				'Journal-URL: ' . $dispatcher->url($request, ROUTE_PAGE, $context->getPath()),
-				'Accept-language:' . $language,
-			)
+			[
+				'On-Behalf-Of' => $this->getSetting($contextId, 'journal_uuid'),
+				'Journal-URL' => $dispatcher->url($request, ROUTE_PAGE, $context->getPath()),
+				'Accept-language' => $language,
+			]
 		);
 
 		// stop here if we didn't get an OK
@@ -530,14 +525,6 @@ class PLNPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Get whether curl is available
-	 * @return boolean
-	 */
-	public function curlInstalled() {
-		return function_exists('curl_version');
-	}
-
-	/**
 	 * Get whether zip archive support is present
 	 * @return boolean
 	 */
@@ -569,104 +556,44 @@ class PLNPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * Get resource using CURL
+	 * Get resource
 	 * @param $url string
 	 * @param $headers array
 	 * @return array
 	 */
-	public function curlGet($url, $headers=array()) {
-
-		import('lib.pkp.classes.helpers.PKPCurlHelper');
-		$curl = PKPCurlHelper::getCurlObject();
-
-		curl_setopt_array($curl, array(
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_HTTPHEADER => array_merge(array(
-				'Expect:',
-			), $headers),
-			CURLOPT_URL => $url
-		));
-
-		$httpResult = curl_exec($curl);
-		$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		$httpError = curl_error($curl);
-		curl_close ($curl);
-
+	public function curlGet($url, $headers=[]) {
+		$httpClient = Application::get()->getHttpClient();
+		try {
+			$response = $httpClient->request('GET', $url, [
+				'headers' => $headers,
+			]);
+		} catch (GuzzleHttp\Exception\RequestException $e) {
+			return ['error' => $e->getMessage(), 'status' => null];
+		}
 		return array(
-			'status' => $httpStatus,
-			'result' => $httpResult,
-			'error'  => $httpError
+			'status' => $response->getStatusCode(),
+			'result' => (string) $response->getBody(),
 		);
 	}
 
 	/**
-	 * Post a file to a resource using CURL
+	 * Post a file to a resource
 	 * @param $url string
 	 * @param $headers array
 	 * @return array
 	 */
 	public function curlPostFile($url, $filename) {
-
-		import('lib.pkp.classes.helpers.PKPCurlHelper');
-		$curl = PKPCurlHelper::getCurlObject();
-
-		curl_setopt_array($curl, array(
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_POST => true,
-			CURLOPT_HTTPHEADER => array(
-				'Content-Length: ' . filesize($filename),
-				'Expect:',
-			),
-			CURLOPT_INFILE => fopen($filename, "r"),
-			CURLOPT_INFILESIZE => filesize($filename),
-			CURLOPT_URL => $url
-		));
-
-		$httpResult = curl_exec($curl);
-		$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		$httpError = curl_error($curl);
-		curl_close ($curl);
-
-		return array(
-			'status' => $httpStatus,
-			'result' => $httpResult,
-			'error'  => $httpError
-		);
+		return $this->_sendFile('POST', $url, $filename);
 	}
 
 	/**
-	 * Put a file to a resource using CURL
+	 * Put a file to a resource
 	 * @param $url string
 	 * @param $filename string
 	 * @return array
 	 */
 	public function curlPutFile($url, $filename) {
-		import('lib.pkp.classes.helpers.PKPCurlHelper');
-		$curl = PKPCurlHelper::getCurlObject();
-
-		curl_setopt_array($curl, array(
-			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_PUT => true,
-			CURLOPT_HTTPHEADER => array(
-				'Content-Type: ' . mime_content_type($filename),
-				'Content-Length: ' . filesize($filename),
-				'Expect:',
-			),
-			CURLOPT_INFILE => fopen($filename, "r"),
-			CURLOPT_INFILESIZE => filesize($filename),
-			CURLOPT_URL => $url
-		));
-
-		$httpResult = curl_exec($curl);
-		$httpStatus = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-		$httpError = curl_error($curl);
-		curl_close ($curl);
-
-		return array(
-			'status' => $httpStatus,
-			'result' => $httpResult,
-			'error'  => $httpError
-		);
+		return $this->_sendFile('PUT', $url, $filename);
 	}
 
 	/**
@@ -675,5 +602,31 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function newUUID() {
 		return PKPString::generateUUID();
+	}
+
+	/**
+	 * Transfer a file to a resource.
+	 * @param $method string PUT or POST
+	 * @param $url string
+	 * @param $headers array
+	 * @return array
+	 */
+	protected function _sendFile($method, $url, $filename) {
+		$httpClient = Application::get()->getHttpClient();
+		try {
+			$response = $httpClient->request($method, $url, [
+				'headers' => array_merge($headers, [
+					'Content-Type' => mime_content_type($filename),
+					'Content-Length' => filesize($filename),
+				]),
+				'body' => fopen($filename, 'r'),
+			]);
+		} catch (GuzzleHttp\Exception\RequestException $e) {
+			return ['error' => $e->getMessage()];
+		}
+		return array(
+			'status' => $response->getStatusCode(),
+			'result' => (string) $response->getBody(),
+		);
 	}
 }

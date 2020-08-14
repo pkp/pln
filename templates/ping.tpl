@@ -19,7 +19,7 @@
 		<current>{$pluginVersion.version->getCurrent()|escape}</current>
 		<prerequisites>
 			<phpVersion>{$prerequisites.phpVersion|escape}</phpVersion>
-			<curlVersion>{$prerequisites.curlVersion|escape}</curlVersion>
+			<curlVersion>not required</curlVersion>
 			<zipInstalled>{$prerequisites.zipInstalled|escape}</zipInstalled>
 			<tarInstalled>{$prerequisites.tarInstalled|escape}</tarInstalled>
 			<acron>{$prerequisites.acron|escape}</acron>

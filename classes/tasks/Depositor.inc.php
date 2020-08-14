@@ -63,13 +63,6 @@ class Depositor extends ScheduledTask {
 
 			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.processing_for', array('title' => $journal->getLocalizedName())), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
-			// check to make sure curl is installed
-			if (!$this->_plugin->curlInstalled()) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.curl_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_CURL_MISSING);
-				continue;
-			}
-
 			// check to make sure zip is installed
 			if (!$this->_plugin->zipInstalled()) {
 				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.zip_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
