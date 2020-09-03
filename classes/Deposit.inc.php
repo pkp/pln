@@ -412,4 +412,31 @@ class Deposit extends DataObject {
 	public function getExportDepositError() {
 		return $this->getData('exportDepositError');
 	}
+
+	/**
+	 * Get Displayed status locale string
+	 * @return string
+	 */
+	public function getDisplayedStatus() {
+		if (!empty($this->getExportDepositError())) {
+			$displayedStatus = __('plugins.generic.pln.displayedstatus.error');
+		} else if ($this->getLockssAgreementStatus()) {
+			$displayedStatus = __('plugins.generic.pln.displayedstatus.completed');
+		} else if ($this->getStatus() == 0) {
+			$displayedStatus = __('plugins.generic.pln.displayedstatus.pending');
+		} else {
+			$displayedStatus = __('plugins.generic.pln.displayedstatus.inprogress');
+		}
+
+		return $displayedStatus;
+	}
+
+	/**
+	 * Resets the deposit
+	 */
+	public function reset() {
+		$this->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_NEW);
+		$this->setLastStatusDate(null);
+		$this->setExportDepositError(null);
+	}
 }

@@ -1,3 +1,4 @@
+#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
@@ -81,7 +82,7 @@ msgid "plugins.generic.pln.status"
 msgstr "Status"
 
 msgid "plugins.generic.pln.objectId"
-msgstr "Type Object Id"
+msgstr "Issue Id"
 
 msgid "plugins.generic.pln.status.docs"
 msgstr "The PKP PN <a href=\"{$statusDocsUrl}\">deposit statuses are described here</a>."
@@ -95,20 +96,8 @@ msgstr "Type"
 msgid "plugins.generic.pln.status.items"
 msgstr "Items"
 
-msgid "plugins.generic.pln.status.checked"
-msgstr "Checked"
-
-msgid "plugins.generic.pln.status.local_status"
-msgstr "Local Status"
-
-msgid "plugins.generic.pln.status.processing_status"
-msgstr "Processing Status"
-
-msgid "plugins.generic.pln.status.lockss_status"
-msgstr "LOCKSS Status"
-
-msgid "plugins.generic.pln.status.complete"
-msgstr "Complete"
+msgid "plugins.generic.pln.status.status"
+msgstr "Status"
 
 msgid "plugins.generic.pln.status.confirmReset"
 msgstr "Are you sure you want to reset this deposit? It will be repackaged and resent to the processing server."
@@ -283,3 +272,34 @@ msgstr "PN Gateway"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "Reports PKP PN Status and recent article titles for the staging server."
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Pending"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "The process of the deposit has not yet started"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "In Progress"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "The deposit process is in progress"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Completed"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "The deposit process is completed"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Error"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "There has been an error regarding the deposit process"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "It might take several days for a deposit to be fully processed."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Latest Update"
+

@@ -361,8 +361,10 @@ class PLNPlugin extends GenericPlugin {
 					$deposit_ids = array_keys($request->getUserVar('reset'));
 					$depositDao = DAORegistry::getDAO('DepositDAO');
 					foreach ($deposit_ids as $deposit_id) {
-						$deposit = $depositDao->getById($deposit_id);
-						$deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_NEW);
+						$deposit = $depositDao->getById($deposit_id); /** @var $deposit Deposit */
+
+						$deposit->reset();
+						
 						$depositDao->updateObject($deposit);
 					}
 				}
