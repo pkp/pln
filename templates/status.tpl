@@ -22,7 +22,7 @@
 	{capture assign="depositsGridUrl"}{url component="plugins.generic.pln.controllers.grid.PLNStatusGridHandler" op="fetchGrid" escape=false}{/capture}
 	{load_url_in_div id="depositsGridContainer" url=$depositsGridUrl}
 	<p>
-		<b>Status Description</b>
+		<b>{translate key='plugins.generic.pln.status.description.title'}</b>
 		<ul>
 			<li>
 				<b>{translate key='plugins.generic.pln.displayedstatus.pending'}</b>: {translate key='plugins.generic.pln.displayedstatus.pending.description'}

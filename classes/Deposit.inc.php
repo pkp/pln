@@ -422,7 +422,7 @@ class Deposit extends DataObject {
 			$displayedStatus = __('plugins.generic.pln.displayedstatus.error');
 		} else if ($this->getLockssAgreementStatus()) {
 			$displayedStatus = __('plugins.generic.pln.displayedstatus.completed');
-		} else if ($this->getStatus() == 0) {
+		} else if ($this->getStatus() == PLN_PLUGIN_DEPOSIT_STATUS_NEW) {
 			$displayedStatus = __('plugins.generic.pln.displayedstatus.pending');
 		} else {
 			$displayedStatus = __('plugins.generic.pln.displayedstatus.inprogress');

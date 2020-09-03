@@ -303,3 +303,6 @@ msgstr "It might take several days for a deposit to be fully processed."
 msgid "plugins.generic.pln.status.latestupdate"
 msgstr "Latest Update"
 
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Status Description"
+
