@@ -80,8 +80,10 @@ msgstr "Deposits"
 msgid "plugins.generic.pln.status"
 msgstr "Status"
 
-#, fuzzy
 msgid "plugins.generic.pln.objectId"
+msgstr "Object Type Id"
+
+msgid "plugins.generic.pln.issueId"
 msgstr "Issue Id"
 
 msgid "plugins.generic.pln.status.docs"

@@ -58,7 +58,7 @@ class PLNStatusGridHandler extends GridHandler {
 		// Columns
 		$cellProvider = new PLNStatusGridCellProvider();
 		$this->addColumn(new GridColumn('id', 'common.id', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('objectId', 'plugins.generic.pln.objectId', null, null, $cellProvider));
+		$this->addColumn(new GridColumn('objectId', 'plugins.generic.pln.issueId', null, null, $cellProvider));
 		$this->addColumn(new GridColumn('status', 'plugins.generic.pln.status.status', null, null, $cellProvider));
 		$this->addColumn(new GridColumn('latestUpdate', 'plugins.generic.pln.status.latestupdate', null, null, $cellProvider));
 		$this->addColumn(new GridColumn('error', 'plugins.generic.pln.displayedstatus.error', null, null, $cellProvider));
