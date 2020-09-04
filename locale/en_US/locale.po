@@ -81,7 +81,7 @@ msgid "plugins.generic.pln.status"
 msgstr "Status"
 
 msgid "plugins.generic.pln.objectId"
-msgstr "Object Type Id"
+msgstr "Type Object Id"
 
 msgid "plugins.generic.pln.issueId"
 msgstr "Issue Id"
