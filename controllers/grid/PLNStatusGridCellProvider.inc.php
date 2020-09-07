@@ -23,26 +23,20 @@ class PLNStatusGridCellProvider extends GridCellProvider {
 	 * @return array
 	 */
 	public function getTemplateVarsFromRowColumn($row, $column) {
-		$deposit = $row->getData();
+		$deposit = $row->getData(); /** @var $deposit Deposit */
 
 		switch ($column->getId()) {
 			case 'id':
 				// The action has the label
 				return array('label' => $deposit->getId());
-			case 'type':
-				return array('label' => $deposit->getObjectType());
 			case 'objectId':
 				return array('label' => $deposit->getObjectId());
-			case 'checked':
-				return array('label' => $deposit->getStatus());
-			case 'local_status':
-				return array('label' => $deposit->getLocalStatus());
-			case 'processing_status':
-				return array('label' => $deposit->getProcessingStatus());
-			case 'lockss_status':
-				return array('label' => $deposit->getLockssStatus());
-			case 'complete':
-				return array('label' => $deposit->getComplete());
+			case 'status':
+				return array('label' => $deposit->getDisplayedStatus());
+			case 'latestUpdate':
+				return array('label' => $deposit->getLastStatusDate());
+			case 'error':
+				return array('label' => $deposit->getExportDepositError());
 		}
 	}
 }

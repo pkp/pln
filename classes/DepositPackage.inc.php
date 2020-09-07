@@ -495,6 +495,8 @@ class DepositPackage {
 					SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 				$this->_logMessage(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
+
+				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
 			} else {
 				$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed', 
 					array('depositId' => $this->_deposit->getId(), 
@@ -503,6 +505,8 @@ class DepositPackage {
 					SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 				$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
+
+				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
 			}
 
 			$this->_deposit->setLockssReceivedStatus();
@@ -626,7 +630,9 @@ class DepositPackage {
 				$this->_deposit->setSentStatus(true);
 				break;
 			default:
+				$this->_deposit->setExportDepositError('Unknown processing state ' . $processingState);
 				$this->_logMessage('Deposit ' . $this->_deposit->getId() . ' has unknown processing state ' . $processingState);
+				break;
 		}
 
 		$lockssState = $contentDOM->getElementsByTagName('category')->item(1)->getAttribute('term');
@@ -650,7 +656,9 @@ class DepositPackage {
 				$this->_deposit->setLockssAgreementStatus(true);
 				break;
 			default:
-				$this->_logMessage('Deposit ' . $this->_deposit->getId() . ' has unknown LOCKSS state ' . $processingState);
+				$this->_deposit->setExportDepositError('Unknown LOCKSS state ' . $lockssState);
+				$this->_logMessage('Deposit ' . $this->_deposit->getId() . ' has unknown LOCKSS state ' . $lockssState);
+				break;
 		}
 
 		$this->_deposit->setLastStatusDate(time());

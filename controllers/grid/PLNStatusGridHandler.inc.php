@@ -58,13 +58,10 @@ class PLNStatusGridHandler extends GridHandler {
 		// Columns
 		$cellProvider = new PLNStatusGridCellProvider();
 		$this->addColumn(new GridColumn('id', 'common.id', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('type', 'common.type', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('objectId', 'plugins.generic.pln.objectId', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('checked', 'plugins.generic.pln.status.checked', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('local_status', 'plugins.generic.pln.status.local_status', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('processing_status', 'plugins.generic.pln.status.processing_status', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('lockss_status', 'plugins.generic.pln.status.lockss_status', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('complete', 'plugins.generic.pln.status.complete', null, null, $cellProvider));
+		$this->addColumn(new GridColumn('objectId', 'plugins.generic.pln.issueId', null, null, $cellProvider));
+		$this->addColumn(new GridColumn('status', 'plugins.generic.pln.status.status', null, null, $cellProvider));
+		$this->addColumn(new GridColumn('latestUpdate', 'plugins.generic.pln.status.latestupdate', null, null, $cellProvider));
+		$this->addColumn(new GridColumn('error', 'plugins.generic.pln.displayedstatus.error', null, null, $cellProvider));
 	}
 
 	/**
@@ -118,9 +115,10 @@ class PLNStatusGridHandler extends GridHandler {
 		$journal = $request->getJournal();
 
 		if (!is_null($depositId)) {
-			$deposit = $depositDao->getById($depositId, $journal->getId());
-			$deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_NEW);
-			$deposit->setExportDepositError('');
+			$deposit = $depositDao->getById($depositId, $journal->getId()); /** @var $deposit Deposit */
+			
+			$deposit->reset();
+
 			$depositDao->updateObject($deposit);
 		}
 
