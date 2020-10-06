@@ -172,17 +172,11 @@ class PLNPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * @copydoc PKPPlugin::getInstallSchemaFile()
+	 * @copydoc Plugin::getInstallMigration()
 	 */
-	public function getInstallSchemaFile() {
-		return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'xml' . DIRECTORY_SEPARATOR . 'schema.xml';
-	}
-
-	/**
-	 * @copydoc PKPPlugin::getInstallDataFile()
-	 */
-	function getInstallDataFile() {
-		return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'xml' . DIRECTORY_SEPARATOR . 'data.xml';
+	function getInstallMigration() {
+		$this->import('PLNPluginSchemaMigration');
+		return new PLNPluginSchemaMigration();
 	}
 
 	/**
