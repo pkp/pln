@@ -29,7 +29,7 @@ class DepositDAO extends DAO {
 	 * @return Deposit Object
 	 */
 	public function getById($depositId, $journalId = null) {
-		$params = array((int) $depositId);
+		$params = [(int) $depositId];
 		if ($journalId !== null) $params[] = (int) $journalId;
 		$result = $this->retrieve(
 			'SELECT *
@@ -66,11 +66,11 @@ class DepositDAO extends DAO {
 				$this->datetimeToDB($deposit->getLastStatusDate()),
 				$this->datetimeToDB($deposit->getDateModified())
 			),
-			array(
+			[
 				(int) $deposit->getJournalId(),
 				$deposit->getUUID(),
 				(int) $deposit->getStatus()
-			)
+			]
 		);
 		$deposit->setId($this->getInsertId());
 		return $deposit->getId();
@@ -95,13 +95,13 @@ class DepositDAO extends DAO {
 				$this->datetimeToDB($deposit->getLastStatusDate()),
 				$this->datetimeToDB($deposit->getDateCreated())
 			),
-			array(
+			[
 				(int) $deposit->getJournalId(),
 				$deposit->getUUID(),
 				(int) $deposit->getStatus(),
 				$deposit->getExportDepositError(),
 				(int) $deposit->getId()
-			)
+			]
 		);
 	}
 
@@ -117,7 +117,7 @@ class DepositDAO extends DAO {
 
 		$this->update(
 			'DELETE from pln_deposits WHERE deposit_id = ?',
-			(int) $deposit->getId()
+			[(int) $deposit->getId()]
 		);
 	}
 
@@ -145,7 +145,7 @@ class DepositDAO extends DAO {
 		$deposit->setDateModified($this->datetimeFromDB($row['date_modified']));
 		$deposit->setExportDepositError($row['export_deposit_error']);
 
-		HookRegistry::call('DepositDAO::_fromRow', array(&$deposit, &$row));
+		HookRegistry::call('DepositDAO::_fromRow', [&$deposit, &$row]);
 
 		return $deposit;
 	}
@@ -162,10 +162,7 @@ class DepositDAO extends DAO {
 			FROM pln_deposits
 			WHERE journal_id = ?
 			AND uuid = ?',
-			array (
-				(int) $journalId,
-				$depositUuid
-			)
+			[(int) $journalId, $depositUuid]
 		);
 		$returner = null;
 		if ($result->RecordCount() != 0) {
@@ -186,9 +183,7 @@ class DepositDAO extends DAO {
 			FROM pln_deposits
 			WHERE journal_id = ?
 			ORDER BY deposit_id',
-			array (
-				(int) $journalId
-			),
+			[(int) $journalId],
 			$dbResultRange
 		);
 
@@ -203,10 +198,7 @@ class DepositDAO extends DAO {
 	public function getNew($journalId) {
 		$result = $this->retrieve(
 			'SELECT * FROM pln_deposits WHERE journal_id = ? AND status = ?',
-			array(
-				(int) $journalId,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_NEW
-			)
+			[(int) $journalId, (int) PLN_PLUGIN_DEPOSIT_STATUS_NEW]
 		);
 
 		return new DAOResultFactory($result, $this, '_fromRow');
@@ -225,12 +217,12 @@ class DepositDAO extends DAO {
 			AND d.status & ? = 0
 			AND d.status & ? = 0
 			AND d.status & ? = 0',
-			array (
+			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT
-			)
+			]
 		);
 
 		return new DAOResultFactory($result, $this, '_fromRow');
@@ -249,12 +241,12 @@ class DepositDAO extends DAO {
 			AND d.status & ? = 0
 			AND d.status & ? = 0
 			AND d.status & ? = 0',
-			array(
+			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED
-			)
+			]
 		);
 
 		return new DAOResultFactory($result, $this, '_fromRow');
@@ -273,12 +265,12 @@ class DepositDAO extends DAO {
 			AND d.status & ? <> 0
 			AND d.status & ? = 0
 			AND d.status & ? = 0',
-			array (
+			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED
-			)
+			]
 		);
 
 		return new DAOResultFactory($result, $this, '_fromRow');
