@@ -78,7 +78,7 @@ class DepositObjectDAO extends DAO {
 			case 'PublishedArticle': // Legacy (OJS pre-3.2)
 			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
 				$result = $this->retrieve(
-					'SELECT pdo.deposit_object_id, a.last_modified FROM pln_deposit_objects pdo
+					'SELECT pdo.deposit_object_id, s.last_modified FROM pln_deposit_objects pdo
 					JOIN submissions s ON pdo.object_id = s.submission_id
 					JOIN publications p ON p.publication_id = s.current_publication_id
 					WHERE s.context_id = ? AND pdo.journal_id = ? AND pdo.date_modified < p.last_modified',
