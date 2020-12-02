@@ -17,11 +17,11 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 class PLNPluginSchemaMigration extends Migration {
-        /**
-         * Run the migrations.
-         * @return void
-         */
-        public function up() {
+	/**
+	 * Run the migrations.
+	 * @return void
+	 */
+	public function up() {
 		// PLN Deposit Objects
 		Capsule::schema()->create('pln_deposit_objects', function (Blueprint $table) {
 			$table->bigInteger('deposit_object_id')->autoIncrement();
