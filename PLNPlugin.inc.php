@@ -45,6 +45,9 @@ define('PLN_PLUGIN_DEPOSIT_STATUS_NEW',					0x00);
 define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED',			0x01);
 define('PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED',			0x02);
 define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED',	0x200);
+define('PLN_PLUGIN_DEPOSIT_STATUS_NEED_REPACKAGE',		0x400);
+define('PLN_PLUGIN_DEPOSIT_STATUS_OTHER_FAILURE',		0x800);
+define('PLN_PLUGIN_DEPOSIT_STATUS_REPACKAGED',			0x1000);
 
 // status on the processing server
 define('PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED',			0x04);
@@ -358,7 +361,7 @@ class PLNPlugin extends GenericPlugin {
 						$deposit = $depositDao->getById($deposit_id); /** @var $deposit Deposit */
 
 						$deposit->reset();
-						
+
 						$depositDao->updateObject($deposit);
 					}
 				}

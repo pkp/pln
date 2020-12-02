@@ -38,12 +38,11 @@ class DepositDAO extends DAO {
 			. ($journalId !== null?' AND journal_id = ?':''),
 			$params
 		);
-		$returner = null;
-		if ($result->RecordCount() != 0) {
-			$returner = $this->_fromRow($result->GetRowAssoc(false));
-		}
-		$result->Close();
-		return $returner;
+
+		$row = $result->current();
+		if ($row) return $this->_fromRow((array) $row);
+
+		return $row;
 	}
 
 	/**
@@ -164,36 +163,37 @@ class DepositDAO extends DAO {
 			AND uuid = ?',
 			[(int) $journalId, $depositUuid]
 		);
-		$returner = null;
-		if ($result->RecordCount() != 0) {
-			$returner = $this->_fromRow($result->GetRowAssoc(false));
-		}
-		$result->Close();
-		return $returner;
+
+		$row = $result->current();
+		if ($row) return $this->_fromRow((array) $row);
+
+		return $row;
 	}
 
 	/**
 	 * Retrieve all deposits.
 	 * @param $journalId int
-	 * @return array Deposit
+	 * @return DAOResultFactory
 	 */
 	public function getByJournalId($journalId, $dbResultRange = null) {
+		$params[] = $journalId;
+
 		$result = $this->retrieveRange(
-			'SELECT *
+			$sql = 'SELECT *
 			FROM pln_deposits
 			WHERE journal_id = ?
 			ORDER BY deposit_id',
-			[(int) $journalId],
+			$params,
 			$dbResultRange
 		);
 
-		return new DAOResultFactory($result, $this, '_fromRow');
+		return new DAOResultFactory($result, $this, '_fromRow', [], $sql, $params, $dbResultRange);
 	}
 
 	/**
 	 * Retrieve all newly-created deposits (ones with new status)
 	 * @param $journalId int
-	 * @return array Deposit
+	 * @return DAOResultFactory
 	 */
 	public function getNew($journalId) {
 		$result = $this->retrieve(
@@ -207,7 +207,7 @@ class DepositDAO extends DAO {
 	/**
 	 * Retrieve all deposits that need packaging
 	 * @param $journalId int
-	 * @return array Deposit
+	 * @return DAOResultFactory
 	 */
 	public function getNeedTransferring($journalId) {
 		$result = $this->retrieve(
@@ -231,7 +231,7 @@ class DepositDAO extends DAO {
 	/**
 	 * Retrieve all deposits that need packaging
 	 * @param $journalId int
-	 * @return array Deposit
+	 * @return DAOResultFactory
 	 */
 	public function getNeedPackaging($journalId) {
 		$result = $this->retrieve(
@@ -255,7 +255,7 @@ class DepositDAO extends DAO {
 	/**
 	 * Retrieve all deposits that need a status update
 	 * @param $journalId int
-	 * @return array Deposit
+	 * @return DAOResultFactory
 	 */
 	public function getNeedStagingStatusUpdate($journalId) {
 		$result = $this->retrieve(

@@ -144,13 +144,13 @@ class Depositor extends ScheduledTask {
 		$depositQueue = $depositDao->getNeedStagingStatusUpdate($journal->getId());
 
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
@@ -179,13 +179,13 @@ class Depositor extends ScheduledTask {
 		$depositQueue = $depositDao->getNeedTransferring($journal->getId());
 
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
@@ -200,7 +200,9 @@ class Depositor extends ScheduledTask {
 	 */
 	protected function _processNeedPackaging($journal) {
 		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
+
 		$depositQueue = $depositDao->getNeedPackaging($journal->getId());
+
 		$fileManager = new ContextFileManager($journal->getId());
 		$plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
 
@@ -212,13 +214,13 @@ class Depositor extends ScheduledTask {
 
 		// loop though all of the deposits that need packaging
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);

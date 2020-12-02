@@ -293,8 +293,14 @@ msgstr "The deposit process is completed"
 msgid "plugins.generic.pln.displayedstatus.error"
 msgstr "Error"
 
+msgid "plugins.generic.pln.displayedstatus.packaging.error"
+msgstr "Local Packaging Error"
+
 msgid "plugins.generic.pln.displayedstatus.error.description"
 msgstr "There has been an error regarding the deposit process"
+
+msgid "plugins.generic.pln.displayedstatus.packaging.error.description"
+msgstr "There has been an error regarding the deposit packaging process - Try exporting using the Native Import/Export plugin to check for errors."
 
 msgid "plugins.generic.pln.status.warning"
 msgstr "It might take several days for a deposit to be fully processed."

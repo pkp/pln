@@ -36,8 +36,11 @@
 			<li>
 				<b>{translate key='plugins.generic.pln.displayedstatus.error'}</b>: {translate key='plugins.generic.pln.displayedstatus.error.description'}
 			</li>
+			<li>
+				<b>{translate key='plugins.generic.pln.displayedstatus.packaging.error'}</b>: {translate key='plugins.generic.pln.displayedstatus.packaging.error.description'}
+			</li>
 		</ul>
 	</p>
 	<p><span class='fa fa-exclamation-triangle'></span> {translate key='plugins.generic.pln.status.warning'}</p>
-	
+
 </div>
