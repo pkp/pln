@@ -214,11 +214,42 @@ class Deposit extends DataObject {
 	}
 
 	/**
+	 * Get whether the deposit has been packaged for the PLN
+	 * @return int
+	 */
+	public function getRePackagedStatus() {
+		return $this->_getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_REPACKAGED);
+	}
+
+	/**
+	 * Get whether the deposit has been packaged for the PLN
+	 * @return int
+	 */
+	public function getNeedRePackageStatus() {
+		return $this->_getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_NEED_REPACKAGE);
+	}
+
+	/**
 	 * Set whether the deposit has been packaged for the PLN
 	 * @param $status boolean
 	 */
 	public function setPackagedStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED);
+	}
+
+	/**
+	 * Set whether the deposit has been packaged for the PLN
+	 * @param $status boolean
+	 */
+	public function setRePackagedStatus($status = true) {
+		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_REPACKAGED);
+	}
+	/**
+	 * Set whether the deposit has been packaged for the PLN
+	 * @param $status boolean
+	 */
+	public function setNeedRePackageStatus($status = true) {
+		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_NEED_REPACKAGE);
 	}
 
 	/**
@@ -419,7 +450,12 @@ class Deposit extends DataObject {
 	 */
 	public function getDisplayedStatus() {
 		if (!empty($this->getExportDepositError())) {
-			$displayedStatus = __('plugins.generic.pln.displayedstatus.error');
+			if ($this->getStatus() == PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED) {
+				$displayedStatus = __('plugins.generic.pln.displayedstatus.packaging.error');
+			} else {
+				$displayedStatus = __('plugins.generic.pln.displayedstatus.error');
+			}
+
 		} else if ($this->getLockssAgreementStatus()) {
 			$displayedStatus = __('plugins.generic.pln.displayedstatus.completed');
 		} else if ($this->getStatus() == PLN_PLUGIN_DEPOSIT_STATUS_NEW) {
@@ -437,6 +473,62 @@ class Deposit extends DataObject {
 	public function reset() {
 		$this->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_NEW);
 		$this->setLastStatusDate(null);
+		$this->setExportDepositError(null);
+	}
+
+	/**
+	 * Set Deposit state for redeposit - updated content
+	 */
+	public function needRepackage() {
+		$this->reset();
+		$this->setNeedRePackageStatus();
+		$this->setLastStatusDate(time());
+	}
+
+	/**
+	 * Set Deposit Failure status
+	 * @param $status boolean
+	 */
+	public function setOtherFailedStatus($status = true) {
+		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_OTHER_FAILURE);
+	}
+
+	/**
+	 * Deposit Status changes after successful packaging
+	 */
+	public function packageSuccess() {
+		$setRepackage = false;
+
+		if ($this->getNeedRePackageStatus()) {
+			$setRepackage = true;
+		}
+
+		$this->reset();
+		$this->setPackagedStatus();
+
+		if ($setRepackage) {
+			$this->setRePackagedStatus();
+		}
+	}
+
+	/**
+	 * Deposit Status changes after unsuccessful packaging
+	 * @param String $message
+	 */
+	public function packageFailed($message = null) {
+		$this->reset();
+		$this->setPackagingFailedStatus(true);
+
+		if ($message) {
+			$this->setExportDepositError($message);
+		}
+	}
+
+	/**
+	 * Clear OtherFailure state for deposit
+	 */
+	public function clearOtherFailedState() {
+		$this->setOtherFailedStatus(false);
 		$this->setExportDepositError(null);
 	}
 }

@@ -319,13 +319,17 @@ class DepositPackage {
 					if (!$exportXml) {
 						$this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.error'));
 						$this->importExportErrorHandler($depositObject->getDepositId(), __('plugins.generic.pln.error.depositor.export.issue.error'));
+						$callback->unregister();
+						return null;
 					}
 				}
 				catch (Exception $exception) {
 					$this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.exception') . $exception->getMessage());
 					$this->importExportErrorHandler($depositObject->getDepositId(), $exception->getMessage());
+					$callback->unregister();
+					return null;
 				}
-				
+
 				$callback->unregister();
 				if ($supportsOptions) $exportXml = $this->_cleanFileList($exportXml, $fileList);
 				$fileManager->writeFile($exportFile, $exportXml);
@@ -435,18 +439,18 @@ class DepositPackage {
 		$url = $plnPlugin->getSetting($journalId, 'pln_network');
 		$atomPath = $this->getAtomDocumentPath();
 
-		if ($this->_deposit->getLockssAgreementStatus()) {
+		if ($this->_deposit->getRePackagedStatus()) {
 			$url .= PLN_PLUGIN_CONT_IRI . '/' . $plnPlugin->getSetting($journalId, 'journal_uuid');
 			$url .= '/' . $this->_deposit->getUUID() . '/edit';
-			
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.postAtom', 
-				array('depositId' => $this->_deposit->getId(), 
-					'statusLocal' => $this->_deposit->getLocalStatus(), 
-					'statusProcessing' => $this->_deposit->getProcessingStatus(), 
+
+			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.postAtom',
+				array('depositId' => $this->_deposit->getId(),
+					'statusLocal' => $this->_deposit->getLocalStatus(),
+					'statusProcessing' => $this->_deposit->getProcessingStatus(),
 					'statusLockss' => $this->_deposit->getLockssStatus(),
 					'url' => $url,
 					'atomPath' => $atomPath,
-					'method' => 'PutFile')), 
+					'method' => 'PutFile')),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$result = $plnPlugin->curlPutFile(
@@ -456,14 +460,14 @@ class DepositPackage {
 		} else {
 			$url .= PLN_PLUGIN_COL_IRI . '/' . $plnPlugin->getSetting($journalId, 'journal_uuid');
 
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.postAtom', 
-				array('depositId' => $this->_deposit->getId(), 
-					'statusLocal' => $this->_deposit->getLocalStatus(), 
-					'statusProcessing' => $this->_deposit->getProcessingStatus(), 
+			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.postAtom',
+				array('depositId' => $this->_deposit->getId(),
+					'statusLocal' => $this->_deposit->getLocalStatus(),
+					'statusProcessing' => $this->_deposit->getProcessingStatus(),
 					'statusLockss' => $this->_deposit->getLockssStatus(),
 					'url' => $url,
 					'atomPath' => $atomPath,
-					'method' => 'PostFile')), 
+					'method' => 'PostFile')),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$result = $plnPlugin->curlPostFile(
@@ -474,10 +478,11 @@ class DepositPackage {
 
 		// if we get the OK, set the status as transferred
 		if (($result['status'] == PLN_PLUGIN_HTTP_STATUS_OK) || ($result['status'] == PLN_PLUGIN_HTTP_STATUS_CREATED)) {
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded', 
-				array('depositId' => $this->_deposit->getId())), 
+			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded',
+				array('depositId' => $this->_deposit->getId())),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
+			$this->_deposit->clearOtherFailedState();
 			$this->_deposit->setTransferredStatus();
 			// unset a remote error if this worked
 			$this->_deposit->setLockssReceivedStatus(false);
@@ -486,31 +491,33 @@ class DepositPackage {
 			$this->_deposit->setLastStatusDate(time());
 			$depositDao->updateObject($this->_deposit);
 		} else {
+			$errorMessage = null;
+
 			// we got an error back from the staging server
 			if($result['status'] == FALSE) {
-				$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed', 
-					array('depositId' => $this->_deposit->getId(), 
+				$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
+					array('depositId' => $this->_deposit->getId(),
 						'error' => $result['error'],
-						'result' => $result['result'])), 
+						'result' => $result['result'])),
 					SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
-				$this->_logMessage(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
-
-				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
+				$errorMessage = __('plugins.generic.pln.error.network.deposit', array('error' => $result['error']));
 			} else {
-				$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed', 
-					array('depositId' => $this->_deposit->getId(), 
+				$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
+					array('depositId' => $this->_deposit->getId(),
 						'error' => $result['status'],
-						'result' => $result['result'])), 
+						'result' => $result['result'])),
 					SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
-				$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
-
-				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
+				$errorMessage = __('plugins.generic.pln.error.http.deposit', array('error' => $result['status']));
 			}
 
-			$this->_deposit->setLockssReceivedStatus();
+			$this->_logMessage($errorMessage);
+
+			$this->_deposit->setOtherFailedStatus();
+			$this->_deposit->setExportDepositError($errorMessage);
 			$this->_deposit->setLastStatusDate(time());
+
 			$depositDao->updateObject($this->_deposit);
 		}
 	}
@@ -543,33 +550,33 @@ class DepositPackage {
 		}
 
 		if (!$fileManager->fileExists($packagePath)) {
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed', 
-				array('depositId' => $this->_deposit->getId())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$message = __('plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed', array('depositId' => $this->_deposit->getId()));
 
-			$this->_deposit->setPackagedStatus(false);
+			$this->_task->addExecutionLogEntry($message, SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+
+			$this->_deposit->packageFailed($message);
 			$this->_deposit->setLastStatusDate(time());
 			$depositDao->updateObject($this->_deposit);
 			return;
 		}
 
 		if (!$fileManager->fileExists($this->generateAtomDocument())) {
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed', 
-				array('depositId' => $this->_deposit->getId())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$message = __('plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed', array('depositId' => $this->_deposit->getId()));
 
-			$this->_deposit->setPackagedStatus(false);
+			$this->_task->addExecutionLogEntry($message, SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+
+			$this->_deposit->packageFailed($message);
 			$this->_deposit->setLastStatusDate(time());
 			$depositDao->updateObject($this->_deposit);
 			return;
 		}
 
-		$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded', 
-				array('depositId' => $this->_deposit->getId())), 
+		$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded',
+				array('depositId' => $this->_deposit->getId())),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 		// update the deposit's status
-		$this->_deposit->setPackagedStatus();
+		$this->_deposit->packageSuccess();
 		$this->_deposit->setLastStatusDate(time());
 		$depositDao->updateObject($this->_deposit);
 	}
@@ -590,15 +597,27 @@ class DepositPackage {
 		$result = $plnPlugin->curlGet($url);
 
 		if ($result['status'] != PLN_PLUGIN_HTTP_STATUS_OK) {
+			$errorMessage = null;
+
 			// stop here if we didn't get an OK
 			if($result['status'] === FALSE) {
-				error_log(__('plugins.generic.pln.error.network.swordstatement', array('error' => $result['error'])));
+				$errorMessage = __('plugins.generic.pln.error.network.swordstatement', array('error' => $result['error']));
 			} else {
-				error_log(__('plugins.generic.pln.error.http.swordstatement', array('error' => $result['status'])));
+				$errorMessage = __('plugins.generic.pln.error.http.swordstatement', array('error' => $result['status']));
 			}
+
+			$this->_logMessage($errorMessage);
+
+			$this->_deposit->setOtherFailedStatus();
+			$this->_deposit->setExportDepositError($errorMessage);
+			$this->_deposit->setLastStatusDate(time());
+
+			$depositDao->updateObject($this->_deposit);
 
 			return;
 		}
+
+		$errored = false;
 
 		$contentDOM = new DOMDocument();
 		$contentDOM->preserveWhiteSpace = false;
@@ -606,11 +625,11 @@ class DepositPackage {
 
 		// get the remote deposit state
 		$processingState = $contentDOM->getElementsByTagName('category')->item(0)->getAttribute('term');
-		$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing.processingState', 
+		$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing.processingState',
 				array('depositId' => $this->_deposit->getId(),
-					'processingState' => $processingState)), 
+					'processingState' => $processingState)),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-				
+
 		switch ($processingState) {
 			case 'depositedByJournal':
 				$this->_deposit->setTransferredStatus(true);
@@ -630,8 +649,10 @@ class DepositPackage {
 				$this->_deposit->setSentStatus(true);
 				break;
 			default:
+				$this->_deposit->setOtherFailedStatus();
 				$this->_deposit->setExportDepositError('Unknown processing state ' . $processingState);
 				$this->_logMessage('Deposit ' . $this->_deposit->getId() . ' has unknown processing state ' . $processingState);
+				$errored = true;
 				break;
 		}
 
@@ -656,9 +677,15 @@ class DepositPackage {
 				$this->_deposit->setLockssAgreementStatus(true);
 				break;
 			default:
+				$this->_deposit->setOtherFailedStatus();
 				$this->_deposit->setExportDepositError('Unknown LOCKSS state ' . $lockssState);
 				$this->_logMessage('Deposit ' . $this->_deposit->getId() . ' has unknown LOCKSS state ' . $lockssState);
+				$errored = true;
 				break;
+		}
+
+		if (!$errored) {
+			$this->_deposit->clearOtherFailedState();
 		}
 
 		$this->_deposit->setLastStatusDate(time());
@@ -676,8 +703,9 @@ class DepositPackage {
 		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
 		$deposit = $depositDao->getById($depositId);
 		if ($deposit) {
-			$deposit->setExportDepositError($message);
-			$deposit->setPackagingFailedStatus();
+			$deposit->packageFailed($message);
+			$deposit->setLastStatusDate(time());
+
 			$depositDao->updateObject($deposit);
 		}
 	}

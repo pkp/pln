@@ -68,7 +68,7 @@ class DepositObjectDAO extends DAO {
 	 * @param $objectType string
 	 */
 	public function markHavingUpdatedContent($journalId, $objectType) {
-		$depositDao = DAORegistry::getDAO('DepositDAO');
+		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
 
 		switch ($objectType) {
 			case 'PublishedArticle': // Legacy (OJS pre-3.2)
@@ -87,8 +87,7 @@ class DepositObjectDAO extends DAO {
 						// only update a deposit after it has been synced in LOCKSS.
 						$depositObject->setDateModified($row->last_modified);
 						$this->updateObject($depositObject);
-						$deposit->setNewStatus();
-						$deposit->setLockssAgreementStatus(true); // this is an update.
+						$deposit->needRepackage();
 						$depositDao->updateObject($deposit);
 					}
 				}
@@ -109,8 +108,7 @@ class DepositObjectDAO extends DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					//if ($deposit->getSentStatus() || !$deposit->getTransferredStatus()) {
-						// only update a deposit after it has been synced in LOCKSS.
+					if ($deposit->getPackagedStatus()) {
 						if ($row->issue_modified > $row->article_modified) {
 							$depositObject->setDateModified($row->issue_modified);
 						} else {
@@ -118,10 +116,9 @@ class DepositObjectDAO extends DAO {
 						}
 
 						$this->updateObject($depositObject);
-						$deposit->setNewStatus();
-						$deposit->setLockssAgreementStatus(true); // this is an update.
+						$deposit->needRepackage();
 						$depositDao->updateObject($deposit);
-					//}
+					}
 				}
 				break;
 			default: assert(false);
