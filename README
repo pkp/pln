@@ -94,6 +94,9 @@ Other useful hints / Troubleshooting hints
 - The 'plugins.generic.pln.classes.tasks.Depositor' task must be inside the
   'scheduled_tasks' database table. If not, try 'Reload Scheduled Tasks' from
   the Plugins gallery area, under the Acron plugin.
+  
+- If your installation is not using the Acron plugin, the scheduled task will
+  need to be added to your server's list of cron jobs.
 
 - Search the plugin's logs in the 'scheduledTaskLogs' folder within the OJS
   files directory. Files named 'PKPPLNDepositorTask-*id*-*datestamp*' should
