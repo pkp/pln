@@ -109,7 +109,7 @@ class DepositObjectDAO extends DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					//if ($deposit->getSentStatus() || !$deposit->getTransferredStatus()) {
+					if ($deposit->getSentStatus() || !$deposit->getTransferredStatus()) {
 						// only update a deposit after it has been synced in LOCKSS.
 						if ($row->issue_modified > $row->article_modified) {
 							$depositObject->setDateModified($row->issue_modified);
@@ -121,7 +121,7 @@ class DepositObjectDAO extends DAO {
 						$deposit->setNewStatus();
 						$deposit->setLockssAgreementStatus(true); // this is an update.
 						$depositDao->updateObject($deposit);
-					//}
+					}
 				}
 				break;
 			default: assert(false);
