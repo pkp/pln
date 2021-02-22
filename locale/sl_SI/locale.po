@@ -1,2 +1,369 @@
 msgid ""
-msgstr "X-Generator: Weblate\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit"
+msgstr ""
+"PO-Revision-Date: 2021-02-24 11:54+0000\n"
+"Last-Translator: Primož Svetek <primoz.svetek@gmail.com>\n"
+"Language-Team: Slovenian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
+"sl_SI/>\n"
+"Language: sl_SI\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=n%100==1 ? 0 : n%100==2 ? 1 : n%100==3 || "
+"n%100==4 ? 2 : 3;\n"
+"X-Generator: Weblate 3.9.1\n"
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"PKP PN vtičnik potrebuje ali Acron vtičnik ali kakšen drug način "
+"periodičnega proženja nalog (npr. \"cron\")."
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Opis statusa"
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Zadnja posodobitev"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Lahko je potrebnih nekaj dni, da je depozit v celoti obdelan."
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Prišlo je do napake pri shranjevanju depozita"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Napaka"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Shranjevanje depozita je zaključeno"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Zaključeno"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Shranjevanje depozita je v teku"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "V teku"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Proces shranjevanja se še ni začel"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Nedokončano"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Poročila o PKP PN statusih in zadnjih naslovih člankov za vmesni strežnik."
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "PN prehod (gateway)"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Shranjevanje Atom datoteke na vmesni strežnik za depozit {$depositId} ni "
+"uspelo (napaka: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Shranjevanje Atom datoteke na vmesnem strežniku za depozit {$depositId} je "
+"uspelo"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Shranjevanje Atom datoteke na vmesnem strežniku za depozit {$depositId} ("
+"lokalni status: [{$statusLocal}], status obdelave: [{$statusProcessing}], "
+"Lockss status: [{$statusLockss}]) - (Url: [{$url}], Atom pot: [{$atomPath}], "
+"metoda: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"Status posodobitve za {$depositId} ({$objectType}: {$objectId}) (lokalni "
+"status: [{$statusLocal}], status obdelave: [{$statusProcessing}], Lockss "
+"status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"Status prenosa depozita {$depositId} ({$objectType}: {$objectId}) (lokalni "
+"status: [{$statusLocal}], status obdelave: [{$statusProcessing}], Lockss "
+"status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "Priprava depozita {$depositId} je uspela"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Priprava depozita {$depositId} ni uspela"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"Prišlo je do napake Domačega uvozno/izvoznega vtičnika pri pripravi depozita "
+"{$depositId}"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Status poskusa shranjevanja {$depositId} ({$objectType}: {$objectId}) ("
+"lokalni status: [{$statusLocal}], status obdelave: [{$statusProcessing}], "
+"Lockss status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "Dobljen status obdelave za {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Pošiljenje depozita na PKP PN."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Priprava vsebine za shranjevanje."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Obdelava nove vsebine."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Obdelava posodobljena vsebine."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Obdelava statusov depozita."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"Datoteke z depozitom ni bilo mogoče najti. Lahko da še ni bila pripravljena "
+"ali pa je bila odstranjena."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "Depozit z zahtevanim UUID ne obstaja."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "Zahtevani UUID ni veljaven ali ni pravilne oblike."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"Napaka pri izvozu številke. Strežniška log datoteka morda vsebuje več "
+"informacij."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"Napaka pri izvozu člankov. Strežniška log datoteka morda vsebuje več "
+"informacij."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "Datoteke {$file} s paketom ni bilo mogoče najti."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr "PN je vrnil HTTP napako {$error} pri preverjanju statusa depozita."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "PN je vrnil HTTP napako {$error} pri shranjevanju depozita."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr "PN je vrnil HTTP napako {$error} pri pridobivanju servisnega dokumenta."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"Omrežna napaka {$error} pri povezovanju do PKP PN za pridobivanje statusa "
+"depozita."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr ""
+"Omrežna napka {$error} pri povezovanju s PKP PN za shranjevanje depozita."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"Omrežna napaka {$error} pri povezovanju do PKP PN za pridobivanje servisnega "
+"dokumenta."
+
+msgid "plugins.generic.pln.error.include.bagit"
+msgstr ""
+"Knjižnica Baglt, ki je vsebovana v OJS, se ne more naložiti, najverjetneje "
+"zaradi neizpolnjenih predpogojev."
+
+msgid "plugins.generic.pln.notifications.archive_tar_missing"
+msgstr ""
+"Preden lahko omogočite PKP PN mora biti nameščena razširitev Archive_Tar PHP."
+
+msgid "plugins.generic.pln.notifications.tar_missing"
+msgstr "Vaš sistem mora imeti omogočeno tar orodje."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"Preden lahko potrdite vaše soglasje z zahtevami in pogoji, mora imeti vaša "
+"revija ISSN. ISSN lahko nastavite v Nastavitvah revije. Ko bo ISSN vaše "
+"revije vpisan, se bodo spodaj pokazale zahteve in pogoji."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "Za nadaljevanje mora biti omogočena podpora za ZipArchive."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"PKP PN zahteve so se spremenile. Za nadaljevanje shranjevanja v PKP PN je "
+"potrebno soglašanje s posodobljenimi zahtevami."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"Prišlo je do težav pri povezovanju do PKP PN - prosimo kontaktirajte vašega "
+"sistemskega administratorja."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "Vaša revija potrebuje ISSN za shranjevanje vsebine v PKP PN."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Preverite status vaših depozitov."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PN sprejema depozite."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PKP PN trenutno ne sprejema depozitov."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Sprejemanje servisnega dokumenta."
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Poteka shranjevanje za {$title}."
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "Naloga PKP PN shranjevanja"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Napaka pri pripravi"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Oddaljena napaka"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Lokalna napaka"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Posodobljeno"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Dogovor"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Sinhroniziranje"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Poslano na LOCKSS"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Preverjeno"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Prejeto"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Prenešeno"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Pripravljeno"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Novo"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Neznano"
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"Ste prepričani, da želite ponastaviti ta depozit? Depozit bo ponovno "
+"pripravljen in poslan na procesni strežnik."
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Status"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Postavke"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Tip"
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr ""
+"PKP PN <a href=\"{$statusDocsUrl}\">statusi depozitov so obrazloženi "
+"tukaj</a>."
+
+msgid "plugins.generic.pln.issueId"
+msgstr "ID številke"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "ID tipa objekta"
+
+msgid "plugins.generic.pln.status"
+msgstr "Status"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Depoziti"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Status omrežja: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Številka"
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Članek"
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr "Strinjanje z zahtevanimi pogoji je obvezno za shranjevanje v PKP PN."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Prosimo izberite prag objekta shranjevanja."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Prosimo izberite tip objektov shranjevanja."
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"V primeru, da iz kakršnegakoli razloga pogoji zgoraj niso navedeni ali "
+"veste, da so se pogoji spremenili, prosimo kliknite Osveži za osvežitev "
+"gornjih pogojev."
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Osveži"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"To je unikatini identifikator revije za PKP PN. Morda boste potrebovali to "
+"informacijo posredovati PKP PN administratorjem za potrebe podpore."
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Identifikator revije"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Strinjam se"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Jaz, kot upravljalec revije, v dobri veri sprejemam in potrjujem spodnje "
+"pravila in pogoje za sodelovanje v mreži Public Knowledge Project’s "
+"Preservation Network (PKP-PN):"
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Pogoji uporabe"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "PKP PN nastavitve so shranjene."
+
+msgid "plugins.generic.pln.settings"
+msgstr "Nastavitve"
+
+msgid "plugins.generic.pln.disabled"
+msgstr "PKP PN vtičnik je bil onemogočen."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "PKP PN vtičnik je bil omogočen."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>PKP Preservation Network</strong><br /><br />Prosimo preberite <a "
+"href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">opis PKP PN</a> in "
+"izpoplnite <a href=\"{$plnPluginURL}\">ta preprost obrazec</a>. To bo "
+"omogočilo, da se vaša revija vključi v Public Knowledge Project Preservation "
+"Network (PKP PN)."
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"PKP PN vtičnik bo shranil vaše objavljene vsebine na \"PKP Preservation "
+"Network\"."
+
+msgid "plugins.generic.pln"
+msgstr "PKP PN vtičnik"
