@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-03-06 04:03+0000\n"
-"Last-Translator: Teodora Fildishevska <t.fildishevska@gmail.com>\n"
+"PO-Revision-Date: 2021-03-07 12:54+0000\n"
+"Last-Translator: Mirko Spiroski <mspiroski@id-press.eu>\n"
 "Language-Team: Macedonian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "mk_MK/>\n"
 "Language: mk_MK\n"
@@ -179,9 +179,8 @@ msgstr ""
 "Ектензијата Archive_Tar PHP мора да биде инсталирана пред PKP PN да може да "
 "биде овозможен."
 
-#, fuzzy
 msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Вашиот систем мора да има tar executable."
+msgstr "Вашиот систем мора да има извршен тар (tar executable)."
 
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
@@ -311,7 +310,6 @@ msgstr ""
 "Потребна е согласност со условите на користење на мрежата за да депонирате "
 "во PKP PN."
 
-#, fuzzy
 msgid "plugins.generic.pln.required.object_threshold"
 msgstr "Ве молиме изберете праг на објект за депозит."
 
@@ -338,12 +336,11 @@ msgstr "Идентификатор на списание"
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "Се согласувам"
 
-#, fuzzy
 msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Како менаџер на списанието, јас, во добра волја, ги прифаќам и потврдувам "
-"следните услови за учество во Public Knowledge Project’s Preservation "
-"Network (PKP-PN):"
+"следните услови за учество во Public Knowledge Project’s мрежа за сочувување "
+"(PKP-PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Услови на употреба"
@@ -365,10 +362,9 @@ msgstr "PKP PN плагинот е оневозможен."
 msgid "plugins.generic.pln.enabled"
 msgstr "PKP PN плагинот е овозможен."
 
-#, fuzzy
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
-"<strong>PKP Preservation Network</strong><br /><br />Ве молиме да го "
+"<strong>ПКП мрежа за сочувување</strong><br /><br />Ве молиме да го "
 "прочитате <a href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">краткиот "
 "преглед на PKP PN</a> и да го пополните <a href=\"{$plnPluginURL}\">овој "
 "едноставен формулар</a>. Оваа опција ќе го овозможи вклучувањето на вашето "
