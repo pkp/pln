@@ -12,7 +12,8 @@
  */
 
 import('lib.pkp.classes.controllers.grid.GridCellProvider');
-import('lib.pkp.classes.linkAction.request.RedirectAction');
+
+use PKP\linkAction\request\RedirectAction;
 
 class PLNStatusGridCellProvider extends GridCellProvider {
 	/**

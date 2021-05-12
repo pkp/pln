@@ -10,7 +10,8 @@
  * @class PLNSettingsForm
  * @brief Form for journal managers to modify PLN plugin settings
  */
-import('lib.pkp.classes.form.Form');
+
+use PKP\form\Form;
 
 class PLNSettingsForm extends Form {
 	/** @var int */

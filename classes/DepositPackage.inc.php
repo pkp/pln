@@ -11,7 +11,10 @@
  * @brief Represent a PLN deposit package.
  */
 
-import('lib.pkp.classes.file.ContextFileManager');
+use PKP\submission\PKPSubmission;
+use PKP\file\ContextFileManager;
+use PKP\file\FileManager;
+
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
 
 class DepositPackage {
@@ -272,7 +275,6 @@ class DepositPackage {
 
 		$bag = new BagIt($bagDir);
 		$fileList = array();
-		import('lib.pkp.classes.file.FileManager');
 		$fileManager = new FileManager();
 
 		switch ($this->_deposit->getObjectType()) {
@@ -285,7 +287,7 @@ class DepositPackage {
 					$submission = $submissionDao->getById($this->_deposit->getObjectId());
 					$currentPublication = $submission->getCurrentPublication();
 					if ($submission->getContextId() != $journal->getId()) continue;
-					if (!$currentPublication || $currentPublication->getStatus() != STATUS_PUBLISHED) continue;
+					if (!$currentPublication || $currentPublication->getStatus() != PKPSubmission::STATUS_PUBLISHED) continue;
 
 					$submissionIds[] = $submission->getId();
 				}

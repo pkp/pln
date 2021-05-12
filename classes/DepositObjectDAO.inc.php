@@ -11,10 +11,9 @@
  * @brief Operations for adding a PLN deposit object
  */
 
-import('lib.pkp.classes.db.DAO');
-import('lib.pkp.classes.submission.PKPSubmission'); // STATUS_PUBLISHED constant
+use \PKP\submission\PKPSubmission;
 
-class DepositObjectDAO extends DAO {
+class DepositObjectDAO extends \PKP\db\DAO {
 	/**
 	 * Retrieve a deposit object by deposit object id.
 	 * @param $journalId int
@@ -104,7 +103,7 @@ class DepositObjectDAO extends DAO {
 					WHERE (pdo.date_modified < p.last_modified OR pdo.date_modified < i.last_modified)
 					AND (pdo.journal_id = ?)
 					GROUP BY pdo.deposit_object_id',
-					['issueId', STATUS_PUBLISHED, (int) $journalId]
+					['issueId', PKPSubmission::STATUS_PUBLISHED, (int) $journalId]
 				);
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
@@ -147,7 +146,7 @@ class DepositObjectDAO extends DAO {
 					JOIN submissions s ON s.current_publication_id = p.publication_id
 					LEFT JOIN pln_deposit_objects pdo ON s.submission_id = pdo.object_id
 					WHERE s.journal_id = ? AND pdo.object_id is null AND p.status = ?',
-					[(int) $journalId, STATUS_PUBLISHED]
+					[(int) $journalId, PKPSubmission::STATUS_PUBLISHED]
 				);
 				foreach ($result as $row) {
 					$objects[] = $submissionDao->getById($row->submission_id);

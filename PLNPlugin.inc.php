@@ -11,8 +11,14 @@
  * @brief PLN plugin class
  */
 
-import('lib.pkp.classes.plugins.GenericPlugin');
-import('lib.pkp.classes.config.Config');
+use PKP\linkAction\LinkAction;
+use PKP\linkAction\request\AjaxModal;
+use PKP\plugins\GenericPlugin;
+use PKP\config\Config;
+
+use APP\notification\Notification;
+use APP\notification\NotificationManager;
+
 import('classes.publication.Publication');
 import('classes.issue.Issue');
 
@@ -61,7 +67,7 @@ define('PLN_PLUGIN_DEPOSIT_STATUS_UPDATE',				0x100);
 define('PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION', 'Submission');
 define('PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE', 'Issue');
 
-define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE',	NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE',	Notification::NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000001);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000002);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000003);
@@ -116,7 +122,6 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function getActions($request, $verb) {
 		$router = $request->getRouter();
-		import('lib.pkp.classes.linkAction.request.AjaxModal');
 		return array_merge(
 			$this->getEnabled()?array(
 				new LinkAction(
@@ -333,7 +338,7 @@ class PLNPlugin extends GenericPlugin {
 							$notificationContent = __('plugins.generic.pln.settings.saved');
 							$currentUser = $request->getUser();
 							$notificationMgr = new NotificationManager();
-							$notificationMgr->createTrivialNotification($currentUser->getId(), NOTIFICATION_TYPE_SUCCESS, array('contents' => $notificationContent));
+							$notificationMgr->createTrivialNotification($currentUser->getId(), PKPNotification::NOTIFICATION_TYPE_SUCCESS, array('contents' => $notificationContent));
 
 							return new JSONMessage(true);
 						}
@@ -366,27 +371,27 @@ class PLNPlugin extends GenericPlugin {
 				return new JSONMessage(true, $form->fetch($request));
 			case 'enable':
 				if(!@include_once('Archive/Tar.php')) {
-					$message = NOTIFICATION_TYPE_ERROR;
+					$message = PKPNotification::NOTIFICATION_TYPE_ERROR;
 					$messageParams = array('contents' => __('plugins.generic.pln.notifications.archive_tar_missing'));
 					break;
 				}
 
 				if(!$this->zipInstalled()) {
-					$message = NOTIFICATION_TYPE_ERROR;
+					$message = PKPNotification::NOTIFICATION_TYPE_ERROR;
 					$messageParams = array('contents' => __('plugins.generic.pln.notifications.zip_missing'));
 					break;
 				}
 				if(!$this->tarInstalled()) {
-					$message = NOTIFICATION_TYPE_ERROR;
+					$message = PKPNotification::NOTIFICATION_TYPE_ERROR;
 					$messageParams = array('contents' => __('plugins.generic.pln.notifications.tar_missing'));
 					break;
 				}
-				$message = NOTIFICATION_TYPE_SUCCESS;
+				$message = PKPNotification::NOTIFICATION_TYPE_SUCCESS;
 				$messageParams = array('contents' => __('plugins.generic.pln.enabled'));
 				$this->updateSetting($journal->getId(), 'enabled', true);
 				break;
 			case 'disable':
-				$message = NOTIFICATION_TYPE_SUCCESS;
+				$message = PKPNotification::NOTIFICATION_TYPE_SUCCESS;
 				$messageParams = array('contents' => __('plugins.generic.pln.disabled'));
 				$this->updateSetting($journal->getId(), 'enabled', false);
 				break;
@@ -515,7 +520,6 @@ class PLNPlugin extends GenericPlugin {
 	public function createJournalManagerNotification($contextId, $notificationType) {
 		$roleDao = DAORegistry::getDAO('RoleDAO');
 		$journalManagers = $roleDao->getUsersByRoleId(ROLE_ID_MANAGER, $contextId);
-		import('classes.notification.NotificationManager');
 		$notificationManager = new NotificationManager();
 		// TODO: this currently gets sent to all journal managers - perhaps only limit to the technical contact's account?
 		while ($journalManager = $journalManagers->next()) {

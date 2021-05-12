@@ -11,7 +11,8 @@
  * @brief Class to perform automated deposits of PLN object.
  */
 
-import('lib.pkp.classes.file.ContextFileManager');
+use \PKP\file\ContextFileManager;
+
 import('lib.pkp.classes.scheduledTask.ScheduledTask');
 
 class Depositor extends ScheduledTask {

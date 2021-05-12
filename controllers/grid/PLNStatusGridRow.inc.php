@@ -13,6 +13,9 @@
 
 import('lib.pkp.classes.controllers.grid.GridRow');
 
+use PKP\linkAction\LinkAction;
+use PKP\linkAction\request\RemoteActionConfirmationModal;
+
 class PLNStatusGridRow extends GridRow {
 	//
 	// Overridden template methods
@@ -29,7 +32,6 @@ class PLNStatusGridRow extends GridRow {
 			$router = $request->getRouter();
 
 			// Create the "reset deposit" action
-			import('lib.pkp.classes.linkAction.request.RemoteActionConfirmationModal');
 			$this->addAction(
 				new LinkAction(
 					'resetDeposit',

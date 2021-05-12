@@ -11,7 +11,7 @@
  * @brief Form for journal managers to check PLN plugin status
  */
 
-import('lib.pkp.classes.form.Form');
+use PKP\form\Form;
 
 class PLNStatusForm extends Form {
 	/** @var int */

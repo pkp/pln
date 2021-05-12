@@ -11,9 +11,7 @@
  * @brief Operations for adding a PLN deposit
  */
 
-import('lib.pkp.classes.db.DAO');
-
-class DepositDAO extends DAO {
+class DepositDAO extends \PKP\db\DAO {
 	/**
 	 * Construct a new deposit object.
 	 * @return Deposit

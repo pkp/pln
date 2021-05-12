@@ -13,8 +13,10 @@
 
 import('lib.pkp.classes.plugins.GatewayPlugin');
 import('lib.pkp.classes.site.VersionCheck');
-import('lib.pkp.classes.db.DBResultRange');
-import('lib.pkp.classes.core.ArrayItemIterator');
+
+use \PKP\core\ArrayItemIterator;
+use \PKP\db\DBResultRange;
+use \PKP\submission\PKPSubmission;
 
 define('PLN_PLUGIN_PING_ARTICLE_COUNT', 12);
 
@@ -153,7 +155,7 @@ class PLNGatewayPlugin extends GatewayPlugin {
 		$submissions = $submissionDao->getByContextId($journal->getId());
 		while ($submission = $submissions->next()) {
 			$publication = $submission->getCurrentPublication();
-			if (!$publication || $publication->getData('status') != STATUS_PUBLISHED) continue;
+			if (!$publication || $publication->getData('status') != PKPSubmission::STATUS_PUBLISHED) continue;
 			$publications[] = $publication;
 			if (count($publications) == PLN_PLUGIN_PING_ARTICLE_COUNT) break;
 		}
