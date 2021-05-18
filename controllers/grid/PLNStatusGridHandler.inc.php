@@ -11,7 +11,10 @@
  * @brief Handle PLNStatus grid requests.
  */
 
-import('lib.pkp.classes.controllers.grid.GridHandler');
+use PKP\controllers\grid\GridHandler;
+use PKP\controllers\grid\GridColumn;
+use PKP\security\Role;
+
 import('plugins.generic.pln.controllers.grid.PLNStatusGridRow');
 import('plugins.generic.pln.controllers.grid.PLNStatusGridCellProvider');
 
@@ -25,7 +28,7 @@ class PLNStatusGridHandler extends GridHandler {
 	public function __construct() {
 		parent::__construct();
 		$this->addRoleAssignment(
-			array(ROLE_ID_MANAGER),
+			array(Role::ROLE_ID_MANAGER),
 			array('fetchGrid', 'fetchRow', 'resetDeposit')
 		);
 		self::$plugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);

@@ -14,8 +14,10 @@
 use PKP\submission\PKPSubmission;
 use PKP\file\ContextFileManager;
 use PKP\file\FileManager;
+use PKP\scheduledTask\ScheduledTaskHelper;
+use PKP\scheduledTask\ScheduledTask;
 
-import('lib.pkp.classes.scheduledTask.ScheduledTask');
+use APP\journal\Journal;
 
 class DepositPackage {
 
@@ -48,7 +50,7 @@ class DepositPackage {
 	 */
 	protected function _logMessage($message) {
 		if($this->_task) {
-			$this->_task->addExecutionLogEntry($message, SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->_task->addExecutionLogEntry($message, ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 		} else {
 			error_log($message);
 		}
@@ -220,13 +222,13 @@ class DepositPackage {
 
 		$mode = $atom->createElementNS('http://pkp.sfu.ca/SWORD', 'publishingMode');
 		switch($journal->getData('publishingMode')) {
-			case PUBLISHING_MODE_OPEN:
+			case Journal::PUBLISHING_MODE_OPEN:
 				$mode->nodeValue = 'Open';
 				break;
-			case PUBLISHING_MODE_SUBSCRIPTION:
+			case Journal::PUBLISHING_MODE_SUBSCRIPTION:
 				$mode->nodeValue = 'Subscription';
 				break;
-			case PUBLISHING_MODE_NONE:
+			case Journal::PUBLISHING_MODE_NONE:
 				$mode->nodeValue = 'None';
 				break;
 		}
@@ -449,7 +451,7 @@ class DepositPackage {
 					'url' => $url,
 					'atomPath' => $atomPath,
 					'method' => 'PutFile')), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$result = $plnPlugin->curlPutFile(
 				$url,
@@ -466,7 +468,7 @@ class DepositPackage {
 					'url' => $url,
 					'atomPath' => $atomPath,
 					'method' => 'PostFile')), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$result = $plnPlugin->curlPostFile(
 				$url,
@@ -478,7 +480,7 @@ class DepositPackage {
 		if (($result['status'] == PLN_PLUGIN_HTTP_STATUS_OK) || ($result['status'] == PLN_PLUGIN_HTTP_STATUS_CREATED)) {
 			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded', 
 				array('depositId' => $this->_deposit->getId())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$this->_deposit->setTransferredStatus();
 			// unset a remote error if this worked
@@ -494,7 +496,7 @@ class DepositPackage {
 					array('depositId' => $this->_deposit->getId(), 
 						'error' => $result['error'],
 						'result' => $result['result'])), 
-					SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+					ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 				$this->_logMessage(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
 
@@ -504,7 +506,7 @@ class DepositPackage {
 					array('depositId' => $this->_deposit->getId(), 
 						'error' => $result['status'],
 						'result' => $result['result'])), 
-					SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+					ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 				$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
 
@@ -547,7 +549,7 @@ class DepositPackage {
 		if (!$fileManager->fileExists($packagePath)) {
 			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed', 
 				array('depositId' => $this->_deposit->getId())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$this->_deposit->setPackagedStatus(false);
 			$this->_deposit->setLastStatusDate(time());
@@ -558,7 +560,7 @@ class DepositPackage {
 		if (!$fileManager->fileExists($this->generateAtomDocument())) {
 			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed', 
 				array('depositId' => $this->_deposit->getId())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$this->_deposit->setPackagedStatus(false);
 			$this->_deposit->setLastStatusDate(time());
@@ -568,7 +570,7 @@ class DepositPackage {
 
 		$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded', 
 				array('depositId' => $this->_deposit->getId())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 		// update the deposit's status
 		$this->_deposit->setPackagedStatus();
@@ -611,7 +613,7 @@ class DepositPackage {
 		$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing.processingState', 
 				array('depositId' => $this->_deposit->getId(),
 					'processingState' => $processingState)), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 				
 		switch ($processingState) {
 			case 'depositedByJournal':
@@ -706,7 +708,7 @@ class DepositUnregisterableErrorCallback {
 
 			$taskDao->updateLastRunTime('plugins.generic.pln.classes.tasks.Depositor', 0);
 
-			$this->_depositPackage->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.error', array('depositId' => $this->_depositId)), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->_depositPackage->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.error', array('depositId' => $this->_depositId)), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$this->unregister();
 		}

@@ -12,8 +12,8 @@
  */
 
 use \PKP\file\ContextFileManager;
-
-import('lib.pkp.classes.scheduledTask.ScheduledTask');
+use PKP\scheduledTask\ScheduledTask;
+use PKP\scheduledTask\ScheduledTaskHelper;
 
 class Depositor extends ScheduledTask {
 
@@ -43,7 +43,7 @@ class Depositor extends ScheduledTask {
 	public function executeActions() {
 		if (!$this->_plugin) return false;
 
-		$this->addExecutionLogEntry('PLN Depositor executeActions started', SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+		$this->addExecutionLogEntry('PLN Depositor executeActions started', ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 		$journalDao = DAORegistry::getDAO('JournalDAO');
 
@@ -62,28 +62,28 @@ class Depositor extends ScheduledTask {
 			$this->_plugin->import('classes.DepositObject');
 			$this->_plugin->import('classes.DepositPackage');
 
-			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.processing_for', array('title' => $journal->getLocalizedName())), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.processing_for', array('title' => $journal->getLocalizedName())), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			// check to make sure zip is installed
 			if (!$this->_plugin->zipInstalled()) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.zip_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.zip_missing'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING);
 				continue;
 			}
 
 			if (!$this->_plugin->tarInstalled()) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.tar_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.tar_missing'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_TAR_MISSING);
 				continue;
 			}
 
-			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.getting_servicedocument'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.getting_servicedocument'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			// get the sword service document
 			$sdResult = $this->_plugin->getServiceDocument($journal->getId());
 
 			// if for some reason we didn't get a valid reponse, skip this journal
 			if ($sdResult != PLN_PLUGIN_HTTP_STATUS_OK) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR);
 				continue;
 			}
@@ -91,13 +91,13 @@ class Depositor extends ScheduledTask {
 			// TODO: DEFSTAT - REMOVE COMMENTS HERE
 			// if the pln isn't accepting deposits, skip this journal
 			//if (!$this->_plugin->getSetting($journal->getId(), 'pln_accepting')) {
-			//  $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			//  $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			//  continue;
 			//}
 
 			// if the terms haven't been agreed to, skip transfer
 			if (!$this->_plugin->termsAgreed($journal->getId())) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.terms_updated'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.terms_updated'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED);
 				continue;
 			}
@@ -106,29 +106,29 @@ class Depositor extends ScheduledTask {
 			if (!$journal->getSetting('onlineIssn') &&
 				!$journal->getSetting('printIssn') &&
 				!$journal->getSetting('issn')) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.issn_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.issn_missing'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING);
 				continue;
 			}
 
 			// update the statuses of existing deposits
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.statusupdates"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.statusupdates"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			$this->_processStatusUpdates($journal);
 
 			// flag any deposits that have been updated and need to be rebuilt
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.updatedcontent"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.updatedcontent"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			$this->_processHavingUpdatedContent($journal);
 
 			// create new deposits for new deposit objects
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.newcontent"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.newcontent"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			$this->_processNewDepositObjects($journal);
 
 			// package any deposits that need packaging
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.packagingdeposits"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.packagingdeposits"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			$this->_processNeedPackaging($journal);
 
 			// transfer the deposit atom documents
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.transferringdeposits"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.transferringdeposits"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			$this->_processNeedTransferring($journal);
 		}
 
@@ -152,7 +152,7 @@ class Depositor extends ScheduledTask {
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
 					'objectType' => $deposit->getObjectType())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
 			$depositPackage->updateDepositStatus();
@@ -187,7 +187,7 @@ class Depositor extends ScheduledTask {
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
 					'objectType' => $deposit->getObjectType())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
 			$depositPackage->transferDeposit();
@@ -220,7 +220,7 @@ class Depositor extends ScheduledTask {
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
 					'objectType' => $deposit->getObjectType())), 
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
 			$depositPackage->packageDeposit();

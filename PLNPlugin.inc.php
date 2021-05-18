@@ -15,6 +15,7 @@ use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
 use PKP\plugins\GenericPlugin;
 use PKP\config\Config;
+use PKP\security\Role;
 
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
@@ -519,7 +520,7 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function createJournalManagerNotification($contextId, $notificationType) {
 		$roleDao = DAORegistry::getDAO('RoleDAO');
-		$journalManagers = $roleDao->getUsersByRoleId(ROLE_ID_MANAGER, $contextId);
+		$journalManagers = $roleDao->getUsersByRoleId(Role::ROLE_ID_MANAGER, $contextId);
 		$notificationManager = new NotificationManager();
 		// TODO: this currently gets sent to all journal managers - perhaps only limit to the technical contact's account?
 		while ($journalManager = $journalManagers->next()) {
