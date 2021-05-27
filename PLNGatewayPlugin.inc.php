@@ -157,7 +157,6 @@ class PLNGatewayPlugin extends GatewayPlugin {
 			$publications[] = $publication;
 			if (count($publications) == PLN_PLUGIN_PING_ARTICLE_COUNT) break;
 		}
-		$submissions->close();
 		$templateMgr->assign('publications', $publications);
 		$templateMgr->assign('pln_network', $plugin->getSetting($journal->getId(), 'pln_network'));
 
