@@ -215,12 +215,6 @@ msgstr "The PKP PN terms of use have been updated. Agreement with new terms is r
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "ZipArchive support must be enabled to proceed."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr "The Archive_Tar PHP extension must be installed before the PKP PN can be enabled."
-
-msgid "plugins.generic.pln.error.include.bagit"
-msgstr "The BagIt library, which is included with OJS, cannot be loaded, probably due to a missing prerequisite."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Network error {$error} connecting to the PKP PN to get the service document."
 

@@ -182,12 +182,6 @@ msgstr "Ihre Zeitschrift muss über eine ISSN verfügen, bevor Sie den Nutzungsb
 msgid "plugins.generic.pln.notifications.tar_missing"
 msgstr "Ihr System muss über ein tar-Programm verfügen."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr "Die Archive_Tar-PHP-Erweiterung muss installiert werden, bevor das PKP PN aktiviert werden kann."
-
-msgid "plugins.generic.pln.error.include.bagit"
-msgstr "Die in OJS enthaltene BagIt-Bibliothek kann nicht geladen werden, vermutlich aufgrund nicht erfüllter Grundvoraussetzungen."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Netzwerk-Fehler {$error} beim Versuch, das Service-Dokument vom PKP PN zu holen."
 

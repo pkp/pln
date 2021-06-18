@@ -250,10 +250,7 @@ class DepositPackage {
 	 * @return string The full path of the created zip archive
 	 */
 	public function generatePackage() {
-		if (!@include_once(dirname(__FILE__).'/../vendor/scholarslab/bagit/lib/bagit.php')) {
-			$this->_logMessage(__('plugins.generic.pln.error.include.bagit'));
-			return;
-		}
+		require_once(dirname(__FILE__) . '/../vendor/autoload.php');
 
 		// get DAOs, plugins and settings
 		$journalDao = DAORegistry::getDAO('JournalDAO');
@@ -275,7 +272,12 @@ class DepositPackage {
 		$exportFile = tempnam(sys_get_temp_dir(), 'ojs-pln-export-');
 		$termsFile = tempnam(sys_get_temp_dir(), 'ojs-pln-terms-');
 
-		$bag = new BagIt($bagDir);
+		// Work around https://github.com/whikloj/BagItTools/issues/26:
+		// Determine if the path is relative, and if it is, prefix with ./
+		if (!preg_match('#^[a-zA-Z]:\\\\#', $bagDir) && strpos($bagDir, '/') !== 0) $bagDir = getcwd() . '/' . $bagDir;
+
+		$bag = \whikloj\BagItTools\Bag::create($bagDir);
+
 		$fileList = array();
 		$fileManager = new FileManager();
 
@@ -361,6 +363,13 @@ class DepositPackage {
 		// add the exported content to the bag
 		$bag->addFile($exportFile, $this->_deposit->getObjectType() . $this->_deposit->getUUID() . '.xml');
 		foreach ($fileList as $sourcePath => $targetPath) {
+			// $sourcePath is a relative path to the files directory; add the files directory to the front
+			$sourcePath = rtrim(Config::getVar('files', 'files_dir'), '/') . '/' . $sourcePath;
+
+			// Work around https://github.com/whikloj/BagItTools/issues/26:
+			// Determine if the path is relative, and if it is, prefix with ./
+			if (!preg_match('#^[a-zA-Z]:\\\\#', $sourcePath) && strpos($sourcePath, '/') !== 0) $sourcePath = getcwd() . '/' . $sourcePath;
+
 			$bag->addFile($sourcePath, $targetPath);
 		}
 
@@ -389,18 +398,18 @@ class DepositPackage {
 		// Add OJS Version
 		$versionDao = DAORegistry::getDAO('VersionDAO');
 		$currentVersion = $versionDao->getCurrentVersion();
-		$bag->setBagInfoData('PKP-PLN-OJS-Version', $currentVersion->getVersionString());
+		$bag->setExtended(true);
+		$bag->addBagInfoTag('PKP-PLN-OJS-Version', $currentVersion->getVersionString());
 
 		$bag->update();
 
 		// create the bag
-		$bag->package($packageFile, 'zip');
+		$bag->package($packageFile);
 
 		// remove the temporary bag directory and temp files
 		$fileManager->rmtree($bagDir);
 		$fileManager->deleteByPath($exportFile);
 		$fileManager->deleteByPath($termsFile);
-
 		return $packageFile;
 	}
 

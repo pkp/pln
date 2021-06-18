@@ -72,11 +72,6 @@ Build Instructions
 manually. If you are installing the plugin using the Plugin Gallery, they are
 not necessary.)
 
-The plugin depends on the BagIt component
-(https://packagist.org/packages/scholarslab/bagit) and it incorporates it as a
-Composer (https://getcomposer.org/) module. Please make sure you have Composer
-installed before installing the plugin.
-
 - Clone the repository containing the code.
 - Run OJS's "php tools/upgrade.php upgrade"
 - Execute "composer install" from console, being in the cloned pln folder.

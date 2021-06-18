@@ -67,9 +67,6 @@ class PLNSettingsForm extends Form {
 	public function _checkPrerequisites() {
 		$messages = array();
 
-		if (!@include_once('Archive/Tar.php')) {
-			$messages[] = __('plugins.generic.pln.notifications.archive_tar_missing');
-		}
 		if (!$this->_plugin->zipInstalled()) {
 			$messages = __('plugins.generic.pln.notifications.zip_missing');
 		}
