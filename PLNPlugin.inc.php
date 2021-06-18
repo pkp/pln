@@ -615,10 +615,10 @@ class PLNPlugin extends GenericPlugin {
 		$httpClient = Application::get()->getHttpClient();
 		try {
 			$response = $httpClient->request($method, $url, [
-				'headers' => array_merge($headers, [
+				'headers' => [
 					'Content-Type' => mime_content_type($filename),
 					'Content-Length' => filesize($filename),
-				]),
+				],
 				'body' => fopen($filename, 'r'),
 			]);
 		} catch (GuzzleHttp\Exception\RequestException $e) {
