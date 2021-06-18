@@ -1,5 +1,5 @@
 {
-  "require": {
-    "scholarslab/bagit": "~0.2"
-  }
+    "require": {
+        "whikloj/bagittools": "^2.1"
+    }
 }

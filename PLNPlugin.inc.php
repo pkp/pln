@@ -365,12 +365,6 @@ class PLNPlugin extends GenericPlugin {
 
 				return new JSONMessage(true, $form->fetch($request));
 			case 'enable':
-				if(!@include_once('Archive/Tar.php')) {
-					$message = NOTIFICATION_TYPE_ERROR;
-					$messageParams = array('contents' => __('plugins.generic.pln.notifications.archive_tar_missing'));
-					break;
-				}
-
 				if(!$this->zipInstalled()) {
 					$message = NOTIFICATION_TYPE_ERROR;
 					$messageParams = array('contents' => __('plugins.generic.pln.notifications.zip_missing'));
