@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-03-12 08:54+0000\n"
+"PO-Revision-Date: 2021-06-22 11:03+0000\n"
 "Last-Translator: Real Academia Galega <reacagal@gmail.com>\n"
 "Language-Team: Galician <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "gl_ES/>\n"
@@ -13,3 +13,33 @@ msgstr ""
 
 msgid "plugins.generic.pln"
 msgstr "Complemento PKP PN"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "Configuración de PKP PN gardada."
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"O complemento PKP PN require o complemento Acron ou ferramentas de "
+"programación periódicas como \"cron\"."
+
+msgid "plugins.generic.pln.settings"
+msgstr "Configuración"
+
+msgid "plugins.generic.pln.disabled"
+msgstr "Desactivouse o complemento PKP PN."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "O complemento PKP PN está habilitado."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>Rede de preservación de PKP (PKP Preservation Network)</strong> <br "
+"/> <br /> Lea a <a href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">"
+"visión xeral do PKP PN</a> e completa <a href=\"{$plnPluginURL}\">este "
+"sinxelo formulario</a>. Esta opción permitirá a inclusión do seu diario na "
+"rede de preservación do Public Knowledge Project (PKP PN)."
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"O complemento PKP PN depositará o contido publicado na rede de preservación "
+"de PKP."
