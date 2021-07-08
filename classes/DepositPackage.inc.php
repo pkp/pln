@@ -272,10 +272,6 @@ class DepositPackage {
 		$exportFile = tempnam(sys_get_temp_dir(), 'ojs-pln-export-');
 		$termsFile = tempnam(sys_get_temp_dir(), 'ojs-pln-terms-');
 
-		// Work around https://github.com/whikloj/BagItTools/issues/26:
-		// Determine if the path is relative, and if it is, prefix with ./
-		if (!preg_match('#^[a-zA-Z]:\\\\#', $bagDir) && strpos($bagDir, '/') !== 0) $bagDir = getcwd() . '/' . $bagDir;
-
 		$bag = \whikloj\BagItTools\Bag::create($bagDir);
 
 		$fileList = array();
@@ -365,11 +361,6 @@ class DepositPackage {
 		foreach ($fileList as $sourcePath => $targetPath) {
 			// $sourcePath is a relative path to the files directory; add the files directory to the front
 			$sourcePath = rtrim(Config::getVar('files', 'files_dir'), '/') . '/' . $sourcePath;
-
-			// Work around https://github.com/whikloj/BagItTools/issues/26:
-			// Determine if the path is relative, and if it is, prefix with ./
-			if (!preg_match('#^[a-zA-Z]:\\\\#', $sourcePath) && strpos($sourcePath, '/') !== 0) $sourcePath = getcwd() . '/' . $sourcePath;
-
 			$bag->addFile($sourcePath, $targetPath);
 		}
 
