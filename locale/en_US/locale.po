@@ -179,12 +179,6 @@ msgstr "Your journal must have an ISSN before you can agree to the terms of serv
 msgid "plugins.generic.pln.notifications.tar_missing"
 msgstr "Your system must have a tar executable."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr "The Archive_Tar PHP extension must be installed before the PKP PN can be enabled."
-
-msgid "plugins.generic.pln.error.include.bagit"
-msgstr "The BagIt library, which is included with OJS, cannot be loaded, probably due to a missing prerequisite."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Network error {$error} connecting to the PKP PN to get the service document."
 

@@ -365,12 +365,6 @@ class PLNPlugin extends GenericPlugin {
 
 				return new JSONMessage(true, $form->fetch($request));
 			case 'enable':
-				if(!@include_once('Archive/Tar.php')) {
-					$message = NOTIFICATION_TYPE_ERROR;
-					$messageParams = array('contents' => __('plugins.generic.pln.notifications.archive_tar_missing'));
-					break;
-				}
-
 				if(!$this->zipInstalled()) {
 					$message = NOTIFICATION_TYPE_ERROR;
 					$messageParams = array('contents' => __('plugins.generic.pln.notifications.zip_missing'));
@@ -615,10 +609,10 @@ class PLNPlugin extends GenericPlugin {
 		$httpClient = Application::get()->getHttpClient();
 		try {
 			$response = $httpClient->request($method, $url, [
-				'headers' => array_merge($headers, [
+				'headers' => [
 					'Content-Type' => mime_content_type($filename),
 					'Content-Length' => filesize($filename),
-				]),
+				],
 				'body' => fopen($filename, 'r'),
 			]);
 		} catch (GuzzleHttp\Exception\RequestException $e) {

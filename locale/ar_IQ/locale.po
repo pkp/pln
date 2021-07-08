@@ -191,9 +191,6 @@ msgstr "ينبغي أن يكون لمجلتك رمز ISSN قبل أن يتسنى
 msgid "plugins.generic.pln.notifications.tar_missing"
 msgstr "ينبغي أن تكون لنظامك القدرة على تشغيل ملفات مضغوطة بصيغة tar."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr "ينبغي تنصيب إضافة ضغط الملفات بصيغة Tar والخاصة ببيئة PHP قبل أن يتسنى تمكين وظيفة PKP PN الخاصة بمشروع المعرفة العامة."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "خطأ في الشبكة: {$error} عند الاتصال بـ PKP PN للحصول على مستند الخدمة."
 

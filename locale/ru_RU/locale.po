@@ -182,12 +182,6 @@ msgstr "У вашего журнала должен быть ISSN до того,
 msgid "plugins.generic.pln.notifications.tar_missing"
 msgstr "В вашей системе должен быть исполняемый файл tar."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr "Расширение PHP Archive_Tar должно быть установлено до включения PKP PLN."
-
-msgid "plugins.generic.pln.error.include.bagit"
-msgstr "Библиотеку BagIt, входящую в состав OJS, не удается загрузить, скорее всего из-за отсутствия необходимых для ее работы компонент."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Ошибка сети {$error} при подключении к PKP PN для получения служебного документа."
 

@@ -182,12 +182,6 @@ msgstr "A revista deve possuir um ISSN antes de concordar com os termos de servi
 msgid "plugins.generic.pln.notifications.tar_missing"
 msgstr "Um executável tar deve estar disponível."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr "A extensão Archive_Tar do PHP deve estar instalada antes de habilitar o plugin PKP PN do PKP."
-
-msgid "plugins.generic.pln.error.include.bagit"
-msgstr "A biblioteca BagIt, incluída com o OJS, não pode ser carregada, provavelmente devido à falta de algum pré-requisito."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Erro de rede {$error} ao conectar à PKP PN para recuperar documento de serviço."
 
