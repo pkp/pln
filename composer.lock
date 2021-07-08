@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "86fcdea73764c662bc6603ba55a0e667",
+    "content-hash": "0c705fe0043b6439baa294416dd68594",
     "packages": [
         {
             "name": "pear/archive_tar",
@@ -246,16 +246,16 @@
         },
         {
             "name": "whikloj/bagittools",
-            "version": "2.1.0",
+            "version": "3.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/whikloj/BagItTools.git",
-                "reference": "eb20c3fc8300f9336228ba414da8971b1dfc0ec8"
+                "reference": "ca234e6df528dcd384286fca970f57f9adabea86"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/whikloj/BagItTools/zipball/eb20c3fc8300f9336228ba414da8971b1dfc0ec8",
-                "reference": "eb20c3fc8300f9336228ba414da8971b1dfc0ec8",
+                "url": "https://api.github.com/repos/whikloj/BagItTools/zipball/ca234e6df528dcd384286fca970f57f9adabea86",
+                "reference": "ca234e6df528dcd384286fca970f57f9adabea86",
                 "shasum": ""
             },
             "require": {
@@ -263,14 +263,14 @@
                 "ext-intl": "*",
                 "ext-mbstring": "*",
                 "ext-zip": "*",
-                "pear/archive_tar": "^1.4",
-                "php": ">=7.2"
+                "pear/archive_tar": "^1.4.11",
+                "php": ">=7.3"
             },
             "require-dev": {
                 "donatj/mock-webserver": "^2.1",
-                "phpdocumentor/phpdocumentor": "^2.0",
-                "phpunit/phpunit": "^7.0",
-                "sebastian/phpcpd": "^4.0",
+                "phpdocumentor/phpdocumentor": "^3.0",
+                "phpunit/phpunit": "^9.0",
+                "sebastian/phpcpd": "^6.0",
                 "squizlabs/php_codesniffer": "^3.5"
             },
             "type": "library",
@@ -301,9 +301,9 @@
             ],
             "support": {
                 "issues": "https://github.com/whikloj/BagItTools/issues",
-                "source": "https://github.com/whikloj/BagItTools/tree/2.1.0"
+                "source": "https://github.com/whikloj/BagItTools/tree/3.0.1"
             },
-            "time": "2020-11-09T14:24:47+00:00"
+            "time": "2021-07-07T01:28:42+00:00"
         }
     ],
     "packages-dev": [],
