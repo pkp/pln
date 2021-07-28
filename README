@@ -20,7 +20,7 @@ file LICENSE for the complete terms of this license.
 
 System Requirements
 -------------------
-- OJS 3.2.1-x.
+- OJS 3.3.0-x.
 - CURL support for PHP.
 - ZipArchive support for PHP.
 
