@@ -13,3 +13,4 @@ pln/vendor/pear/console_getopt/.travis.yml
 pln/vendor/scholarslab/bagit/.gitignore
 pln/.gitattributes
 pln/.gitignore
+pln/.git
