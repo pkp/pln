@@ -1,8 +1,9 @@
 # Viveka Svensson <viveka.svensson@lnu.se>, 2021.
+# Edvin Erdtman <edvin.erdtman@liu.se>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-08-25 12:05+0000\n"
-"Last-Translator: Viveka Svensson <viveka.svensson@lnu.se>\n"
+"PO-Revision-Date: 2021-09-14 08:05+0000\n"
+"Last-Translator: Edvin Erdtman <edvin.erdtman@liu.se>\n"
 "Language-Team: Swedish <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "sv_SE/>\n"
 "Language: sv_SE\n"
@@ -14,3 +15,55 @@ msgstr ""
 
 msgid "plugins.generic.pln"
 msgstr "PKP PN plugin"
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Uppdatera"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"Detta är tidskriftens unika identifikator för PKP PN. Du kan behöva denna "
+"vid felsökning och support då du kontaktar administratörer för PKP PN."
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Tidskriftens identifkator"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Jag godkänner"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Som tidskriftsansvarig, accepterar och bekräftar jag i god tro, följande "
+"villkor för deltagande i Public Knowledge Project’s Preservation Network "
+"(PKP-PN):"
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Användarvillkor"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "Inställningar för PKP PN har sparats."
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"PKP PN-pluginen kräver att antingen Acron-pluginet eller ett aktivt "
+"schemaläggningsprogram som t.ex. 'cron.'"
+
+msgid "plugins.generic.pln.settings"
+msgstr "Inställningar"
+
+msgid "plugins.generic.pln.disabled"
+msgstr "PKP PN-pluginet har deaktiverats."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "PKP PN-pluginet har aktiverats."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>PKP Preservation Network</strong><br /><br />Var vänlig läs<a href=\""
+"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">översikten av PKP PN</a> och "
+"fyll i <a href=\"{$plnPluginURL}\">detta enkla formulär</a>. Detta gör det "
+"möljligt att inkludera tidskriften i Public Knowledge Project Preservation "
+"Network (PKP PN)."
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"PKP PN-plugin deponerar publicerat innehåll till PKP Preservation Network."
