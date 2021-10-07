@@ -2,8 +2,8 @@
 # Edvin Erdtman <edvin.erdtman@liu.se>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-09-14 08:05+0000\n"
-"Last-Translator: Edvin Erdtman <edvin.erdtman@liu.se>\n"
+"PO-Revision-Date: 2021-10-08 12:06+0000\n"
+"Last-Translator: Viveka Svensson <viveka.svensson@lnu.se>\n"
 "Language-Team: Swedish <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "sv_SE/>\n"
 "Language: sv_SE\n"
@@ -67,3 +67,6 @@ msgstr ""
 msgid "plugins.generic.pln.description"
 msgstr ""
 "PKP PN-plugin deponerar publicerat innehåll till PKP Preservation Network."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Välj objektstyp för deponering"
