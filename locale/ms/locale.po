@@ -1,8 +1,9 @@
 # Ga Ja Poh <gajapo2932@decorbuz.com>, 2021.
+# Studiorimau <studiorimau@gmail.com>, 2021.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-10-05 15:30+0000\n"
-"Last-Translator: Ga Ja Poh <gajapo2932@decorbuz.com>\n"
+"PO-Revision-Date: 2021-10-26 08:07+0000\n"
+"Last-Translator: Studiorimau <studiorimau@gmail.com>\n"
 "Language-Team: Malay <http://translate.pkp.sfu.ca/projects/plugins/pln/ms/>\n"
 "Language: ms\n"
 "MIME-Version: 1.0\n"
@@ -321,3 +322,53 @@ msgstr ""
 
 msgid "plugins.generic.pln"
 msgstr "Plugin PN PKP"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Butiran Status"
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Maklumat terkini"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr ""
+"Ia mungkin mengambil masa beberapa hari untuk deposit diproses sepenuhnya."
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Terdapat ralat dengan proses deposit"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Ralat"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Proses deposit selesai"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Selesai"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Proses deposit sedang dijalankan"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Sedang Berlangsung"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Proses deposit masih belum bermula"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Belum selesai"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Melaporkan Status PN PKP dan tajuk artikel terkini untuk pelayan staging."
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "Gerbang PN"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Penyiaran fail Atom ke pelayan staging untuk deposit {$depositId} gagal "
+"(Ralat: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Menyiarkan fail Atom ke pelayan staging untuk deposit {$depositId} berjaya"
