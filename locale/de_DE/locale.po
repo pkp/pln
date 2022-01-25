@@ -8,7 +8,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2020-03-03T23:08:22+00:00\n"
+"PO-Revision-Date: 2022-01-25T18:08:22+01:00\n"
 "Language: \n"
 
 msgid "plugins.generic.pln"
@@ -80,6 +80,12 @@ msgstr "Ablieferungen"
 msgid "plugins.generic.pln.status"
 msgstr "Status"
 
+msgid "plugins.generic.pln.objectId"
+msgstr "Objekt Typ Id"
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Heft/Ausgaben Id"
+
 msgid "plugins.generic.pln.status.docs"
 msgstr "Die <a href=\"{$statusDocsUrl}\">Statusangaben des PLN</a> sind hier beschrieben."
 
@@ -145,6 +151,9 @@ msgstr "Lokaler Fehler"
 
 msgid "plugins.generic.pln.status.remote_failure"
 msgstr "Serverfehler"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Paketierungsfehler"
 
 msgid "plugins.generic.pln.depositorTask.name"
 msgstr "PKP PN Ablieferungsaufgabe"
@@ -233,8 +242,71 @@ msgstr "Verpacke Inhalte zur Ablieferung."
 msgid "plugins.generic.pln.depositor.transferringdeposits"
 msgstr "Sende Ablieferungen an das PLN."
 
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr "Aktualisiere den Status für {$depositId} ({$objectType}: {$objectId}) (Local Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss Status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "Verarbeitungsstatus für {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr "Versuche Paketablieferung {$depositId} ({$objectType}: {$objectId}) (Local Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss Status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr "Natives Import/Export Plugin für Ablieferung gescheitert {$depositId}, when trying to package it"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Paketablieferung für {$depositId} gescheitert"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "Paketablieferung für {$depositId} erfolgreich"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr "Versuche Ablieferung zu übermitteln {$depositId} ({$objectType}: {$objectId}) (Local Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss Status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr "Atom Datei an staging server für Ablieferung posten {$depositId} (Local Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss Status: [{$statusLockss}]) - (Url: [{$url}], AtomPath: [{$atomPath}], Method: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr "Posting der Atom Datei an staging server für Ablieferung {$depositId} erfolgreich"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr "Posting der Atom Datei an staging server für Ablieferung {$depositId} gescheitert (Error: [{$error} - [{$result}]])"
+
 msgid "plugins.generic.plngateway.displayName"
 msgstr "PLN-Schnittstelle"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "Liefert den PLN-Status und die Titel der letzten Artikel an den Übergabeserver."
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Wartend"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Der Ablieferungsprozess hat noch nicht begonnen"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Im Gang, fortschreitend"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Der Ablieferungsprozess ist im Gang"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Vollständig"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Der Ablieferungsprozess ist vollständig"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Fehler"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Im Ablieferungsprozess ist ein Fehler aufgetreten"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Es könnte mehrere Tage dauern bis der Ablieferungsprozess vollständig ist."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Letzte Aktualisierung"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Statusbeschreibung"
