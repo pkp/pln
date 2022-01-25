@@ -98,6 +98,9 @@ msgstr "Typ"
 msgid "plugins.generic.pln.status.items"
 msgstr "Elemente"
 
+msgid "plugins.generic.pln.status.status"
+msgstr "Status"
+
 msgid "plugins.generic.pln.status.checked"
 msgstr "Überprüft"
 
