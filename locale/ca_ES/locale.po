@@ -1,0 +1,380 @@
+# Jordi LC <jordi.lacruz@uab.cat>, 2021.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-08-07 02:47+0000\n"
+"Last-Translator: Jordi LC <jordi.lacruz@uab.cat>\n"
+"Language-Team: Catalan <http://translate.pkp.sfu.ca/projects/plugins/pln/"
+"ca_ES/>\n"
+"Language: ca_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Descripció de l'estat"
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Darrera actualització"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "El processament complet d'un dipòsit pot trigar diversos dies."
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Hi ha hagut un error en el procés de dipòsit"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Error"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "El procés de dipòsit s'ha completat"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Completat"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "El procés de dipòsit està en curs"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "En curs"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "El procés de dipòsit encara no ha començat"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Pendent"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Informa de l'estat de PKP PN i dels títols dels articles recents al servidor "
+"de prova."
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "Entrada PN"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"La publicació de l'arxiu Atom en el servidor de prova per al dipòsit "
+"{$depositId} ha fallat (Error: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"La publicació de l'arxiu Atom en el servidor de prova per al dipòsit "
+"{$depositId} ha tingut èxit"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Publicant l'arxiu Atom en el servidor de prova per al dipòsit {$depositId} ("
+"Estat local: [{$statusLocal}], Estat de processament: [{$statusProcessing}], "
+"Estat Lockss: [{$statusLockss}]) - (Url: [{$url}], ruta Atom: [{$atomPath}], "
+"Mètode: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"Intentant transferir el dipòsit {$depositId} ({$objectType}: {$objectId}) ("
+"Estat local: [{$statusLocal}], Estat de processament: [{$statusProcessing}], "
+"Estat Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "L'empaquetat per al dipòsit {$depositId} ha tingut èxit"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "L'empaquetat per al dipòsit {$depositId} ha fallat"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"El mòdul natiu Importar/Exportar ha fallat per al dipòsit {$depositId} quan "
+"intentava empaquetar-lo"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Intentant dipositar el paquet {$depositId} ({$objectType}: {$objectId}) ("
+"Estat local: [{$statusLocal}], Estat de processament: [{$statusProcessing}], "
+"Estat Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr ""
+"Obtingut l'estat de processament de {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"Intentant actualitzar l'estat de {$depositId} ({$objectType}: {$objectId}) ("
+"Estat local: [{$statusLocal}], Estat de processament: [{$statusProcessing}], "
+"Estat Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Enviant dipòsits a PKP PN."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Empaquetant el contingut per al dipòsit."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Processant el contingut nou."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Processant el contingut actualitzat."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Processant les actualitzacions d'estat dels dipòsits."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"No s'ha pogut trobar l'arxiu de dipòsit. Podria ser que encara no s'hagués "
+"empaquetat o que el paquet s'hagi eliminat."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "No hi ha cap dipòsit amb l'UUID sol·licitat."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "L'UUID sol·licitat no és vàlid o no té un format correcte."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"S'ha produït un error mentre s'exportava un número. El registre d'errors del "
+"servidor podria oferir més informació."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"S'ha produït un error mentre s'exportaven els articles. El registre d'errors "
+"del servidor podria oferir més informació."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "No es pot trobar l'arxiu empaquetat {$file}."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr ""
+"El servidor de PN ha retornat l'error HTTP {$error} quan comprovava l'estat "
+"del dipòsit."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr ""
+"El servidor de PN ha retornat l'error HTTP {$error} quan enviava el dipòsit."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr ""
+"El servidor de PN ha retornat l'error HTTP {$error} quan intentava obtenir "
+"el document de servei."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"Error de xarxa {$error} en connectar amb PKP PN per obtenir una "
+"actualització d'estat per al dipòsit."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr "Error de xarxa {$error} en connectar amb PKP PN per enviar el dipòsit."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"Error de xarxa {$error} en connectar amb PKP PN per obtenir el document de "
+"servei."
+
+msgid "plugins.generic.pln.error.include.bagit"
+msgstr ""
+"La biblioteca BagIt, que s'inclou amb OJS, no es pot carregar, probablement "
+"a causa d'un requisit previ que falta."
+
+msgid "plugins.generic.pln.notifications.archive_tar_missing"
+msgstr ""
+"L'extensió PHP Archive_Tar ha d'estar instal·lada abans de poder activar PKP "
+"PN."
+
+msgid "plugins.generic.pln.notifications.tar_missing"
+msgstr "El vostre sistema ha de tenir un executable tar."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"La vostra revista ha de tenir un ISSN abans que pugueu acceptar les "
+"condicions del servei. Podeu introduir l'ISSN en la pàgina de configuració "
+"de la revista. Un cop introduït, les condicions del servei es mostraran a "
+"sota."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "El suport de ZipArchive ha d'estar activat per continuar."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"S'han actualitzat les condicions d'ús de PKP PN. Per continuar dipositant "
+"objectes cal que accepteu les noves condicions."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"S'ha produït un error connectant amb PKP PN. Contacteu amb el vostre "
+"administrador/a de sistemes."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "La vostra revista ha de tenir un ISSN per dipositar contingut a PKP PN."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Verifiqueu l'estat dels vostres dipòsits."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PN accepta dipòsits."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PKP PN no accepta dipòsits en aquest moment."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Obtenint document de servei."
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Processant dipòsit per a {$title}."
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "Tasca de dipòsit de PKP PN"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Error d'empaquetat"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Error remot"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Error local"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Actualitzat"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Acord"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Sincronitzant"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Enviat a LOCKSS"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Validat"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Rebut"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Transferit"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Empaquetat"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Nou"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Desconegut"
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"Segur que voleu restaurar aquest dipòsit? Aquest es tornarà a empaquetar i "
+"enviar al servidor de processament."
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Estat"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Elements"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Tipus"
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr ""
+"<a href=\"{$statusDocsUrl}\">Aquí es descriuen els estats de dipòsit</a> de "
+"PKP PN ."
+
+msgid "plugins.generic.pln.issueId"
+msgstr "ID de número"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "ID de tipus d'objecte"
+
+msgid "plugins.generic.pln.status"
+msgstr "Estat"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Dipòsits"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Estat de la xarxa: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Número"
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Article"
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr ""
+"L'acceptació de les condicions d'ús de la xarxa és obligatòria per poder "
+"dipositar a PKP PN."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Trieu un llindar d'objecte de dipòsit."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Trieu un tipus d'objecte de dipòsit."
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"Si per alguna raó no hi hagués cap condició llistada a sobre o sabéssiu que "
+"aquestes condicions s'han actualitzat, feu clic a recarregar per actualitzar "
+"les condicions llistades a sobre."
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Recarregar"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"Aquest és l'identificador únic de la revista per a PKP PN. Pot ser que "
+"necessiteu compartir-lo amb els administradors/ores de PKP PN amb finalitats "
+"de suport."
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Identificador de la revista"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Accepto"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Com a administrador/a de la revista accepto i confirmo, amb bona voluntat, "
+"els termes i condicions per participar en la xarxa de preservació de Public "
+"Knowledge Project (PKP PN):"
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Condicions d'ús"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "S'ha desat la configuració de PKP PN."
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"El mòdul PKP PN requereix el mòdul Acron o eines de programació periòdica "
+"com 'cron'."
+
+msgid "plugins.generic.pln.settings"
+msgstr "Configuració"
+
+msgid "plugins.generic.pln.disabled"
+msgstr "S'ha desactivat el mòdul PKP PN."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "S'ha activat el mòdul PKP PN."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>PKP Preservation Network</strong><br /><br />Llegiu el <a href=\""
+"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">resum de PKP PN</a> i "
+"completeu <a href=\"{$plnPluginURL}\">aquest senzill formulari</a>. Aquesta "
+"opció activarà la inclusió de la vostra revista en la xarxa de preservació "
+"de Public Knowledge Project (PKP PN)."
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"El mòdul PKP PN dipositarà el vostre contingut publicat en la xarxa de "
+"preservació de PKP."
+
+msgid "plugins.generic.pln"
+msgstr "Mòdul PKP PN"

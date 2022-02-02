@@ -1,0 +1,379 @@
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-03-07 12:54+0000\n"
+"Last-Translator: Mirko Spiroski <mspiroski@id-press.eu>\n"
+"Language-Team: Macedonian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
+"mk_MK/>\n"
+"Language: mk_MK\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n==1 || n%10==1 ? 0 : 1;\n"
+"X-Generator: Weblate 3.9.1\n"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Опис на статус"
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Последна промена"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr ""
+"Можно е да бидат потребни неколку дена додека депозитот биде целосно "
+"обработен."
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Се појави грешка при процесот на депонирање"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Грешка"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Процесот на депонирање е завршен"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Завршено"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Процесот на депонирање е во тек"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Во тек"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Процесот за депонирање се уште не е започнат"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Во очекување"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Поднесува извештај за статусот на PKP PN и неодамнешни наслови на трудови до "
+"серверот за инстанцирање."
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "PN порта"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Испраќањето на Atom датотеката до серверот за инстанцирање за депонирање "
+"{$depositId} е неуспешно (Грешка: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Испраќање на Atom датотеката до серверот за инстанцирање за депонирање "
+"{$depositId} (локален статус: [{$statusLocal}], статус на процесирање: "
+"[{$statusProcessing}], статус на Lockss: [{$statusLockss}]) - (Урл: [{$url}]"
+", AtomPath: [{$atomPath}], Метода: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Испраќањето на Atom датотеката до серверот за инстанцирање за депонирање "
+"{$depositId} е успешно"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"Проба за пренос на депозит {$depositId} ({$objectType}: {$objectId}) ("
+"локален статус: [{$statusLocal}], статус на процесирање: "
+"[{$statusProcessing}], статус на Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "Пакувањето на депозитот {$depositId} беше успешно"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Пакувањето на депозитот {$depositId} не беше успешно"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"Локалниот плагин за импортирање/експортирање не успеа за депозитот "
+"{$depositId}, при обид да го спакува"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"Проба на ажурирање на статус за {$depositId} ({$objectType}: {$objectId}) ("
+"локален статус: [{$statusLocal}], статус на процесирање: "
+"[{$statusProcessing}], статус на Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Проба на депонирање на пакет {$depositId} ({$objectType}: {$objectId}) ("
+"локален статус: [{$statusLocal}], статус на процесирње: [{$statusProcessing}]"
+", статус на Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "Добиен статус на процесирање за {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Депозитите се испраќаат до PKP PN."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Се пакува содржината за депонирање."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Се процесираат ажурирањата на статусот на депозитот."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Се процесира нова содржина."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Се процесира ажурирната содржина."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"Датотеката на депозитот не е пронајдена. Можно е се уште да не е спакувана, "
+"или пакетот да бил отстранет."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "Нема депозит со бараното UUID."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "Бараното UUID не е валидно или не е првилно форматирано."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"Настана грешка при експортирање на издание. Дневникот за грешки на серверот "
+"може да има повеќе информации."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"Настана грешка при експортирње на трудови. Дневникот за грешки на серверот "
+"може да има повеќе информации."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "Не е пронајдена спакуваната датотека {$file}."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr ""
+"PN серверот врати HTTP грешка {$error} при проверка на статусот на депозит."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"Грешка на мрежата {$error} при конектирање до PKP PN за да се добие "
+"ажурираниот статус на депозитот."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr ""
+"Грешка на мрежата {$error} при конектирање до PKP PN за да се испрати "
+"депозитот."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"Грешка на мрежата {$error} при конектирање до PKP PN за превземање на "
+"документот за услуги."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "PN серверот врати HTTP грешка {$error} при испраќање на депозитот."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr ""
+"PN серверот врати HTTP грешка {$error} при обидување да го добие докуметот "
+"за услуги."
+
+msgid "plugins.generic.pln.error.include.bagit"
+msgstr ""
+"BagIt библиотеката, која е вклучена со OJS, на може да биде вчитана, "
+"најверојатно поради предуслов кој недостасува."
+
+msgid "plugins.generic.pln.notifications.archive_tar_missing"
+msgstr ""
+"Ектензијата Archive_Tar PHP мора да биде инсталирана пред PKP PN да може да "
+"биде овозможен."
+
+msgid "plugins.generic.pln.notifications.tar_missing"
+msgstr "Вашиот систем мора да има извршен тар (tar executable)."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"Вашето списание мора да има ISSN пред да можете да се согласите со условите "
+"на користење. Можете да го внесете ISSN на страницата за поставки на "
+"списанието. Откако ќе го внесете ISSN на списанието, условите на користење "
+"ќе бидат прикажани подолу."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "Поддршката за ZipArchive мора да биде овозможена за да продолжите."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"Условите за користење на PKP PN беа ажурирани. Потребна е согласност со "
+"новите услови за да продолжите со депонирање."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"Настана грешка при конектирање до PKP PN - ве молиме да го контактирате "
+"вашиот системски администратор."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "Вашето списание мора да има ISSN за да депонира содржина во PKP PN."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Проверете го статусот на вашите депозити."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PN прима депозити."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PKP PN не прима депозити во моментов."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Добивање на документ за услуга."
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Обработка на депонент за {$title}."
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "PKP PN задача за депонент"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Неуспех при пакување"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Далечински неуспех"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Локален неуспех"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Ажурирано"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Согласност"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Се синхронизира"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Испратено до LOCKSS"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Валидирано"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Примено"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Префрлено"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Спакувано"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Ново"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Непознато"
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"Дали сте сигурни дека сакате да го ресетирате овој депозит? Ќе биде повторно "
+"спакувано и испратено до серверот за процесирање."
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Статус"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Елементи"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Тип"
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr ""
+"<a href=\"{$statusDocsUrl}\">Тука се опишани статусите на депозитите</a> на "
+"PKP PN."
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Id на издание"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Id на тип на објект"
+
+msgid "plugins.generic.pln.status"
+msgstr "Статус"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Депозити"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Статус на мрежа: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Издание"
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Труд"
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr ""
+"Потребна е согласност со условите на користење на мрежата за да депонирате "
+"во PKP PN."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Ве молиме изберете праг на објект за депозит."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Ве молиме изберете тип на објект за депонирање."
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"Ако поради некоја причина нема наведени термини погоре или знаете дека овие "
+"термини се ажурирани, кликнете на Освежи за да ги ажурирате погоре "
+"наведените термини."
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Освежи"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"Ова е единствен идентификатор на вашето списание за PKP PN. Можеби ќе треба "
+"да го споделите ова со администраторите на PKP PN со цел да добиете поддршка."
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Идентификатор на списание"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Се согласувам"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Како менаџер на списанието, јас, во добра волја, ги прифаќам и потврдувам "
+"следните услови за учество во Public Knowledge Project’s мрежа за сочувување "
+"(PKP-PN):"
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Услови на употреба"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "Зачувани се PKP PN поставките."
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"PKP PN плагинот бара или Acron плагин или алатки за периодично закажување "
+"како „cron.“"
+
+msgid "plugins.generic.pln.settings"
+msgstr "Поставки"
+
+msgid "plugins.generic.pln.disabled"
+msgstr "PKP PN плагинот е оневозможен."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "PKP PN плагинот е овозможен."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>ПКП мрежа за сочувување</strong><br /><br />Ве молиме да го "
+"прочитате <a href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">краткиот "
+"преглед на PKP PN</a> и да го пополните <a href=\"{$plnPluginURL}\">овој "
+"едноставен формулар</a>. Оваа опција ќе го овозможи вклучувањето на вашето "
+"списание во Public Knowledge Project Preservation Network (PKP PN)."
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"PKP PN плагинот ќе ја депонира вашата објавена содржина во PKP Preservation "
+"Network."
+
+msgid "plugins.generic.pln"
+msgstr "PKP PN Плагин"

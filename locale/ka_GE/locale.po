@@ -1,0 +1,369 @@
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2021-04-13 08:55+0000\n"
+"Last-Translator: Dimitri Gogelia <dimitri.gogelia@iliauni.edu.ge>\n"
+"Language-Team: Georgian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
+"ka_GE/>\n"
+"Language: ka_GE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 3.9.1\n"
+
+msgid "plugins.generic.pln.settings"
+msgstr "პარამეტრები"
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "განახლება"
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "სტატია"
+
+msgid "plugins.generic.pln.status"
+msgstr "სტატუსი"
+
+msgid "plugins.generic.pln.status.id"
+msgstr "იდენტიფიკატორი"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "ტიპი"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "ნივთები"
+
+msgid "plugins.generic.pln.status.status"
+msgstr "სტატუსი"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "უცნობი"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "ახალი"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "განახლებული"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "გადასახედი"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "დასრულდა"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "შეცდომა"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Posting the Atom file to staging server for deposit {$depositId} failed "
+"(Error: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Posting the Atom file to staging server for deposit {$depositId} succeeded"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Posting the Atom file to staging server for deposit {$depositId} (Local "
+"Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss "
+"Status: [{$statusLockss}]) - (Url: [{$url}], AtomPath: [{$atomPath}], Method:"
+" [{$method}])"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Type Object Id"
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"PKP PN მოდულს სჭირდება ან Acron მოდული ან პერიოდული დაგეგმვის ხელსაწყოები, "
+"როგორიცაა 'cron'."
+
+msgid "plugins.generic.pln"
+msgstr "PKP PN პლაგინი"
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"PKP PN პლაგინი განათავსებს თქვენს გამოქვეყნებულ შინაარსს PKP შენარჩუნების "
+"ქსელში."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>PKP შემნახველი ქსელი</strong><br /><br /> გთხოვთ, წაიკითხოთ <a href="
+"\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">PKP PN</a>-ის მიმოხილვა და "
+"შეავსოთ <a href=\"{$plnPluginURL}\">ეს მარტივი ფორმა</a> . ეს ვარიანტი "
+"საშუალებას მოგცემთ შეიტანოთ თქვენი ჟურნალი საზოგადოებრივი ცოდნის პროექტის "
+"შენარჩუნების ქსელში (PKP PN)."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "ჩართულია PKP PN მოდული."
+
+msgid "plugins.generic.pln.disabled"
+msgstr "PKP PN მოდული გამორთულია."
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "PKP PN პარამეტრები შენახულია."
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "მოხმარების პირობები"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"როგორც ჟურნალის მენეჯერი, კეთილსინდისიერად ვეთანხმები და ვადასტურებ "
+"საზოგადოების ცოდნის პროექტის შენარჩუნების ქსელში (PKP-PN) მონაწილეობის "
+"შემდეგ პირობებსა და პირობებს:"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "ვეთანხმები"
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "ჟურნალის იდენტიფიკატორი"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"ეს არის თქვენი ჟურნალის უნიკალური იდენტიფიკატორი PKP PN- სთვის. შეიძლება "
+"დაგჭირდეთ ამის გაზიარება PKP PN ადმინისტრატორებთან მხარდაჭერის მიზნით."
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"თუ რაიმე მიზეზით არ არის ზემოთ ჩამოთვლილი ტერმინები ან იცით რომ ეს ტერმინები "
+"განახლდა, დააჭირეთ განახლებას ზემოთ ჩამოთვლილი ტერმინების განახლებისთვის."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "გთხოვთ, აირჩიოთ დეპოზიტის ობიექტის ტიპი."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "გთხოვთ, აირჩიოთ დეპოზიტის ობიექტის ბარიერი."
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr ""
+"საჭიროა შეთანხმება ქსელის გამოყენების პირობებთან PKP PN-ში ჩარიცხვის მიზნით."
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "გამოცემა"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "ქსელის სტატუსი: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "დეპოზიტი"
+
+msgid "plugins.generic.pln.issueId"
+msgstr "გამოცემის იდენტიფიკატორი"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr ""
+"<a href=\"{$statusDocsUrl}\">აქ აღწერილია</a> PKP PN დეპოზიტის სტატუსები."
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"დარწმუნებული ხართ, რომ გსურთ ამ დეპოზიტის გადაყენება? იგი გადაიფუთება და "
+"გადაეცემა დამუშავების სერვერს."
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "შეფუთული"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "გადაგზავნილია"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "მიღებულია"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "დადასტურებულია"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "გაგზავნილია LOCKSS-ში"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "სინქრონიზაცია"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "ხელშეკრულება"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "ადგილობრივი მარცხი"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "დისტანციური მარცხი"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "შეფუთვა ჩაიშალა"
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "PKP PN დეპოზიტორის დავალება"
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "დეპოზიტორის დამუშავება {$title}."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "მომსახურების დოკუმენტის მიღება."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PKP PN ამჟამად არ იღებს დეპოზიტებს."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PN იღებს დეპოზიტებს."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "შეამოწმეთ თქვენი დეპოზიტების სტატუსი."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "თქვენს ჟურნალს უნდა ჰქონდეს ISSN, PKP PN-ში შინაარსის შესატანად."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"PKP PN-სთან დაკავშირებისას მოხდა შეცდომა — გთხოვთ, დაუკავშირდეთ თქვენი "
+"სისტემის ადმინისტრატორს."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"განახლებულია PKP PN-ის გამოყენების პირობები. დეპოზიტის გასაგრძელებლად "
+"საჭიროა შეთანხმება ახალ პირობებთან."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "გასაგრძელებლად ZipArchive მხარდაჭერა უნდა იყოს ჩართული."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"სანამ თქვენს მომსახურების პირობებს ეთანხმებით, თქვენს ჟურნალს უნდა ჰქონდეს "
+"ISSN. შეგიძლიათ შეიტანოთ ISSN ჟურნალის პარამეტრების გვერდზე. ჟურნალ ISSN-ის "
+"შეყვანის შემდეგ მომსახურების პირობები ნაჩვენებია ქვემოთ."
+
+msgid "plugins.generic.pln.notifications.tar_missing"
+msgstr "თქვენს სისტემას უნდა ჰქონდეს tar executable."
+
+msgid "plugins.generic.pln.notifications.archive_tar_missing"
+msgstr ""
+"Archive_Tar PHP გაფართოება უნდა იყოს დაინსტალირებული, სანამ PKP PN ჩაირთვება."
+
+msgid "plugins.generic.pln.error.include.bagit"
+msgstr ""
+"BagIt ბიბლიოთეკის, რომელიც შედის OJS-ში, შეუძლებელია ჩატვირთვა, ალბათ, "
+"წინაპირობის არარსებობის გამო."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"ქსელის შეცდომა {$error} PKP PN-სთან დაკავშირებისას, მომსახურების დოკუმენტის "
+"მისაღებად."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr ""
+"დეპოზიტის გაგზავნისთვის ქსელის შეცდომაა {$error} PKP PN-სთან დაკავშირებისას."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"ქსელის შეცდომა {$error} PKP PN-სთან დაკავშირებისას, დეპოზიტისთვის სტატუსის "
+"განახლების მისაღებად."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr ""
+"სერვისის დოკუმენტის მიღების მცდელობისას, PN სერვერმა დაუბრუნა HTTP შეცდომა "
+"{$error}."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "ანაბრის გაგზავნისას PN სერვერმა დაუბრუნა HTTP შეცდომა {$error}."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr ""
+"დეპოზიტის სტატუსის შემოწმებისას PN სერვერმა დაუბრუნა HTTP შეცდომა {$error}."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "პაკეტის ფაილის {$file} პოვნა შეუძლებელია."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"სტატიების ექსპორტის დროს მოხდა შეცდომა. სერვერის შეცდომების ჟურნალს შეიძლება "
+"ჰქონდეს მეტი ინფორმაცია."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"გამოცემის ექსპორტის დროს მოხდა შეცდომა. სერვერის შეცდომების ჟურნალს შეიძლება "
+"ჰქონდეს მეტი ინფორმაცია."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "მოთხოვნილი UUID არ არის სწორი, ან არ არის სწორად ფორმატირებული."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "მოთხოვნად UUID-ში დეპოზიტი არ არის."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"დეპოზიტის ფაილი ვერ მოიძებნა. შეიძლება ჯერ არ არის შეფუთული, ან პაკეტი "
+"ამოღებულია."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "დეპოზიტის სტატუსის განახლებების დამუშავება."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "განახლებული შინაარსის დამუშავება."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "ახალი შინაარსის დამუშავება."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "შეფუთვის შინაარსი დეპოზიტისთვის."
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "დეპოზიტების გაგზავნა PKP PN-სთვის."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"სტატუსის განახლების მცდელობა {$depositId} ({$objectType}: {$objectId}) ("
+"Local Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], "
+"Lockss Status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "დამუშავების სტატუსი მიიღო {$depositId} -> {{$processingState})"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"პაკეტის დეპოზიტის მცდელობა {$depositId} ({$objectType}: {$objectId}) (Local "
+"Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss "
+"Status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"მშობლიური იმპორტ/ექსპორტის პლაგინი ჩაიშალა დეპოზიტისთვის {$depositId}, "
+"როდესაც ის შეფუთვას ცდილობდა"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "{$depositId} დეპოზიტის შეფუთვა ჩაიშალა"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "{$depositId} დეპოზიტის შეფუთვა წარმატებით განხორციელდა"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"პაკეტის დეპოზიტის მცდელობა {$depositId} ({$objectType}: {$objectId}) (Local "
+"Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss "
+"Status: [{$statusLockss}])"
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "PN კარიბჭე"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"იუწყება PKP PN სტატუსი და ბოლო სტატიების სათაურები ინსცენირების სერვერისთვის."
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "დეპოზიტის პროცესი ჯერ არ დაწყებულა"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "მიმდინარეობს"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "დეპოზიტის პროცესი მიმდინარეობს"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "ანაბრის პროცესი დასრულებულია"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "დეპოზიტის პროცესთან დაკავშირებით მოხდა შეცდომა"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "დეპოზიტის სრულად დამუშავებას შეიძლება რამდენიმე დღე დასჭირდეს."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "უახლესი განახლება"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "სტატუსის აღწერა"
