@@ -156,7 +156,7 @@ class DepositPackage {
 
 		$entry->appendChild($this->_generateElement($atom, 'id', 'urn:uuid:'.$this->_deposit->getUUID()));
 
-		$entry->appendChild($this->_generateElement($atom, 'updated', strftime("%Y-%m-%d %H:%M:%S", strtotime($this->_deposit->getDateModified()))));
+		$entry->appendChild($this->_generateElement($atom, 'updated', date("Y-m-d H:i:s", strtotime($this->_deposit->getDateModified()))));
 
 		$url = $dispatcher->url($request, ROUTE_PAGE, $journal->getPath()) . '/' . PLN_PLUGIN_ARCHIVE_FOLDER . '/deposits/' . $this->_deposit->getUUID();
 		$pkpDetails = $this->_generateElement($atom, 'pkp:content', $url, 'http://pkp.sfu.ca/SWORD');
@@ -194,7 +194,7 @@ class DepositPackage {
 
 		$pkpDetails->setAttribute('volume', $objectVolume);
 		$pkpDetails->setAttribute('issue', $objectIssue);
-		$pkpDetails->setAttribute('pubdate', strftime('%Y-%m-%d', strtotime($objectPublicationDate)));
+		$pkpDetails->setAttribute('pubdate', date('Y-m-d', strtotime($objectPublicationDate)));
 
 		// Add OJS Version
 		$versionDao = DAORegistry::getDAO('VersionDAO');

@@ -19,6 +19,7 @@ use PKP\security\Role;
 
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
+use APP\facades\Repo;
 
 import('classes.publication.Publication');
 import('classes.issue.Issue');
@@ -513,13 +514,21 @@ class PLNPlugin extends GenericPlugin {
 	 * @param $notificationType int
 	 */
 	public function createJournalManagerNotification($contextId, $notificationType) {
-		$roleDao = DAORegistry::getDAO('RoleDAO');
-		$journalManagers = $roleDao->getUsersByRoleId(Role::ROLE_ID_MANAGER, $contextId);
+		// Get a list of all managerial user group IDs
+		$userGroupDao = DAORegistry::getDAO('UserGroupDAO');
+		$userGroups = $userGroupDao->getByRoleId(Role::ROLE_ID_MANAGER, $contextId);
+		$userGroupIds = [];
+		foreach ($userGroups as $userGroup) {
+			$userGroupIds[] = $userGroup->getId();
+		}
+
+		$collector = Repo::user()->getCollector();
+		$collector->filterByUserGroupIds($userGroupIds);
+		$journalManagers = Repo::user()->getMany($collector);
 		$notificationManager = new NotificationManager();
 		// TODO: this currently gets sent to all journal managers - perhaps only limit to the technical contact's account?
-		while ($journalManager = $journalManagers->next()) {
+		foreach ($journalManagers as $journalManager) {
 			$notificationManager->createTrivialNotification($journalManager->getId(), $notificationType);
-			unset($journalManager);
 		}
 	}
 
