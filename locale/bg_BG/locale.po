@@ -1,7 +1,7 @@
 # Cyril Kamburov <cc@intermedia.bg>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-04-01 09:51+0000\n"
+"PO-Revision-Date: 2022-04-04 14:57+0000\n"
 "Last-Translator: Cyril Kamburov <cc@intermedia.bg>\n"
 "Language-Team: Bulgarian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "bg_BG/>\n"
@@ -19,3 +19,11 @@ msgstr ""
 
 msgid "plugins.generic.pln"
 msgstr "Добавка за PKP PN"
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>Мрежа за запазване PKP PN (Preservation Network) </strong><br /><br "
+"/>Моля, прочетете <a href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">"
+"преглед на PKP PN</a> и попълнете <a href=\"{$plnPluginURL}\">този опростен "
+"формуляр</a>. Тази опция ще позволи включването на вашето списание в мрежата "
+"за запазване на проекта за обществено знание (PKP PN)."
