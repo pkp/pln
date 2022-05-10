@@ -644,9 +644,12 @@ class DepositPackage {
 			case '':
 				// do nothing.
 				break;
+			// WARNING: The usage of 'received' is unknown and it may be removed in the future
 			case 'received':
 				$this->_deposit->setLockssReceivedStatus();
 				break;
+			// WARNING: The usage of 'syncing' is unknown and it may be removed in the future
+			case 'syncing':
 			case 'inProgress':
 				$this->_deposit->setLockssSyncingStatus();
 				break;
