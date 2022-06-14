@@ -85,8 +85,8 @@ class PLNPlugin extends GenericPlugin {
 			HookRegistry::register('LoadHandler', array($this, 'callbackLoadHandler'));
 			HookRegistry::register('NotificationManager::getNotificationContents', array($this, 'callbackNotificationContents'));
 			HookRegistry::register('LoadComponentHandler', array($this, 'setupComponentHandlers'));
+			$this->_disableRestrictions();
 		}
-
 		HookRegistry::register('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
 		return true;
 	}
@@ -108,6 +108,31 @@ class PLNPlugin extends GenericPlugin {
 				return true;
 		}
 		return false;
+	}
+
+	/**
+	 * When the request is supposed to be handled by the plugin, this method will disable:
+	 * - Redirecting non-logged users (the staging server) at contexts protected by login
+	 * - Redirecting non-logged users (the staging server) at non-public contexts to the login page (see more at: PKPPageRouter::route())
+	 */
+	private function _disableRestrictions() {
+		$request = $this->getRequest();
+		// Avoid issues with the APIRouter
+		if (!($request->getRouter() instanceof PageRouter)) {
+			return;
+		}
+
+		$page = $request->getRequestedPage();
+		$operation = $request->getRequestedOp();
+		$arguments = $request->getRequestedArgs();
+		if ([$page, $operation] === ['pln', 'deposits'] || [$page, $operation, $arguments[0] ?? ''] === ['gateway', 'plugin', 'PLNGatewayPlugin']) {
+			define('SESSION_DISABLE_INIT', true);
+			HookRegistry::register('RestrictedSiteAccessPolicy::_getLoginExemptions', function ($hookName, $args) {
+				$exemptions =& $args[0];
+				array_push($exemptions, 'gateway', 'pln');
+				return false;
+			});
+		}
 	}
 
 	/**
