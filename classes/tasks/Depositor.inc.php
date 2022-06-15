@@ -70,12 +70,6 @@ class Depositor extends ScheduledTask {
 				continue;
 			}
 
-			if (!$this->_plugin->tarInstalled()) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.tar_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_TAR_MISSING);
-				continue;
-			}
-
 			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.getting_servicedocument'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			// get the sword service document
 			$sdResult = $this->_plugin->getServiceDocument($journal->getId());
