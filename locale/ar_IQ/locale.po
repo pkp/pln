@@ -188,9 +188,6 @@ msgstr "دعم ZipArchive ينبغي تمكينه للمتابعة."
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr "ينبغي أن يكون لمجلتك رمز ISSN قبل أن يتسنى لك الموافقة على شروط الخدمة. بإمكانك إدخال رمز ISSN في صفحة إعدادات المجلة. بمجرد إدخال هذا الرمز، ستظهر لك شروط الخدمة أدناه."
 
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "ينبغي أن تكون لنظامك القدرة على تشغيل ملفات مضغوطة بصيغة tar."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "خطأ في الشبكة: {$error} عند الاتصال بـ PKP PN للحصول على مستند الخدمة."
 

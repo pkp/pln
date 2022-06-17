@@ -179,9 +179,6 @@ msgstr "Per continuare devi abilitare il supporto ZipArchive."
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr "La tua rivista deve avere un ISSN definito, prima di accettare le condizioni d'uso. Puoi inserire l'ISSN nella pagina del setup della rivista. Una volta che tu abbia inserito l'ISSN, le condizioni d'uso saranno visualizzate qui sotto."
 
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Il sistema deve avere un eseguibile tar."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Errore di rete {$error} connettendosi alla PKP PN per ricevere il service document."
 

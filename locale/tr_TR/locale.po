@@ -17,9 +17,6 @@ msgstr "Hizmet belgesi alınıyor."
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr "Hizmet şartlarını kabul edebilmeniz için derginizin bir ISSN'sinin olması gerekir. Dergi Ayarları sayfasında ISSN bilgisini girebilirsiniz. Hizmet koşullarının aşağıda görüntülenebilmesi için öncelikle derginin ISSN'si girilmelidir."
 
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Sisteminiz tar uygulamasını çalıştırabilmelidir."
-
 msgid "plugins.generic.pln.error.depositor.export.articles.error"
 msgstr "Makaleler ihraç edilirken bir hata oluştu. Sunucu günlük dosyaları daha fazla bilgi içerebilir."
 
