@@ -41,7 +41,7 @@ support, bugfixes, or comments.
 
 ## Setting a default
 
-By default, the PLN plugin deposits to http://pkp-pln.lib.sfu.ca. Journal
+By default, the PLN plugin deposits to https://pkp-pn.lib.sfu.ca. Journal
 managers can change the URL on the plugin settings page. The default URL can
 also be set in the OJS `config.inc.php` file by adding this configuration:
 ```
