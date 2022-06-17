@@ -174,14 +174,6 @@ msgstr ""
 "La biblioteca BagIt, que se incluye con OJS, no pudo cargarse, probablemente "
 "a causa de un requisito previo que falta."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr ""
-"La extensión PHP Archive_Tar debe estar instalada antes de poder activar PKP "
-"PN."
-
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Su sistema debe tener un ejecutable tar."
-
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
 "Su revista  debe tener un ISSN antes de que pueda aceptar las condiciones "

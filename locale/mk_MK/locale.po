@@ -174,14 +174,6 @@ msgstr ""
 "BagIt библиотеката, која е вклучена со OJS, на може да биде вчитана, "
 "најверојатно поради предуслов кој недостасува."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr ""
-"Ектензијата Archive_Tar PHP мора да биде инсталирана пред PKP PN да може да "
-"биде овозможен."
-
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Вашиот систем мора да има извршен тар (tar executable)."
-
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
 "Вашето списание мора да има ISSN пред да можете да се согласите со условите "

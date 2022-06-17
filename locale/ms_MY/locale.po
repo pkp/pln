@@ -121,13 +121,6 @@ msgstr ""
 "Perpustakaan BagIt, yang disertakan dengan OJS, tidak dapat dimuat, mungkin "
 "disebabkan oleh prasyarat yang hilang."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr ""
-"Sambungan PHP Archive_Tar mesti dipasang sebelum PN PKP dapat didayakan."
-
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Sistem anda mesti mempunyai tar yang boleh dilaksanakan."
-
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
 "Jurnal anda mesti mempunyai ISSN sebelum anda dapat bersetuju dengan syarat "

@@ -182,9 +182,6 @@ msgstr "Suporte ao ZipArchive deve estar habilitado para continuar."
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr "A revista deve possuir um ISSN antes de concordar com os termos de serviço. Informe o ISSN no formulário de Detalhes da revista, na configuração. Os termos de serviço serão apresentados assim que o ISSN for informado."
 
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Um executável tar deve estar disponível."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Erro de rede {$error} ao conectar à PKP PN para recuperar documento de serviço."
 

@@ -183,9 +183,6 @@ msgstr "Для работы необходимо включить поддерж
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr "У вашего журнала должен быть ISSN до того, как вы примение условия использования. Вы можете ввести ISSN на странице «Настройка журнала». После того как будет введен ISSN журнал, условия использования будут показаны ниже."
 
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "В вашей системе должен быть исполняемый файл tar."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Ошибка сети {$error} при подключении к PKP PN для получения служебного документа."
 

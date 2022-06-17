@@ -176,9 +176,6 @@ msgstr "ZipArchive support must be enabled to proceed."
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr "Your journal must have an ISSN before you can agree to the terms of service. You can enter the ISSN on the Journal Settings page. Once the journal ISSN is entered, the terms of service will be shown below."
 
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Your system must have a tar executable."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Network error {$error} connecting to the PKP PN to get the service document."
 

@@ -173,13 +173,6 @@ msgstr ""
 "Knjižnica Baglt, ki je vsebovana v OJS, se ne more naložiti, najverjetneje "
 "zaradi neizpolnjenih predpogojev."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr ""
-"Preden lahko omogočite PKP PN mora biti nameščena razširitev Archive_Tar PHP."
-
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Vaš sistem mora imeti omogočeno tar orodje."
-
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
 "Preden lahko potrdite vaše soglasje z zahtevami in pogoji, mora imeti vaša "
