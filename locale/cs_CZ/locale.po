@@ -300,14 +300,6 @@ msgstr ""
 "Knihovnu BagIt, která je součástí OJS, nelze načíst, pravděpodobně kvůli "
 "některému chybějícímu požadavku pro běh této knihovny."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr ""
-"Aby fungovalo PKP PN, je třeba nejprve nainstalovat na vašem serveru "
-"rozšíření PHP Archive_Tar."
-
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Je třeba, aby na vašem serveru byla spuštěná služba tar."
-
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
 "Než budete moci souhlasit s podmínkami služby, váš časopis musí mít číslo "

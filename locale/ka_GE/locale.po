@@ -228,13 +228,6 @@ msgstr ""
 "ISSN. შეგიძლიათ შეიტანოთ ISSN ჟურნალის პარამეტრების გვერდზე. ჟურნალ ISSN-ის "
 "შეყვანის შემდეგ მომსახურების პირობები ნაჩვენებია ქვემოთ."
 
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "თქვენს სისტემას უნდა ჰქონდეს tar executable."
-
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr ""
-"Archive_Tar PHP გაფართოება უნდა იყოს დაინსტალირებული, სანამ PKP PN ჩაირთვება."
-
 msgid "plugins.generic.pln.error.include.bagit"
 msgstr ""
 "BagIt ბიბლიოთეკის, რომელიც შედის OJS-ში, შეუძლებელია ჩატვირთვა, ალბათ, "

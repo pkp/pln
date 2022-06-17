@@ -191,9 +191,6 @@ msgstr "Obtenir le document de service."
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr "Votre revue doit avoir un ISSN pour pouvoir accepter les conditions d'utilisation. Vous pouvez entrer votre ISSN dans les paramètres de votre revue. Une fois l'ISSN de la revue ajouté, les conditions d'utilisation seront affichées ci-dessous."
 
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Votre système doit avoir un exécutable tar."
-
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Erreur réseau {$error} connexion au PKP PN pour obtenir le document de service."
 

@@ -173,12 +173,6 @@ msgstr ""
 "BagIt-biblioteket, som er inkluderet i OJS, kan ikke indlæses, sandsynligvis "
 "på grund af en manglende betingelser."
 
-msgid "plugins.generic.pln.notifications.archive_tar_missing"
-msgstr "Archive_Tar PHP extension skal installeres, før PKP PN kan aktiveres."
-
-msgid "plugins.generic.pln.notifications.tar_missing"
-msgstr "Dit system skal kunne håndtere tar."
-
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
 "Dit tidsskrift skal have et ISSN, før det er muligt for dig at acceptere "
