@@ -8,7 +8,7 @@
  * PLN plugin settings
  *}
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plnplugin SYSTEM "ping.dtd"> 
+<!DOCTYPE plnplugin SYSTEM "ping.dtd">
 <plnplugin>
 	<ojsInfo>
 		<release>{$ojsVersion|escape}</release>
@@ -21,7 +21,6 @@
 			<phpVersion>{$prerequisites.phpVersion|escape}</phpVersion>
 			<curlVersion>not required</curlVersion>
 			<zipInstalled>{$prerequisites.zipInstalled|escape}</zipInstalled>
-			<tarInstalled>{$prerequisites.tarInstalled|escape}</tarInstalled>
 			<acron>{$prerequisites.acron|escape}</acron>
 			<tasks>{$prerequisites.tasks|escape}</tasks>
 		</prerequisites>

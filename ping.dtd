@@ -18,11 +18,10 @@
 <!ELEMENT releaseDate (#PCDATA)>
 <!ELEMENT current (#PCDATA)>
 
-<!ELEMENT prerequisites (phpVersion, curlVersion, zipInstalled, tarInstalled, acron, tasks)>
+<!ELEMENT prerequisites (phpVersion, curlVersion, zipInstalled, acron, tasks)>
 <!ELEMENT phpVersion (#PCDATA)>
 <!ELEMENT curlVersion (#PCDATA)>
 <!ELEMENT zipInstalled (#PCDATA)>
-<!ELEMENT tarInstalled (#PCDATA)>
 <!ELEMENT acron (#PCDATA)>
 <!ELEMENT tasks (#PCDATA)>
 

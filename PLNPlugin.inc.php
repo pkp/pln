@@ -75,7 +75,6 @@ define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE
 define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000003);
 // define('PLN_PLUGIN_NOTIFICATION_TYPE_CURL_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000004); DEPRECATED
 define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000005);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_TAR_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000006);
 
 class PLNPlugin extends GenericPlugin {
 	/**
@@ -377,11 +376,6 @@ class PLNPlugin extends GenericPlugin {
 					$messageParams = array('contents' => __('plugins.generic.pln.notifications.zip_missing'));
 					break;
 				}
-				if(!$this->tarInstalled()) {
-					$message = PKPNotification::NOTIFICATION_TYPE_ERROR;
-					$messageParams = array('contents' => __('plugins.generic.pln.notifications.tar_missing'));
-					break;
-				}
 				$message = PKPNotification::NOTIFICATION_TYPE_SUCCESS;
 				$messageParams = array('contents' => __('plugins.generic.pln.enabled'));
 				$this->updateSetting($journal->getId(), 'enabled', true);
@@ -538,17 +532,6 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function zipInstalled() {
 		return class_exists('ZipArchive');
-	}
-
-	/**
-	 * Check if the Archive_Tar extension is installed and available. BagIt
-	 * requires it, and will not function without it.
-	 *
-	 * @return boolean
-	 */
-	public function tarInstalled() {
-		@include_once('Archive/Tar.php');
-		return class_exists('Archive_Tar');
 	}
 
 	/**
