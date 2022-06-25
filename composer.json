@@ -1,5 +1,14 @@
 {
+    "name": "pkp/pln",
+    "description": "A plugin to enable OJS to preserve content in the PKP Preservation Network",
+    "license": "GPL-3.0-only",
     "require": {
-        "whikloj/bagittools": "^3.0.1"
+        "php": ">=7.3",
+        "whikloj/bagittools": "^4.2"
+    },
+    "config": {
+        "classmap-authoritative": true,
+        "optimize-autoloader": true,
+        "sort-packages": true
     }
 }
