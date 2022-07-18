@@ -2,7 +2,7 @@
 # Tigran Zargaryan <tigran@flib.sci.am>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-07-04 06:31+0000\n"
+"PO-Revision-Date: 2022-07-19 02:46+0000\n"
 "Last-Translator: Tigran Zargaryan <tigran@flib.sci.am>\n"
 "Language-Team: Armenian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "hy_AM/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.4.2\n"
 
 msgid "plugins.generic.pln.status.description.title"
 msgstr "Կարգավիճակի նկարագրություն"
@@ -89,7 +89,7 @@ msgstr ""
 
 msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
 msgstr ""
-"Փորձում ենք փաթեթեթավորել ավանդը  {$depositId} ({$objectType}: {$objectId}) ("
+"Փորձում ենք փաթեթեթավորել ավանդը {$depositId} ({$objectType}: {$objectId}) ("
 "Local Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], "
 "Lockss Status: [{$statusLockss}])"
 
@@ -172,8 +172,8 @@ msgstr "Ձեր համակարգը պետք է ունենա tar գործարկվ�
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
 "Ձեր ամսագիրը պետք է ունենա ISSN, նախքան դուք կարողանաք համաձայնվել "
-"ծառայության պայմաններին: Դուք կարող եք մուտքագրել ISSN ամսագրի "
-"կարգավորումների էջում: Ամսագրի ISSN-ը  մուտքագրելուց հետո ծառայության "
+"ծառայության պայմաններին: Դուք կարող եք մուտքագրել ISSN-ը ամսագրի "
+"կարգավորումների էջում: Ամսագրի ISSN-ը մուտքագրելուց հետո ծառայության "
 "պայմանները կցուցադրվեն ստորև:"
 
 msgid "plugins.generic.pln.notifications.zip_missing"
