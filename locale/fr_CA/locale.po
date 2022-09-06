@@ -1,15 +1,19 @@
+# Martin Brändle <martin.braendle@uzh.ch>, 2022.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
+"PO-Revision-Date: 2022-09-07 01:53+0000\n"
+"Last-Translator: Martin Brändle <martin.braendle@uzh.ch>\n"
+"Language-Team: French (Canada) <http://translate.pkp.sfu.ca/projects/plugins/"
+"pln/fr_CA/>\n"
+"Language: fr_CA\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2020-03-03T23:08:22+00:00\n"
-"Language: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln"
 msgstr "Plugiciel PKP PLN"
@@ -45,13 +49,16 @@ msgid "plugins.generic.pln.settings.refresh"
 msgstr "Rafraîchir"
 
 msgid "plugins.generic.pln.settings.refresh_help"
-msgstr "Si pour quelques raisons, il n'y aucun terme listé ci-dessus, où si vous savez que ces termes ont été mis à jour, cliquez sur rafraîchir pour mettre à jour les termes listés ci-dessus."
+msgstr ""
+"Si pour quelques raisons, il n'y aucun terme listé ci-dessus, ou si vous "
+"savez que ces termes ont été mis à jour, cliquez sur rafraîchir pour mettre "
+"à jour les termes listés ci-dessus."
 
 msgid "plugins.generic.pln.required.object_type"
 msgstr "Veuillez choisir un type d'objet pour le dépôt."
 
 msgid "plugins.generic.pln.required.object_threshold"
-msgstr "Please choose a deposit object threshold."
+msgstr "Veuillez choisir un seuil d'objet de dépôt."
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
 msgstr "L'acceptation des conditions d'utilisation du réseau est requise pour déposer sur le PLN.."
@@ -78,10 +85,10 @@ msgid "plugins.generic.pln.status.type"
 msgstr "Type"
 
 msgid "plugins.generic.pln.status.items"
-msgstr "Items"
+msgstr "Objets"
 
 msgid "plugins.generic.pln.status.packaged"
-msgstr "Packaged"
+msgstr "Emballé"
 
 msgid "plugins.generic.pln.status.transferred"
 msgstr "Transferré"
@@ -96,7 +103,7 @@ msgid "plugins.generic.pln.status.synced"
 msgstr "Synchronisé"
 
 msgid "plugins.generic.pln.status.updated"
-msgstr "Mis àjour"
+msgstr "Mis à jour"
 
 msgid "plugins.generic.pln.status.local_failure"
 msgstr "Échec local"
@@ -120,7 +127,7 @@ msgid "plugins.generic.pln.notifications.processing_for"
 msgstr "Déposant en traitement de"
 
 msgid "plugins.generic.pln.notifications.pln_not_accepting"
-msgstr "Le PKP PN n'accepte pas les dépôt actuellement."
+msgstr "Le PKP PN n'accepte pas les dépôts actuellement."
 
 msgid "plugins.generic.pln.notifications.pln_accepting"
 msgstr "Le PKP PN accepte les dépôts"
@@ -237,7 +244,7 @@ msgid "plugins.generic.pln.depositor.updatedcontent"
 msgstr "Traitement de contenu mis à jour."
 
 msgid "plugins.generic.pln.depositor.newcontent"
-msgstr "Nouveau contenu en traitemnt"
+msgstr "Nouveau contenu en traitement"
 
 msgid "plugins.generic.pln.depositor.packagingdeposits"
 msgstr "Paquetage de contenu pour le dépôt en cours."
