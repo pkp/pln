@@ -1,7 +1,7 @@
 # Cyril Kamburov <cc@intermedia.bg>, 2022.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-04-04 17:59+0000\n"
+"PO-Revision-Date: 2022-12-04 10:02+0000\n"
 "Last-Translator: Cyril Kamburov <cc@intermedia.bg>\n"
 "Language-Team: Bulgarian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "bg_BG/>\n"
@@ -10,12 +10,12 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln.description"
 msgstr ""
 "Добавка (плъгин) за PKP PN ще депозира публикуваното ви съдържание в мрежата "
-"за съхранение на PKP (PKP Preservation Network)."
+"за съхранение PKP Preservation Network."
 
 msgid "plugins.generic.pln"
 msgstr "Добавка за PKP PN"
