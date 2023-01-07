@@ -9,6 +9,7 @@
     "config": {
         "classmap-authoritative": true,
         "optimize-autoloader": true,
+        "prepend-autoloader": false,
         "sort-packages": true
     }
 }
