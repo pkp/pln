@@ -245,7 +245,7 @@ class DepositPackage {
 	 * @return string The full path of the created zip archive
 	 */
 	public function generatePackage() {
-		require_once(dirname(__FILE__) . '/../vendor/autoload.php');
+		require_once __DIR__ . '/../vendor/autoload.php';
 
 		// get DAOs, plugins and settings
 		$journalDao = DAORegistry::getDAO('JournalDAO');
