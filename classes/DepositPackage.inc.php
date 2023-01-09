@@ -32,6 +32,9 @@ class DepositPackage {
 	 */
 	var $_task;
 
+	/** @var bool */
+	var $_depositPackageErrored;
+
 	/**
 	 * Constructor.
 	 * @param $deposit Deposit
