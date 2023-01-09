@@ -283,7 +283,7 @@ class DepositDAO extends DAO {
 	public function deleteByJournalId($journalId) {
 		$deposits = $this->getByJournalId($journalId);
 		foreach($deposits as $deposit) {
-			$this->deleteDeposit($deposit);
+			$this->deleteObject($deposit);
 		}
 	}
 }
