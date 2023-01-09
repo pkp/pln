@@ -130,8 +130,8 @@ class DepositPackage {
 		$entry->appendChild($this->_generateElement($atom, 'email', $journal->getData('contactEmail')));
 		$entry->appendChild($this->_generateElement($atom, 'title', $journal->getLocalizedName()));
 
-		$request = PKPApplication::getRequest();
-		$application = PKPApplication::getApplication();
+		$request = Application::get()->getRequest();
+		$application = Application::get();
 		$dispatcher = $application->getDispatcher();
 
 		$entry->appendChild($this->_generateElement($atom, 'pkp:journal_url', $dispatcher->url($request, ROUTE_PAGE, $journal->getPath()), 'http://pkp.sfu.ca/SWORD'));
