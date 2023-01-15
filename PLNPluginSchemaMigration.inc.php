@@ -12,10 +12,9 @@
  */
 
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Builder;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class PLNPluginSchemaMigration extends Migration {
 	/**
@@ -23,28 +22,39 @@ class PLNPluginSchemaMigration extends Migration {
 	 * @return void
 	 */
 	public function up() {
+		// Before the version 2.0.4.3, it's needed to check for a missing "export_deposit_error" field
+		if (Schema::schema()->hasTable('pln_deposits') && !Schema::schema()->hasColumn('pln_deposits', 'export_deposit_error')) {
+			Schema::schema()->table('pln_deposits', function (Blueprint $table) {
+				$table->string('export_deposit_error', 1000)->nullable();
+			});
+		}
+
 		// PLN Deposit Objects
-		Schema::create('pln_deposit_objects', function (Blueprint $table) {
-			$table->bigInteger('deposit_object_id')->autoIncrement();
-			$table->bigInteger('journal_id');
-			$table->bigInteger('object_id');
-			$table->string('object_type', 36);
-			$table->bigInteger('deposit_id')->nullable();
-			$table->datetime('date_created');
-			$table->datetime('date_modified')->nullable();
-		});
+		if (!Schema::schema()->hasTable('pln_deposit_objects')) {
+			Schema::create('pln_deposit_objects', function (Blueprint $table) {
+				$table->bigInteger('deposit_object_id')->autoIncrement();
+				$table->bigInteger('journal_id');
+				$table->bigInteger('object_id');
+				$table->string('object_type', 36);
+				$table->bigInteger('deposit_id')->nullable();
+				$table->datetime('date_created');
+				$table->datetime('date_modified')->nullable();
+			});
+		}
 
 		// PLN Deposits
-		Schema::create('pln_deposits', function (Blueprint $table) {
-			$table->bigInteger('deposit_id')->autoIncrement();
-			$table->bigInteger('journal_id');
-			$table->string('uuid', 36)->nullable();
-			$table->bigInteger('status')->default(0)->nullable();
-			$table->datetime('date_status')->nullable();
-			$table->datetime('date_created');
-			$table->datetime('date_modified')->nullable();
-			$table->string('export_deposit_error', 1000)->nullable();
-		});
+		if (!Schema::schema()->hasTable('pln_deposits')) {
+			Schema::create('pln_deposits', function (Blueprint $table) {
+				$table->bigInteger('deposit_id')->autoIncrement();
+				$table->bigInteger('journal_id');
+				$table->string('uuid', 36)->nullable();
+				$table->bigInteger('status')->default(0)->nullable();
+				$table->datetime('date_status')->nullable();
+				$table->datetime('date_created');
+				$table->datetime('date_modified')->nullable();
+				$table->string('export_deposit_error', 1000)->nullable();
+			});
+		}
 
 		// Temporarily back up the old scheduled_tasks entry for this plugin, if there is one
 		DB::unprepared("UPDATE scheduled_tasks SET class_name='plugins.generic.pln.classes.tasks.Depositor_TEMP' WHERE class_name='plugins.generic.pln.classes.tasks.Depositor'");
