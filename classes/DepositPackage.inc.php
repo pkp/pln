@@ -330,8 +330,10 @@ class DepositPackage {
 				catch (Exception $exception) {
 					$this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.exception') . $exception->getMessage());
 					$this->importExportErrorHandler($depositObject->getDepositId(), $exception->getMessage());
+					$callback->unregister();
+					return false;
 				}
-				
+
 				$callback->unregister();
 				if ($supportsOptions) $exportXml = $this->_cleanFileList($exportXml, $fileList);
 				$fileManager->writeFile($exportFile, $exportXml);
