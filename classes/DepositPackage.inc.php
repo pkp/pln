@@ -618,7 +618,8 @@ class DepositPackage {
 				array('depositId' => $this->_deposit->getId(),
 					'processingState' => $processingState)),
 				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-				
+
+		$this->_deposit->setExportDepositError(null);
 		switch ($processingState) {
 			case 'depositedByJournal':
 				$this->_deposit->setTransferredStatus(true);
