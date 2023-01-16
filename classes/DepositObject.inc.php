@@ -20,7 +20,7 @@ class DepositObject extends DataObject {
 		switch ($this->getObjectType()) {
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
 				$issueDao = DAORegistry::getDAO('IssueDAO'); /** @var $issueDao IssueDAO */
-				return $issueDao->getIssueById($this->getObjectId(),$this->getJournalId());
+				return $issueDao->getById($this->getObjectId(), $this->getJournalId());
 			case 'PublishedArticle': // Legacy (OJS pre-3.2)
 			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
 				$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /** @var $submissionDao SubmissionDAO */
