@@ -296,3 +296,29 @@ msgstr "Latest Update"
 msgid "plugins.generic.pln.status.description.title"
 msgstr "Status Description"
 
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr "Failed to download the deposit from your system. The operation will be retried, meanwhile, you may check if your system is behind a firewall"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr "Deposit failed, ensure it didn't exceed the maximum size supported by the Preservation Network"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Deposit repackaging failed, the operation will be retried"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr "The deposit didn't pass the anti-virus check, you should inspect its files, and resend"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr "The deposit didn't pass the content validation, you may try to resend the deposit"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr "The deposit didn't pass the payload validation, you may try to resend the deposit"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr "The deposit didn't pass the bag validation, you may try to resend the deposit"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr "The deposit is being preserved, but it wasn't possible to check its status, the operation will be retried"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr "The deposit has been withheld, the version of your system is above its expectations"
