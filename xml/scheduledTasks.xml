@@ -21,7 +21,7 @@
 
 <scheduled_tasks>
 	<task class="plugins.generic.pln.classes.tasks.Depositor">
-		<descr>Deposit content with the PLN</descr>
+		<descr>Deposit content with the PKP Preservation Network</descr>
 		<frequency hour="0"/>
 		<arg>autoStage</arg>
 	</task>
