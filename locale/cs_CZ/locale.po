@@ -1,10 +1,10 @@
-# Jiří Dlouhý <jiri.dlouhy@czp.cuni.cz>, 2022.
+# Jiří Dlouhý <jiri.dlouhy@czp.cuni.cz>, 2022, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2022-08-09 12:25+0000\n"
+"PO-Revision-Date: 2023-01-29 20:48+0000\n"
 "Last-Translator: Jiří Dlouhý <jiri.dlouhy@czp.cuni.cz>\n"
 "Language-Team: Czech <http://translate.pkp.sfu.ca/projects/plugins/pln/cs_CZ/"
 ">\n"
@@ -357,7 +357,7 @@ msgstr "Id typu objektu"
 msgid "plugins.generic.pln.settings.acron_required"
 msgstr ""
 "Plugin PKP PN vyžaduje buď plugin Acron, nebo nástroje pro pravidelné "
-"spouštění, například „cron.“"
+"spouštění, například „cron“."
 
 msgid "plugins.generic.pln.disabled"
 msgstr "PKP PN plugin byl zakázán."
