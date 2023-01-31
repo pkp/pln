@@ -1,11 +1,12 @@
 # Jonas Raoni Soares da Silva <weblate@raoni.org>, 2023.
+# Diego José Macêdo <diegojmacedo@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2023-01-28 19:48+0000\n"
-"Last-Translator: Jonas Raoni Soares da Silva <weblate@raoni.org>\n"
+"PO-Revision-Date: 2023-02-01 16:48+0000\n"
+"Last-Translator: Diego José Macêdo <diegojmacedo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <http://translate.pkp.sfu.ca/projects/"
 "plugins/pln/pt_BR/>\n"
 "Language: pt_BR\n"
@@ -36,7 +37,9 @@ msgid "plugins.generic.pln.settings"
 msgstr "Configurações"
 
 msgid "plugins.generic.pln.settings.acron_required"
-msgstr "O plugin PKP PN exige o plugin Acron ou outra forma de agendamento periódico de ações como o 'cron'."
+msgstr ""
+"O plugin PKP PN exige o plugin Acron ou outra forma de agendamento periódico "
+"de ações como o \"cron\"."
 
 msgid "plugins.generic.pln.settings.saved"
 msgstr "PLN do PKP configurações salvas."
