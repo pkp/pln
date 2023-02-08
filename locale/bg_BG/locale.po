@@ -1,7 +1,7 @@
-# Cyril Kamburov <cc@intermedia.bg>, 2022.
+# Cyril Kamburov <cc@intermedia.bg>, 2022, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2022-12-04 10:02+0000\n"
+"PO-Revision-Date: 2023-02-09 20:48+0000\n"
 "Last-Translator: Cyril Kamburov <cc@intermedia.bg>\n"
 "Language-Team: Bulgarian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "bg_BG/>\n"
@@ -357,7 +357,7 @@ msgstr "PKP PN настройките са запазени."
 msgid "plugins.generic.pln.settings.acron_required"
 msgstr ""
 "PKP PN добавката (плъгин) изисква или плъгин Acron, или инструменти за "
-"периодични задачи като 'cron.'"
+"периодични задачи като \"cron\"."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Настройки"
