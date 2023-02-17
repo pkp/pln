@@ -1,9 +1,11 @@
+# Jonas Raoni Soares da Silva <weblate@raoni.org>, 2023.
+# Diego José Macêdo <diegojmacedo@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2021-03-02 16:54+0000\n"
+"PO-Revision-Date: 2023-02-01 16:48+0000\n"
 "Last-Translator: Diego José Macêdo <diegojmacedo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <http://translate.pkp.sfu.ca/projects/"
 "plugins/pln/pt_BR/>\n"
@@ -12,13 +14,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln"
 msgstr "Plugin PKP PN do PKP"
 
 msgid "plugins.generic.pln.description"
-msgstr "O plugin PKP PN do PKP  realizará o deposito do conteúdo preservado na Rede Privada LOCKSS da PKP para preservação."
+msgstr ""
+"O plugin PKP PN do PKP realizará o deposito do conteúdo preservado na Rede "
+"Privada LOCKSS da PKP para preservação."
 
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr "<strong>Rede Privada LOCKSS da PKP</strong><br /><br />Por favor, leia o <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\">resumo da PKP PN (Rede Privada LOCKSS) da PKP</a> e preencha <a href=\"{$plnPluginURL}\">este formulário</a>. Esta opção permitirá a inclusão de seu periódico no Public Knowledge Project Private LOCKSS Network (PLN do PKP)."
@@ -33,7 +37,9 @@ msgid "plugins.generic.pln.settings"
 msgstr "Configurações"
 
 msgid "plugins.generic.pln.settings.acron_required"
-msgstr "O plugin PKP PN exige o plugin Acron ou outra forma de agendamento periódico de ações como o 'cron'."
+msgstr ""
+"O plugin PKP PN exige o plugin Acron ou outra forma de agendamento periódico "
+"de ações como o \"cron\"."
 
 msgid "plugins.generic.pln.settings.saved"
 msgstr "PLN do PKP configurações salvas."
@@ -323,7 +329,7 @@ msgstr ""
 "[{$statusProcessing}], Status Lockss: [{$statusLockss}])"
 
 msgid "plugins.generic.pln.status.packagingFailed"
-msgstr "Falha no  empacotamento"
+msgstr "Falha no empacotamento"
 
 msgid "plugins.generic.pln.status.status"
 msgstr "Status"
