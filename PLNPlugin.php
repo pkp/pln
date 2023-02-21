@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file PLNPlugin.inc.php
+ * @file PLNPlugin.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
@@ -310,7 +310,7 @@ class PLNPlugin extends GenericPlugin {
 					define('HANDLER_CLASS', 'PLNHandler');
 					AppLocale::requireComponents(LOCALE_COMPONENT_APP_COMMON);
 					$handlerFile =& $args[2];
-					$handlerFile = $this->getHandlerPath() . '/' . 'PLNHandler.inc.php';
+					$handlerFile = $this->getHandlerPath() . '/' . 'PLNHandler.php';
 				}
 			}
 		}

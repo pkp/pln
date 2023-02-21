@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file controllers/grid/PLNStatusGridCellProvider.inc.php
+ * @file controllers/grid/PLNStatusGridCellProvider.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
