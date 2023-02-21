@@ -410,18 +410,6 @@ class PLNPlugin extends GenericPlugin {
 	}
 
 	/**
-	 * @copydoc GenericPlugin::getManagementVerbs()
-	 */
-	public function getManagementVerbs() {
-		$verbs = parent::getManagementVerbs();
-		if ($this->getEnabled()) {
-			$verbs[] = array('settings', __('plugins.generic.pln.settings'));
-			$verbs[] = array('status', __('plugins.generic.pln.status'));
-		}
-		return $verbs;
-	}
-
-	/**
 	 * Check to see whether the PLN's terms have been agreed to
 	 * to append.
 	 * @param int $journalId
