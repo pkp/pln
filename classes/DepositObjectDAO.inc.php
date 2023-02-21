@@ -258,7 +258,7 @@ class DepositObjectDAO extends \PKP\db\DAO {
 	 * Get the ID of the last inserted deposit object.
 	 * @return int
 	 */
-	public function getInsertId() {
+	public function getInsertId(): int {
 		return $this->_getInsertId('pln_deposit_objects', 'object_id');
 	}
 
@@ -288,5 +288,36 @@ class DepositObjectDAO extends \PKP\db\DAO {
 		HookRegistry::call('DepositObjectDAO::_fromRow', [&$depositObject, &$row]);
 
 		return $depositObject;
+	}
+
+	/**
+	 * Retrieve all deposit objects by journal ID.
+	 * @param int $journalId
+	 * @return DAOResultFactory
+	 */
+	public function getByJournalId($journalId, $dbResultRange = null) {
+		$params[] = $journalId;
+
+		$result = $this->retrieveRange(
+			$sql = 'SELECT *
+			FROM pln_deposit_objects
+			WHERE journal_id = ?
+			ORDER BY deposit_object_id',
+			$params,
+			$dbResultRange
+		);
+
+		return new DAOResultFactory($result, $this, '_fromRow', [], $sql, $params, $dbResultRange);
+	}
+
+	/**
+	 * Delete deposit objects by journal id
+	 * @param $journalId
+	 */
+	public function deleteByJournalId($journalId) {
+		$depositObjects = $this->getByJournalId($journalId);
+		foreach($depositObjects as $depositObject) {
+			$this->deleteObject($depositObject);
+		}
 	}
 }
