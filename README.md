@@ -11,7 +11,7 @@
 ## About
 
 This plugin provides a means for OJS to preserve content in the PKP
-Preservation Network (PKP|PN). The plugin checks for new and modified content
+Preservation Network (PKP PN). The plugin checks for new and modified content
 and provided the PN's terms of use are met, will communicate with the PN's
 staging server to preserve your published content automatically.
 
@@ -22,9 +22,9 @@ file LICENSE for the complete terms of this license.
 
 ## System Requirements
 
-* OJS 3.4.0 or greater.
-* CURL support for PHP.
-* ZipArchive support for PHP.
+- OJS 3.4.0 or greater.
+- CURL support for PHP.
+- ZipArchive support for PHP.
 
 ## Note
 
@@ -35,37 +35,30 @@ preserve your journal's content.
 
 ## Contact/Support
 
-Please use the PKP support forum (http://forum.pkp.sfu.ca/), PKP issue
-tracker (https://github.com/pkp/pkp-lib/issues) or email the authors for
-support, bugfixes, or comments.
+If you have issues, please use the PKP support forum (https://forum.pkp.sfu.ca/c/questions/5),
+the issues tracker (https://github.com/pkp/pln/issues) is reserved for triaged issues.
 
-## Setting a default
+## Setting up the deposit server
 
-By default, the PLN plugin deposits to https://pkp-pn.lib.sfu.ca. Journal
+By default, the plugin deposits to https://pkp-pn.lib.sfu.ca. Journal
 managers can change the URL on the plugin settings page. The default URL can
 also be set in the OJS `config.inc.php` file by adding this configuration:
+
 ```
-; Change the default PLN
+; Change the default Preservation Network URL
 [lockss]
-pln_url = http://example.com
+pln_url = https://example.com
 ```
+
 You will need to clear the data caches after adding or changing this setting.
 There is a link to clear the caches at
-`Site Administration` > `Administrative Functions`
-
-## Version History
-
-* 1.0	- Initial Release
-* 1.0.1	- Make upgraded plugins use default settings
-* 1.0.2	- Bug fixes, add terms of use acceptance to the gateway, add setting for
-          default network URL. 
-* 2.0.x	- Porting PLN Plugin to OJS 3.x
+`Site Administration` > `Administration`
 
 ## Installation Instructions
 
 We recommend installing this plugin using the Plugin Gallery within OJS. Log in
-with administrator privileges, navigate to `Settings` > `Journal` > `Plugins`, and
-choose the Plugin Gallery. Find the PLN plugin there and follow the
+with administrator privileges, navigate to `Settings` > `Website` > `Plugins`, and
+choose the Plugin Gallery. Find the `PN Plugin` there and follow the
 instructions to install it.
 
 ## Build Instructions
@@ -80,28 +73,29 @@ not necessary.)
   (This process is going to produce a `vendor` folder containing the depending
   library.)
 - Enable Acron plugin and change `config.inc.php` variable `scheduled_tasks = On`
-- Enable the pln plugin
+- Enable the PN plugin
 
 ## Other useful hints / Troubleshooting hints
 
-- The pln plugin depends on 2 database tables, namely the `pln_deposits` and
-  `pln_deposit_objects` tables. If those tables are not in your database, you
-  may not have installed the plugin properly.
+- The plugin depends on 2 database tables: `pln_deposits` and `pln_deposit_objects`.
+  If those tables are not present in your database, it means the plugin wasn't
+  installed properly, refer to the previous sections for help.
 
-- The `plugins.generic.pln.classes.tasks.Depositor` task must be inside the
-  `scheduled_tasks` database table. If not, try `Reload Scheduled Tasks` from
-  the Plugins gallery area, under the Acron plugin.
+- Ensure the plugin is creating daily log files at the `scheduledTaskLogs` folder within
+  the OJS files directory. Files named as `PKPPLNDepositorTask-*id*-*datestamp*` should
+  be present. If absent, the task is probably not being executed daily or
+  there might be permission issues to create them.
 
-- Search the plugin's logs in the `scheduledTaskLogs` folder within the OJS
-  files directory. Files named `PKPPLNDepositorTask-*id*-*datestamp*` should
-  be found there.
+- The `plugins.generic.pln.classes.tasks.Depositor` task must be present in the
+  `scheduled_tasks` table. If it's not, try to reload the scheduled tasks at the
+  Acron plugin (the option `Reload Scheduled Tasks` at the plugin settings).
 
-- In the scheduled task log files, if an entry like `[*date time*] [Notice] Task
-  process stopped.` is found, then the process seems to have exited as it
-  should. Otherwise please check the PHP logs for more info/errors.
+- Every log file should end with an entry like `[*date time*] [Notice] Task process stopped.`.
+  If absent, it means the process has been halted unexpectedly due to errors, check
+  the server/PHP error log for more information.
 
-- If an issue fails to be packaged, it may be useful to try and export the issue
-  from the native import/export plugin. Possible export problems may cause the
-  PLN Plugin to fail to send the failed content, and the native import/export
-  plugin may display some hints on why the failure occured.
+- If an issue fails to be packaged, try to export it through the Native XML plugin at the
+  `Tools` > `Import/Export`, which is supposed to display some hints about what went wrong.
 
+- Whenever something doesn't work as expected, always check the error log for clues.
+  If nothing helps, report your problem in the forum.
