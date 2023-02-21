@@ -403,7 +403,7 @@ class PLNPlugin extends GenericPlugin {
 			[
 				'On-Behalf-Of' => $this->getSetting($contextId, 'journal_uuid'),
 				'Journal-URL' => $dispatcher->url($request, Application::ROUTE_PAGE, $context->getPath()),
-				'Accept-language' => $language,
+				'Accept-Language' => $language,
 			]
 		);
 
