@@ -35,6 +35,7 @@ use PKP\core\PKPString;
 use PKP\db\DAORegistry;
 use PKP\notification\PKPNotification;
 use PKP\plugins\Hook;
+use PKP\userGroup\UserGroup;
 
 define('PLN_PLUGIN_NAME', 'plnplugin');
 
@@ -173,7 +174,7 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function registerDAOs() {
 		DAORegistry::registerDAO('DepositDAO', new DepositDAO());
-        DAORegistry::registerDAO('DepositObjectDAO', new DepositObjectDAO());
+		DAORegistry::registerDAO('DepositObjectDAO', new DepositObjectDAO());
 	}
 
 	/**
@@ -468,21 +469,19 @@ class PLNPlugin extends GenericPlugin {
 	 * @param int $notificationType
 	 */
 	public function createJournalManagerNotification($contextId, $notificationType) {
-		// Get a list of all managerial user group IDs
-		$userGroupDao = DAORegistry::getDAO('UserGroupDAO');
-		$userGroups = $userGroupDao->getByRoleId(Role::ROLE_ID_MANAGER, $contextId);
-		$userGroupIds = [];
-		foreach ($userGroups as $userGroup) {
-			$userGroupIds[] = $userGroup->getId();
-		}
+		$userGroupIds = Repo::userGroup()
+			->getByRoleIds([Role::ROLE_ID_MANAGER], $contextId)
+			->map(fn (UserGroup $userGroup) => $userGroup->getId())
+			->toArray();
 
-		$collector = Repo::user()->getCollector();
-		$collector->filterByUserGroupIds($userGroupIds);
-		$journalManagers = Repo::user()->getMany($collector);
+		$managers = Repo::user()
+			->getCollector()
+			->filterByRoleIds($userGroupIds)
+			->getMany();
 		$notificationManager = new NotificationManager();
-		// TODO: this currently gets sent to all journal managers - perhaps only limit to the technical contact's account?
-		foreach ($journalManagers as $journalManager) {
-			$notificationManager->createTrivialNotification($journalManager->getId(), $notificationType);
+		// TODO: This is going to notify all managers, perhaps only the technical contact should be notified?
+		foreach ($managers as $manager) {
+			$notificationManager->createTrivialNotification($manager->getId(), $notificationType);
 		}
 	}
 
