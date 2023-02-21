@@ -23,7 +23,7 @@ msgid "plugins.generic.pln.description"
 msgstr "إن إضافة مشروع المعرفة العامة PKP PN ستقوم بإيداع محتوياتك المنشورة في شبكة LOCKSS الخاصة من أجل الحفاظ عليها."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>الشبكة الخاصة لمشروع المعرفة العامة LOCKSS</strong><br /><br />لطفاً، إقرأ <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\">نظرة عامة على PKP PN لمشروع المعرفة العامة</a> ومن ثم أكمل <a href=\"{$plnPluginURL}\">هذا النموذج البسيط</a>. هذا الخيار سيمكنك من تضمين مجلتك في الشبكة الاصة لمشروع المعرفة العامة LOCKSS (PKP PLN)."
+msgstr "<strong>الشبكة الخاصة لمشروع المعرفة العامة LOCKSS</strong><br /><br />لطفاً، إقرأ <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">نظرة عامة على PKP PN لمشروع المعرفة العامة</a> ومن ثم أكمل <a href=\"{$plnPluginURL}\">هذا النموذج البسيط</a>. هذا الخيار سيمكنك من تضمين مجلتك في الشبكة الاصة لمشروع المعرفة العامة LOCKSS (PKP PLN)."
 
 msgid "plugins.generic.pln.enabled"
 msgstr "إن إضافة PKP PN لمشروع المعرفة العامة قد تم تمكينها."

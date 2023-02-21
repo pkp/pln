@@ -18,7 +18,7 @@ msgid "plugins.generic.pln.description"
 msgstr "PKP PLN插件将您出版的内容存储在PKP Private LOCKSS Network中。"
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />请阅读 <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\"> PKP PN 概述</a> 并且完成 <a href=\"{$plnPluginURL}\">这个简单的表格</a>. 该操作可以使你的期刊收录到公共知识项目的Private LOCKSS Network (PKP PLN)中。"
+msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />请阅读 <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\"> PKP PN 概述</a> 并且完成 <a href=\"{$plnPluginURL}\">这个简单的表格</a>. 该操作可以使你的期刊收录到公共知识项目的Private LOCKSS Network (PKP PLN)中。"
 
 msgid "plugins.generic.pln.settings"
 msgstr "设置"

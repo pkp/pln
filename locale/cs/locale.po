@@ -22,7 +22,7 @@ msgid "plugins.generic.pln.description"
 msgstr "Plugin PKP PN uloží váš publikovaný obsah do PKP veřejné sítě LOCKSS pro jejich ochranu."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP soukromá síť LOCKSS</strong><br /><br />Přečtěte si <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\">informace o PKP PLN</a> a vyplňte <a href=\"{$plnPluginURL}\">tento jednoduchý formulář</a>. Tato volba vám umožní zahrnutí vašeho časopisu do sítě Public Knowledge Project Private LOCKSS (PKP PLN)."
+msgstr "<strong>PKP soukromá síť LOCKSS</strong><br /><br />Přečtěte si <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">informace o PKP PLN</a> a vyplňte <a href=\"{$plnPluginURL}\">tento jednoduchý formulář</a>. Tato volba vám umožní zahrnutí vašeho časopisu do sítě Public Knowledge Project Private LOCKSS (PKP PLN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Nastavení"

@@ -18,7 +18,7 @@ msgid "plugins.generic.pln.description"
 msgstr "De PKP PN plugin deponeert uw publicaties in het PKP Private LOCKSS Network ter preservatie."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Gelieve het <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\">overshot van het PKP PLN</a> te lezen en <a href=\"{$plnPluginURL}\">dit formulier</a> in te vullen. Deze optie zorgt ervoor dat uw tijdschrift wordt opgenomen in het  Public Knowledge Project Private LOCKSS Network (PKP PLN)."
+msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Gelieve het <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">overshot van het PKP PLN</a> te lezen en <a href=\"{$plnPluginURL}\">dit formulier</a> in te vullen. Deze optie zorgt ervoor dat uw tijdschrift wordt opgenomen in het  Public Knowledge Project Private LOCKSS Network (PKP PLN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Instellingen"

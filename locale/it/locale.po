@@ -22,7 +22,7 @@ msgid "plugins.generic.pln.description"
 msgstr "Il plugin PKP PN cura il versamento dei contenuti pubblicati dalla rivista nella PKP Private LOCKSS Network a fini di conservazione a lungo termine."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Leggi la <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\">panoramica sulla PKP PLN</a> e completa <a href=\"{$plnPluginURL}\">questo semplice modulo</a>. Questa opzione permette l'inclusione della tua rivista nella Public Knowledge Project Private LOCKSS Network (PKP PLN)."
+msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Leggi la <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">panoramica sulla PKP PLN</a> e completa <a href=\"{$plnPluginURL}\">questo semplice modulo</a>. Questa opzione permette l'inclusione della tua rivista nella Public Knowledge Project Private LOCKSS Network (PKP PLN)."
 
 msgid "plugins.generic.pln.enabled"
 msgstr "Il plugin PKP PN è stato abilitato."

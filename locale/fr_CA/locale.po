@@ -22,13 +22,13 @@ msgid "plugins.generic.pln.description"
 msgstr "Le Plugiciel PKP PN déposera votre contenu publié dans le réseau privé LOCKSS de PKP pour préservation."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>Réseau privé LOCKSS de PKP</strong><br /><br />Veuillez lire le <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\">guide de PKP PLN</a> et compléter <a href=\"{$plnPluginURL}\">ce simple formulaire</a>. Cette option permettra l'inclusion de votre revue dans le réseau LOCKSS privé du Public Project Knowledge (PKP PLN)."
+msgstr "<strong>Réseau privé LOCKSS de PKP</strong><br /><br />Veuillez lire le <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">guide de PKP PLN</a> et compléter <a href=\"{$plnPluginURL}\">ce simple formulaire</a>. Cette option permettra l'inclusion de votre revue dans le réseau LOCKSS privé du Public Project Knowledge (PKP PLN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Paramètres"
 
 msgid "plugins.generic.pln.settings.saved"
-msgstr "Paramètres de PKP PN enregistrés ."
+msgstr "Paramètres de PKP PN enregistrés."
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Conditions d'utilisation"
@@ -61,7 +61,7 @@ msgid "plugins.generic.pln.required.object_threshold"
 msgstr "Veuillez choisir un seuil d'objet de dépôt."
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
-msgstr "L'acceptation des conditions d'utilisation du réseau est requise pour déposer sur le PLN.."
+msgstr "L'acceptation des conditions d'utilisation du réseau est requise pour déposer sur le PLN."
 
 msgid "plugins.generic.pln.objects.article"
 msgstr "Article"
@@ -130,16 +130,16 @@ msgid "plugins.generic.pln.notifications.pln_not_accepting"
 msgstr "Le PKP PN n'accepte pas les dépôts actuellement."
 
 msgid "plugins.generic.pln.notifications.pln_accepting"
-msgstr "Le PKP PN accepte les dépôts"
+msgstr "Le PKP PN accepte les dépôts."
 
 msgid "plugins.generic.pln.notifications.check_status"
-msgstr "Vérifier les statuts de vos dépôts"
+msgstr "Vérifier les statuts de vos dépôts."
 
 msgid "plugins.generic.pln.notifications.issn_missing"
 msgstr "Votre revue doit avoir un ISSN pour déposer son contenu à PKP PLN."
 
 msgid "plugins.generic.pln.notifications.http_error"
-msgstr "Une erreur est survenue pendant la connexion à PKP PN - veuillez contacter votre administrateur système"
+msgstr "Une erreur est survenue pendant la connexion à PKP PN - veuillez contacter votre administrateur système."
 
 msgid "plugins.generic.pln.notifications.terms_updated"
 msgstr "Les conditions d'utilisation de PKP PN ont été mises à jour. L'acceptation des nouvelles conditions sont requises avant de continuer à déposer."
