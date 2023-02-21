@@ -21,12 +21,12 @@ use \PKP\submission\PKPSubmission;
 define('PLN_PLUGIN_PING_ARTICLE_COUNT', 12);
 
 class PLNGatewayPlugin extends GatewayPlugin {
-	/** @var $parentPluginName string Name of parent plugin */
+	/** @var string $parentPluginName Name of parent plugin */
 	var $parentPluginName;
 
 	/**
 	 * Constructor.
-	 * @param $parentPluginName string
+	 * @param string $parentPluginName
 	 */
 	public function __construct($parentPluginName) {
 		parent::__construct();

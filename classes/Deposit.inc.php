@@ -15,7 +15,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Constructor
-	 * @param $uuid string|null
+	 * @param ?string $uuid
 	 * @return Deposit
 	 */
 	public function __construct($uuid) {
@@ -47,9 +47,10 @@ class Deposit extends DataObject {
 
 	/**
 	 * Get all deposit objects of this deposit.
-	 * @return array of DepositObject
+	 * @return DAOResultFactory List of DepositObject
 	 */
 	public function getDepositObjects() {
+		/** @var DepositObjectDAO */
 		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
 		return $depositObjectDao->getByDepositId($this->getJournalId(), $this->getId());
 	}
@@ -64,7 +65,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set deposit uuid
-	 * @param $uuid string
+	 * @param string $uuid
 	 */
 	public function setUUID($uuid) {
 		$this->setData('uuid', $uuid);
@@ -80,7 +81,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set journal id
-	 * @param $journalId int
+	 * @param int $journalId
 	 */
 	public function setJournalId($journalId) {
 		$this->setData('journal_id', $journalId);
@@ -98,7 +99,7 @@ class Deposit extends DataObject {
 	/**
 	 * Set deposit status - this is the raw bit field, the other status
 	 * functions are more immediately useful.
-	 * @param $status int
+	 * @param int $status
 	 */
 	public function setStatus($status) {
 		$this->setData('status', $status);
@@ -185,7 +186,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Get a status from the bit field.
-	 * @param $field int one of the PLN_PLUGIN_DEPOSIT_STATUS_* constants.
+	 * @param int $field one of the PLN_PLUGIN_DEPOSIT_STATUS_* constants.
 	 * @return int
 	 */
 	protected function _getStatusField($field) {
@@ -215,7 +216,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether the deposit has been packaged for the PLN
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setPackagedStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED);
@@ -231,7 +232,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether the PLN has been notified of the available deposit
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setTransferredStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED);
@@ -247,7 +248,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether the PLN has been notified of the available deposit
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setPackagingFailedStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED);
@@ -263,7 +264,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether the PLN has retrieved the deposit from the journal
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setReceivedStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED);
@@ -279,7 +280,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether the PLN is syncing the deposit across its nodes
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setValidatedStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED);
@@ -295,7 +296,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether the deposit has been synced across its nodes
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setSentStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_SENT);
@@ -311,7 +312,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether there's been an error from the staging server
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setLockssReceivedStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
@@ -327,7 +328,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether there's been a local error in the deposit process
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setLockssSyncingStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_SYNCING);
@@ -343,7 +344,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set whether there's been an update to a deposit
-	 * @param $status boolean
+	 * @param boolean $status
 	 */
 	public function setLockssAgreementStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT);
@@ -359,7 +360,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set set the date of the last status change
-	 * @param $dateLastStatus DateTime
+	 * @param DateTime $dateLastStatus
 	 */
 	public function setLastStatusDate($dateLastStatus) {
 		$this->setData('dateStatus', $dateLastStatus);
@@ -375,7 +376,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set the date of deposit creation
-	 * @param $dateCreated boolean
+	 * @param boolean $dateCreated
 	 */
 	public function setDateCreated($dateCreated) {
 		$this->setData('dateCreated', $dateCreated);
@@ -383,7 +384,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Get the modification date of the deposit
-	 * @return DateTime
+	 * @return string
 	 */
 	public function getDateModified() {
 		return $this->getData('dateModified');
@@ -391,7 +392,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set the modification date of the deposit
-	 * @param $dateModified boolean
+	 * @param string $dateModified
 	 */
 	public function setDateModified($dateModified) {
 		$this->setData('dateModified', $dateModified);
@@ -399,7 +400,7 @@ class Deposit extends DataObject {
 
 	/**
 	 * Set the export deposit error message.
-	 * @param $exportDepositError string
+	 * @param string $exportDepositError
 	 */
 	public function setExportDepositError($exportDepositError) {
 		$this->setData('exportDepositError', $exportDepositError);
