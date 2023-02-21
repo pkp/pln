@@ -11,6 +11,8 @@
  * @brief Handle PLNStatus grid requests.
  */
 
+namespace APP\plugins\generic\pln\controllers\grid;
+
 use PKP\controllers\grid\feature\PagingFeature;
 use PKP\controllers\grid\GridHandler;
 use PKP\controllers\grid\GridColumn;

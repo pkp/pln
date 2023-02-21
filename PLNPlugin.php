@@ -11,7 +11,8 @@
  * @brief PLN plugin class
  */
 
-use APP\core\Application;
+namespace APP\plugins\generic\pln;
+
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
 use PKP\plugins\GenericPlugin;
@@ -23,6 +24,11 @@ use APP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\facades\Repo;
 use APP\i18n\AppLocale;
+use APP\plugins\generic\pln\classes\DepositDAO;
+use APP\plugins\generic\pln\classes\DepositObjectDAO;
+use APP\plugins\generic\pln\classes\form\PLNSettingsForm;
+use APP\plugins\generic\pln\classes\form\PLNStatusForm;
+use DOMDocument;
 use GuzzleHttp\Exception\RequestException;
 use PKP\core\JSONMessage;
 use PKP\core\PKPString;
@@ -72,8 +78,6 @@ define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED', PLN_PLUGIN_NOTIFICATION_TYP
 define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 5);
-
-
 
 class PLNPlugin extends GenericPlugin {
 	/**

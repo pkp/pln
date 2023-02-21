@@ -11,6 +11,8 @@
  * @brief Class for a cell provider to display information about PLN Deposits
  */
 
+namespace APP\plugins\generic\pln\controllers\grid;
+
 use PKP\controllers\grid\GridCellProvider;
 use PKP\controllers\grid\GridColumn;
 

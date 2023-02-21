@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file classes/migration/upgrade/I28_FixDepositStatus.inc.php
+ * @file classes/migration/upgrade/I28_FixDepositStatus.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
@@ -10,6 +10,8 @@
  * @class I28_FixDepositStatus
  * @brief Adds new fields to manage the deposit status and resets the status for all deposits.
  */
+
+namespace APP\plugins\generic\pln\classes\migration\upgrade;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

@@ -11,6 +11,9 @@
  * @brief Basic class describing a deposit stored in the PLN
  */
 
+namespace APP\plugins\generic\pln\classes;
+
+use Exception;
 use PKP\core\DataObject;
 use PKP\db\DAORegistry;
 

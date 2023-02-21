@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file classes/migration/install/PLNPluginSchemaMigration.inc.php
+ * @file classes/migration/install/PLNPluginSchemaMigration.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
@@ -10,6 +10,8 @@
  * @class PLNPluginSchemaMigration
  * @brief Describe database table structures.
  */
+
+namespace APP\plugins\generic\pln\classes\migration\install;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

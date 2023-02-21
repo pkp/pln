@@ -11,7 +11,11 @@
  * @brief Class to perform automated deposits of PLN object.
  */
 
+namespace APP\plugins\generic\pln\classes\tasks;
+
 use APP\journal\JournalDAO;
+use APP\plugins\generic\pln\classes\DepositPackage;
+use APP\plugins\generic\pln\form\Deposit;
 use PKP\db\DAORegistry;
 use \PKP\file\ContextFileManager;
 use PKP\plugins\PluginRegistry;

@@ -11,6 +11,9 @@
  * @brief Operations for adding a PLN deposit
  */
 
+namespace APP\plugins\generic\pln\classes;
+
+use APP\plugins\generic\pln\form\Deposit;
 use PKP\db\DAO;
 use PKP\db\DAORegistry;
 use PKP\db\DAOResultFactory;

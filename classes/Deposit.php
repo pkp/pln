@@ -11,6 +11,8 @@
  * @brief Container for deposit objects that are submitted to a PLN
  */
 
+namespace APP\plugins\generic\pln\form;
+
 use PKP\core\DataObject;
 use PKP\db\DAORegistry;
 

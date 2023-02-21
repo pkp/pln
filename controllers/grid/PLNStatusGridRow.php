@@ -11,6 +11,8 @@
  * @brief Handle PLNStatus deposit grid row requests.
  */
 
+namespace APP\plugins\generic\pln\controllers\grid;
+
 use PKP\controllers\grid\GridRow;
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\RemoteActionConfirmationModal;

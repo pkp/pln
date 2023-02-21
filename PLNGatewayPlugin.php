@@ -11,6 +11,8 @@
  * @brief Gateway component of web PLN plugin
  */
 
+namespace APP\plugins\generic\pln;
+
 use APP\core\Application;
 use APP\template\TemplateManager;
 use PKP\config\Config;

@@ -11,6 +11,8 @@
  * @brief Form for journal managers to modify PLN plugin settings
  */
 
+namespace APP\plugins\generic\pln\classes\form;
+
 use APP\template\TemplateManager;
 use PKP\db\DAORegistry;
 use PKP\form\Form;

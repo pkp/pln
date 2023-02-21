@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file classes/migration/upgrade/I35_FixMissingField.inc.php
+ * @file classes/migration/upgrade/I35_FixMissingField.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
@@ -10,6 +10,8 @@
  * @class I35_FixMissingField
  * @brief Before the version 2.0.4.3, it's needed to check for a missing "export_deposit_error" field
  */
+
+namespace APP\plugins\generic\pln\classes\migration\upgrade;
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;

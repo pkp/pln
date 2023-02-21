@@ -11,6 +11,8 @@
  * @brief Represent a PLN deposit package.
  */
 
+namespace APP\plugins\generic\pln\classes;
+
 use APP\core\Application;
 use PKP\submission\PKPSubmission;
 use PKP\file\ContextFileManager;
@@ -19,6 +21,10 @@ use PKP\scheduledTask\ScheduledTaskHelper;
 use APP\journal\Journal;
 use APP\journal\JournalDAO;
 use APP\plugins\importexport\native\NativeImportExportPlugin;
+use DOMDocument;
+use DOMElement;
+use DOMXPath;
+use Exception;
 use PKP\config\Config;
 use PKP\db\DAORegistry;
 use PKP\plugins\PluginRegistry;

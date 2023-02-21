@@ -11,7 +11,10 @@
  * @brief Handle PLN requests
  */
 
+namespace APP\plugins\generic\pln\pages;
+
 use APP\handler\Handler;
+use APP\plugins\generic\pln\classes\DepositPackage;
 use APP\template\TemplateManager;
 use PKP\core\PKPString;
 use PKP\db\DAORegistry;
