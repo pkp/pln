@@ -22,9 +22,6 @@ use PKP\plugins\PluginRegistry;
 use PKP\security\authorization\ContextAccessPolicy;
 use PKP\security\Role;
 
-import('plugins.generic.pln.controllers.grid.PLNStatusGridRow');
-import('plugins.generic.pln.controllers.grid.PLNStatusGridCellProvider');
-
 class PLNStatusGridHandler extends GridHandler {
 	/** @var PLNPlugin The pln plugin */
 	static $plugin;
@@ -78,7 +75,6 @@ class PLNStatusGridHandler extends GridHandler {
 	 * @copydoc GridHandler::initFeatures()
 	 */
 	public function initFeatures($request, $args) {
-		import('lib.pkp.classes.controllers.grid.feature.PagingFeature');
 		return array(new PagingFeature());
 	}
 
@@ -86,7 +82,6 @@ class PLNStatusGridHandler extends GridHandler {
 	 * @copydoc GridHandler::getRowInstance()
 	 */
 	protected function getRowInstance() {
-		import('plugins.generic.pln.controllers.grid.PLNStatusGridRow');
 		return new PLNStatusGridRow();
 	}
 
@@ -94,7 +89,6 @@ class PLNStatusGridHandler extends GridHandler {
 	 * @copydoc GridHandler::authorize()
 	 */
 	public function authorize($request, &$args, $roleAssignments) {
-		import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
 		$this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
 		return parent::authorize($request, $args, $roleAssignments);
 	}

@@ -15,6 +15,7 @@ namespace APP\plugins\generic\pln\controllers\grid;
 
 use PKP\controllers\grid\GridCellProvider;
 use PKP\controllers\grid\GridColumn;
+use PKP\linkAction\request\RemoteActionConfirmationModal;
 
 class PLNStatusGridCellProvider extends GridCellProvider {
 	/**
@@ -70,7 +71,6 @@ class PLNStatusGridCellProvider extends GridCellProvider {
 		if (!empty($rowId)) {
 			$router = $request->getRouter();
 			// Create the "reset deposit" action
-			import('lib.pkp.classes.linkAction.request.RemoteActionConfirmationModal');
 			$link = new LinkAction(
 				'resetDeposit',
 				new RemoteActionConfirmationModal(

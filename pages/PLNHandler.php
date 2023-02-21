@@ -36,7 +36,6 @@ class PLNHandler extends Handler {
 	 * @copydoc PKPHandler::authorize()
 	 */
 	public function authorize($request, &$args, $roleAssignments) {
-		import('lib.pkp.classes.security.authorization.ContextRequiredPolicy');
 		$this->addPolicy(new ContextRequiredPolicy($request));
 
 		return parent::authorize($request, $args, $roleAssignments);

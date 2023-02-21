@@ -67,9 +67,6 @@ class Depositor extends ScheduledTask {
 			}
 
 			$this->_plugin->registerDAOs();
-			$this->_plugin->import('classes.Deposit');
-			$this->_plugin->import('classes.DepositObject');
-			$this->_plugin->import('classes.DepositPackage');
 
 			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.processing_for', array('title' => $journal->getLocalizedName())), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
