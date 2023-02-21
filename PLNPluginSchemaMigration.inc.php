@@ -23,14 +23,14 @@ class PLNPluginSchemaMigration extends Migration {
 	 */
 	public function up() {
 		// Before the version 2.0.4.3, it's needed to check for a missing "export_deposit_error" field
-		if (Schema::schema()->hasTable('pln_deposits') && !Schema::schema()->hasColumn('pln_deposits', 'export_deposit_error')) {
-			Schema::schema()->table('pln_deposits', function (Blueprint $table) {
+		if (Schema::hasTable('pln_deposits') && !Schema::hasColumn('pln_deposits', 'export_deposit_error')) {
+			Schema::table('pln_deposits', function (Blueprint $table) {
 				$table->string('export_deposit_error', 1000)->nullable();
 			});
 		}
 
 		// PLN Deposit Objects
-		if (!Schema::schema()->hasTable('pln_deposit_objects')) {
+		if (!Schema::hasTable('pln_deposit_objects')) {
 			Schema::create('pln_deposit_objects', function (Blueprint $table) {
 				$table->bigInteger('deposit_object_id')->autoIncrement();
 				$table->bigInteger('journal_id');
@@ -43,7 +43,7 @@ class PLNPluginSchemaMigration extends Migration {
 		}
 
 		// PLN Deposits
-		if (!Schema::schema()->hasTable('pln_deposits')) {
+		if (!Schema::hasTable('pln_deposits')) {
 			Schema::create('pln_deposits', function (Blueprint $table) {
 				$table->bigInteger('deposit_id')->autoIncrement();
 				$table->bigInteger('journal_id');
