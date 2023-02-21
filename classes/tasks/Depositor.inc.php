@@ -11,7 +11,10 @@
  * @brief Class to perform automated deposits of PLN object.
  */
 
+use APP\journal\JournalDAO;
+use PKP\db\DAORegistry;
 use \PKP\file\ContextFileManager;
+use PKP\plugins\PluginRegistry;
 use PKP\scheduledTask\ScheduledTask;
 use PKP\scheduledTask\ScheduledTaskHelper;
 
@@ -45,6 +48,7 @@ class Depositor extends ScheduledTask {
 
 		$this->addExecutionLogEntry('PKP Preservation Network Processor', ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
+		/** @var JournalDAO */
 		$journalDao = DAORegistry::getDAO('JournalDAO');
 
 		// Get all journals

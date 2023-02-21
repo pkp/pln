@@ -13,7 +13,6 @@
 
 use PKP\controllers\grid\GridCellProvider;
 use PKP\controllers\grid\GridColumn;
-use PKP\linkAction\request\RedirectAction;
 
 class PLNStatusGridCellProvider extends GridCellProvider {
 	/**

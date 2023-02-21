@@ -11,11 +11,14 @@
  * @brief Gateway component of web PLN plugin
  */
 
-import('lib.pkp.classes.plugins.GatewayPlugin');
-import('lib.pkp.classes.site.VersionCheck');
-
+use APP\core\Application;
+use APP\template\TemplateManager;
+use PKP\config\Config;
 use \PKP\core\ArrayItemIterator;
-use \PKP\db\DBResultRange;
+use PKP\db\DAORegistry;
+use PKP\plugins\GatewayPlugin;
+use PKP\plugins\PluginRegistry;
+use PKP\site\VersionCheck;
 use \PKP\submission\PKPSubmission;
 
 define('PLN_PLUGIN_PING_ARTICLE_COUNT', 12);

@@ -11,6 +11,9 @@
  * @brief Basic class describing a deposit stored in the PLN
  */
 
+use PKP\core\DataObject;
+use PKP\db\DAORegistry;
+
 class DepositObject extends DataObject {
 	/**
 	 * Get the content object that's referenced by this deposit object

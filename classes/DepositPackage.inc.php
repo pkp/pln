@@ -17,6 +17,11 @@ use PKP\file\ContextFileManager;
 use PKP\file\FileManager;
 use PKP\scheduledTask\ScheduledTaskHelper;
 use APP\journal\Journal;
+use APP\journal\JournalDAO;
+use APP\plugins\importexport\native\NativeImportExportPlugin;
+use PKP\config\Config;
+use PKP\db\DAORegistry;
+use PKP\plugins\PluginRegistry;
 
 class DepositPackage {
 	const PKP_NAMESPACE = 'http://pkp.sfu.ca/SWORD';
@@ -115,6 +120,7 @@ class DepositPackage {
 		$plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
 		/** @var JournalDAO */
 		$journalDao = DAORegistry::getDAO('JournalDAO');
+		/** @var Journal */
 		$journal = $journalDao->getById($this->_deposit->getJournalId());
 		$fileManager = new ContextFileManager($this->_deposit->getJournalId());
 
@@ -139,7 +145,7 @@ class DepositPackage {
 		$request = Application::get()->getRequest();
 		$dispatcher = Application::get()->getDispatcher();
 
-		$entry->appendChild($this->_generateElement($atom, 'pkp:journal_url', $dispatcher->url($request, ROUTE_PAGE, $journal->getPath()), static::PKP_NAMESPACE));
+		$entry->appendChild($this->_generateElement($atom, 'pkp:journal_url', $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()), static::PKP_NAMESPACE));
 
 		$entry->appendChild($this->_generateElement($atom, 'pkp:publisherName', $journal->getData('publisherInstitution'), static::PKP_NAMESPACE));
 
@@ -158,7 +164,7 @@ class DepositPackage {
 
 		$entry->appendChild($this->_generateElement($atom, 'updated', date("Y-m-d H:i:s", strtotime($this->_deposit->getDateModified()))));
 
-		$url = $dispatcher->url($request, ROUTE_PAGE, $journal->getPath()) . '/' . PLN_PLUGIN_ARCHIVE_FOLDER . '/deposits/' . $this->_deposit->getUUID();
+		$url = $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()) . '/' . PLN_PLUGIN_ARCHIVE_FOLDER . '/deposits/' . $this->_deposit->getUUID();
 		$pkpDetails = $this->_generateElement($atom, 'pkp:content', $url, static::PKP_NAMESPACE);
 		$pkpDetails->setAttribute('size', ceil(filesize($packageFile)/1000));
 
@@ -430,7 +436,8 @@ class DepositPackage {
 		$journalId = $this->_deposit->getJournalId();
 		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
-		$plnPlugin = PluginRegistry::getPlugin('generic',PLN_PLUGIN_NAME);
+        /** @var PLNPlugin */
+		$plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
 
 		// post the atom document
 		$baseUrl = $plnPlugin->getSetting($journalId, 'pln_network');
@@ -573,6 +580,7 @@ class DepositPackage {
 		$journalId = $this->_deposit->getJournalId();
 		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
+        /** @var PLNPlugin */
 		$plnPlugin = PluginRegistry::getPlugin('generic', 'plnplugin');
 
 		$url = $plnPlugin->getSetting($journalId, 'pln_network') . PLN_PLUGIN_CONT_IRI;

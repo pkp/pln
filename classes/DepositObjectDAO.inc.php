@@ -11,9 +11,12 @@
  * @brief Operations for adding a PLN deposit object
  */
 
+use PKP\db\DAO;
+use PKP\db\DAORegistry;
+use PKP\db\DAOResultFactory;
 use \PKP\submission\PKPSubmission;
 
-class DepositObjectDAO extends \PKP\db\DAO {
+class DepositObjectDAO extends DAO {
 	/**
 	 * Retrieve a deposit object by deposit object id.
 	 * @param int $journalId

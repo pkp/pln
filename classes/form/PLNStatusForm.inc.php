@@ -11,7 +11,10 @@
  * @brief Form for journal managers to check PLN plugin status
  */
 
+use APP\template\TemplateManager;
+use PKP\db\DAORegistry;
 use PKP\form\Form;
+use PKP\handler\PKPHandler;
 
 class PLNStatusForm extends Form {
 	/** @var int */

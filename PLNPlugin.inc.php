@@ -17,11 +17,18 @@ use PKP\linkAction\request\AjaxModal;
 use PKP\plugins\GenericPlugin;
 use PKP\config\Config;
 use PKP\security\Role;
-
+use APP\core\Application;
+use APP\core\PageRouter;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\facades\Repo;
+use APP\i18n\AppLocale;
+use GuzzleHttp\Exception\RequestException;
+use PKP\core\JSONMessage;
+use PKP\core\PKPString;
+use PKP\db\DAORegistry;
 use PKP\notification\PKPNotification;
+use PKP\plugins\HookRegistry;
 
 import('classes.publication.Publication');
 import('classes.issue.Issue');
@@ -65,6 +72,8 @@ define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED', PLN_PLUGIN_NOTIFICATION_TYP
 define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 5);
+
+
 
 class PLNPlugin extends GenericPlugin {
 	/**
@@ -355,7 +364,7 @@ class PLNPlugin extends GenericPlugin {
 					/** @var DepositDAO */
 					$depositDao = DAORegistry::getDAO('DepositDAO');
 					foreach ($deposit_ids as $deposit_id) {
-						$deposit = $depositDao->getById($deposit_id); /** @var Deposit $deposit */
+						$deposit = $depositDao->getById($deposit_id);
 
 						$deposit->setNewStatus();
 
@@ -410,7 +419,7 @@ class PLNPlugin extends GenericPlugin {
 			$network . PLN_PLUGIN_SD_IRI,
 			[
 				'On-Behalf-Of' => $this->getSetting($contextId, 'journal_uuid'),
-				'Journal-URL' => $dispatcher->url($request, ROUTE_PAGE, $context->getPath()),
+				'Journal-URL' => $dispatcher->url($request, Application::ROUTE_PAGE, $context->getPath()),
 				'Accept-language' => $language,
 			]
 		);
@@ -509,7 +518,7 @@ class PLNPlugin extends GenericPlugin {
 	 * @return boolean
 	 */
 	public function cronEnabled() {
-		$application = PKPApplication::get();
+		$application = Application::get();
 		$products = $application->getEnabledProducts('plugins.generic');
 		return isset($products['acron']) || Config::getVar('general', 'scheduled_tasks', false);
 	}
@@ -528,7 +537,7 @@ class PLNPlugin extends GenericPlugin {
 		try {
 			$response = $httpClient->request('GET', $url, ['headers' => $headers]);
 			$body = (string) $response->getBody();
-		} catch (GuzzleHttp\Exception\RequestException $e) {
+		} catch (RequestException $e) {
 			$response = $e->getResponse();
 			$body = $response ? (string) $response->getBody() : null;
 			$error = $e->getMessage();
@@ -591,7 +600,7 @@ class PLNPlugin extends GenericPlugin {
 				],
 				'body' => fopen($filename, 'r'),
 			]);
-		} catch (GuzzleHttp\Exception\RequestException $e) {
+		} catch (RequestException $e) {
 			return ['error' => $e->getMessage()];
 		}
 		return array(

@@ -11,6 +11,9 @@
  * @brief Container for deposit objects that are submitted to a PLN
  */
 
+use PKP\core\DataObject;
+use PKP\db\DAORegistry;
+
 class Deposit extends DataObject {
 
 	/**

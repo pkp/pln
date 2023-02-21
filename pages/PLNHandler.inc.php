@@ -11,7 +11,13 @@
  * @brief Handle PLN requests
  */
 
-import('classes.handler.Handler');
+use APP\handler\Handler;
+use APP\template\TemplateManager;
+use PKP\core\PKPString;
+use PKP\db\DAORegistry;
+use PKP\file\FileManager;
+use PKP\plugins\PluginRegistry;
+use PKP\security\authorization\ContextRequiredPolicy;
 
 class PLNHandler extends Handler {
 	/**

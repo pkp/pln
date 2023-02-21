@@ -11,7 +11,12 @@
  * @brief Operations for adding a PLN deposit
  */
 
-class DepositDAO extends \PKP\db\DAO {
+use PKP\db\DAO;
+use PKP\db\DAORegistry;
+use PKP\db\DAOResultFactory;
+use PKP\plugins\HookRegistry;
+
+class DepositDAO extends DAO {
 	/**
 	 * Construct a new deposit object.
 	 * @return Deposit
