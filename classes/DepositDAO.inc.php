@@ -123,7 +123,7 @@ class DepositDAO extends \PKP\db\DAO {
 	 * Get the ID of the last inserted deposit.
 	 * @return int
 	 */
-	public function getInsertId() {
+	public function getInsertId(): int {
 		return $this->_getInsertId('pln_deposits', 'deposit_id');
 	}
 

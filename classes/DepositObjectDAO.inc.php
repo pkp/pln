@@ -258,7 +258,7 @@ class DepositObjectDAO extends \PKP\db\DAO {
 	 * Get the ID of the last inserted deposit object.
 	 * @return int
 	 */
-	public function getInsertId() {
+	public function getInsertId(): int {
 		return $this->_getInsertId('pln_deposit_objects', 'object_id');
 	}
 
