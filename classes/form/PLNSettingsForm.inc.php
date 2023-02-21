@@ -3,8 +3,8 @@
 /**
  * @file classes/form/PLNSettingsForm.inc.php
  *
- * Copyright (c) 2013-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
+ * Copyright (c) 2013-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNSettingsForm
@@ -48,7 +48,7 @@ class PLNSettingsForm extends Form {
 	 */
 	public function readInputData() {
 		$this->readUserVars(array('terms_agreed'));
-		
+
 		$terms_agreed = $this->getData('terms_of_use_agreement');
 		if ($this->getData('terms_agreed')) {
 			foreach (array_keys($this->getData('terms_agreed')) as $term_agreed) {

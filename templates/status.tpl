@@ -1,8 +1,8 @@
 {**
  * templates/status.tpl
  *
- * Copyright (c) 2013-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
+ * Copyright (c) 2013-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * PLN plugin settings
@@ -39,5 +39,5 @@
 		</ul>
 	</p>
 	<p><span class='fa fa-exclamation-triangle'></span> {translate key='plugins.generic.pln.status.warning'}</p>
-	
+
 </div>

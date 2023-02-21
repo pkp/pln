@@ -3,8 +3,8 @@
 /**
  * @file classes/tasks/Depositor.inc.php
  *
- * Copyright (c) 2013-2020 Simon Fraser University
- * Copyright (c) 2003-2020 John Willinsky
+ * Copyright (c) 2013-2023 Simon Fraser University
+ * Copyright (c) 2003-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNPluginDepositor
@@ -139,13 +139,13 @@ class Depositor extends ScheduledTask {
 		$depositQueue = $depositDao->getNeedStagingStatusUpdate($journal->getId());
 
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
@@ -174,13 +174,13 @@ class Depositor extends ScheduledTask {
 		$depositQueue = $depositDao->getNeedTransferring($journal->getId());
 
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
@@ -207,13 +207,13 @@ class Depositor extends ScheduledTask {
 
 		// loop though all of the deposits that need packaging
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
