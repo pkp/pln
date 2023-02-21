@@ -1,0 +1,369 @@
+# Ga Ja Poh <gajapo2932@decorbuz.com>, 2021.
+# Studiorimau <studiorimau@gmail.com>, 2021.
+# Mohamad Shabilullah <shabilhamid91@gmail.com>, 2023.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-02-09 20:48+0000\n"
+"Last-Translator: Mohamad Shabilullah <shabilhamid91@gmail.com>\n"
+"Language-Team: Malay <http://translate.pkp.sfu.ca/projects/plugins/pln/ms_MY/"
+">\n"
+"Language: ms_MY\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.13.1\n"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Mengepos fail Atom ke pelayan staging untuk deposit {$depositId} (Status "
+"Tempatan: [{$statusLocal}], Status Pemprosesan: [{$statusProcessing}], "
+"Status Kunci: [{$statusLockss}]) -(Url: [{$url}], AtomPath: [{$atomPath}], "
+"Kaedah: [{$kaedah}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"Mencuba deposit pemindahan {$depositId} ({$objectType}: {$objectId}) (Status "
+"Tempatan: [{$statusLocal}], Status Pemprosesan: [{$statusProcessing}], "
+"Status Kunci: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "Mempakej untuk deposit {$depositId} berjaya"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Mempakej untuk deposit {$depositId} gagal"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"Plugin Import / Eksport Asli gagal untuk deposit {$depositId}, ketika cuba "
+"mempakej"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Mencuba deposit pakej {$depositId} ({$objectType}: {$objectId}) (Status "
+"Tempatan: [{$statusLocal}], Status Pemprosesan: [{$statusProcessing}], "
+"Status Kunci: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "Status pemprosesan mendapat {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"Mencuba kemas kini status untuk {$depositId} ({$objectType}: {$objectId}) ("
+"Status Tempatan [{$ statusLocal}], Status Pemprosesan: [{$statusProcessing}]"
+", Status Kunci: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Menghantar deposit ke PKP PN."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Kandungan pakej untuk deposit."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Memproses kandungan baru."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Memproses kandungan yang dikemas kini."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Memproses kemas kini status deposit."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"Fail deposit tidak dijumpai. Mungkin belum dipakej, atau pakej mungkin telah "
+"dipadam."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "Tidak ada deposit dengan UUID yang diminta."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "UUID yang diminta tidak sah atau tidak diformat dengan betul."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"Ralat berlaku semasa mengeksport isu. Log ralat pelayan mungkin mempunyai "
+"lebih banyak maklumat."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"Ralat berlaku semasa mengeksport artikel. Log ralat pelayan mungkin "
+"mempunyai lebih banyak maklumat."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "Tidak dapat mencari fail pakej {$file}."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr ""
+"Pelayan PN mengembalikan ralat HTTP {$error} semasa memeriksa status deposit."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "Pelayan PN mengembalikan ralat HTTP {$error} semasa menghantar deposit."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr ""
+"Pelayan PN mengembalikan ralat HTTP {$error} ketika cuba mendapatkan dokumen "
+"perkhidmatan."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"Ralat rangkaian {$error} menyambung ke PKP PN untuk mendapatkan kemas kini "
+"status untuk deposit."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr ""
+"Ralat rangkaian {$ error} menyambung ke PKP PN untuk menghantar deposit."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"Ralat rangkaian {$ error} menyambung ke PKP PN untuk mendapatkan dokumen "
+"perkhidmatan."
+
+msgid "plugins.generic.pln.error.include.bagit"
+msgstr ""
+"Perpustakaan BagIt, yang disertakan dengan OJS, tidak dapat dimuat, mungkin "
+"disebabkan oleh prasyarat yang hilang."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"Jurnal anda mesti mempunyai ISSN sebelum anda dapat bersetuju dengan syarat "
+"perkhidmatan. Anda boleh memasukkan ISSN di halaman Tetapan Jurnal. Setelah "
+"jurnal ISSN dimasukkan, syarat perkhidmatan akan ditunjukkan di bawah."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "Sokongan ZipArchive mesti didayakan untuk meneruskan."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"Syarat penggunaan PKP PN telah dikemas kini. Perjanjian dengan syarat baru "
+"diperlukan untuk meneruskan penyetoran."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"Terdapat ralat semasa menyambung ke PKP PN - sila hubungi pentadbir sistem "
+"anda."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "Jurnal anda mesti mempunyai ISSN untuk menyimpan kandungan ke PKP PN."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Periksa status deposit anda."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PN PKP menerima deposit."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PN PKP pada masa ini tidak menerima deposit."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Mendapatkan dokumen perkhidmatan."
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Pemprosesan pendeposit untuk {$title}."
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "Tugas Penyimpan PN PKP"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Kegagalan Pakej"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Kegagalan Luar"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Kegagalan Local"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Dikemas kini"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Perjanjian"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Menyegerakkan"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Dihantar ke LOCKSS"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Disahkan"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Menerima"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Dipindahkan"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Dikemas"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Baharu"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Tidak diketahui"
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"Adakah anda pasti mahu menetapkan semula deposit ini? Ia akan dikemas semula "
+"dan dihantar semula ke pelayan pemprosesan."
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Status"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Item"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Taip"
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr ""
+"PKP PN <a href=\"{$statusDocsUrl}\"> Status deposit PKP dijelaskan di sini "
+"</a>."
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Id Isu"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Taip Id Objek"
+
+msgid "plugins.generic.pln.status"
+msgstr "Status"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Deposit"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Status Rangkaian: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Isu"
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Artikel"
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr ""
+"Perjanjian dengan syarat penggunaan rangkaian diperlukan untuk deposit ke "
+"PKP PN."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Sila pilih ambang objek deposit."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Sila pilih jenis objek deposit."
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"Sekiranya atas sebab tertentu tidak ada istilah yang disenaraikan di atas "
+"atau anda tahu syarat ini telah diperbaharui, klik Segarkan untuk mengemas "
+"kini syarat yang disenaraikan di atas."
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Segarkan"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"Ini adalah pengenalpasti unik jurnal anda untuk PKP PN. Anda mungkin perlu "
+"berkongsi ini dengan pentadbir PKP PN untuk tujuan sokongan."
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Pengenalpasti Jurnal"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Saya setuju"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Sebagai Pengurus Jurnal, saya, dengan niat baik, menerima dan mengesahkan "
+"terma dan syarat berikut untuk penyertaan dalam Public Knowledge Project’s "
+"Preservation Network (PKP-PN):"
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Syarat Penggunaan"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "Tetapan PN PKP disimpan."
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"Pemalam PKP PN memerlukan sama ada pemalam Acron atau alat penjadualan "
+"berkala seperti \"cron\"."
+
+msgid "plugins.generic.pln.settings"
+msgstr "Tetapan"
+
+msgid "plugins.generic.pln.disabled"
+msgstr "Plugin PKP PN telah dilumpuhkan."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "Plugin PKP PN telah didayakan."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong> PKP Preservation Network </strong> <br /> <br /> Baca <a href=\""
+"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\"> ikhtisar PKP PN </a> dan "
+"lengkapkan <a href=\"{$plnPluginURL}\"> borang ringkas ini </a>. Pilihan ini "
+"akan membolehkan kemasukan jurnal anda dalam Public Knowledge Project "
+"Preservation Network (PKP PN)."
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"Plugin PKP PN akan memasukkan kandungan yang anda terbitkan ke dalam PKP "
+"Preservation Network."
+
+msgid "plugins.generic.pln"
+msgstr "Plugin PN PKP"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Butiran Status"
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Maklumat terkini"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr ""
+"Ia mungkin mengambil masa beberapa hari untuk deposit diproses sepenuhnya."
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Terdapat ralat dengan proses deposit"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Ralat"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Proses deposit selesai"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Selesai"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Proses deposit sedang dijalankan"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Sedang Berlangsung"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Proses deposit masih belum bermula"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Belum selesai"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Melaporkan Status PN PKP dan tajuk artikel terkini untuk pelayan staging."
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "Gerbang PN"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Penyiaran fail Atom ke pelayan staging untuk deposit {$depositId} gagal "
+"(Ralat: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Menyiarkan fail Atom ke pelayan staging untuk deposit {$depositId} berjaya"

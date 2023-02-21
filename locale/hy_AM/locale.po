@@ -1,0 +1,366 @@
+# Artashes Mirzoyan <amirzoyan@sci.am>, 2022.
+# Tigran Zargaryan <tigran@flib.sci.am>, 2022, 2023.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-02-16 05:48+0000\n"
+"Last-Translator: Tigran Zargaryan <tigran@flib.sci.am>\n"
+"Language-Team: Armenian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
+"hy_AM/>\n"
+"Language: hy_AM\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Կարգավիճակի նկարագրություն"
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Վերջին թարմացում"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Ավանդի ամբողջական մշակման համար կարող է պահանջվել մի քանի օր:"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Ավանդադրման գործընթացի հետ կապված սխալ է տեղի ունեցել"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Սխալ"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Ավանդադրման գործընթացն ավարտված է"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Ավարտված"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Ավանդադրման գործընթացն ընթացքի մեջ է"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Ընթացքում է"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Ավանդադրման գործընթացը դեռ չի սկսվել"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Սպասում է"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Զեկուցում է PKP PN կարգավիճակի և վերջին հոդվածների վերնագրերը փուլային "
+"կայանի համար:"
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "PN Դարպաս"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Չհաջողվեց տեղադրել Atom նիշքը փուլային կայանում {$depositId} ավանդի համար "
+"(Սխալ՝ [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Atom նիշքի տեղադրումը փուլային սերվերում {$depositId} ավանդի համար հաջողվեց"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Atom նիշքի տեղադրում փուլի կայանում այս ավանդի համար՝ {$depositId} (Local "
+"Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss "
+"Status: [{$statusLockss}]) - (Url: [{$url}], AtomPath: [{$atomPath}], Method:"
+" [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"Փորձում է փոխանցել ավանդը {$depositId} ({$objectType}: {$objectId}) (Local "
+"Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], Lockss "
+"Status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "{$depositId} ավանդի փաթեթավորումը հաջողվեց"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "{$depositId} ավանդի փաթեթավորումը ձախողվեց"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"Մայրենի Ներմուծում/արտահանում փլագինը ձախողվեց {$depositId} ավանդի համար այն "
+"փաթեթավորելիս"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Փորձում ենք փաթեթեթավորել ավանդը {$depositId} ({$objectType}: {$objectId}) ("
+"Local Status: [{$statusLocal}], Processing Status: [{$statusProcessing}], "
+"Lockss Status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr ""
+"Մշակման կարգավիճակը ստացվել է {$depositId} -> ({$processingState}) համար"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"{$depositId }-ի կարգավիճակի թարմացման փորձ սրա համար՝ (({$objectType}: "
+"{$objectId}) (Local Status: [{$statusLocal}], Processing Status: "
+"[{$statusProcessing}], Lockss Status: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Ավանդների ուղարկում PKP PN-ին:"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Փաթեթավորման բովանդակություն ավանդի համար:"
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Նոր բովանդակության մշակում:"
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Թարմացված բովանդակության մշակում:"
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Ավանդի կարգավիճակի թարմացումների մշակում:"
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"Ավանդի նիշքը հնարավոր չէ գտնել: Հնարավոր է, որ այն դեռ փաթեթավորված չէ, կամ "
+"փաթեթը հանվել է:"
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "Պահանջվող UUID-ում ավանդ չկա:"
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "Հայցվող UUID-ն վավեր չէ կամ ճիշտ ձևաչափված չէ:"
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"թողարկումն արտահանելիս սխալ առաջացավ: Սերվերի սխալների գրանցամատյանը կարող է "
+"ավելի շատ տեղեկություններ պարունակել:"
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"Հոդվածներ արտահանելիս սխալ տեղի ունեցավ: Սերվերի սխալների գրանցամատյանը "
+"կարող է ավելի շատ տեղեկություններ պարունակել:"
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "Հնարավոր չէ գտնել փաթեթի նիշքը՝ {$file}:"
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr "PN սերվերը վերադարձրեց HTTP սխալ {$error} ավանդի կարգավիճակը ստուգելիս:"
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "PN սերվերը վերադարձրեց HTTP սխալ {$error} ավանդն ուղարկելիս:"
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr ""
+"PN սերվերը վերադարձրեց HTTP սխալ {$error}, երբ փորձում էր ստանալ ծառայողական "
+"փաստաթուղթը:"
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"Ցանցի սխալ՝ {$error}՝ միանալով PKP PN-ին՝ ավանդի կարգավիճակի թարմացում "
+"ստանալու համար:"
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr "Ցանցի սխալ {$error}՝ միանալով PKP PN-ին՝ ավանդ ուղարկելու համար:"
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"Ցանցի սխալ {$error}՝ միանալով PKP PN-ին՝ սպասարկման փաստաթուղթը ստանալու "
+"համար:"
+
+msgid "plugins.generic.pln.notifications.tar_missing"
+msgstr "Ձեր համակարգը պետք է ունենա tar գործարկվող:"
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"Ձեր ամսագիրը պետք է ունենա ISSN, նախքան դուք կարողանաք համաձայնվել "
+"ծառայության պայմաններին: Դուք կարող եք մուտքագրել ISSN-ը ամսագրի "
+"կարգավորումների էջում: Ամսագրի ISSN-ը մուտքագրելուց հետո ծառայության "
+"պայմանները կցուցադրվեն ստորև:"
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "ZipArchive-ի աջակցությունը պետք է միացված լինի՝ շարունակելու համար:"
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"PKP PN-ի օգտագործման պայմանները թարմացվել են: Ավանդադրումը շարունակելու "
+"համար պահանջվում է համաձայնագիր նոր պայմաններով:"
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"PKP PN-ին միանալիս սխալ տեղի ունեցավ. դիմեք ձեր համակարգի ադմինիստրատորին:"
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr ""
+"Ձեր ամսագիրը պետք է ունենա ISSN՝ բովանդակությունը PKP PN-ին փոխանցելու համար:"
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Ստուգեք ձեր ավանդների կարգավիճակը:"
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PN-ն ավանդներ է ընդունում:"
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PKP PN-ն ներկայումս ավանդներ չի ընդունում:"
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Ծառայողական փաստաթուղթ ստանալը:"
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Ավանդատուի մշակում {$title} -ի համար:"
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "PKP PN ավանդատուի առաջադրանք"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Փաթեթավորման ձախողում"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Հեռավար ձախողում"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Տեղային ձախողում"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Թարմացված"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Համաձայնագիր"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Համաժամացում"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Ուղարկվել է LOCKSS-ին"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Վավերացված"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Ստացված"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Տեղափոխվել է"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Փաթեթավորված"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Նոր"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Անհայտ"
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"Իսկապե՞ս ուզում եք վերականգնել այս ավանդը: Այն կվերափաթեթավորվի և նորից "
+"կուղարկվի մշակող սերվերին:"
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Վիճակ"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Նյութեր"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Տեսակ"
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr ""
+"PKP PN <a href=\"{$statusDocsUrl}\">ավանդադրման կարգավիճակները նկարագրված են "
+"այստեղ</a>."
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Թողարկման Id"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Մուտքագրեք առարկայի Id-ն"
+
+msgid "plugins.generic.pln.status"
+msgstr "Կարգավիճակ"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Ավանդներ"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Ցանցի կարգավիճակ: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Թողարկում"
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Հոդված"
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr ""
+"PKP PN-ին ավանդ դնելու համար պահանջվում է համաձայնություն ցանցի օգտագործման "
+"պայմանների հետ:"
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Խնդրում ենք ընտրել ավանդադրվող օբյեկտի շեմը:"
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Խնդրում ենք ընտրել ավանդադրվող օբյեկտի տեսակը:"
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"Եթե ինչ-ինչ պատճառներով վերը նշված պայմանները չկան կամ գիտեք, որ այս "
+"պայմանները թարմացվել են, սեղմեք Թարմացնել՝ վերը թվարկված պայմանները "
+"թարմացնելու համար:"
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Թարմացնել"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"Սա ձեր ամսագրի եզակի նույնացուցիչն է PKP PN-ի համար: Հնարավոր է, որ ձեզ "
+"անհրաժեշտ լինի կիսվել այս PKP PN -ով ադմինիստրատորների հետ՝ աջակցության "
+"նպատակով:"
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Ամսագրի նույնացուցիչ"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Համաձայն եմ"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Որպես ամսագրի մենեջեր՝ ես, բարեխղճորեն, ընդունում և հաստատում եմ Public "
+"Knowledge Project-ի Preservation Network-ին (PKP-PN) մասնակցելու հետևյալ "
+"դրույթներն ու պայմանները:"
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Օգտվելու կանոններ"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "PKP PN կարգավորումները պահպանված են:"
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"PKP PN հավելվածը պահանջում է կա՛մ Acron հավելված, կա՛մ պարբերական "
+"պլանավորման գործիքներ, ինչպիսին է cron\" -ը:"
+
+msgid "plugins.generic.pln.settings"
+msgstr "Կարգավորումներ"
+
+msgid "plugins.generic.pln.disabled"
+msgstr "PKP PN փլագինը անջատված է."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "PKP PN փլագինը միացված է."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>PKP Preservation Network</strong><br /><br />Կարդացեք <a href=\""
+"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">ակնարկ PKP PN</a> և լրացրեք <a "
+"href=\"{$plnPluginURL}\">այս պարզ ձևը</a>. Այս տարբերակը հնարավորություն կտա "
+"ներառել ձեր ամսագիրըPublic Knowledge Project Preservation Network (PKP PN)."
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"PKP PN հավելվածը ձեր հրապարակված բովանդակությունը կպահի PKP պահպանման "
+"ցանցում:"
+
+msgid "plugins.generic.pln"
+msgstr "PKP PN փլագին"

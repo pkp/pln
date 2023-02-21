@@ -1,15 +1,19 @@
+# Hüseyin Körpeoğlu <yoruyenturk@hotmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
+"PO-Revision-Date: 2023-02-06 12:48+0000\n"
+"Last-Translator: Hüseyin Körpeoğlu <yoruyenturk@hotmail.com>\n"
+"Language-Team: Turkish <http://translate.pkp.sfu.ca/projects/plugins/pln/"
+"tr_TR/>\n"
+"Language: tr_TR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2020-03-03T23:08:22+00:00\n"
-"Language: \n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln.notifications.getting_servicedocument"
 msgstr "Hizmet belgesi alınıyor."
@@ -36,7 +40,7 @@ msgid "plugins.generic.pln.depositor.statusupdates"
 msgstr "Arşiv durum güncellemeleri işleniyor."
 
 msgid "plugins.generic.pln.depositor.updatedcontent"
-msgstr "İçerik güncellemesi işlendi"
+msgstr "Güncellenen içerik işleniyor."
 
 msgid "plugins.generic.pln.depositor.newcontent"
 msgstr "Yeni içerik işleniyor."
@@ -135,103 +139,236 @@ msgid "plugins.generic.pln.status.complete"
 msgstr "Tamam"
 
 msgid "plugins.generic.pln.description"
-msgstr "The PKP PN plugin will deposit your published content into the PKP Private LOCKSS Network for preservation."
+msgstr ""
+"PKP PN eklentisi, yayınlanan içeriğinizi PKP Saklama Ağı’nda saklayacaktır."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Please read the <a href=\"https://pkp.sfu.ca/pkp-lockss/\" target=\"_blank\">overview of the PKP PLN</a> and complete <a href=\"{$plnPluginURL}\">this simple form</a>. This option will enable inclusion of your journal in the Public Knowledge Project Private LOCKSS Network (PKP PLN)."
+msgstr ""
+"<strong>PKP Saklama Ağı</strong><br /><br />Lütfen <a href=\"https://pkp.sfu."
+"ca/pkp-pn\" target=\"_blank\">PKP PN'ye genel bakışı</a> okuyun ve <a href=\""
+"{$plnPluginURL}\">bu basit formu</a>doldurun. Bu seçenek, derginizin Kamu "
+"Bilgisi Proje Saklama Ağı'na (PKP PN) eklenmesini sağlar."
 
 msgid "plugins.generic.pln.enabled"
-msgstr "The PKP PN plugin has been enabled."
+msgstr "PKP PN eklentisi etkinleştirildi."
 
 msgid "plugins.generic.pln.disabled"
-msgstr "The PKP PN plugin has been disabled."
+msgstr "PKP PN eklentisi devre dışı bırakıldı."
 
 msgid "plugins.generic.pln.settings.acron_required"
-msgstr "The PKP PN plugin requires either the Acron plugin or a periodic scheduling tools such as 'cron.'"
+msgstr ""
+"PKP PN eklentisi, Acron eklentisini veya \"cron\" gibi periyodik zamanlama "
+"araçlarını gerektirir."
 
 msgid "plugins.generic.pln.settings.saved"
-msgstr "PKP PN settings saved."
+msgstr "PKP PN ayarları kaydedildi."
 
 msgid "plugins.generic.pln.settings.terms_of_use"
-msgstr "Terms of Use"
+msgstr "Kullanım Şartları"
 
 msgid "plugins.generic.pln.settings.terms_of_use_help"
-msgstr "As Primary Contact, I, in good faith, accept and confirm the following terms and conditions for participation in the Public Knowledge Project’s Private LOCKSS Network (PKP-PLN):"
+msgstr ""
+"Dergi Yöneticisi olarak, iyi niyetle, Kamu Bilgisi Projesi'nin Saklama "
+"Ağı'na (PKP-PN) katılım için aşağıdaki hüküm ve koşulları kabul ediyor ve "
+"onaylıyorum:"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
-msgstr "This is your journal's unique identifier for the PKP PLN. You may need to share this with PKP PN administrators for support purposes."
+msgstr ""
+"Bu, derginin PKP PN için benzersiz tanımlayıcısıdır. Destek almak için bunu "
+"PKP PN yöneticileriyle paylaşmanız gerekebilir."
 
 msgid "plugins.generic.pln.settings.refresh_help"
-msgstr "If for some reason there are no terms listed above or you know these terms have been updated, click Refresh to update the terms listed above."
+msgstr ""
+"Herhangi bir nedenle yukarıda listelenen bir koşul yoksa veya bu koşulların "
+"güncellendiğini biliyorsanız, yukarıda listelenen koşulları güncellemek için "
+"Yenile'yi tıklatın."
 
 msgid "plugins.generic.pln.required.object_type"
-msgstr "Please choose an deposit object type."
+msgstr "Lütfen bir saklama nesnesi türü seçin."
 
 msgid "plugins.generic.pln.required.object_threshold"
-msgstr "Please choose a deposit object threshold."
+msgstr "Lütfen bir saklama nesnesi eşiği seçin."
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
-msgstr "Agreement to the network's terms of use is required in order to deposit to the PLN."
+msgstr ""
+"PKP PN'ye saklama işlemi için ağın kullanım koşullarının kabul edilmesi "
+"gerekir."
 
 msgid "plugins.generic.pln.status.deposits"
-msgstr "Deposits"
+msgstr "Ödeme"
 
 msgid "plugins.generic.pln.status.docs"
-msgstr "The PKP PN <a href=\"{$statusDocsUrl}\">deposit statuses are described here</a>."
+msgstr ""
+"PKP PN <a href=\"{$statusDocsUrl}\">saklama işlemine ait durumlar burada "
+"açıklanmıştır</a>."
 
 msgid "plugins.generic.pln.status.confirmReset"
-msgstr "Are you sure you want to reset this deposit? It will be repackaged and resent to the processing server."
+msgstr ""
+"Bu saklama işlemini sıfırlamak istediğinizden emin misiniz? Yeniden "
+"paketlenecek ve işleme sunucusuna yeniden gönderilecektir."
 
 msgid "plugins.generic.pln.status.syncing"
-msgstr "Syncing"
+msgstr "Eşitleniyor"
 
 msgid "plugins.generic.pln.depositorTask.name"
-msgstr "PKP PN Depositor Task"
+msgstr "PKP PN Saklama Görevi"
 
 msgid "plugins.generic.pln.notifications.processing_for"
-msgstr "Depositor processing for {$title}."
+msgstr "{$title} için saklama işlemi gerçekleştiriliyor."
 
 msgid "plugins.generic.pln.notifications.pln_not_accepting"
-msgstr "The PKP PN is not currently accepting deposits."
+msgstr "PKP PN şu anda saklama isteği kabul etmiyor."
 
 msgid "plugins.generic.pln.notifications.pln_accepting"
-msgstr "The PKP PN is accepting deposits."
+msgstr "PKP PN saklama isteği kabul ediyor."
 
 msgid "plugins.generic.pln.notifications.check_status"
-msgstr "Check the status of your deposits."
+msgstr "Saklama işleminizin durumunu kontrol edin."
 
 msgid "plugins.generic.pln.notifications.issn_missing"
-msgstr "Your journal must have an ISSN to deposit content to the PKP PLN."
+msgstr ""
+"PKP PN’de içerik saklamak için derginizin bir ISSN'ye sahip olması gerekir."
 
 msgid "plugins.generic.pln.notifications.http_error"
-msgstr "There was an error connecting to the PKP PN - please contact your system administrator."
+msgstr ""
+"PKP PN'ye bağlanırken bir hata oluştu - lütfen sistem yöneticinize başvurun."
 
 msgid "plugins.generic.pln.notifications.terms_updated"
-msgstr "The PKP PN terms of use have been updated. Agreement with new terms is required to continue depositing."
+msgstr ""
+"PKP PN kullanım koşulları güncellendi. Saklama işlemine devam etmek için "
+"yeni şartlarla anlaşma yapılması gerekmektedir."
 
 msgid "plugins.generic.pln.notifications.zip_missing"
-msgstr "ZipArchive support must be enabled to proceed."
+msgstr "Devam etmek için ZipArchive desteğinin etkinleştirilmesi gerekir."
+
+msgid "plugins.generic.pln.error.include.bagit"
+msgstr ""
+"OJS ile birlikte gelen BagIt kitaplığı, büyük olasılıkla eksik bir "
+"gereksinim nedeniyle yüklenemiyor."
 
 msgid "plugins.generic.pln.error.network.servicedocument"
-msgstr "Network error {$error} connecting to the PKP PN to get the service document."
+msgstr ""
+"Hizmet belgesini almak için PKP PN'ye bağlanırken {$error} ağ hatası oluştu."
 
 msgid "plugins.generic.pln.error.network.deposit"
-msgstr "Network error {$error} connecting to the PKP PN to send the deposit."
+msgstr ""
+"Saklama isteğini göndermek için PKP PN'ye bağlanırken {$error} ağ hatası "
+"oluştu."
 
 msgid "plugins.generic.pln.error.network.swordstatement"
-msgstr "Network error {$error} connecting to the PKP PN to get a status update for deposit."
+msgstr ""
+"Saklama işlemi için bir durum güncelleştirmesi almak üzere PKP PN'ye "
+"bağlanırken {$error} ağ hatası oluştu."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "PLN server returned HTTP error {$error} when attempting to get the service document."
+msgstr ""
+"PN sunucusu, hizmet belgesini almaya çalışırken {$error} HTTP hatası "
+"gönderdi."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "PLN server returned HTTP error {$error} when sending the deposit."
+msgstr "PN sunucusu saklama isteğini gönderirken HTTP hatası {$error} gönderdi."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "PLN server returned HTTP error {$error} when checking the status of a deposit."
+msgstr ""
+"PN sunucusu, saklama durumunu denetlerken {$error} HTTP hatası gönderdi."
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
-msgstr "Cannot find package file {$file}."
+msgstr "{$file} paket dosyası bulunamıyor."
 
 msgid "plugins.generic.plngateway.description"
-msgstr "Reports PKP PN Status and recent article titles for the staging server."
+msgstr ""
+"Hazırlama sunucusu için PKP PN Durumunu ve son makale başlıklarını bildirir."
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"{$depositId} ({$objectType} saklamasını aktarma işlemi deneniyor: "
+"{$objectId}) (Yerel Durum: [{$statusLocal}], İşlem Durumu: "
+"[{$statusProcessing}], Lockss Durumu: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Tür Nesnesi Kimliği"
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Sorun Kimliği"
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Durum"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Paketleme Hatası"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"{$depositId} ({$objectType} için durum güncellemesi deneniyor: {$objectId}) ("
+"Yerel Durum: [{$statusLocal}], İşlem Durumu: [{$statusProcessing}], Lockss "
+"Durumu: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "{$depositId} -> ({$processingState}) için işlem durumu alındı"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"{$depositId} ({$objectType} için paket sakla işlemi deneniyor: {$objectId}) ("
+"Yerel Durum: [{$statusLocal}], İşlem Durumu: [{$statusProcessing}], Lockss "
+"Durumu: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"Doğal İçe / Dışa Aktarma eklentisi, {$depositId} saklama işlemini "
+"gerçekleştirmeye çalışırken başarısız oldu"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "{$depositId} saklaması için paketleme işlemi başarısız oldu"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "{$depositId} saklaması için paketleme işlemi başarılı oldu"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"{$depositId} saklama işlemi için Atom dosyası hazırlama sunucusuna "
+"gönderiliyor (Yerel Durum: [{$statusLocal}], İşleme Durumu: "
+"[{$statusProcessing}], Lockss Durumu: [{$statusLockss}]) - (Url: [{ $url}], "
+"AtomYolu: [{$atomPath}], Yöntem: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Atom dosyasının {$depositId} saklama işlemi için hazırlama sunucusuna "
+"gönderimi başarılı oldu"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Atom dosyasını {$depositId} saklaması için hazırlama sunucusuna gönderme "
+"işlemi başarısız oldu (Hata: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Beklemede"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Saklama işlemi henüz başlamadı"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Devam Etmekte"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Saklama işlemi devam ediyor"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Tamamlandı"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Saklama işlemi tamamlandı"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Hata"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Saklama işlemiyle ilgili bir hata oluştu"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Bir saklama işleminin tamamlanması birkaç gün sürebilir."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Son Güncelleme"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Durum Tanımlaması"
