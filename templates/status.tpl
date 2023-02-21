@@ -39,5 +39,5 @@
 		</ul>
 	</p>
 	<p><span class='fa fa-exclamation-triangle'></span> {translate key='plugins.generic.pln.status.warning'}</p>
-	
+
 </div>

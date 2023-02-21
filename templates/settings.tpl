@@ -31,7 +31,7 @@
 			{fbvFormSection title="plugins.generic.pln.settings.terms_of_use" list=true}
 				{if $hasIssn}
 					{foreach name=terms from=$terms_of_use key=term_name item=term_data}
-						{if $terms_of_use_agreement[$term_name]} 
+						{if $terms_of_use_agreement[$term_name]}
 							{assign var="checked" value="checked"}
 						{else}
 							{assign var="checked" value=""}
@@ -53,7 +53,7 @@
 				<p>{translate key="plugins.generic.pln.settings.refresh_help"}</p>
 				<input type="submit" id="refresh" name="refresh" class="button" value="{translate key="plugins.generic.pln.settings.refresh"}"/>
 			{/fbvFormSection}
-			
+
 			{fbvFormButtons id="plnPluginSettingsFormSubmit" submitText="common.save" hideCancel=true}
 		{/fbvFormArea}
 	</form>
