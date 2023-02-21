@@ -17,13 +17,13 @@ class PLNStatusForm extends Form {
 	/** @var int */
 	var $_contextId;
 
-	/** @var Plugin */
+	/** @var PLNPlugin Plugin */
 	var $_plugin;
 
 	/**
 	 * Constructor
-	 * @param $plugin Plugin
-	 * @param $contextId int
+	 * @param PLNPlugin $plugin
+	 * @param int $contextId
 	 */
 	public function __construct($plugin, $contextId) {
 		$this->_contextId = $contextId;
@@ -37,6 +37,7 @@ class PLNStatusForm extends Form {
 	 */
 	public function fetch($request, $template = null, $display = false) {
 		$context = $request->getContext();
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
 		$networkStatus = $this->_plugin->getSetting($context->getId(), 'pln_accepting');
 		$networkStatusMessage = $this->_plugin->getSetting($context->getId(), 'pln_accepting_message');

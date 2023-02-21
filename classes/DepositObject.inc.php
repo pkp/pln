@@ -19,11 +19,11 @@ class DepositObject extends DataObject {
 	public function getContent() {
 		switch ($this->getObjectType()) {
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
-				$issueDao = DAORegistry::getDAO('IssueDAO'); /** @var $issueDao IssueDAO */
+				$issueDao = DAORegistry::getDAO('IssueDAO'); /** @var IssueDAO $issueDao */
 				return $issueDao->getById($this->getObjectId(), $this->getJournalId());
 			case 'PublishedArticle': // Legacy (OJS pre-3.2)
 			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
-				$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /** @var $submissionDao SubmissionDAO */
+				$submissionDao = DAORegistry::getDAO('SubmissionDAO'); /** @var SubmissionDAO $submissionDao */
 				$submission = $submissionDao->getById($this->getObjectId());
 				if ($submission->getContextId() != $this->getJournalId()) throw new Exception('Submission context and context ID do not agree!');
 				return $submission;
@@ -33,7 +33,7 @@ class DepositObject extends DataObject {
 
 	/**
 	 * Set the content object that's referenced by this deposit object
-	 * @param $content Object (Issue,Submission)
+	 * @param Object $content (Issue,Submission)
 	 */
 	public function setContent($content) {
 		if (is_a($content, PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE) || is_a($content, PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION)) {
@@ -118,7 +118,7 @@ class DepositObject extends DataObject {
 
 	/**
 	 * Set the date of deposit object creation
-	 * @param $dateCreated DateTime
+	 * @param DateTime $dateCreated
 	 */
 	public function setDateCreated($dateCreated) {
 		$this->setData('dateCreated', $dateCreated);
@@ -134,7 +134,7 @@ class DepositObject extends DataObject {
 
 	/**
 	 * Set the modification date of the deposit object
-	 * @param $dateModified DateTime
+	 * @param DateTime $dateModified
 	 */
 	public function setDateModified($dateModified) {
 		$this->setData('dateModified', $dateModified);

@@ -31,8 +31,8 @@ class DepositPackage {
 
 	/**
 	 * Constructor.
-	 * @param $deposit Deposit
-	 * @param $task ScheduledTask
+	 * @param Deposit $deposit
+	 * @param ScheduledTask $task
 	 */
 	public function __construct($deposit, $task = null) {
 		$this->_deposit = $deposit;
@@ -44,7 +44,7 @@ class DepositPackage {
 	 * a scheduled task, the message will be sent to the task's
 	 * log. Otherwise it will be sent to error_log().
 	 *
-	 * @param $message string Locale-specific message to be logged
+	 * @param string $message Locale-specific message to be logged
 	 */
 	protected function _logMessage($message) {
 		if($this->_task) {
@@ -111,6 +111,7 @@ class DepositPackage {
 	 */
 	public function generateAtomDocument() {
 		$plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
+		/** @var JournalDAO */
 		$journalDao = DAORegistry::getDAO('JournalDAO');
 		$journal = $journalDao->getById($this->_deposit->getJournalId());
 		$fileManager = new ContextFileManager($this->_deposit->getJournalId());
@@ -134,8 +135,7 @@ class DepositPackage {
 		$entry->appendChild($this->_generateElement($atom, 'title', $journal->getLocalizedName()));
 
 		$request = Application::get()->getRequest();
-		$application = Application::get();
-		$dispatcher = $application->getDispatcher();
+		$dispatcher = Application::get()->getDispatcher();
 
 		$entry->appendChild($this->_generateElement($atom, 'pkp:journal_url', $dispatcher->url($request, ROUTE_PAGE, $journal->getPath()), 'http://pkp.sfu.ca/SWORD'));
 
@@ -168,11 +168,12 @@ class DepositPackage {
 			case 'PublishedArticle': // Legacy (OJS pre-3.2)
 			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
 				$depositObjects = $this->_deposit->getDepositObjects();
+				/** @var SubmissionDAO */
 				$submissionDao = DAORegistry::getDAO('SubmissionDAO');
 				while ($depositObject = $depositObjects->next()) {
 					$submission = $submissionDao->getById($depositObject->getObjectId());
 					$publication = $submission->getCurrentPublication();
-					$publicationDate = $publication?$publication->getData('publicationDate'):null;
+					$publicationDate = $publication ? $publication->getData('publicationDate') : null;
 					if ($publicationDate && strtotime($publicationDate) > $objectPublicationDate)
 						$objectPublicationDate = strtotime($publicationDate);
 				}
@@ -180,6 +181,7 @@ class DepositPackage {
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
 				$depositObjects = $this->_deposit->getDepositObjects();
 				while ($depositObject = $depositObjects->next()) {
+					/** @var IssueDAO */
 					$issueDao = DAORegistry::getDAO('IssueDAO');
 					$issue = $issueDao->getById($depositObject->getObjectId());
 					$objectVolume = $issue->getVolume();
@@ -195,6 +197,7 @@ class DepositPackage {
 		$pkpDetails->setAttribute('pubdate', strftime('%Y-%m-%d', strtotime($objectPublicationDate)));
 
 		// Add OJS Version
+		/** @var VersionDAO */
 		$versionDao = DAORegistry::getDAO('VersionDAO');
 		$currentVersion = $versionDao->getCurrentVersion();
 		$pkpDetails->setAttribute('ojsVersion', $currentVersion->getVersionString());
@@ -251,9 +254,11 @@ class DepositPackage {
 		require_once __DIR__ . '/../vendor/autoload.php';
 
 		// get DAOs, plugins and settings
+		/** @var JournalDAO */
 		$journalDao = DAORegistry::getDAO('JournalDAO');
+		/** @var IssueDAO */
 		$issueDao = DAORegistry::getDAO('IssueDAO');
-		$sectionDao = DAORegistry::getDAO('SectionDAO');
+		/** @var SubmissionDAO */
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
 		PluginRegistry::loadCategory('importexport');
 		$exportPlugin = PluginRegistry::getPlugin('importexport', 'NativeImportExportPlugin');
@@ -302,8 +307,7 @@ class DepositPackage {
 				break;
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
 				// we only ever do one issue at a time, so get that issue
-				$application = Application::getApplication();
-				$request = $application->getRequest();
+				$request = Application::get()->getRequest();
 				$depositObject = $depositObjects->next();
 				$issue = $issueDao->getByBestId($depositObject->getObjectId(), $journal->getId());
 
@@ -313,7 +317,7 @@ class DepositPackage {
 					$exportXml = $exportPlugin->exportIssues(
 						(array) $issue->getId(),
 						$journal,
-						$user = $request->getUser(),
+						$request->getUser(),
 						['no-embed' => 1]
 					);
 
@@ -388,6 +392,7 @@ class DepositPackage {
 		$bag->addFile($termsFile, 'terms' . $this->_deposit->getUUID() . '.xml');
 
 		// Add OJS Version
+		/** @var VersionDAO */
 		$versionDao = DAORegistry::getDAO('VersionDAO');
 		$currentVersion = $versionDao->getCurrentVersion();
 		$bag->setExtended(true);
@@ -407,8 +412,8 @@ class DepositPackage {
 
 	/**
 	 * Read a list of file paths from the specified native XML string and clean up the XML's pathnames.
-	 * @param $xml string
-	 * @param $fileList array Reference to array to receive file list
+	 * @param string $xml
+	 * @param array $fileList Reference to array to receive file list
 	 * @return array
 	 */
 	function _cleanFileList($xml, &$fileList) {
@@ -430,11 +435,9 @@ class DepositPackage {
 	 */
 	public function transferDeposit() {
 		$journalId = $this->_deposit->getJournalId();
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
-		$journalDao = DAORegistry::getDAO('JournalDAO');
 		$plnPlugin = PluginRegistry::getPlugin('generic',PLN_PLUGIN_NAME);
-		$fileManager = new ContextFileManager($journalId);
-		$plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
 
 		// post the atom document
 		$url = $plnPlugin->getSetting($journalId, 'pln_network');
@@ -524,8 +527,8 @@ class DepositPackage {
 	 * Package a deposit for transfer to and retrieval by the PLN.
 	 */
 	public function packageDeposit() {
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
-		$journalDao = DAORegistry::getDAO('JournalDAO');
 		$fileManager = new ContextFileManager($this->_deposit->getJournalId());
 		$plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
 
@@ -584,6 +587,7 @@ class DepositPackage {
 	 */
 	public function updateDepositStatus() {
 		$journalId = $this->_deposit->getJournalId();
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
 		$plnPlugin = PluginRegistry::getPlugin('generic', 'plnplugin');
 
@@ -667,7 +671,6 @@ class DepositPackage {
 				break;
 			case 'agreement':
 				if(!$this->_deposit->getLockssAgreementStatus()) {
-					$journalDao = DAORegistry::getDAO('JournalDAO');
 					$fileManager = new ContextFileManager($this->_deposit->getJournalId());
 					$depositDir = $this->getDepositDir();
 					$fileManager->rmtree($depositDir);
@@ -686,13 +689,13 @@ class DepositPackage {
 
 	/**
 	 * Handle an error during the import/export process.
-	 * @param $depositId int Deposit ID
-	 * @param $message string Error message
+	 * @param int $depositId Deposit ID
+	 * @param string $message Error message
 	 */
 	public function importExportErrorHandler($depositId, $message) {
 		$this->_depositPackageErrored = true;
 
-		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
+		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
 		$deposit = $depositDao->getById($depositId);
 		if ($deposit) {
 			$deposit->setExportDepositError($message);
@@ -719,7 +722,7 @@ class DepositUnregisterableErrorCallback {
 	public function __destruct() {
 		if (!$this->_isUnregistered) {
 			$this->_depositPackage->importExportErrorHandler($this->_depositId, "Deposit Import/export error");
-			$taskDao = DAORegistry::getDao('ScheduledTaskDAO'); /** @var $taskDao ScheduledTaskDAO */
+			$taskDao = DAORegistry::getDao('ScheduledTaskDAO'); /** @var ScheduledTaskDAO $taskDao */
 
 			$taskDao->updateLastRunTime('plugins.generic.pln.classes.tasks.Depositor', 0);
 

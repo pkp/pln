@@ -95,8 +95,6 @@ not necessary.)
   the server/PHP error log for more information.
 
 - If an issue fails to be packaged, try to export it through the Native XML plugin at the
-  from the native import/export plugin. Possible export problems may cause the
-  PLN Plugin to fail to send the failed content, and the native import/export
   `Tools` > `Import/Export`, which is supposed to display some hints about what went wrong.
 
 - Whenever something doesn't work as expected, always check the error log for clues.

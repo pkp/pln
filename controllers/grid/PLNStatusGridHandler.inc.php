@@ -33,7 +33,7 @@ class PLNStatusGridHandler extends GridHandler {
 
 	/**
 	 * Set the translator plugin.
-	 * @param $plugin StaticPagesPlugin
+	 * @param StaticPagesPlugin $plugin
 	 */
 	public static function setPlugin($plugin) {
 		self::$plugin = $plugin;
@@ -94,6 +94,7 @@ class PLNStatusGridHandler extends GridHandler {
 	 */
 	protected function loadData($request, $filter) {
 		$context = $request->getContext();
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
 		$rangeInfo = $this->getGridRangeInfo($request, $this->getId());
 		return $depositDao->getByJournalId($context->getId(), $rangeInfo);
@@ -104,19 +105,20 @@ class PLNStatusGridHandler extends GridHandler {
 	//
 	/**
 	 * Reset Deposit
-	 * @param $args array
-	 * @param $request PKPRequest
+	 * @param array $args
+	 * @param PKPRequest $request
 	 *
 	 * @return string Serialized JSON object
 	 */
 	public function resetDeposit($args, $request) {
 		$depositId = $args['depositId'];
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
 		$journal = $request->getJournal();
 
 		if (!is_null($depositId)) {
-			$deposit = $depositDao->getById($depositId, $journal->getId()); /** @var $deposit Deposit */
-			
+			$deposit = $depositDao->getById($depositId, $journal->getId()); /** @var Deposit $deposit */
+
 			$deposit->reset();
 
 			$depositDao->updateObject($deposit);

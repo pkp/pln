@@ -12,11 +12,12 @@
  */
 
 import('classes.handler.Handler');
+
 class PLNHandler extends Handler {
 	/**
 	 * Index handler: redirect to journal page.
-	 * @param $args array
-	 * @param $request PKPRequest
+	 * @param array $args
+	 * @param PKPRequest $request
 	 */
 	public function index($args, $request) {
 		$request->redirect(null, 'index');
@@ -41,6 +42,7 @@ class PLNHandler extends Handler {
 	 */
 	public function deposits($args, $request) {
 		$journal = $request->getJournal();
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
 		$fileManager = new FileManager();
 		$dispatcher = $request->getDispatcher();

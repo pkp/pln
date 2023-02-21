@@ -93,8 +93,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Permit requests to the static pages grid handler
-	 * @param $hookName string The name of the hook being invoked
-	 * @param $args array The parameters to the invoked hook
+	 * @param string $hookName The name of the hook being invoked
+	 * @param array $args The parameters to the invoked hook
 	 */
 	public function setupComponentHandlers($hookName, $params) {
 		$component = $params[0];
@@ -219,8 +219,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * @see PKPPlugin::getSetting()
-	 * @param $journalId int
-	 * @param $settingName string
+	 * @param int $journalId
+	 * @param string $settingName
 	 */
 	public function getSetting($journalId, $settingName) {
 		// if there isn't a journal_uuid, make one
@@ -247,8 +247,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Register as a gateway plugin.
-	 * @param $hookName string
-	 * @param $args array
+	 * @param string $hookName
+	 * @param array $args
 	 */
 	public function callbackLoadCategory($hookName, $args) {
 		$category =& $args[0];
@@ -266,8 +266,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Delete all plug-in data for a journal when the journal is deleted
-	 * @param $hookName string (JournalDAO::deleteJournalById)
-	 * @param $args array (JournalDAO, journalId)
+	 * @param string $hookName (JournalDAO::deleteJournalById)
+	 * @param array $args (JournalDAO, journalId)
 	 * @return boolean false to continue processing subsequent hooks
 	 */
 	public function callbackDeleteJournalById($hookName, $params) {
@@ -290,8 +290,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Hook registry function to provide notification messages
-	 * @param $hookName string (NotificationManager::getNotificationContents)
-	 * @param $args array ($notification, $message)
+	 * @param string $hookName (NotificationManager::getNotificationContents)
+	 * @param array $args ($notification, $message)
 	 * @return boolean false to continue processing subsequent hooks
 	 */
 	public function callbackNotificationContents($hookName, $args) {
@@ -379,10 +379,10 @@ class PLNPlugin extends GenericPlugin {
 					$deposit_ids = array_keys($request->getUserVar('reset'));
 					$depositDao = DAORegistry::getDAO('DepositDAO');
 					foreach ($deposit_ids as $deposit_id) {
-						$deposit = $depositDao->getById($deposit_id); /** @var $deposit Deposit */
+						$deposit = $depositDao->getById($deposit_id); /** @var Deposit $deposit */
 
 						$deposit->reset();
-						
+
 						$depositDao->updateObject($deposit);
 					}
 				}
@@ -424,7 +424,7 @@ class PLNPlugin extends GenericPlugin {
 	/**
 	 * Check to see whether the PLN's terms have been agreed to
 	 * to append.
-	 * @param $journalId int
+	 * @param int $journalId
 	 * @return boolean
 	 */
 	public function termsAgreed($journalId) {
@@ -442,7 +442,7 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Request service document at specified URL
-	 * @param $contextId int The journal id for the service document we wish to fetch
+	 * @param int $contextId The journal id for the service document we wish to fetch
 	 * @return int The HTTP response status or FALSE for a network error.
 	 */
 	public function getServiceDocument($contextId) {
@@ -522,8 +522,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Create notification for all journal managers
-	 * @param $contextId int
-	 * @param $notificationType int
+	 * @param int $contextId
+	 * @param int $notificationType
 	 */
 	public function createJournalManagerNotification($contextId, $notificationType) {
 		$roleDao = DAORegistry::getDAO('RoleDAO');
@@ -559,8 +559,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Get resource
-	 * @param $url string
-	 * @param $headers array
+	 * @param string $url
+	 * @param array $headers
 	 * @return array
 	 */
 	public function curlGet($url, $headers=[]) {
@@ -580,8 +580,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Post a file to a resource
-	 * @param $url string
-	 * @param $headers array
+	 * @param string $url
+	 * @param array $headers
 	 * @return array
 	 */
 	public function curlPostFile($url, $filename) {
@@ -590,8 +590,8 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Put a file to a resource
-	 * @param $url string
-	 * @param $filename string
+	 * @param string $url
+	 * @param string $filename
 	 * @return array
 	 */
 	public function curlPutFile($url, $filename) {
@@ -608,9 +608,9 @@ class PLNPlugin extends GenericPlugin {
 
 	/**
 	 * Transfer a file to a resource.
-	 * @param $method string PUT or POST
-	 * @param $url string
-	 * @param $headers array
+	 * @param string $method PUT or POST
+	 * @param string $url
+	 * @param array $headers
 	 * @return array
 	 */
 	protected function _sendFile($method, $url, $filename) {

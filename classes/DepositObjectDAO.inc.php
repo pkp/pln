@@ -17,8 +17,8 @@ import('lib.pkp.classes.submission.PKPSubmission'); // STATUS_PUBLISHED constant
 class DepositObjectDAO extends DAO {
 	/**
 	 * Retrieve a deposit object by deposit object id.
-	 * @param $journalId int
-	 * @param $depositObjectId int
+	 * @param int $journalId
+	 * @param int $depositObjectId
 	 * @return DepositObject
 	 */
 	public function getById($journalId, $depositObjectId) {
@@ -35,8 +35,8 @@ class DepositObjectDAO extends DAO {
 
 	/**
 	 * Retrieve all deposit objects by deposit id.
-	 * @param $journalId int
-	 * @param $depositId int
+	 * @param int $journalId
+	 * @param int $depositId
 	 * @return DAOResultFactory
 	 */
 	public function getByDepositId($journalId, $depositId) {
@@ -50,7 +50,7 @@ class DepositObjectDAO extends DAO {
 
 	/**
 	 * Retrieve all deposit objects with no deposit id.
-	 * @param $journalId int
+	 * @param int $journalId
 	 * @return DAOResultFactory
 	 */
 	public function getNew($journalId) {
@@ -64,10 +64,11 @@ class DepositObjectDAO extends DAO {
 
 	/**
 	 * Retrieve all deposit objects with no deposit id.
-	 * @param $journalId int
-	 * @param $objectType string
+	 * @param int $journalId
+	 * @param string $objectType
 	 */
 	public function markHavingUpdatedContent($journalId, $objectType) {
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
 
 		switch ($objectType) {
@@ -131,8 +132,8 @@ class DepositObjectDAO extends DAO {
 	/**
 	 * Create a new deposit object for OJS content that doesn't yet have one
 	 *
-	 * @param $journalId int
-	 * @param $objectType string
+	 * @param int $journalId
+	 * @param string $objectType
 	 * @return array DepositObject ordered by sequence
 	 */
 	public function createNew($journalId, $objectType) {
@@ -141,6 +142,7 @@ class DepositObjectDAO extends DAO {
 		switch ($objectType) {
 			case 'PublishedArticle': // Legacy (OJS pre-3.2)
 			case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
+				/** @var SubmissionDAO */
 				$submissionDao = DAORegistry::getDAO('SubmissionDAO'); // Constants
 				$result = $this->retrieve(
 					'SELECT p.submission_id FROM publications p
@@ -154,6 +156,7 @@ class DepositObjectDAO extends DAO {
 				}
 				break;
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
+				/** @var IssueDAO */
 				$issueDao = DAORegistry::getDAO('IssueDAO');
 				$result = $this->retrieve(
 					'SELECT i.issue_id
@@ -185,7 +188,7 @@ class DepositObjectDAO extends DAO {
 
 	/**
 	 * Insert deposit object
-	 * @param $depositObject DepositObject
+	 * @param DepositObject $depositObject
 	 * @return int inserted DepositObject id
 	 */
 	public function insertObject($depositObject) {
@@ -216,7 +219,7 @@ class DepositObjectDAO extends DAO {
 
 	/**
 	 * Update deposit object
-	 * @param $depositObject DepositObject
+	 * @param DepositObject $depositObject
 	 */
 	public function updateObject($depositObject) {
 		$this->update(
@@ -243,7 +246,7 @@ class DepositObjectDAO extends DAO {
 
 	/**
 	 * Delete deposit object
-	 * @param $depositObject Deposit
+	 * @param Deposit $depositObject
 	 */
 	public function deleteObject($depositObject) {
 		$this->update(
@@ -270,7 +273,7 @@ class DepositObjectDAO extends DAO {
 
 	/**
 	 * Internal function to return a deposit object from a row.
-	 * @param $row array
+	 * @param array $row
 	 * @return DepositObject
 	 */
 	public function _fromRow($row) {

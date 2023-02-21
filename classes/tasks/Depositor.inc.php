@@ -21,7 +21,7 @@ class Depositor extends ScheduledTask {
 
 	/**
 	 * Constructor.
-	 * @param $args array task arguments
+	 * @param array $args task arguments
 	 */
 	public function __construct($args) {
 		PluginRegistry::loadCategory('generic');
@@ -130,21 +130,21 @@ class Depositor extends ScheduledTask {
 
 	/**
 	 * Go through existing deposits and fetch their status from the PLN
-	 * @param $journal Journal
+	 * @param Journal $journal
 	 */
 	protected function _processStatusUpdates($journal) {
 		// get deposits that need status updates
-		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
+		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
 		$depositQueue = $depositDao->getNeedStagingStatusUpdate($journal->getId());
 
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.statusupdates.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
@@ -153,33 +153,33 @@ class Depositor extends ScheduledTask {
 	}
 
 	/**
-	 * @param $journal Journal Object
+	 * @param Journal $journal Object
 	 *
 	 * Go thourgh the deposits and mark them as updated if they have been
 	 */
 	protected function _processHavingUpdatedContent(&$journal) {
 		// get deposits that have updated content
-		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO'); /** @var $depositObjectDao DepositObjectDAO */
+		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO'); /** @var DepositObjectDAO $depositObjectDao */
 		$depositObjectDao->markHavingUpdatedContent($journal->getId(), $this->_plugin->getSetting($journal->getId(), 'object_type'));
 	}
 
 	/**
 	 * If a deposit hasn't been transferred, transfer it
-	 * @param $journal Journal Object
+	 * @param Journal $journal Object
 	 */
 	protected function _processNeedTransferring($journal) {
 		// fetch the deposits we need to send to the pln
-		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
+		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
 		$depositQueue = $depositDao->getNeedTransferring($journal->getId());
 
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
@@ -190,10 +190,10 @@ class Depositor extends ScheduledTask {
 
 	/**
 	 * Create packages for any deposits that don't have any or have been updated
-	 * @param $journal Journal Object
+	 * @param Journal $journal Object
 	 */
 	protected function _processNeedPackaging($journal) {
-		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
+		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
 		$depositQueue = $depositDao->getNeedPackaging($journal->getId());
 		$fileManager = new ContextFileManager($journal->getId());
 		$plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
@@ -206,13 +206,13 @@ class Depositor extends ScheduledTask {
 
 		// loop though all of the deposits that need packaging
 		while ($deposit = $depositQueue->next()) {
-			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing', 
-				array('depositId' => $deposit->getId(), 
-					'statusLocal' => $deposit->getLocalStatus(), 
-					'statusProcessing' => $deposit->getProcessingStatus(), 
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing',
+				array('depositId' => $deposit->getId(),
+					'statusLocal' => $deposit->getLocalStatus(),
+					'statusProcessing' => $deposit->getProcessingStatus(),
 					'statusLockss' => $deposit->getLockssStatus(),
 					'objectId' => $deposit->getObjectId(),
-					'objectType' => $deposit->getObjectType())), 
+					'objectType' => $deposit->getObjectType())),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$depositPackage = new DepositPackage($deposit, $this);
@@ -222,15 +222,15 @@ class Depositor extends ScheduledTask {
 
 	/**
 	 * Create new deposits for deposit objects
-	 * @param $journal Journal Object
+	 * @param Journal $journal Object
 	 */
 	protected function _processNewDepositObjects($journal) {
 		// get the object type we'll be dealing with
 		$objectType = $this->_plugin->getSetting($journal->getId(), 'object_type');
 
 		// create new deposit objects for any new OJS content
-		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
-		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO'); /** @var $depositObjectDao DepositObjectDAO */
+		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
+		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO'); /** @var DepositObjectDAO $depositObjectDao */
 		$depositObjectDao->createNew($journal->getId(), $objectType);
 
 		// retrieve all deposit objects that don't belong to a deposit

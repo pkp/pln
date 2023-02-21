@@ -24,8 +24,8 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Retrieve deposit by ID.
-	 * @param $depositId int
-	 * @param $journalId int optional
+	 * @param int $depositId
+	 * @param int $journalId optional
 	 * @return Deposit Object
 	 */
 	public function getById($depositId, $journalId = null) {
@@ -47,7 +47,7 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Insert deposit object
-	 * @param $deposit Deposit
+	 * @param Deposit $deposit
 	 * @return int inserted Deposit id
 	 */
 	public function insertObject($deposit) {
@@ -77,7 +77,7 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Update deposit
-	 * @param $deposit Deposit
+	 * @param Deposit $deposit
 	 */
 	public function updateObject($deposit) {
 		$this->update(
@@ -106,9 +106,10 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Delete deposit
-	 * @param $deposit Deposit
+	 * @param Deposit $deposit
 	 */
 	public function deleteObject($deposit) {
+		/** @var DepositObjectDAO */
 		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
 		foreach($deposit->getDepositObjects() as $depositObject) {
 			$depositObjectDao->deleteObject($depositObject);
@@ -130,7 +131,7 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Internal function to return a deposit from a row.
-	 * @param $row array
+	 * @param array $row
 	 * @return Deposit
 	 */
 	public function _fromRow($row) {
@@ -151,8 +152,8 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Retrieve a deposit by deposit uuid and journal id.
-	 * @param $journalId int
-	 * @param $depositUuid string
+	 * @param int $journalId
+	 * @param string $depositUuid
 	 * @return Deposit
 	 */
 	public function getByUUID($journalId, $depositUuid) {
@@ -172,7 +173,7 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Retrieve all deposits.
-	 * @param $journalId int
+	 * @param int $journalId
 	 * @return DAOResultFactory
 	 */
 	public function getByJournalId($journalId, $dbResultRange = null) {
@@ -192,7 +193,7 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Retrieve all newly-created deposits (ones with new status)
-	 * @param $journalId int
+	 * @param int $journalId
 	 * @return DAOResultFactory
 	 */
 	public function getNew($journalId) {
@@ -206,7 +207,7 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Retrieve all deposits that need packaging
-	 * @param $journalId int
+	 * @param int $journalId
 	 * @return DAOResultFactory
 	 */
 	public function getNeedTransferring($journalId) {
@@ -230,7 +231,7 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Retrieve all deposits that need packaging
-	 * @param $journalId int
+	 * @param int $journalId
 	 * @return DAOResultFactory
 	 */
 	public function getNeedPackaging($journalId) {
@@ -254,7 +255,7 @@ class DepositDAO extends DAO {
 
 	/**
 	 * Retrieve all deposits that need a status update
-	 * @param $journalId int
+	 * @param int $journalId
 	 * @return DAOResultFactory
 	 */
 	public function getNeedStagingStatusUpdate($journalId) {

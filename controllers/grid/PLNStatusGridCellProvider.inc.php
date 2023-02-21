@@ -18,12 +18,12 @@ class PLNStatusGridCellProvider extends GridCellProvider {
 	/**
 	 * Extracts variables for a given column from a data element
 	 * so that they may be assigned to template before rendering.
-	 * @param $row GridRow
-	 * @param $column GridColumn
+	 * @param GridRow $row
+	 * @param GridColumn $column
 	 * @return array
 	 */
 	public function getTemplateVarsFromRowColumn($row, $column) {
-		$deposit = $row->getData(); /** @var $deposit Deposit */
+		$deposit = $row->getData(); /** @var Deposit $deposit */
 
 		switch ($column->getId()) {
 			case 'id':
