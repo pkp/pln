@@ -14,7 +14,7 @@
 use PKP\db\DAO;
 use PKP\db\DAORegistry;
 use PKP\db\DAOResultFactory;
-use PKP\plugins\HookRegistry;
+use PKP\plugins\Hook;
 
 class DepositDAO extends DAO {
 	/**
@@ -160,7 +160,7 @@ class DepositDAO extends DAO {
 		$deposit->setPreservedDate($row['date_preserved'] ? $this->datetimeFromDB($row['date_preserved']) : null);
 		$deposit->setExportDepositError($row['export_deposit_error']);
 
-		HookRegistry::call('DepositDAO::_fromRow', [&$deposit, &$row]);
+		Hook::call('DepositDAO::_fromRow', [&$deposit, &$row]);
 
 		return $deposit;
 	}

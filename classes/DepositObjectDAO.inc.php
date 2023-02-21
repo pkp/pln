@@ -14,6 +14,7 @@
 use PKP\db\DAO;
 use PKP\db\DAORegistry;
 use PKP\db\DAOResultFactory;
+use PKP\plugins\Hook;
 use \PKP\submission\PKPSubmission;
 
 class DepositObjectDAO extends DAO {
@@ -266,7 +267,7 @@ class DepositObjectDAO extends DAO {
 		$depositObject->setDateCreated($this->datetimeFromDB($row['date_created']));
 		$depositObject->setDateModified($this->datetimeFromDB($row['date_modified']));
 
-		HookRegistry::call('DepositObjectDAO::_fromRow', [&$depositObject, &$row]);
+		Hook::call('DepositObjectDAO::_fromRow', [&$depositObject, &$row]);
 
 		return $depositObject;
 	}

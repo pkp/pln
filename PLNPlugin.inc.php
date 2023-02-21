@@ -28,7 +28,7 @@ use PKP\core\JSONMessage;
 use PKP\core\PKPString;
 use PKP\db\DAORegistry;
 use PKP\notification\PKPNotification;
-use PKP\plugins\HookRegistry;
+use PKP\plugins\Hook;
 
 import('classes.publication.Publication');
 import('classes.issue.Issue');
@@ -87,13 +87,13 @@ class PLNPlugin extends GenericPlugin {
 			$this->import('classes.DepositObject');
 			$this->import('classes.DepositPackage');
 
-			HookRegistry::register('PluginRegistry::loadCategory', array($this, 'callbackLoadCategory'));
-			HookRegistry::register('LoadHandler', array($this, 'callbackLoadHandler'));
-			HookRegistry::register('NotificationManager::getNotificationMessage', array($this, 'callbackNotificationContents'));
-			HookRegistry::register('LoadComponentHandler', array($this, 'setupComponentHandlers'));
+			Hook::add('PluginRegistry::loadCategory', array($this, 'callbackLoadCategory'));
+			Hook::add('LoadHandler', array($this, 'callbackLoadHandler'));
+			Hook::add('NotificationManager::getNotificationContents', array($this, 'callbackNotificationContents'));
+			Hook::add('LoadComponentHandler', array($this, 'setupComponentHandlers'));
 			$this->_disableRestrictions();
 		}
-		HookRegistry::register('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
+		Hook::add('AcronPlugin::parseCronTab', array($this, 'callbackParseCronTab'));
 		return true;
 	}
 
@@ -133,7 +133,7 @@ class PLNPlugin extends GenericPlugin {
 		$arguments = $request->getRequestedArgs();
 		if ([$page, $operation] === ['pln', 'deposits'] || [$page, $operation, $arguments[0] ?? ''] === ['gateway', 'plugin', 'PLNGatewayPlugin']) {
 			define('SESSION_DISABLE_INIT', true);
-			HookRegistry::register('RestrictedSiteAccessPolicy::_getLoginExemptions', function ($hookName, $args) {
+			Hook::add('RestrictedSiteAccessPolicy::_getLoginExemptions', function ($hookName, $args) {
 				$exemptions =& $args[0];
 				array_push($exemptions, 'gateway', 'pln');
 				return false;
