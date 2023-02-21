@@ -10,19 +10,20 @@
  * @class PLNSettingsForm
  * @brief Form for journal managers to modify PLN plugin settings
  */
+
 import('lib.pkp.classes.form.Form');
 
 class PLNSettingsForm extends Form {
 	/** @var int */
 	var $_contextId;
 
-	/** @var Plugin */
+	/** @var PLNPlugin */
 	var $_plugin;
 
 	/**
 	 * Constructor
-	 * @param $plugin Plugin
-	 * @param $contextId int
+	 * @param Plugin $plugin
+	 * @param int $contextId
 	 */
 	public function __construct($plugin, $contextId) {
 		$this->_contextId = $contextId;
@@ -47,7 +48,7 @@ class PLNSettingsForm extends Form {
 	 */
 	public function readInputData() {
 		$this->readUserVars(array('terms_agreed'));
-		
+
 		$terms_agreed = $this->getData('terms_of_use_agreement');
 		if ($this->getData('terms_agreed')) {
 			foreach (array_keys($this->getData('terms_agreed')) as $term_agreed) {
@@ -67,10 +68,10 @@ class PLNSettingsForm extends Form {
 		$messages = array();
 
 		if (!$this->_plugin->zipInstalled()) {
-			$messages = __('plugins.generic.pln.notifications.zip_missing');
+			$messages[] = __('plugins.generic.pln.notifications.zip_missing');
 		}
 		if (!$this->_plugin->cronEnabled()) {
-			$messages = __('plugins.generic.pln.settings.acron_required');
+			$messages[] = __('plugins.generic.pln.settings.acron_required');
 		}
 		return $messages;
 	}
@@ -110,6 +111,7 @@ class PLNSettingsForm extends Form {
 		parent::execute(...$functionArgs);
 		$this->_plugin->updateSetting($this->_contextId, 'terms_of_use_agreement', serialize($this->getData('terms_of_use_agreement')), 'object');
 
+		/** @var PluginSettingsDAO */
 		$pluginSettingsDao = DAORegistry::getDAO('PluginSettingsDAO');
 		$pluginSettingsDao->installSettings($this->_contextId, $this->_plugin->getName(), $this->_plugin->getContextSpecificPluginSettingsFile());
 	}
