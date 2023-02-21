@@ -289,4 +289,35 @@ class DepositObjectDAO extends \PKP\db\DAO {
 
 		return $depositObject;
 	}
+
+	/**
+	 * Retrieve all deposit objects by journal ID.
+	 * @param int $journalId
+	 * @return DAOResultFactory
+	 */
+	public function getByJournalId($journalId, $dbResultRange = null) {
+		$params[] = $journalId;
+
+		$result = $this->retrieveRange(
+			$sql = 'SELECT *
+			FROM pln_deposit_objects
+			WHERE journal_id = ?
+			ORDER BY deposit_object_id',
+			$params,
+			$dbResultRange
+		);
+
+		return new DAOResultFactory($result, $this, '_fromRow', [], $sql, $params, $dbResultRange);
+	}
+
+	/**
+	 * Delete deposit objects by journal id
+	 * @param $journalId
+	 */
+	public function deleteByJournalId($journalId) {
+		$depositObjects = $this->getByJournalId($journalId);
+		foreach($depositObjects as $depositObject) {
+			$this->deleteObject($depositObject);
+		}
+	}
 }
