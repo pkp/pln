@@ -339,8 +339,6 @@ class PLNPlugin extends GenericPlugin {
 	 * @copydoc PKPPlugin::manage()
 	 */
 	public function manage($args, $request) {
-		$journal = $request->getJournal();
-
 		switch($request->getUserVar('verb')) {
 			case 'settings':
 				$context = $request->getContext();
@@ -392,23 +390,6 @@ class PLNPlugin extends GenericPlugin {
 				}
 
 				return new JSONMessage(true, $form->fetch($request));
-			case 'enable':
-				if(!$this->zipInstalled()) {
-					$message = PKPNotification::NOTIFICATION_TYPE_ERROR;
-					$messageParams = array('contents' => __('plugins.generic.pln.notifications.zip_missing'));
-					break;
-				}
-				$message = PKPNotification::NOTIFICATION_TYPE_SUCCESS;
-				$messageParams = array('contents' => __('plugins.generic.pln.enabled'));
-				$this->updateSetting($journal->getId(), 'enabled', true);
-				break;
-			case 'disable':
-				$message = PKPNotification::NOTIFICATION_TYPE_SUCCESS;
-				$messageParams = array('contents' => __('plugins.generic.pln.disabled'));
-				$this->updateSetting($journal->getId(), 'enabled', false);
-				break;
-			default:
-				return parent::manage($verb, $args, $message, $messageParams);
 		}
 
 	}

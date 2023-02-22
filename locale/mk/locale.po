@@ -348,12 +348,6 @@ msgstr ""
 msgid "plugins.generic.pln.settings"
 msgstr "Поставки"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "PKP PN плагинот е оневозможен."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "PKP PN плагинот е овозможен."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong>ПКП мрежа за сочувување</strong><br /><br />Ве молиме да го "

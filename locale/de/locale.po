@@ -23,12 +23,6 @@ msgstr "Das PKP-PLN-Plug-In wird Ihre veröffentlichten Inhalte in das PKP Priva
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Bitte lesen Sie die <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">Übersicht zu PKP PLN</a> und füllen Sie <a href=\"{$plnPluginURL}\">dieses einfache Formular</a> aus. Diese Option wird die Aufnahme Ihrer Zeitschrift in das Public Knowledge Project Private LOCKSS Network (PKP PLN) aktivieren."
 
-msgid "plugins.generic.pln.enabled"
-msgstr "Das PKP-PLN-Plug-In wurde aktiviert."
-
-msgid "plugins.generic.pln.disabled"
-msgstr "Das PKP-PLN-Plug-In wurde deaktiviert."
-
 msgid "plugins.generic.pln.settings"
 msgstr "Einstellungen"
 

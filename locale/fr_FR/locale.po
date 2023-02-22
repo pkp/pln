@@ -140,12 +140,6 @@ msgstr "Les conditions d'utilisation de PKP PN ont été mises à jour. L'accept
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "Le support ZipArchive doit être activé avant de poursuivre."
 
-msgid "plugins.generic.pln.enabled"
-msgstr "Le plugiciel PKP PN a été activé."
-
-msgid "plugins.generic.pln.disabled"
-msgstr "Le plugiciel a été désactivé."
-
 msgid "plugins.generic.pln.settings.acron_required"
 msgstr "Le plugiciel PKP PN exige le plugiciel Acron ou des outils de planification périodiques comme 'cron'."
 

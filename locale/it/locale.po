@@ -24,12 +24,6 @@ msgstr "Il plugin PKP PN cura il versamento dei contenuti pubblicati dalla rivis
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Leggi la <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">panoramica sulla PKP PLN</a> e completa <a href=\"{$plnPluginURL}\">questo semplice modulo</a>. Questa opzione permette l'inclusione della tua rivista nella Public Knowledge Project Private LOCKSS Network (PKP PLN)."
 
-msgid "plugins.generic.pln.enabled"
-msgstr "Il plugin PKP PN è stato abilitato."
-
-msgid "plugins.generic.pln.disabled"
-msgstr "Il plugin PKP PN è stato disabilitato."
-
 msgid "plugins.generic.pln.settings"
 msgstr "Impostazioni"
 
