@@ -350,9 +350,3 @@ msgid "plugins.generic.pln.settings.acron_required"
 msgstr ""
 "Plugin PKP PN vyžaduje buď plugin Acron, nebo nástroje pro pravidelné "
 "spouštění, například „cron“."
-
-msgid "plugins.generic.pln.disabled"
-msgstr "PKP PN plugin byl zakázán."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "PKP PN plugin byl povolen."

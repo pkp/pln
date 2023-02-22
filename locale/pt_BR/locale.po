@@ -27,12 +27,6 @@ msgstr ""
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr "<strong>Rede Privada LOCKSS da PKP</strong><br /><br />Por favor, leia o <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">resumo da PKP PN (Rede Privada LOCKSS) da PKP</a> e preencha <a href=\"{$plnPluginURL}\">este formulário</a>. Esta opção permitirá a inclusão de seu periódico no Public Knowledge Project Private LOCKSS Network (PLN do PKP)."
 
-msgid "plugins.generic.pln.enabled"
-msgstr "O plugin PKP PN do PKP foi habilitado."
-
-msgid "plugins.generic.pln.disabled"
-msgstr "O plugin PKP PN do PKP foi desabilitado."
-
 msgid "plugins.generic.pln.settings"
 msgstr "Configurações"
 

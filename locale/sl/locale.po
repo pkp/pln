@@ -340,12 +340,6 @@ msgstr "PKP PN nastavitve so shranjene."
 msgid "plugins.generic.pln.settings"
 msgstr "Nastavitve"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "PKP PN vtičnik je bil onemogočen."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "PKP PN vtičnik je bil omogočen."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong>PKP Preservation Network</strong><br /><br />Prosimo preberite <a "

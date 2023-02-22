@@ -349,12 +349,6 @@ msgstr ""
 msgid "plugins.generic.pln.settings"
 msgstr "Configuració"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "S'ha desactivat el mòdul PKP PN."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "S'ha activat el mòdul PKP PN."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong>PKP Preservation Network</strong><br /><br />Llegiu el <a href=\""

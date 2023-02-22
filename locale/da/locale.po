@@ -348,12 +348,6 @@ msgstr ""
 msgid "plugins.generic.pln.settings"
 msgstr "Indstillinger"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "PKP PN-pluginen er deaktiveret."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "PKP PN-pluginen er blevet aktiveret."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong>PKP Preservation Network</strong><br /><br />Læs <a href=\""

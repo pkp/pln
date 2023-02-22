@@ -149,12 +149,6 @@ msgstr ""
 "{$plnPluginURL}\">bu basit formu</a>doldurun. Bu seçenek, derginizin Kamu "
 "Bilgisi Proje Saklama Ağı'na (PKP PN) eklenmesini sağlar."
 
-msgid "plugins.generic.pln.enabled"
-msgstr "PKP PN eklentisi etkinleştirildi."
-
-msgid "plugins.generic.pln.disabled"
-msgstr "PKP PN eklentisi devre dışı bırakıldı."
-
 msgid "plugins.generic.pln.settings.acron_required"
 msgstr ""
 "PKP PN eklentisi, Acron eklentisini veya \"cron\" gibi periyodik zamanlama "

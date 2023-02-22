@@ -361,9 +361,3 @@ msgstr ""
 
 msgid "plugins.generic.pln.settings"
 msgstr "Настройки"
-
-msgid "plugins.generic.pln.disabled"
-msgstr "Добавката (плъгин) PKP PN е деактивирана."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "Добавката (плъгин) PKP PN е активирана."

@@ -93,12 +93,6 @@ msgstr ""
 "საშუალებას მოგცემთ შეიტანოთ თქვენი ჟურნალი საზოგადოებრივი ცოდნის პროექტის "
 "შენარჩუნების ქსელში (PKP PN)."
 
-msgid "plugins.generic.pln.enabled"
-msgstr "ჩართულია PKP PN მოდული."
-
-msgid "plugins.generic.pln.disabled"
-msgstr "PKP PN მოდული გამორთულია."
-
 msgid "plugins.generic.pln.settings.saved"
 msgstr "PKP PN პარამეტრები შენახულია."
 

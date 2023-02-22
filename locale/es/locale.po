@@ -349,12 +349,6 @@ msgstr ""
 msgid "plugins.generic.pln.settings"
 msgstr "Ajustes"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "Se ha desactivado el módulo PKP PN."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "Se ha activado el módulo PKP PN."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong>PKP Preservation Network</strong><br /><br />Consulte el <a href=\""
