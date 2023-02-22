@@ -74,19 +74,18 @@ class Depositor extends ScheduledTask {
 			// get the sword service document
 			$sdResult = $this->_plugin->getServiceDocument($journal->getId());
 
-			// if for some reason we didn't get a valid reponse, skip this journal
+			// if for some reason we didn't get a valid response, skip this journal
 			if ($sdResult != PLN_PLUGIN_HTTP_STATUS_OK) {
 				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR);
 				continue;
 			}
 
-			// TODO: DEFSTAT - REMOVE COMMENTS HERE
-			// if the pln isn't accepting deposits, skip this journal
-			//if (!$this->_plugin->getSetting($journal->getId(), 'pln_accepting')) {
-			//  $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			//  continue;
-			//}
+			// if the pln isn't accepting deposits, skip the journal
+			if (!$this->_plugin->getSetting($journal->getId(), 'pln_accepting')) {
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				continue;
+			}
 
 			// if the terms haven't been agreed to, skip transfer
 			if (!$this->_plugin->termsAgreed($journal->getId())) {

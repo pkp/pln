@@ -50,12 +50,6 @@ msgstr ""
 msgid "plugins.generic.pln.settings"
 msgstr "Inställningar"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "PKP PN-pluginet har deaktiverats."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "PKP PN-pluginet har aktiverats."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong>PKP Preservation Network</strong><br /><br />Var vänlig läs<a href=\""

@@ -25,12 +25,6 @@ msgstr ""
 msgid "plugins.generic.pln.settings"
 msgstr "Configuración"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "Desactivouse o complemento PKP PN."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "O complemento PKP PN está habilitado."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong>Rede de preservación de PKP (PKP Preservation Network)</strong> <br "
