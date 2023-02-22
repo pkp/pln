@@ -344,12 +344,6 @@ msgstr ""
 msgid "plugins.generic.pln.settings"
 msgstr "Կարգավորումներ"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "PKP PN փլագինը անջատված է."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "PKP PN փլագինը միացված է."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong>PKP Preservation Network</strong><br /><br />Կարդացեք <a href=\""

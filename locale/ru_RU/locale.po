@@ -24,12 +24,6 @@ msgstr "Плагин «PKP PLN» отправляет ваш опубликов�
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr "<strong>Частная сеть LOCKSS от PKP</strong><br /><br />Пожалуйста, прочитайте <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">обзор PKP PLN</a> и заполните <a href=\"{$plnPluginURL}\">эту простую форму</a>. Эта настройка позволит включить ваш журналв Частную сеть LOCKSS, созданную Public Knowledge Project (PKP PLN)."
 
-msgid "plugins.generic.pln.enabled"
-msgstr "Плагин «PKP PLN» был включен."
-
-msgid "plugins.generic.pln.disabled"
-msgstr "Плагин «PKP PLN» был отключен."
-
 msgid "plugins.generic.pln.settings"
 msgstr "Настройки"
 

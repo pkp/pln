@@ -296,12 +296,6 @@ msgstr ""
 msgid "plugins.generic.pln.settings"
 msgstr "Tetapan"
 
-msgid "plugins.generic.pln.disabled"
-msgstr "Plugin PKP PN telah dilumpuhkan."
-
-msgid "plugins.generic.pln.enabled"
-msgstr "Plugin PKP PN telah didayakan."
-
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr ""
 "<strong> PKP Preservation Network </strong> <br /> <br /> Baca <a href=\""
