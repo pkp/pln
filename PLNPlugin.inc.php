@@ -49,20 +49,20 @@ define('PLN_PLUGIN_CONT_IRI', PLN_PLUGIN_BASE_IRI . '/cont-iri');
 define('PLN_PLUGIN_ARCHIVE_FOLDER', 'pln');
 
 // local statuses
-define('PLN_PLUGIN_DEPOSIT_STATUS_NEW',					0x00);
-define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED',			0x01);
-define('PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED',			0x02);
+define('PLN_PLUGIN_DEPOSIT_STATUS_NEW',					0x000);
+define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED',			0x001);
+define('PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED',			0x002);
 define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED',	0x200);
 
 // status on the processing server
-define('PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED',			0x04);
-define('PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED',			0x08); // was SYNCING
-define('PLN_PLUGIN_DEPOSIT_STATUS_SENT',				0x10); // was SYNCED
+define('PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED',			0x004);
+define('PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED',			0x008); // was SYNCING
+define('PLN_PLUGIN_DEPOSIT_STATUS_SENT',				0x010); // was SYNCED
 
 // status in the LOCKSS PLN
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED',		0x20); // was REMOTE_FAILURE
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_SYNCING',		0x40); // was LOCAL_FAILURE
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT',	0x80); // was UPDATE
+define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED',		0x020); // was REMOTE_FAILURE
+define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_SYNCING',		0x040); // was LOCAL_FAILURE
+define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT',	0x080); // was UPDATE
 
 define('PLN_PLUGIN_DEPOSIT_STATUS_UPDATE',				0x100);
 
@@ -70,11 +70,10 @@ define('PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION', 'Submission');
 define('PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE', 'Issue');
 
 define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE',	Notification::NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000001);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000002);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000003);
-// define('PLN_PLUGIN_NOTIFICATION_TYPE_CURL_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000004); DEPRECATED
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 0x0000005);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 1);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 5);
 
 class PLNPlugin extends GenericPlugin {
 	/**
@@ -91,7 +90,7 @@ class PLNPlugin extends GenericPlugin {
 			HookRegistry::register('PluginRegistry::loadCategory', array($this, 'callbackLoadCategory'));
 			HookRegistry::register('JournalDAO::deleteJournalById', array($this, 'callbackDeleteJournalById'));
 			HookRegistry::register('LoadHandler', array($this, 'callbackLoadHandler'));
-			HookRegistry::register('NotificationManager::getNotificationContents', array($this, 'callbackNotificationContents'));
+			HookRegistry::register('NotificationManager::getNotificationMessage', array($this, 'callbackNotificationMessage'));
 			HookRegistry::register('LoadComponentHandler', array($this, 'setupComponentHandlers'));
 			$this->_disableRestrictions();
 		}
@@ -302,22 +301,19 @@ class PLNPlugin extends GenericPlugin {
 	 * @return boolean false to continue processing subsequent hooks
 	 */
 	public function callbackNotificationContents($hookName, $args) {
+		/** @var Notification */
 		$notification = $args[0];
-		$message = $args[1];
+		$message =& $args[1];
 
 		$type = $notification->getType();
-		assert(isset($type));
-		switch ($type) {
-			case PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED:
-				$message = __('plugins.generic.pln.notifications.terms_updated');
-				break;
-			case PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING:
-				$message = __('plugins.generic.pln.notifications.issn_missing');
-				break;
-			case PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR:
-				$message = __('plugins.generic.pln.notifications.http_error');
-				break;
-		}
+		$notificationByType = [
+			PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED => __('plugins.generic.pln.notifications.terms_updated'),
+			PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING => __('plugins.generic.pln.notifications.issn_missing'),
+			PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR => __('plugins.generic.pln.notifications.http_error'),
+			PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING => __('plugins.generic.pln.notifications.http_error')
+		];
+		$message = $notificationByType[$type] ?? $message;
+		return false;
 	}
 
 	/**
@@ -336,6 +332,7 @@ class PLNPlugin extends GenericPlugin {
 				}
 			}
 		}
+		return false;
 	}
 
 	/**
