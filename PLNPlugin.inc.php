@@ -271,8 +271,10 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function callbackDeleteJournalById($hookName, $params) {
 		$journalId = $params[1];
+		/** @var DepositDAO */
 		$depositDao = DAORegistry::getDAO('DepositDAO');
 		$depositDao->deleteByJournalId($journalId);
+		/** @var DepositObjectDAO */
 		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
 		$depositObjectDao->deleteByJournalId($journalId);
 		return false;
@@ -374,6 +376,7 @@ class PLNPlugin extends GenericPlugin {
 
 				if ($request->getUserVar('reset')) {
 					$deposit_ids = array_keys($request->getUserVar('reset'));
+					/** @var DepositDAO */
 					$depositDao = DAORegistry::getDAO('DepositDAO');
 					foreach ($deposit_ids as $deposit_id) {
 						$deposit = $depositDao->getById($deposit_id); /** @var Deposit $deposit */
@@ -476,6 +479,7 @@ class PLNPlugin extends GenericPlugin {
 		$this->updateSetting($contextId, 'checksum_type', $element->nodeValue);
 
 		// update the network status
+		/** @var DOMElement */
 		$element = $serviceDocument->getElementsByTagName('pln_accepting')->item(0);
 		$this->updateSetting($contextId, 'pln_accepting', (($element->getAttribute('is_accepting') == 'Yes') ? true : false));
 		$this->updateSetting($contextId, 'pln_accepting_message', $element->nodeValue);
@@ -511,14 +515,16 @@ class PLNPlugin extends GenericPlugin {
 	 * @param int $notificationType
 	 */
 	public function createJournalManagerNotification($contextId, $notificationType) {
+		/** @var RoleDAO */
 		$roleDao = DAORegistry::getDAO('RoleDAO');
+		/** @var DAOResultIterator */
 		$journalManagers = $roleDao->getUsersByRoleId(ROLE_ID_MANAGER, $contextId);
 		import('classes.notification.NotificationManager');
 		$notificationManager = new NotificationManager();
 		// TODO: this currently gets sent to all journal managers - perhaps only limit to the technical contact's account?
+		/** @var User */
 		while ($journalManager = $journalManagers->next()) {
 			$notificationManager->createTrivialNotification($journalManager->getId(), $notificationType);
-			unset($journalManager);
 		}
 	}
 

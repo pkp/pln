@@ -106,7 +106,7 @@ class PLNStatusGridHandler extends GridHandler {
 	/**
 	 * Reset Deposit
 	 * @param array $args
-	 * @param PKPRequest $request
+	 * @param Request $request
 	 *
 	 * @return string Serialized JSON object
 	 */
