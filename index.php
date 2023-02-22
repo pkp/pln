@@ -10,6 +10,6 @@
  * @brief Wrapper for PLN plugin.
  */
 
-require_once('PLNPlugin.inc.php');
+require_once 'PLNPlugin.inc.php';
 return new PLNPlugin();
 

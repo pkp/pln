@@ -139,11 +139,11 @@ class PLNGatewayPlugin extends GatewayPlugin {
 			);
 		}
 		$templateMgr->assign('termsDisplay', new ArrayItemIterator($termsDisplay));
-
+		/** @var VersionDAO */
 		$versionDao = DAORegistry::getDAO('VersionDAO');
 		$ojsVersion = $versionDao->getCurrentVersion();
 		$templateMgr->assign('ojsVersion', $ojsVersion->getVersionString());
-
+		/** @var SubmissionDAO */
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
 		$publications = array();
 		$submissions = $submissionDao->getByContextId($journal->getId());
