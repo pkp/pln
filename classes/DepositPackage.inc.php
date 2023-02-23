@@ -490,8 +490,6 @@ class DepositPackage {
 				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$this->_deposit->setTransferredStatus();
-			// unset a remote error if this worked
-			$this->_deposit->setLockssReceivedStatus(false);
 			// if this was an update, unset the update flag
 			$this->_deposit->setLockssAgreementStatus(false);
 			$this->_deposit->setLastStatusDate(time());
@@ -520,7 +518,6 @@ class DepositPackage {
 				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
 			}
 
-			$this->_deposit->setLockssReceivedStatus();
 			$this->_deposit->setLastStatusDate(time());
 			$depositDao->updateObject($this->_deposit);
 		}
@@ -659,12 +656,6 @@ class DepositPackage {
 			case '':
 				// do nothing.
 				break;
-			// WARNING: The usage of 'received' is unknown and it may be removed in the future
-			case 'received':
-				$this->_deposit->setLockssReceivedStatus();
-				break;
-			// WARNING: The usage of 'syncing' is unknown and it may be removed in the future
-			case 'syncing':
 			case 'inProgress':
 				$this->_deposit->setLockssSyncingStatus();
 				break;
