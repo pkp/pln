@@ -21,6 +21,9 @@ msgstr "PKP PN Plugin"
 msgid "plugins.generic.pln.description"
 msgstr "The PKP PN plugin will deposit your published content into the PKP Preservation Network."
 
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr "Access the PKP PN plugin settings to view and accept the terms of the service."
+
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr "<strong>PKP Preservation Network</strong><br /><br />Please read the <a href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">overview of the PKP PN</a> and complete <a href=\"{$plnPluginURL}\">this simple form</a>. This option will enable inclusion of your journal in the Public Knowledge Project Preservation Network (PKP PN)."
 

@@ -603,4 +603,18 @@ class PLNPlugin extends GenericPlugin {
 			'result' => (string) $response->getBody(),
 		);
 	}
+
+	/**
+	 * @copydoc LazyLoadPlugin::register()
+	 */
+	public function setEnabled($enabled) {
+		parent::setEnabled($enabled);
+		if ($enabled) {
+			(new NotificationManager())->createTrivialNotification(
+				Application::get()->getRequest()->getUser()->getId(),
+				NOTIFICATION_TYPE_SUCCESS,
+				['contents' => __('plugins.generic.pln.onPluginEnabledNotification')]
+			);
+		}
+	}
 }
