@@ -245,17 +245,6 @@ class DepositObjectDAO extends DAO {
 	}
 
 	/**
-	 * Delete deposit object
-	 * @param Deposit $depositObject
-	 */
-	public function deleteObject($depositObject) {
-		$this->update(
-			'DELETE from pln_deposit_objects WHERE deposit_object_id = ?',
-			[(int) $depositObject->getId()]
-		);
-	}
-
-	/**
 	 * Get the ID of the last inserted deposit object.
 	 * @return int
 	 */
@@ -292,33 +281,21 @@ class DepositObjectDAO extends DAO {
 	}
 
 	/**
-	 * Retrieve all deposit objects by journal ID.
-	 * @param int $journalId
-	 * @return DAOResultFactory
+	 * Delete deposit objects assigned to non-existent journal/deposit IDs.
 	 */
-	public function getByJournalId($journalId, $dbResultRange = null) {
-		$params[] = $journalId;
-
-		$result = $this->retrieveRange(
-			$sql = 'SELECT *
+	public function pruneOrphaned() {
+		$this->update(
+			'DELETE
 			FROM pln_deposit_objects
-			WHERE journal_id = ?
-			ORDER BY deposit_object_id',
-			$params,
-			$dbResultRange
+			WHERE
+				journal_id NOT IN (
+					SELECT journal_id
+					FROM journals
+				)
+				OR deposit_id NOT IN (
+					SELECT deposit_id
+					FROM pln_deposits
+				)'
 		);
-
-		return new DAOResultFactory($result, $this, '_fromRow', [], $sql, $params, $dbResultRange);
-	}
-
-	/**
-	 * Delete deposit objects by journal id
-	 * @param $journalId
-	 */
-	public function deleteByJournalId($journalId) {
-		$depositObjects = $this->getByJournalId($journalId);
-		foreach($depositObjects as $depositObject) {
-			$this->deleteObject($depositObject);
-		}
 	}
 }
