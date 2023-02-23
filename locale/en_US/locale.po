@@ -149,6 +149,9 @@ msgstr "Packaging Failure"
 msgid "plugins.generic.pln.depositorTask.name"
 msgstr "PKP PN Depositor Task"
 
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Pruning orphaned deposits."
+
 msgid "plugins.generic.pln.notifications.processing_for"
 msgstr "Depositor processing for {$title}."
 
@@ -259,6 +262,9 @@ msgstr "Posting the Atom file to staging server for deposit {$depositId} succeed
 
 msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
 msgstr "Posting the Atom file to staging server for deposit {$depositId} failed (Error: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "The removal of the following deposits failed: {$depositIds}."
 
 msgid "plugins.generic.plngateway.displayName"
 msgstr "PN Gateway"
