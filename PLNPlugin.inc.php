@@ -80,7 +80,6 @@ class PLNPlugin extends GenericPlugin {
 			$this->import('classes.DepositPackage');
 
 			HookRegistry::register('PluginRegistry::loadCategory', array($this, 'callbackLoadCategory'));
-			HookRegistry::register('JournalDAO::deleteJournalById', array($this, 'callbackDeleteJournalById'));
 			HookRegistry::register('LoadHandler', array($this, 'callbackLoadHandler'));
 			HookRegistry::register('NotificationManager::getNotificationMessage', array($this, 'callbackNotificationContents'));
 			HookRegistry::register('LoadComponentHandler', array($this, 'setupComponentHandlers'));
@@ -260,23 +259,6 @@ class PLNPlugin extends GenericPlugin {
 				break;
 		}
 
-		return false;
-	}
-
-	/**
-	 * Delete all plug-in data for a journal when the journal is deleted
-	 * @param string $hookName (JournalDAO::deleteJournalById)
-	 * @param array $args (JournalDAO, journalId)
-	 * @return boolean false to continue processing subsequent hooks
-	 */
-	public function callbackDeleteJournalById($hookName, $params) {
-		$journalId = $params[1];
-		/** @var DepositDAO */
-		$depositDao = DAORegistry::getDAO('DepositDAO');
-		$depositDao->deleteByJournalId($journalId);
-		/** @var DepositObjectDAO */
-		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
-		$depositObjectDao->deleteByJournalId($journalId);
 		return false;
 	}
 
