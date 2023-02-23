@@ -105,18 +105,15 @@ class DepositDAO extends \PKP\db\DAO {
 	/**
 	 * Delete deposit
 	 * @param Deposit $deposit
+	 * @return bool True on success
 	 */
 	public function deleteObject($deposit) {
-		/** @var DepositObjectDAO */
-		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
-		foreach($deposit->getDepositObjects() as $depositObject) {
-			$depositObjectDao->deleteObject($depositObject);
+		if (!(new DepositPackage($deposit))->remove()) {
+			return false;
 		}
 
-		$this->update(
-			'DELETE from pln_deposits WHERE deposit_id = ?',
-			[(int) $deposit->getId()]
-		);
+		$this->update('DELETE from pln_deposits WHERE deposit_id = ?', [(int) $deposit->getId()]);
+		return true;
 	}
 
 	/**
@@ -276,13 +273,27 @@ class DepositDAO extends \PKP\db\DAO {
 	}
 
 	/**
-	 * Delete deposits by journal id
-	 * @param $journalId
+	 * Delete deposits assigned to non-existent journal IDs.
+	 * @return int[] Deposit IDs which failed to be removed
 	 */
-	public function deleteByJournalId($journalId) {
-		$deposits = $this->getByJournalId($journalId);
-		foreach($deposits as $deposit) {
-			$this->deleteObject($deposit);
+	public function pruneOrphaned() {
+		$result = $this->retrieveRange(
+			$sql = 'SELECT *
+			FROM pln_deposits
+			WHERE journal_id NOT IN (
+				SELECT journal_id
+				FROM journals
+			)
+			ORDER BY deposit_id'
+		);
+		$failedIds = [];
+		$deposits = new DAOResultFactory($result, $this, '_fromRow', [], $sql);
+		/** @var Deposit */
+		foreach($deposits->toIterator() as $deposit) {
+			if (!$this->deleteObject($deposit)) {
+				$failedIds[] = $deposit->getId();
+			}
 		}
+		return $failedIds;
 	}
 }

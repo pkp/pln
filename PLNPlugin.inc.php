@@ -11,6 +11,7 @@
  * @brief PLN plugin class
  */
 
+use APP\core\Application;
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
 use PKP\plugins\GenericPlugin;
@@ -20,6 +21,7 @@ use PKP\security\Role;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\facades\Repo;
+use PKP\notification\PKPNotification;
 
 import('classes.publication.Publication');
 import('classes.issue.Issue');
@@ -88,7 +90,6 @@ class PLNPlugin extends GenericPlugin {
 			$this->import('classes.DepositPackage');
 
 			HookRegistry::register('PluginRegistry::loadCategory', array($this, 'callbackLoadCategory'));
-			HookRegistry::register('JournalDAO::deleteJournalById', array($this, 'callbackDeleteJournalById'));
 			HookRegistry::register('LoadHandler', array($this, 'callbackLoadHandler'));
 			HookRegistry::register('NotificationManager::getNotificationMessage', array($this, 'callbackNotificationMessage'));
 			HookRegistry::register('LoadComponentHandler', array($this, 'setupComponentHandlers'));
@@ -267,21 +268,6 @@ class PLNPlugin extends GenericPlugin {
 				break;
 		}
 
-		return false;
-	}
-
-	/**
-	 * Delete all plug-in data for a journal when the journal is deleted
-	 * @param string $hookName (JournalDAO::deleteJournalById)
-	 * @param array $args (JournalDAO, journalId)
-	 * @return boolean false to continue processing subsequent hooks
-	 */
-	public function callbackDeleteJournalById($hookName, $params) {
-		$journalId = $params[1];
-		$depositDao = DAORegistry::getDAO('DepositDAO');
-		$depositDao->deleteByJournalId($journalId);
-		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
-		$depositObjectDao->deleteByJournalId($journalId);
 		return false;
 	}
 
@@ -622,5 +608,19 @@ class PLNPlugin extends GenericPlugin {
 			'status' => $response->getStatusCode(),
 			'result' => (string) $response->getBody(),
 		);
+	}
+
+	/**
+	 * @copydoc LazyLoadPlugin::register()
+	 */
+	public function setEnabled($enabled) {
+		parent::setEnabled($enabled);
+		if ($enabled) {
+			(new NotificationManager())->createTrivialNotification(
+				Application::get()->getRequest()->getUser()->getId(),
+				PKPNotification::NOTIFICATION_TYPE_SUCCESS,
+				['contents' => __('plugins.generic.pln.onPluginEnabledNotification')]
+			);
+		}
 	}
 }

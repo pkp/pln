@@ -490,8 +490,6 @@ class DepositPackage {
 				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$this->_deposit->setTransferredStatus();
-			// unset a remote error if this worked
-			$this->_deposit->setLockssReceivedStatus(false);
 			// if this was an update, unset the update flag
 			$this->_deposit->setLockssAgreementStatus(false);
 			$this->_deposit->setLastStatusDate(time());
@@ -520,7 +518,6 @@ class DepositPackage {
 				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
 			}
 
-			$this->_deposit->setLockssReceivedStatus();
 			$this->_deposit->setLastStatusDate(time());
 			$depositDao->updateObject($this->_deposit);
 		}
@@ -540,13 +537,9 @@ class DepositPackage {
 			$fileManager->mkdir($plnDir);
 		}
 
-		// make a location for our work and clear it out if it's there
-		$depositDir = $plnDir . DIRECTORY_SEPARATOR . $this->_deposit->getUUID();
-		if ($fileManager->fileExists($depositDir, 'dir')) {
-			$fileManager->rmtree($depositDir);
-		}
-
-		$fileManager->mkdir($depositDir);
+		// make a location for our work and clear it out if it already exists
+		$this->remove();
+		$fileManager->mkdir($this->getDepositDir());
 
 		$packagePath = $this->generatePackage();
 		if (!$packagePath) {
@@ -663,20 +656,12 @@ class DepositPackage {
 			case '':
 				// do nothing.
 				break;
-			// WARNING: The usage of 'received' is unknown and it may be removed in the future
-			case 'received':
-				$this->_deposit->setLockssReceivedStatus();
-				break;
-			// WARNING: The usage of 'syncing' is unknown and it may be removed in the future
-			case 'syncing':
 			case 'inProgress':
 				$this->_deposit->setLockssSyncingStatus();
 				break;
 			case 'agreement':
 				if(!$this->_deposit->getLockssAgreementStatus()) {
-					$fileManager = new ContextFileManager($this->_deposit->getJournalId());
-					$depositDir = $this->getDepositDir();
-					$fileManager->rmtree($depositDir);
+					$this->remove();
 				}
 				$this->_deposit->setLockssAgreementStatus(true);
 				break;
@@ -705,6 +690,15 @@ class DepositPackage {
 			$deposit->setPackagingFailedStatus();
 			$depositDao->updateObject($deposit);
 		}
+	}
+
+	/**
+	 * Delete a deposit package from the disk
+	 * @return bool True on success
+	 */
+	public function remove() {
+		return (new ContextFileManager($this->_deposit->getJournalId()))
+			->rmtree($this->getDepositDir());
 	}
 }
 

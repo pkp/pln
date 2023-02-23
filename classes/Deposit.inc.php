@@ -153,9 +153,6 @@ class Deposit extends DataObject {
 		if ($this->getLockssSyncingStatus()) {
 			return __('plugins.generic.pln.status.syncing');
 		}
-		if ($this->getLockssReceivedStatus()) {
-			return __('plugins.generic.pln.status.received');
-		}
 		return __('plugins.generic.pln.status.unknown');
 	}
 
@@ -300,22 +297,6 @@ class Deposit extends DataObject {
 	 */
 	public function setSentStatus($status = true) {
 		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_SENT);
-	}
-
-	/**
-	 * Get whether there's been an error from the staging server
-	 * @return int
-	 */
-	public function getLockssReceivedStatus() {
-		return $this->_getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
-	}
-
-	/**
-	 * Set whether there's been an error from the staging server
-	 * @param boolean $status
-	 */
-	public function setLockssReceivedStatus($status = true) {
-		$this->_setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
 	}
 
 	/**

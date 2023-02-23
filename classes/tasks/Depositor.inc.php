@@ -43,7 +43,7 @@ class Depositor extends ScheduledTask {
 	public function executeActions() {
 		if (!$this->_plugin) return false;
 
-		$this->addExecutionLogEntry('PLN Depositor executeActions started', ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+		$this->addExecutionLogEntry('PKP Preservation Network Processor', ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 		$journalDao = DAORegistry::getDAO('JournalDAO');
 
@@ -124,6 +124,8 @@ class Depositor extends ScheduledTask {
 			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.transferringdeposits"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			$this->_processNeedTransferring($journal);
 		}
+
+		$this->pruneOrphaned();
 
 		return true;
 	}
@@ -261,7 +263,7 @@ class Depositor extends ScheduledTask {
 				}
 				break;
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
-				// create a new deposit for reach deposit object
+				// create a new deposit for each deposit object
 				while ($newObject = $newObjects->next()) {
 					$newDeposit = new Deposit($this->_plugin->newUUID());
 					$newDeposit->setJournalId($journal->getId());
@@ -273,5 +275,23 @@ class Depositor extends ScheduledTask {
 				break;
 			default: assert(false);
 		}
+	}
+
+	/**
+	 * Removes orphaned deposits
+	 * This should be called at the end of the process to avoid dropping "deposit objects", which still don't have an assigned deposit
+	 */
+	public function pruneOrphaned() {
+		$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pruningOrphanedDeposits'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+
+		/** @var DepositDAO */
+		$depositDao = DAORegistry::getDAO('DepositDAO');
+		if (count($failedDepositIds = $depositDao->pruneOrphaned())) {
+			$this->addExecutionLogEntry(__('plugins.generic.pln.depositor.pruningDeposits.error', ['depositIds' => implode(', ', $failedDepositIds)]), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+		}
+
+		/** @var DepositObjectDAO */
+		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
+		$depositObjectDao->pruneOrphaned();
 	}
 }
