@@ -11,6 +11,7 @@
  * @brief PLN plugin class
  */
 
+use APP\core\Application;
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
 use PKP\plugins\GenericPlugin;
@@ -20,6 +21,7 @@ use PKP\security\Role;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\facades\Repo;
+use PKP\notification\PKPNotification;
 
 import('classes.publication.Publication');
 import('classes.issue.Issue');
@@ -622,5 +624,19 @@ class PLNPlugin extends GenericPlugin {
 			'status' => $response->getStatusCode(),
 			'result' => (string) $response->getBody(),
 		);
+	}
+
+	/**
+	 * @copydoc LazyLoadPlugin::register()
+	 */
+	public function setEnabled($enabled) {
+		parent::setEnabled($enabled);
+		if ($enabled) {
+			(new NotificationManager())->createTrivialNotification(
+				Application::get()->getRequest()->getUser()->getId(),
+				PKPNotification::NOTIFICATION_TYPE_SUCCESS,
+				['contents' => __('plugins.generic.pln.onPluginEnabledNotification')]
+			);
+		}
 	}
 }
