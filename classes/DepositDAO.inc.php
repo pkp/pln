@@ -214,7 +214,8 @@ class DepositDAO extends DAO {
 			WHERE d.journal_id = ?
 			AND d.status & ? = 0
 			AND d.status & ? = 0
-			AND d.status & ? = 0',
+			AND d.status & ? = 0
+			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED,
@@ -238,7 +239,8 @@ class DepositDAO extends DAO {
 			WHERE d.journal_id = ?
 			AND d.status & ? = 0
 			AND d.status & ? = 0
-			AND d.status & ? = 0',
+			AND d.status & ? = 0
+			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
@@ -262,7 +264,8 @@ class DepositDAO extends DAO {
 			WHERE d.journal_id = ?
 			AND d.status & ? <> 0
 			AND d.status & ? = 0
-			AND d.status & ? = 0',
+			AND d.status & ? = 0
+			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
