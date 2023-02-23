@@ -21,6 +21,9 @@ msgstr "PKP PN Plugin"
 msgid "plugins.generic.pln.description"
 msgstr "The PKP PN plugin will deposit your published content into the PKP Preservation Network."
 
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr "Access the PKP PN plugin settings to view and accept the terms of the service."
+
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr "<strong>PKP Preservation Network</strong><br /><br />Please read the <a href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">overview of the PKP PN</a> and complete <a href=\"{$plnPluginURL}\">this simple form</a>. This option will enable inclusion of your journal in the Public Knowledge Project Preservation Network (PKP PN)."
 
@@ -146,6 +149,9 @@ msgstr "Packaging Failure"
 msgid "plugins.generic.pln.depositorTask.name"
 msgstr "PKP PN Depositor Task"
 
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Pruning orphaned deposits."
+
 msgid "plugins.generic.pln.notifications.processing_for"
 msgstr "Depositor processing for {$title}."
 
@@ -256,6 +262,9 @@ msgstr "Posting the Atom file to staging server for deposit {$depositId} succeed
 
 msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
 msgstr "Posting the Atom file to staging server for deposit {$depositId} failed (Error: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "The removal of the following deposits failed: {$depositIds}."
 
 msgid "plugins.generic.plngateway.displayName"
 msgstr "PN Gateway"

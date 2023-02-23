@@ -80,7 +80,6 @@ class PLNPlugin extends GenericPlugin {
 			$this->import('classes.DepositPackage');
 
 			HookRegistry::register('PluginRegistry::loadCategory', array($this, 'callbackLoadCategory'));
-			HookRegistry::register('JournalDAO::deleteJournalById', array($this, 'callbackDeleteJournalById'));
 			HookRegistry::register('LoadHandler', array($this, 'callbackLoadHandler'));
 			HookRegistry::register('NotificationManager::getNotificationMessage', array($this, 'callbackNotificationContents'));
 			HookRegistry::register('LoadComponentHandler', array($this, 'setupComponentHandlers'));
@@ -260,23 +259,6 @@ class PLNPlugin extends GenericPlugin {
 				break;
 		}
 
-		return false;
-	}
-
-	/**
-	 * Delete all plug-in data for a journal when the journal is deleted
-	 * @param string $hookName (JournalDAO::deleteJournalById)
-	 * @param array $args (JournalDAO, journalId)
-	 * @return boolean false to continue processing subsequent hooks
-	 */
-	public function callbackDeleteJournalById($hookName, $params) {
-		$journalId = $params[1];
-		/** @var DepositDAO */
-		$depositDao = DAORegistry::getDAO('DepositDAO');
-		$depositDao->deleteByJournalId($journalId);
-		/** @var DepositObjectDAO */
-		$depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
-		$depositObjectDao->deleteByJournalId($journalId);
 		return false;
 	}
 
@@ -498,13 +480,13 @@ class PLNPlugin extends GenericPlugin {
 	public function createJournalManagerNotification($contextId, $notificationType) {
 		/** @var RoleDAO */
 		$roleDao = DAORegistry::getDAO('RoleDAO');
-		/** @var DAOResultIterator */
+		/** @var DAOResultFactory */
 		$journalManagers = $roleDao->getUsersByRoleId(ROLE_ID_MANAGER, $contextId);
 		import('classes.notification.NotificationManager');
 		$notificationManager = new NotificationManager();
 		// TODO: this currently gets sent to all journal managers - perhaps only limit to the technical contact's account?
 		/** @var User */
-		while ($journalManager = $journalManagers->next()) {
+		foreach ($journalManagers->toIterator() as $journalManager) {
 			$notificationManager->createTrivialNotification($journalManager->getId(), $notificationType);
 		}
 	}
@@ -602,5 +584,19 @@ class PLNPlugin extends GenericPlugin {
 			'status' => $response->getStatusCode(),
 			'result' => (string) $response->getBody(),
 		);
+	}
+
+	/**
+	 * @copydoc LazyLoadPlugin::register()
+	 */
+	public function setEnabled($enabled) {
+		parent::setEnabled($enabled);
+		if ($enabled) {
+			(new NotificationManager())->createTrivialNotification(
+				Application::get()->getRequest()->getUser()->getId(),
+				NOTIFICATION_TYPE_SUCCESS,
+				['contents' => __('plugins.generic.pln.onPluginEnabledNotification')]
+			);
+		}
 	}
 }
