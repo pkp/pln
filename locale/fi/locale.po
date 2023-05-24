@@ -1,15 +1,16 @@
+# Antti-Jussi Nygård <ajnyga@gmail.com>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-04-08 19:55+0000\n"
+"PO-Revision-Date: 2023-05-25 16:49+0000\n"
 "Last-Translator: Antti-Jussi Nygård <ajnyga@gmail.com>\n"
-"Language-Team: Finnish <http://translate.pkp.sfu.ca/projects/plugins/pln/"
-"fi_FI/>\n"
-"Language: fi_FI\n"
+"Language-Team: Finnish <http://translate.pkp.sfu.ca/projects/plugins/pln/fi/>"
+"\n"
+"Language: fi\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln.description"
 msgstr ""
@@ -18,3 +19,50 @@ msgstr ""
 
 msgid "plugins.generic.pln"
 msgstr "PKP PN -lisäosa"
+
+msgid "plugins.generic.pln.enabled"
+msgstr "PKP PN -lisäosa on otettu käyttöön."
+
+msgid "plugins.generic.pln.disabled"
+msgstr "PKP PN -lisäosa on otettu pois käytöstä."
+
+msgid "plugins.generic.pln.settings"
+msgstr "Asetukset"
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"PKP PN vaatii joko Acron-lisäosan tai ajoitettujen tehtävien (cron) käyttöä."
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "PKP PN asetukset tallennettu."
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Käyttöehdot"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Olen samaa mieltä"
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Julkaisun tunniste"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"Tämä on lehden yksilöllinen tunniste PKP PN -palvelussa. Sinun on ehkä "
+"jaettava tämä PKP PN -palvelun ylläpitäjien kanssa käyttäjätukea varten."
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Päivitä"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Julkaisun hallinnoijana hyväksyn ja vahvistan seuraavat ehdot, jotka "
+"koskevat osallistumista Public Knowledge Projectin Preservation Network (PKP-"
+"PN) -palveluun:"
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>PKP Preservation Network</strong><br /><br />Ole hyvä ja lue <a href="
+"\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">PKP PN -palvelun kuvaus</a> "
+"ja täytä <a href=\"{$plnPluginURL}\">tämä lyhyt lomake</a>. Tämä "
+"mahdollistaa lehden lisäämisen Public Knowledge Project Preservation Network "
+"(PKP PN) -palveluun."
