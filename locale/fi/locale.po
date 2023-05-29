@@ -1,7 +1,7 @@
 # Antti-Jussi Nygård <ajnyga@gmail.com>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-05-25 16:49+0000\n"
+"PO-Revision-Date: 2023-06-01 08:49+0000\n"
 "Last-Translator: Antti-Jussi Nygård <ajnyga@gmail.com>\n"
 "Language-Team: Finnish <http://translate.pkp.sfu.ca/projects/plugins/pln/fi/>"
 "\n"
@@ -47,7 +47,7 @@ msgstr "Julkaisun tunniste"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
 msgstr ""
-"Tämä on lehden yksilöllinen tunniste PKP PN -palvelussa. Sinun on ehkä "
+"Tämä on julkaisun yksilöllinen tunniste PKP PN -palvelussa. Sinun on ehkä "
 "jaettava tämä PKP PN -palvelun ylläpitäjien kanssa käyttäjätukea varten."
 
 msgid "plugins.generic.pln.settings.refresh"
@@ -64,5 +64,340 @@ msgstr ""
 "<strong>PKP Preservation Network</strong><br /><br />Ole hyvä ja lue <a href="
 "\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">PKP PN -palvelun kuvaus</a> "
 "ja täytä <a href=\"{$plnPluginURL}\">tämä lyhyt lomake</a>. Tämä "
-"mahdollistaa lehden lisäämisen Public Knowledge Project Preservation Network "
-"(PKP PN) -palveluun."
+"mahdollistaa julkaisun lisäämisen Public Knowledge Project Preservation "
+"Network (PKP PN) -palveluun."
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"Jos ehtoja ei jostain syystä ole lueteltu yllä tai tiedät, että nämä ehdot "
+"ovat muuttuneet, päivitä yllä luetellut ehdot valitsemalla Päivitä."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Valitse talletuskohteen tyyppi."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Valitse talletuskohteen kynnysarvo."
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr "Tallettaminen PKP PN -palveluun edellyttää käyttöehtojen hyväksymistä."
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Artikkeli"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Numero"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Palvelun tila: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Talletukset"
+
+msgid "plugins.generic.pln.status"
+msgstr "Tila"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Kohteen ID"
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Numeron ID"
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Tyyppi"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Kohteet"
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Tila"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Tuntematon"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Uusi"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Pakattu"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Siirretty"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Vastaanotettu"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Vahvistettu"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Lähetetty LOCKSS-palveluun"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Synkronoidaan"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Sopimus"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Päivitetty"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Paikallinen virhe"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Etäpalvelun virhe"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Pakkausvirhe"
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "PKP PN -talletustehtävä"
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Talletetaan {$title}."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Haetaan palveluasiakirjaa."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PN ottaa vastaan talletuksia."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Tarkista talletustesi tila."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr ""
+"Julkaisulla on oltava ISSN-tunnus, jotta voit tallettaa sisältöä PKP PN "
+"-palveluun."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"Yhteyden muodostamisessa PKP PN -palveluun tapahtui virhe - ota yhteyttä "
+"järjestelmänvalvojaan."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"PKP PN -palvelun käyttöehdot on päivitetty. Tallettamisen jatkaminen "
+"edellyttää uusien ehtojen hyväksymistä."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "ZipArchive-tuki on otettava käyttöön, jotta voit jatkaa."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"Julkaisulla on oltava ISSN-tunnus, ennen kuin voit hyväksyä palvelun ehdot. "
+"Voit syöttää ISSN-tunnuksen julkaisun asetuksista. Kun julkaisun ISSN-tunnus "
+"on annettu, käyttöehdot näkyvät alla."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"Tapahtui virhe {$error}, kun muodostettiin yhteyttä PKP PN -palveluun "
+"palveluasiakirjan noutamiseksi."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr ""
+"Tapahtui virhe {$error}, kun muodostettiin yhteyttä PKP PN -palveluun "
+"talletusta varten."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"Tapahtui virhe {$error}, kun muodostettiin yhteyttä PKP PN -palveluun "
+"talletuksen tilan päivittämiseksi."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr ""
+"PN-palvelin palautti HTTP-virheen {$error} yrittäessään noutaa "
+"palveludokumenttia."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "PN-palvelin palautti HTTP-virheen {$error} talletuksen yhteydessä."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr ""
+"PN-palvelin palautti HTTP-virheen {$error} tarkistettaessa talletuksen tilaa."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "Pakettitiedostoa {$file} ei löydy."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"Artikkelien viennissä tapahtui virhe. Palvelimen virhelokissa voi olla "
+"lisätietoja."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"Numeron viennissä tapahtui virhe. Palvelimen virhelokissa voi olla "
+"lisätietoja."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr ""
+"Pyydetty UUID-tunnus ei ole kelvollinen tai sitä ei ole muotoiltu oikein."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "Pyydetyllä UUID-tunnuksella ei ole talletusta."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"Talletustiedostoa ei löydy. Sitä ei ehkä ole vielä pakattu tai paketti on "
+"poistettu."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Käsitellään talletusten tilapäivityksiä."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Käsitellään päivitettyä sisältöä."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Käsitellään uutta sisältöä."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Pakataan sisältöä talletettavaksi."
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Talletetaan PKP PN -palveluun."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "Käsittelyn tila saatu kohteelle {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Yritetään pakata talletusta {$depositId} ({$objectType}: {$objectId}) ("
+"Paikallinen tila: {$statusLocal}], Käsittelyn tila: [{$statusProcessing}], "
+"Lockss-tila: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Talletuksen {$depositId} pakkaus epäonnistui"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "Talletuksen pakkaus {$depositId} onnistui"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Lähetetään atom-tiedosto valmistelupalvelimelle talletusta {$depositId} "
+"varten (Paikallinen tila: {$statusLocal}], Käsittelyn tila: "
+"[{$statusProcessing}], Lockss-tila: [{$statusLockss}]) - (URL: [{$url}], "
+"AtomPath: [{$atomPath}], Menetelmä: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Atom-tiedoston lähettäminen valmistelupalvelimelle talletukselle {$depositId}"
+" onnistui"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Atom-tiedoston lähettäminen valmistelupalvelimelle talletukselle {$depositId}"
+" epäonnistui (Virhe: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "PN-yhdyskäytävä"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Ilmoittaa PKP PN -tilan ja viimeisimmät artikkelien otsikot "
+"valmistelupalvelimelle."
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Vireillä"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Talletusprosessi ei ole vielä alkanut"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Käynnissä"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Talletusprosessi on käynnissä"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Valmis"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Virhe"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Talletusprosessissa on tapahtunut virhe"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Talletuksen käsittely saattaa kestää useita päiviä."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Viimeisin päivitys"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Tilan kuvaus"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"Talletus epäonnistui, varmista, ettei se ylittänyt PKP PN -palvelun tukemaa "
+"enimmäiskokoa"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Talletuksen uudelleenpakkaaminen epäonnistui, yritetään uudelleen"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"Talletus ei läpäissyt virustentorjuntatarkastusta, tarkasta talletuksen "
+"tiedostot ja lähetä se uudelleen"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr ""
+"Talletus ei läpäissyt sisällön validointia, voit yrittää lähettää "
+"talletuksen uudelleen"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr ""
+"Talletus ei läpäissyt hyötykuorman validointia, voit yrittää lähettää "
+"talletuksen uudelleen"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr ""
+"Talletus ei läpäissyt BagIt-validointia, voit yrittää lähettää talletuksen "
+"uudelleen"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"Talletus on tehty, mutta sen tilaa ei ole voitu tarkistaa, operaatiota "
+"yritetään uudelleen"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr "Talletus evättiin, järjestelmäsi versio on odotettua korkeampi"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"Järjestelmän vienti/tuonti -lisäosa epäonnistui talletuksessa {$depositId}, "
+"kun talletusta yritettiin pakata"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"Yritetään siirtää talletus {$depositId} ({$objectType}: {$objectId}) ("
+"Paikallinen tila: [{$statusLocal}], Käsittelyn tila: [{$statusProcessing}], "
+"Lockss-tila: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Talletusprosessi on saatettu päätökseen"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"Talletuksen lataaminen järjestelmästäsi epäonnistui. Toimintoa yritetään "
+"uudelleen, sillä välin voit tarkistaa, onko järjestelmäsi palomuurin takana"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr ""
+"PKP PN <a href=\"{$statusDocsUrl}\">talletusten tilat kuvataan täällä</a>."
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"Haluatko varmasti nollata tämän talletuksen? Se pakataan uudelleen ja "
+"lähetetään uudelleen käsittelevälle palvelimelle."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PKP PN ei tällä hetkellä ota vastaan talletuksia."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"Yritetään päivittää {$depositId} tila ({$objectType}: {$objectId}) (Local "
+"Status: {$statusLocal}], Käsittelyn tila: [{$statusProcessing}], Lockss-tila:"
+" [{$statusLockss}])"
