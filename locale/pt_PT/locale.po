@@ -1,8 +1,143 @@
 # Weblate Admin <alec@smecher.bc.ca>, 2023.
+# José Carvalho <jcarvalho@keep.pt>, 2023.
 msgid ""
 msgstr ""
+"PO-Revision-Date: 2023-06-01 08:49+0000\n"
+"Last-Translator: José Carvalho <jcarvalho@keep.pt>\n"
+"Language-Team: Portuguese (Portugal) <http://translate.pkp.sfu.ca/projects/"
+"plugins/pln/pt_PT/>\n"
 "Language: pt_PT\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Weblate\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.13.1\n"
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"O plugin PKP PN exige o plugin Acron ou outra forma de agendamento periódico "
+"de ações como o \"cron\"."
+
+msgid "plugins.generic.pln.status.docs"
+msgstr ""
+"A <a href=\"{$statusDocsUrl}\">situação dos depósitos na PKP PN está "
+"descrita aqui</a>."
+
+msgid "plugins.generic.pln"
+msgstr "Plugin PKP PN"
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"O plugin PKP PN realizará o deposito do conteúdo na Rede Privada LOCKSS da "
+"PKP para preservação digital."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "O plugin PKP PN foi ativado."
+
+msgid "plugins.generic.pln.disabled"
+msgstr "O plugin PKP PN foi desativado."
+
+msgid "plugins.generic.pln.settings"
+msgstr "Configurações"
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "Configurações do PKP PN guardadas."
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Termos de uso"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Aceito"
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Identificador da revista"
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Atualizar"
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Escolha um tipo de objeto para depósito."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Escolha um limite para o depósito do objeto."
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr ""
+"Para continuar o deposito na PKP PN, é necessário aceitar os termos de uso "
+"da rede."
+
+#, fuzzy
+msgid "plugins.generic.pln.objects.article"
+msgstr "Artigo"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Número"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Estado da rede: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Depósitos"
+
+msgid "plugins.generic.pln.status"
+msgstr "Situação"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Tipo de Id do Objeto"
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Id do Número"
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Tipo"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Itens"
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Estado"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Desconhecido"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Novo"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Empacotado"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Transferido"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Recebido"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Validado"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Enviado ao LOCKSS"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "A sincronizar"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Acordo"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Atualizado"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Falha local"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Falha remota"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Falha no empacotamento"
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "Tarefa de depósito PKP PN"
