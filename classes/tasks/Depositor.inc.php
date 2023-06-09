@@ -16,7 +16,7 @@ import('lib.pkp.classes.scheduledTask.ScheduledTask');
 
 class Depositor extends ScheduledTask {
 
-	/** @var Object */
+	/** @var object */
 	var $_plugin;
 
 	/**
@@ -53,8 +53,9 @@ class Depositor extends ScheduledTask {
 		while ($journal = $journals->next()) {
 
 			// if the plugin isn't enabled for this journal, skip it
-			if (!$this->_plugin->getSetting($journal->getId(), 'enabled'))
+			if (!$this->_plugin->getSetting($journal->getId(), 'enabled')) {
 				continue;
+			}
 
 			$this->_plugin->registerDAOs();
 			$this->_plugin->import('classes.Deposit');
@@ -105,23 +106,43 @@ class Depositor extends ScheduledTask {
 
 			// update the statuses of existing deposits
 			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.statusupdates"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_processStatusUpdates($journal);
+			try {
+				$this->_processStatusUpdates($journal);
+			} catch (Throwable $e) {
+				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+			}
 
 			// flag any deposits that have been updated and need to be rebuilt
 			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.updatedcontent"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_processHavingUpdatedContent($journal);
+			try {
+				$this->_processHavingUpdatedContent($journal);
+			} catch (Throwable $e) {
+				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+			}
 
 			// create new deposits for new deposit objects
 			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.newcontent"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_processNewDepositObjects($journal);
+			try {
+				$this->_processNewDepositObjects($journal);
+			} catch (Throwable $e) {
+				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+			}
 
 			// package any deposits that need packaging
 			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.packagingdeposits"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_processNeedPackaging($journal);
+			try {
+				$this->_processNeedPackaging($journal);
+			} catch (Throwable $e) {
+				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+			}
 
 			// transfer the deposit atom documents
 			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.transferringdeposits"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_processNeedTransferring($journal);
+			try {
+				$this->_processNeedTransferring($journal);
+			} catch (Throwable $e) {
+				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+			}
 		}
 
 		$this->pruneOrphaned();
@@ -235,7 +256,7 @@ class Depositor extends ScheduledTask {
 		$depositObjectDao->createNew($journal->getId(), $objectType);
 
 		// retrieve all deposit objects that don't belong to a deposit
-		$newObjects = $depositObjectDao->getNew($journal->getId(), $objectType);
+		$newObjects = $depositObjectDao->getNew($journal->getId());
 
 		switch ($objectType) {
 			case 'PublishedArticle': // Legacy (OJS pre-3.2)
