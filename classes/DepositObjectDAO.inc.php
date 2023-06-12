@@ -84,12 +84,13 @@ class DepositObjectDAO extends DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					if($deposit->getSentStatus() || !$deposit->getTransferredStatus()) {
+					if ($deposit->getLockssAgreementStatus() || !$deposit->getTransferredStatus()) {
 						// only update a deposit after it has been synced in LOCKSS.
 						$depositObject->setDateModified($row->last_modified);
 						$this->updateObject($depositObject);
+						$oldAgreement = $deposit->getLockssAgreementStatus();
 						$deposit->setNewStatus();
-						$deposit->setLockssAgreementStatus(true); // this is an update.
+						$deposit->setLockssAgreementStatus($oldAgreement); // this is an update.
 						$depositDao->updateObject($deposit);
 					}
 				}
@@ -110,7 +111,7 @@ class DepositObjectDAO extends DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					if ($deposit->getSentStatus() || !$deposit->getTransferredStatus()) {
+					if ($deposit->getLockssAgreementStatus() || !$deposit->getTransferredStatus()) {
 						// only update a deposit after it has been synced in LOCKSS.
 						if ($row->issue_modified > $row->article_modified) {
 							$depositObject->setDateModified($row->issue_modified);
@@ -119,8 +120,9 @@ class DepositObjectDAO extends DAO {
 						}
 
 						$this->updateObject($depositObject);
+						$oldAgreement = $deposit->getLockssAgreementStatus();
 						$deposit->setNewStatus();
-						$deposit->setLockssAgreementStatus(true); // this is an update.
+						$deposit->setLockssAgreementStatus($oldAgreement); // this is an update.
 						$depositDao->updateObject($deposit);
 					}
 				}
@@ -249,7 +251,7 @@ class DepositObjectDAO extends DAO {
 	 * @return int
 	 */
 	public function getInsertId() {
-		return $this->_getInsertId('pln_deposit_objects', 'object_id');
+		return $this->_getInsertId();
 	}
 
 	/**

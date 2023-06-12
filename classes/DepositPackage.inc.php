@@ -151,7 +151,7 @@ class DepositPackage {
 
 		$entry->appendChild($this->_generateElement($atom, 'id', 'urn:uuid:'.$this->_deposit->getUUID()));
 
-		$entry->appendChild($this->_generateElement($atom, 'updated', strftime("%Y-%m-%d %H:%M:%S", strtotime($this->_deposit->getDateModified()))));
+		$entry->appendChild($this->_generateElement($atom, 'updated', date("Y-m-d H:i:s", strtotime($this->_deposit->getDateModified()))));
 
 		$url = $dispatcher->url($request, ROUTE_PAGE, $journal->getPath()) . '/' . PLN_PLUGIN_ARCHIVE_FOLDER . '/deposits/' . $this->_deposit->getUUID();
 		$pkpDetails = $this->_generateElement($atom, 'pkp:content', $url, 'http://pkp.sfu.ca/SWORD');
@@ -191,7 +191,7 @@ class DepositPackage {
 
 		$pkpDetails->setAttribute('volume', $objectVolume);
 		$pkpDetails->setAttribute('issue', $objectIssue);
-		$pkpDetails->setAttribute('pubdate', strftime('%Y-%m-%d', strtotime($objectPublicationDate)));
+		$pkpDetails->setAttribute('pubdate', date('Y-m-d', strtotime($objectPublicationDate)));
 
 		// Add OJS Version
 		/** @var VersionDAO */
@@ -598,34 +598,34 @@ class DepositPackage {
 					'processingState' => $processingState)),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
+		// Clear previous error messages
 		$this->_deposit->setExportDepositError(null);
+		// Handle the local state
 		switch ($processingState) {
 			case 'depositedByJournal':
-				$this->_deposit->setTransferredStatus(true);
+			case 'harvest-error':
+				$this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED);
 				break;
 			case 'harvested':
-			case 'xml-validated':
 			case 'payload-validated':
-			case 'virus-checked':
-				$this->_deposit->setReceivedStatus(true);
-				break;
 			case 'bag-validated':
-			case 'reserialized':
-				$this->_deposit->setValidatedStatus(true);
-				break;
-			case 'deposited':
-				$this->_deposit->setSentStatus(true);
-				break;
-			case 'hold':
-			case 'harvest-error':
-			case 'deposit-error':
-			case 'reserialize-error':
-			case 'virus-error':
-			case 'xml-error':
+			case 'xml-validated':
+			case 'virus-checked':
 			case 'payload-error':
 			case 'bag-error':
+			case 'xml-error':
+			case 'virus-error':
+				$this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED);
+				break;
+			case 'reserialized':
+			case 'hold':
+			case 'reserialize-error':
+			case 'deposit-error':
+				$this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED);
+				break;
+			case 'deposited':
 			case 'status-error':
-				$this->_deposit->setExportDepositError(__('plugins.generic.pln.status.error.' . $processingState));
+				$this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT);
 				break;
 			default:
 				$this->_deposit->setExportDepositError('Unknown processing state ' . $processingState);
@@ -633,25 +633,26 @@ class DepositPackage {
 				break;
 		}
 
+		// The deposit file can be dropped once it's received by the PKP PN
+		if ($this->_deposit->getReceivedStatus()) {
+			$this->remove();
+		}
+
+		// Handle error messages
+		if (in_array($processingState, ['hold', 'harvest-error', 'deposit-error', 'reserialize-error', 'virus-error', 'xml-error', 'payload-error', 'bag-error', 'status-error'])) {
+			$this->_deposit->setExportDepositError(__('plugins.generic.pln.status.error.' . $processingState));
+		}
+
 		$lockssState = $contentDOM->getElementsByTagName('category')->item(1)->getAttribute('term');
-		switch($lockssState) {
+		switch ($lockssState) {
 			case '':
 				// do nothing.
 				break;
-			// WARNING: The usage of 'received' is unknown and it may be removed in the future
-			case 'received':
-				$this->_deposit->setLockssReceivedStatus();
-				break;
-			// WARNING: The usage of 'syncing' is unknown and it may be removed in the future
-			case 'syncing':
 			case 'inProgress':
-				$this->_deposit->setLockssSyncingStatus();
+				$this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
 				break;
 			case 'agreement':
-				if(!$this->_deposit->getLockssAgreementStatus()) {
-					$this->remove();
-				}
-				$this->_deposit->setLockssAgreementStatus(true);
+				$this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT);
 				break;
 			default:
 				$this->_deposit->setExportDepositError('Unknown LOCKSS state ' . $lockssState);
@@ -659,7 +660,7 @@ class DepositPackage {
 				break;
 		}
 
-		$this->_deposit->setLastStatusDate(time());
+		$this->_deposit->setLastStatusDate(Core::getCurrentDate());
 		$depositDao->updateObject($this->_deposit);
 	}
 

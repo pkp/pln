@@ -41,31 +41,29 @@ define('PLN_PLUGIN_CONT_IRI', PLN_PLUGIN_BASE_IRI . '/cont-iri');
 define('PLN_PLUGIN_ARCHIVE_FOLDER', 'pln');
 
 // local statuses
-define('PLN_PLUGIN_DEPOSIT_STATUS_NEW',					0x000);
-define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED',			0x001);
-define('PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED',			0x002);
-define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED',	0x200);
+define('PLN_PLUGIN_DEPOSIT_STATUS_NEW', 0x000);
+define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED', 0x001);
+define('PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED', 0x002);
 
 // status on the processing server
-define('PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED',			0x004);
-define('PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED',			0x008);
-define('PLN_PLUGIN_DEPOSIT_STATUS_SENT',				0x010);
+define('PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED', 0x004);
+define('PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED', 0x008);
+define('PLN_PLUGIN_DEPOSIT_STATUS_SENT', 0x010);
 
 // status in the LOCKSS PLN
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED',		0x020);
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_SYNCING',		0x040);
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT',	0x080);
+define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED', 0x040);
+define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT', 0x080);
 
-define('PLN_PLUGIN_DEPOSIT_STATUS_UPDATE',				0x100);
+define('PLN_PLUGIN_DEPOSIT_STATUS_UPDATE', 0x100);
 
 define('PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION', 'Submission');
 define('PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE', 'Issue');
 
-define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE',	NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 1);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 5);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE', NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 1);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 5);
 
 class PLNPlugin extends GenericPlugin {
 	/**
@@ -324,7 +322,7 @@ class PLNPlugin extends GenericPlugin {
 				$form = new PLNSettingsForm($this, $context->getId());
 
 				if ($request->getUserVar('refresh')) {
-					$this->getServiceDocument($context->getId(), $request);
+					$this->getServiceDocument($context->getId());
 				} else {
 					if ($request->getUserVar('save')) {
 
@@ -397,7 +395,7 @@ class PLNPlugin extends GenericPlugin {
 	 * @return int The HTTP response status or FALSE for a network error.
 	 */
 	public function getServiceDocument($contextId) {
-		$application = Application::getApplication();
+		$application = Application::get();
 		$request = $application->getRequest();
 		$contextDao = Application::getContextDAO();
 		$context = $contextDao->getById($contextId);
@@ -406,7 +404,7 @@ class PLNPlugin extends GenericPlugin {
 		$locale = $context->getPrimaryLocale();
 		$language = strtolower(str_replace('_', '-', $locale));
 		$network = $this->getSetting($context->getId(), 'pln_network');
-		$application = Application::getApplication();
+		$application = Application::get();
 		$dispatcher = $application->getDispatcher();
 
 		// retrieve the service document
@@ -451,7 +449,9 @@ class PLNPlugin extends GenericPlugin {
 		$termElements = $serviceDocument->getElementsByTagName('terms_of_use')->item(0)->childNodes;
 		$terms = array();
 		foreach($termElements as $termElement) {
-			$terms[$termElement->tagName] = array('updated' => $termElement->getAttribute('updated'), 'term' => $termElement->nodeValue);
+			if ($termElement instanceof DOMElement) {
+				$terms[$termElement->tagName] = array('updated' => $termElement->getAttribute('updated'), 'term' => $termElement->nodeValue);
+			}
 		}
 
 		$newTerms = serialize($terms);
@@ -506,7 +506,7 @@ class PLNPlugin extends GenericPlugin {
 	 * @return boolean
 	 */
 	public function cronEnabled() {
-		$application = PKPApplication::getApplication();
+		$application = PKPApplication::get();
 		$products = $application->getEnabledProducts('plugins.generic');
 		return isset($products['acron']) || Config::getVar('general', 'scheduled_tasks', false);
 	}

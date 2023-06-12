@@ -71,17 +71,6 @@ class Depositor extends ScheduledTask {
 				continue;
 			}
 
-			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.getting_servicedocument'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			// get the sword service document
-			$sdResult = $this->_plugin->getServiceDocument($journal->getId());
-
-			// if for some reason we didn't get a valid response, skip this journal
-			if ($sdResult != PLN_PLUGIN_HTTP_STATUS_OK) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR);
-				continue;
-			}
-
 			// if the pln isn't accepting deposits, skip the journal
 			if (!$this->_plugin->getSetting($journal->getId(), 'pln_accepting')) {
 				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
@@ -101,6 +90,16 @@ class Depositor extends ScheduledTask {
 				!$journal->getSetting('issn')) {
 				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.issn_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING);
+				continue;
+			}
+
+			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.getting_servicedocument'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			// get the sword service document
+			$sdResult = $this->_plugin->getServiceDocument($journal->getId());
+			// if for some reason we didn't get a valid response, skip this journal
+			if ($sdResult != PLN_PLUGIN_HTTP_STATUS_OK) {
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR);
 				continue;
 			}
 

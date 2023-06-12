@@ -123,7 +123,7 @@ class DepositDAO extends DAO {
 	 * @return int
 	 */
 	public function getInsertId() {
-		return $this->_getInsertId('pln_deposits', 'deposit_id');
+		return $this->_getInsertId();
 	}
 
 	/**
@@ -203,7 +203,7 @@ class DepositDAO extends DAO {
 	}
 
 	/**
-	 * Retrieve all deposits that need packaging
+	 * Retrieve all deposits that need to be transferred
 	 * @param int $journalId
 	 * @return DAOResultFactory
 	 */
@@ -212,15 +212,13 @@ class DepositDAO extends DAO {
 			'SELECT *
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
-			AND d.status & ? = 0
-			AND d.status & ? = 0
+			AND d.status & ? <> 0
 			AND d.status & ? = 0
 			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT
+				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
+				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED
 			]
 		);
 
@@ -238,14 +236,10 @@ class DepositDAO extends DAO {
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
 			AND d.status & ? = 0
-			AND d.status & ? = 0
-			AND d.status & ? = 0
 			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED
+				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED
 			]
 		);
 
@@ -264,13 +258,11 @@ class DepositDAO extends DAO {
 			WHERE d.journal_id = ?
 			AND d.status & ? <> 0
 			AND d.status & ? = 0
-			AND d.status & ? = 0
 			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED
+				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT
 			]
 		);
 
