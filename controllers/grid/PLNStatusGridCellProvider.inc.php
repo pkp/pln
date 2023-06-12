@@ -30,7 +30,17 @@ class PLNStatusGridCellProvider extends GridCellProvider {
 				// The action has the label
 				return array('label' => $deposit->getId());
 			case 'objectId':
-				return array('label' => $deposit->getObjectId());
+				$label = [];
+				/** @var DepositObject $object */
+				foreach ($deposit->getDepositObjects()->toIterator() as $object) {
+					$content = $object->getContent();
+					if ($content instanceof Issue) {
+						$label[] = $content->getIssueIdentification();
+					} else {
+						$label[] = $content->getLocalizedTitle();
+					}
+				}
+				return array('label' => implode(' ', $label));
 			case 'status':
 				return array('label' => $deposit->getDisplayedStatus());
 			case 'latestUpdate':
