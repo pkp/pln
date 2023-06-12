@@ -2,7 +2,7 @@
 # José Carvalho <jcarvalho@keep.pt>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-06-01 08:49+0000\n"
+"PO-Revision-Date: 2023-06-13 08:49+0000\n"
 "Last-Translator: José Carvalho <jcarvalho@keep.pt>\n"
 "Language-Team: Portuguese (Portugal) <http://translate.pkp.sfu.ca/projects/"
 "plugins/pln/pt_PT/>\n"
@@ -141,3 +141,23 @@ msgstr "Falha no empacotamento"
 
 msgid "plugins.generic.pln.depositorTask.name"
 msgstr "Tarefa de depósito PKP PN"
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"Deseja realmente reiniciar este depósito? Este será empacotado e enviado "
+"novamente para processamento."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "A obter informações (service document)."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "O PKP PN não aceita depósitos neste momento."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "O PKP PN aceita depósitos."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Verificar situação dos depósitos."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "A revista deve ter um ISSN para poder depositar na rede PKP PN."
