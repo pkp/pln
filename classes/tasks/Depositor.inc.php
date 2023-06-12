@@ -177,7 +177,7 @@ class Depositor extends ScheduledTask {
 	/**
 	 * @param Journal $journal Object
 	 *
-	 * Go thourgh the deposits and mark them as updated if they have been
+	 * Go through the deposits and mark them as updated if they have been
 	 */
 	protected function _processHavingUpdatedContent(&$journal) {
 		// get deposits that have updated content
@@ -221,7 +221,7 @@ class Depositor extends ScheduledTask {
 		$plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
 
 		// make sure the pln work directory exists
-		// TOOD: use FileManager calls instead of PHP ones where possible
+		// TODO: use FileManager calls instead of PHP ones where possible
 		if ($fileManager->fileExists($plnDir, 'dir') !== true) {
 			$fileManager->mkdirtree($plnDir);
 		}

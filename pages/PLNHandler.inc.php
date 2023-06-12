@@ -97,6 +97,8 @@ class PLNHandler extends Handler {
 	 * @return PLNPlugin
 	 */
 	protected function _getPlugin() {
-		return PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
+		/** @var  PLNPlugin $plugin */
+		$plugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
+		return $plugin;
 	}
 }

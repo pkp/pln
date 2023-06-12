@@ -14,7 +14,7 @@
 class DepositObject extends DataObject {
 	/**
 	 * Get the content object that's referenced by this deposit object
-	 * @return Object (Issue,Submission)
+	 * @return object (Issue,Submission)
 	 */
 	public function getContent() {
 		switch ($this->getObjectType()) {
@@ -33,7 +33,7 @@ class DepositObject extends DataObject {
 
 	/**
 	 * Set the content object that's referenced by this deposit object
-	 * @param Object $content (Issue,Submission)
+	 * @param object $content (Issue,Submission)
 	 */
 	public function setContent($content) {
 		if (is_a($content, PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE) || is_a($content, PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION)) {
@@ -118,7 +118,7 @@ class DepositObject extends DataObject {
 
 	/**
 	 * Set the date of deposit object creation
-	 * @param DateTime $dateCreated
+	 * @param string $dateCreated
 	 */
 	public function setDateCreated($dateCreated) {
 		$this->setData('dateCreated', $dateCreated);
@@ -126,7 +126,7 @@ class DepositObject extends DataObject {
 
 	/**
 	 * Get the modification date of the deposit object
-	 * @return DateTime
+	 * @return string
 	 */
 	public function getDateModified() {
 		return $this->getData('dateModified');
@@ -134,7 +134,7 @@ class DepositObject extends DataObject {
 
 	/**
 	 * Set the modification date of the deposit object
-	 * @param DateTime $dateModified
+	 * @param string $dateModified
 	 */
 	public function setDateModified($dateModified) {
 		$this->setData('dateModified', $dateModified);

@@ -35,8 +35,41 @@ class PLNStatusGridCellProvider extends GridCellProvider {
 				return array('label' => $deposit->getDisplayedStatus());
 			case 'latestUpdate':
 				return array('label' => $deposit->getLastStatusDate());
-			case 'error':
-				return array('label' => $deposit->getExportDepositError());
+			case 'actions':
+				return array('label' => '');
+			default:
+				throw new Exception('Unexpected column');
+		}
+	}
+
+	/**
+	 * @copydoc GridColumn::getCellActions()
+	 */
+	public function getCellActions($request, $row, $column, $position = GRID_ACTION_POSITION_DEFAULT) {
+		if ($column->getId() !== 'actions') {
+			return [];
+		}
+
+		$request = Application::get()->getRequest();
+		$rowId = $row->getId();
+		$actionArgs['depositId'] = $rowId;
+		if (!empty($rowId)) {
+			$router = $request->getRouter();
+			// Create the "reset deposit" action
+			import('lib.pkp.classes.linkAction.request.RemoteActionConfirmationModal');
+			$link = new LinkAction(
+				'resetDeposit',
+				new RemoteActionConfirmationModal(
+					$request->getSession(),
+					__('plugins.generic.pln.status.confirmReset'),
+					__('form.resubmit'),
+
+					$router->url($request, null, null, 'resetDeposit', null, $actionArgs, 'modal_reset')
+				),
+				__('form.resubmit'),
+				'reset'
+			);
+			return [$link];
 		}
 	}
 }

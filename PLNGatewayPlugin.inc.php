@@ -118,7 +118,7 @@ class PLNGatewayPlugin extends GatewayPlugin {
 			$templateMgr->assign('termsAccepted', 'no');
 		}
 
-		$application = PKPApplication::getApplication();
+		$application = Application::get();
 		$products = $application->getEnabledProducts('plugins.generic');
 		$prerequisites = array(
 			'phpVersion' => PHP_VERSION,
