@@ -26,9 +26,6 @@ class DepositPackage {
 	 */
 	var $_task;
 
-	/** @var bool */
-	var $_depositPackageErrored;
-
 	/**
 	 * Constructor.
 	 * @param Deposit $deposit
@@ -260,9 +257,9 @@ class DepositPackage {
 		$issueDao = DAORegistry::getDAO('IssueDAO');
 		/** @var SubmissionDAO */
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
-		PluginRegistry::loadCategory('importexport');
-		$exportPlugin = PluginRegistry::getPlugin('importexport', 'NativeImportExportPlugin');
-		$supportsOptions = in_array('parseOpts', get_class_methods($exportPlugin));
+		/** @var NativeImportExportPlugin */
+		$exportPlugin = PluginRegistry::loadPlugin('importexport', 'native');
+		$supportsOptions = method_exists($exportPlugin, 'parseOpts');
 		@ini_set('memory_limit', -1);
 		$plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
 
@@ -291,7 +288,7 @@ class DepositPackage {
 					$submission = $submissionDao->getById($this->_deposit->getObjectId());
 					$currentPublication = $submission->getCurrentPublication();
 					if ($submission->getContextId() != $journal->getId()) continue;
-					if (!$currentPublication || $currentPublication->getStatus() != STATUS_PUBLISHED) continue;
+					if (!$currentPublication || $currentPublication->getData('status') != STATUS_PUBLISHED) continue;
 
 					$submissionIds[] = $submission->getId();
 				}
@@ -299,10 +296,11 @@ class DepositPackage {
 				// export all of the submissions together
 				$exportXml = $exportPlugin->exportSubmissions($submissionIds, $journal, null, ['no-embed' => 1]);
 				if (!$exportXml) {
-					$this->_logMessage(__('plugins.generic.pln.error.depositor.export.articles.error'));
-					return false;
+					throw new Exception(__('plugins.generic.pln.error.depositor.export.articles.error'));
 				}
-				if ($supportsOptions) $exportXml = $this->_cleanFileList($exportXml, $fileList);
+				if ($supportsOptions) {
+					$exportXml = $this->_cleanFileList($exportXml, $fileList);
+				}
 				$fileManager->writeFile($exportFile, $exportXml);
 				break;
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
@@ -311,33 +309,24 @@ class DepositPackage {
 				$depositObject = $depositObjects->next();
 				$issue = $issueDao->getByBestId($depositObject->getObjectId(), $journal->getId());
 
-				$callback = new DepositUnregisterableErrorCallback($depositObject->getDepositId(), $this);
+				$exportXml = $exportPlugin->exportIssues(
+					(array) $issue->getId(),
+					$journal,
+					$request->getUser(),
+					['no-embed' => 1]
+				);
 
-				try {
-					$exportXml = $exportPlugin->exportIssues(
-						(array) $issue->getId(),
-						$journal,
-						$request->getUser(),
-						['no-embed' => 1]
-					);
-
-					if (!$exportXml) {
-						$this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.error'));
-						$this->importExportErrorHandler($depositObject->getDepositId(), __('plugins.generic.pln.error.depositor.export.issue.error'));
-					}
-				}
-				catch (Exception $exception) {
-					$this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.exception') . $exception->getMessage());
-					$this->importExportErrorHandler($depositObject->getDepositId(), $exception->getMessage());
-					$callback->unregister();
-					return false;
+				if (!$exportXml) {
+					throw new $exception($this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.error')));
 				}
 
-				$callback->unregister();
-				if ($supportsOptions) $exportXml = $this->_cleanFileList($exportXml, $fileList);
+				if ($supportsOptions) {
+					$exportXml = $this->_cleanFileList($exportXml, $fileList);
+				}
 				$fileManager->writeFile($exportFile, $exportXml);
 				break;
-			default: throw new Exception('Unknown deposit type!');
+			default:
+				throw new Exception('Unknown deposit type!');
 		}
 
 		// add the current terms to the bag
@@ -414,7 +403,7 @@ class DepositPackage {
 	 * Read a list of file paths from the specified native XML string and clean up the XML's pathnames.
 	 * @param string $xml
 	 * @param array $fileList Reference to array to receive file list
-	 * @return array
+	 * @return string
 	 */
 	function _cleanFileList($xml, &$fileList) {
 		$doc = new DOMDocument();
@@ -487,11 +476,9 @@ class DepositPackage {
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 			$this->_deposit->setTransferredStatus();
-			// unset a remote error if this worked
-			$this->_deposit->setLockssReceivedStatus(false);
-			// if this was an update, unset the update flag
 			$this->_deposit->setLockssAgreementStatus(false);
-			$this->_deposit->setLastStatusDate(time());
+			$this->_deposit->setExportDepositError(null);
+			$this->_deposit->setLastStatusDate(Core::getCurrentDate());
 			$depositDao->updateObject($this->_deposit);
 		} else {
 			// we got an error back from the staging server
@@ -513,12 +500,10 @@ class DepositPackage {
 					SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
 				$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
-
 				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
 			}
 
-			$this->_deposit->setLockssReceivedStatus();
-			$this->_deposit->setLastStatusDate(time());
+			$this->_deposit->setLastStatusDate(Core::getCurrentDate());
 			$depositDao->updateObject($this->_deposit);
 		}
 	}
@@ -541,29 +526,25 @@ class DepositPackage {
 		$this->remove();
 		$fileManager->mkdir($this->getDepositDir());
 
-		$packagePath = $this->generatePackage();
-		if (!$packagePath) {
-			return;
-		}
+		try {
+			$packagePath = $this->generatePackage();
+			if (!$fileManager->fileExists($packagePath)) {
+				throw new Exception(__(
+					'plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed',
+					array('depositId' => $this->_deposit->getId())
+				));
+			}
 
-		if (!$fileManager->fileExists($packagePath)) {
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed',
-				array('depositId' => $this->_deposit->getId())),
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-
-			$this->_deposit->setPackagedStatus(false);
-			$this->_deposit->setLastStatusDate(time());
-			$depositDao->updateObject($this->_deposit);
-			return;
-		}
-
-		if (!$fileManager->fileExists($this->generateAtomDocument())) {
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed',
-				array('depositId' => $this->_deposit->getId())),
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-
-			$this->_deposit->setPackagedStatus(false);
-			$this->_deposit->setLastStatusDate(time());
+			if (!$fileManager->fileExists($this->generateAtomDocument())) {
+				throw new Exception(__(
+					'plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed',
+					array('depositId' => $this->_deposit->getId())
+				));
+			}
+		} catch (Throwable $exception) {
+			$this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.error') . $exception->getMessage());
+			$this->_deposit->setExportDepositError($exception->getMessage());
+			$this->_deposit->setLastStatusDate(Core::getCurrentDate());
 			$depositDao->updateObject($this->_deposit);
 			return;
 		}
@@ -574,7 +555,8 @@ class DepositPackage {
 
 		// update the deposit's status
 		$this->_deposit->setPackagedStatus();
-		$this->_deposit->setLastStatusDate(time());
+		$this->_deposit->setExportDepositError(null);
+		$this->_deposit->setLastStatusDate(Core::getCurrentDate());
 		$depositDao->updateObject($this->_deposit);
 	}
 
@@ -682,63 +664,11 @@ class DepositPackage {
 	}
 
 	/**
-	 * Handle an error during the import/export process.
-	 * @param int $depositId Deposit ID
-	 * @param string $message Error message
-	 */
-	public function importExportErrorHandler($depositId, $message) {
-		$this->_depositPackageErrored = true;
-
-		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
-		$deposit = $depositDao->getById($depositId);
-		if ($deposit) {
-			$deposit->setExportDepositError($message);
-			$deposit->setPackagingFailedStatus();
-			$depositDao->updateObject($deposit);
-		}
-	}
-
-	/**
 	 * Delete a deposit package from the disk
 	 * @return bool True on success
 	 */
 	public function remove() {
 		return (new ContextFileManager($this->_deposit->getJournalId()))
 			->rmtree($this->getDepositDir());
-	}
-}
-
-/**
- * Callback class used to work around error handling quirks.
- * This is a hack slated for destruction when no longer needed!
- */
-class DepositUnregisterableErrorCallback {
-	private $_depositId;
-	private $_depositPackage;
-	private $_isUnregistered = false;
-
-	public function __construct($depositId, $depositPackage) {
-		$this->_depositId = $depositId;
-		$this->_depositPackage = $depositPackage;
-	}
-
-	public function __destruct() {
-		if (!$this->_isUnregistered) {
-			$this->_depositPackage->importExportErrorHandler($this->_depositId, "Deposit Import/export error");
-			$taskDao = DAORegistry::getDao('ScheduledTaskDAO'); /** @var ScheduledTaskDAO $taskDao */
-
-			$taskDao->updateLastRunTime('plugins.generic.pln.classes.tasks.Depositor', 0);
-
-			$this->_depositPackage->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.packagingdeposits.processing.error', array('depositId' => $this->_depositId)), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-
-			$this->unregister();
-		}
-	}
-
-	/**
-	 * Unregister the callback.
-	 */
-	public function unregister() {
-		$this->_isUnregistered = true;
 	}
 }
