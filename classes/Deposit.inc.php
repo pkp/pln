@@ -168,7 +168,10 @@ class Deposit extends DataObject {
 	 * Set new (blank) deposit status
 	 */
 	public function setNewStatus() {
+		$oldAgreement = $this->getLockssAgreementStatus();
 		$this->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_NEW);
+		// The agreement is kept until the deposit reaches the "transferred" state, the purpose is only to flag it as an update
+		$this->setLockssAgreementStatus($oldAgreement);
 	}
 
 	/**
@@ -392,9 +395,7 @@ class Deposit extends DataObject {
 	 * Resets the deposit
 	 */
 	public function reset() {
-		$oldAgreement = $this->getLockssAgreementStatus();
-		$this->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_NEW);
-		$this->setLockssAgreementStatus($oldAgreement);
+		$this->setNewStatus();
 		$this->setLastStatusDate(null);
 		$this->setExportDepositError(null);
 	}

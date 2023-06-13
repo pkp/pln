@@ -88,9 +88,7 @@ class DepositObjectDAO extends DAO {
 						// only update a deposit after it has been synced in LOCKSS.
 						$depositObject->setDateModified($row->last_modified);
 						$this->updateObject($depositObject);
-						$oldAgreement = $deposit->getLockssAgreementStatus();
 						$deposit->setNewStatus();
-						$deposit->setLockssAgreementStatus($oldAgreement); // this is an update.
 						$depositDao->updateObject($deposit);
 					}
 				}
@@ -120,9 +118,7 @@ class DepositObjectDAO extends DAO {
 						}
 
 						$this->updateObject($depositObject);
-						$oldAgreement = $deposit->getLockssAgreementStatus();
 						$deposit->setNewStatus();
-						$deposit->setLockssAgreementStatus($oldAgreement); // this is an update.
 						$depositDao->updateObject($deposit);
 					}
 				}
