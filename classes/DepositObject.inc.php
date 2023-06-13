@@ -14,7 +14,7 @@
 class DepositObject extends DataObject {
 	/**
 	 * Get the content object that's referenced by this deposit object
-	 * @return object (Issue,Submission)
+	 * @return Issue|Submission
 	 */
 	public function getContent() {
 		switch ($this->getObjectType()) {
