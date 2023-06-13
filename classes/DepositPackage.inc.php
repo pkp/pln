@@ -291,7 +291,7 @@ class DepositPackage {
 					$submission = $submissionDao->getById($this->_deposit->getObjectId());
 					$currentPublication = $submission->getCurrentPublication();
 					if ($submission->getContextId() != $journal->getId()) continue;
-					if (!$currentPublication || $currentPublication->getStatus() != PKPSubmission::STATUS_PUBLISHED) continue;
+					if (!$currentPublication || $currentPublication->getData('status') != PKPSubmission::STATUS_PUBLISHED) continue;
 
 					$submissionIds[] = $submission->getId();
 				}

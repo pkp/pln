@@ -69,7 +69,7 @@ define('PLN_PLUGIN_DEPOSIT_STATUS_UPDATE', 0x100);
 define('PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION', 'Submission');
 define('PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE', 'Issue');
 
-define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE', NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE', PKPNotification::NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 1);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
 define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
@@ -89,7 +89,7 @@ class PLNPlugin extends GenericPlugin {
 
 			HookRegistry::register('PluginRegistry::loadCategory', array($this, 'callbackLoadCategory'));
 			HookRegistry::register('LoadHandler', array($this, 'callbackLoadHandler'));
-			HookRegistry::register('NotificationManager::getNotificationMessage', array($this, 'callbackNotificationMessage'));
+			HookRegistry::register('NotificationManager::getNotificationMessage', array($this, 'callbackNotificationContents'));
 			HookRegistry::register('LoadComponentHandler', array($this, 'setupComponentHandlers'));
 			$this->_disableRestrictions();
 		}
@@ -363,6 +363,7 @@ class PLNPlugin extends GenericPlugin {
 
 				if ($request->getUserVar('reset')) {
 					$deposit_ids = array_keys($request->getUserVar('reset'));
+					/** @var DepositDAO */
 					$depositDao = DAORegistry::getDAO('DepositDAO');
 					foreach ($deposit_ids as $deposit_id) {
 						$deposit = $depositDao->getById($deposit_id); /** @var Deposit $deposit */
@@ -376,18 +377,6 @@ class PLNPlugin extends GenericPlugin {
 				return new JSONMessage(true, $form->fetch($request));
 		}
 
-	}
-
-	/**
-	 * @copydoc GenericPlugin::getManagementVerbs()
-	 */
-	public function getManagementVerbs() {
-		$verbs = parent::getManagementVerbs();
-		if ($this->getEnabled()) {
-			$verbs[] = array('settings', __('plugins.generic.pln.settings'));
-			$verbs[] = array('status', __('plugins.generic.pln.status'));
-		}
-		return $verbs;
 	}
 
 	/**
@@ -460,6 +449,7 @@ class PLNPlugin extends GenericPlugin {
 		$this->updateSetting($contextId, 'checksum_type', $element->nodeValue);
 
 		// update the network status
+		/** @var DOMElement */
 		$element = $serviceDocument->getElementsByTagName('pln_accepting')->item(0);
 		$this->updateSetting($contextId, 'pln_accepting', (($element->getAttribute('is_accepting') == 'Yes') ? true : false));
 		$this->updateSetting($contextId, 'pln_accepting_message', $element->nodeValue);

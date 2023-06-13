@@ -150,6 +150,9 @@ class Deposit extends DataObject {
 		if ($this->getLockssAgreementStatus()) {
 			return __('plugins.generic.pln.status.agreement');
 		}
+		if ($this->getLockssReceivedStatus()) {
+			return __('plugins.generic.pln.status.received');
+		}
 		return __('plugins.generic.pln.status.unknown');
 	}
 

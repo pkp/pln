@@ -72,7 +72,7 @@ class Depositor extends ScheduledTask {
 				continue;
 			}
 
-			// if the pln isn't accepting deposits, skip this journal
+			// if the pln isn't accepting deposits, skip the journal
 			if (!$this->_plugin->getSetting($journal->getId(), 'pln_accepting')) {
 				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 				continue;
@@ -215,7 +215,7 @@ class Depositor extends ScheduledTask {
 	 * @param Journal $journal Object
 	 */
 	protected function _processNeedPackaging($journal) {
-		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var $depositDao DepositDAO */
+		$depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
 		$depositQueue = $depositDao->getNeedPackaging($journal->getId());
 		$fileManager = new ContextFileManager($journal->getId());
 		$plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
