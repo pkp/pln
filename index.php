@@ -12,4 +12,3 @@
 
 require_once('PLNPlugin.inc.php');
 return new PLNPlugin();
-
