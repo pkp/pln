@@ -2,7 +2,7 @@
 # José Carvalho <jcarvalho@keep.pt>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-06-13 08:49+0000\n"
+"PO-Revision-Date: 2023-06-21 08:49+0000\n"
 "Last-Translator: José Carvalho <jcarvalho@keep.pt>\n"
 "Language-Team: Portuguese (Portugal) <http://translate.pkp.sfu.ca/projects/"
 "plugins/pln/pt_PT/>\n"
@@ -66,7 +66,6 @@ msgstr ""
 "Para continuar o deposito na PKP PN, é necessário aceitar os termos de uso "
 "da rede."
 
-#, fuzzy
 msgid "plugins.generic.pln.objects.article"
 msgstr "Artigo"
 
@@ -161,3 +160,18 @@ msgstr "Verificar situação dos depósitos."
 
 msgid "plugins.generic.pln.notifications.issn_missing"
 msgstr "A revista deve ter um ISSN para poder depositar na rede PKP PN."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"Os termos de uso da PKP PN do PKP foram atualizados. É necessário aceitar os "
+"novos termos para continuar a depositar."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "O suporte ao ZipArchive deve estar ativo para continuar."
+
+#, fuzzy
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"A revista deve possuir um ISSN antes de concordar com os termos de serviço. "
+"Indique o ISSN no formulário de Detalhes da revista, na configuração. Os "
+"termos de serviço serão apresentados assim que o ISSN for informa"
