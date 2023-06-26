@@ -2,7 +2,7 @@
 # José Carvalho <jcarvalho@keep.pt>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-06-21 08:49+0000\n"
+"PO-Revision-Date: 2023-06-27 07:49+0000\n"
 "Last-Translator: José Carvalho <jcarvalho@keep.pt>\n"
 "Language-Team: Portuguese (Portugal) <http://translate.pkp.sfu.ca/projects/"
 "plugins/pln/pt_PT/>\n"
@@ -169,9 +169,8 @@ msgstr ""
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "O suporte ao ZipArchive deve estar ativo para continuar."
 
-#, fuzzy
 msgid "plugins.generic.pln.notifications.issn_setting"
 msgstr ""
 "A revista deve possuir um ISSN antes de concordar com os termos de serviço. "
 "Indique o ISSN no formulário de Detalhes da revista, na configuração. Os "
-"termos de serviço serão apresentados assim que o ISSN for informa"
+"termos de serviço serão apresentados assim que o ISSN for inserido."
