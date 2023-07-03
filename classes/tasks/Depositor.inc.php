@@ -104,10 +104,10 @@ class Depositor extends ScheduledTask {
 				continue;
 			}
 
-			// update the statuses of existing deposits
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.statusupdates"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			// create new deposits for new deposit objects
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.newcontent"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			try {
-				$this->_processStatusUpdates($journal);
+				$this->_processNewDepositObjects($journal);
 			} catch (Throwable $e) {
 				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
 			}
@@ -120,18 +120,18 @@ class Depositor extends ScheduledTask {
 				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
 			}
 
-			// create new deposits for new deposit objects
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.newcontent"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			try {
-				$this->_processNewDepositObjects($journal);
-			} catch (Throwable $e) {
-				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
-			}
-
 			// package any deposits that need packaging
 			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.packagingdeposits"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			try {
 				$this->_processNeedPackaging($journal);
+			} catch (Throwable $e) {
+				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+			}
+
+			// update the statuses of existing deposits
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.statusupdates"), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			try {
+				$this->_processStatusUpdates($journal);
 			} catch (Throwable $e) {
 				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
 			}
