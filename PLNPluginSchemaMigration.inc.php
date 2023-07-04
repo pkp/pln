@@ -29,9 +29,9 @@ class PLNPluginSchemaMigration extends Migration {
 		}
 
 		// Introduced after version 2.0.4.3
-		if (Capsule::schema()->hasTable('pln_deposits') && !Capsule::schema()->hasColumn('pln_deposits', 'preserved')) {
+		if (Capsule::schema()->hasTable('pln_deposits') && !Capsule::schema()->hasColumn('pln_deposits', 'date_preserved')) {
 			Capsule::schema()->table('pln_deposits', function (Blueprint $table) {
-				$table->boolean('preserved')->default(0);
+				$table->datetime('date_preserved')->nullable();
 			});
 		}
 
@@ -59,7 +59,7 @@ class PLNPluginSchemaMigration extends Migration {
 				$table->datetime('date_created');
 				$table->datetime('date_modified')->nullable();
 				$table->string('export_deposit_error', 1000)->nullable();
-				$table->boolean('preserved')->default(0);
+				$table->datetime('date_preserved')->nullable();
 			});
 		}
 

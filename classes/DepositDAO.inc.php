@@ -59,11 +59,13 @@ class DepositDAO extends DAO {
 					status,
 					date_status,
 					date_created,
-					date_modified)
+					date_modified,
+					date_preserved)
 				VALUES
-					(?, ?, ?, %s, NOW(), %s)',
+					(?, ?, ?, %s, NOW(), %s, %s)',
 				$this->datetimeToDB($deposit->getLastStatusDate()),
-				$this->datetimeToDB($deposit->getDateModified())
+				$this->datetimeToDB($deposit->getDateModified()),
+				$this->datetimeToDB($deposit->getPreservedDate())
 			),
 			[
 				(int) $deposit->getJournalId(),
@@ -88,11 +90,13 @@ class DepositDAO extends DAO {
 					status = ?,
 					date_status = %s,
 					date_created = %s,
+					date_preserved = %s,
 					date_modified = NOW(),
 					export_deposit_error = ?
 				WHERE deposit_id = ?',
 				$this->datetimeToDB($deposit->getLastStatusDate()),
-				$this->datetimeToDB($deposit->getDateCreated())
+				$this->datetimeToDB($deposit->getDateCreated()),
+				$this->datetimeToDB($deposit->getPreservedDate())
 			),
 			[
 				(int) $deposit->getJournalId(),
@@ -140,6 +144,7 @@ class DepositDAO extends DAO {
 		$deposit->setLastStatusDate($this->datetimeFromDB($row['date_status']));
 		$deposit->setDateCreated($this->datetimeFromDB($row['date_created']));
 		$deposit->setDateModified($this->datetimeFromDB($row['date_modified']));
+		$deposit->setPreservedDate($row['date_preserved'] ? $this->datetimeFromDB($row['date_preserved']) : null);
 		$deposit->setExportDepositError($row['export_deposit_error']);
 
 		HookRegistry::call('DepositDAO::_fromRow', [&$deposit, &$row]);

@@ -653,6 +653,7 @@ class DepositPackage {
 				break;
 			case 'agreement':
 				$this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT);
+				$this->_deposit->setPreservedDate(Core::getCurrentDate());
 				break;
 			default:
 				$this->_deposit->setExportDepositError('Unknown LOCKSS state ' . $lockssState);
