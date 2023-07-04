@@ -392,19 +392,19 @@ class Deposit extends DataObject {
 	}
 
 	/**
-	 * Get whether the at least one version of the deposit has been preserved
-	 * @return bool
+	 * Retrieves when the deposit was preserved
+	 * @return ?string
 	 */
-	public function hasPreservedContent() {
-		return (bool) $this->getData('preserved');
+	public function getPreservedDate() {
+		return $this->getData('datePreserved');
 	}
 
 	/**
-	 * Set whether LOCKSS considered the deposit as preserved
-	 * @param boolean $status
+	 * Set the preserved date of the deposit
+	 * @param ?string $date
 	 */
-	public function setHasPreservedContent(bool $hasPreservedContent) {
-		$this->setData('preserved', (int) $hasPreservedContent);
+	public function setPreservedDate($date) {
+		$this->setData('datePreserved', $date);
 	}
 
 	/**
