@@ -84,13 +84,10 @@ class DepositObjectDAO extends DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					if ($deposit->getLockssAgreementStatus() || !$deposit->getTransferredStatus()) {
-						// only update a deposit after it has been synced in LOCKSS.
-						$depositObject->setDateModified($row->last_modified);
-						$this->updateObject($depositObject);
-						$deposit->setNewStatus();
-						$depositDao->updateObject($deposit);
-					}
+					$depositObject->setDateModified($row->last_modified);
+					$this->updateObject($depositObject);
+					$deposit->setNewStatus();
+					$depositDao->updateObject($deposit);
 				}
 				break;
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
@@ -109,18 +106,15 @@ class DepositObjectDAO extends DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					if ($deposit->getLockssAgreementStatus() || !$deposit->getTransferredStatus()) {
-						// only update a deposit after it has been synced in LOCKSS.
-						if ($row->issue_modified > $row->article_modified) {
-							$depositObject->setDateModified($row->issue_modified);
-						} else {
-							$depositObject->setDateModified($row->article_modified);
-						}
-
-						$this->updateObject($depositObject);
-						$deposit->setNewStatus();
-						$depositDao->updateObject($deposit);
+					if ($row->issue_modified > $row->article_modified) {
+						$depositObject->setDateModified($row->issue_modified);
+					} else {
+						$depositObject->setDateModified($row->article_modified);
 					}
+
+					$this->updateObject($depositObject);
+					$deposit->setNewStatus();
+					$depositDao->updateObject($deposit);
 				}
 				break;
 			default: assert(false);
