@@ -105,18 +105,14 @@ class DepositObjectDAO extends \PKP\db\DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					if ($row->issue_modified > $row->article_modified) {
-						$depositObject->setDateModified($row->issue_modified);
-					} else {
-						$depositObject->setDateModified($row->article_modified);
-					}
-
+					$depositObject->setDateModified(max($row->issue_modified, $row->article_modified));
 					$this->updateObject($depositObject);
 					$deposit->setNewStatus();
 					$depositDao->updateObject($deposit);
 				}
 				break;
-			default: assert(false);
+			default:
+				throw new Exception("Invalid object type \"{$objectType}\"");
 		}
 	}
 
@@ -162,7 +158,8 @@ class DepositObjectDAO extends \PKP\db\DAO {
 					$objects[] = $issueDao->getById($row->issue_id);
 				}
 				break;
-			default: assert(false);
+			default:
+				throw new Exception("Invalid object type \"{$objectType}\"");
 		}
 
 		$depositObjects = array();

@@ -31,13 +31,6 @@ define('PLN_PLUGIN_NAME', 'plnplugin');
 // defined here in case an upgrade doesn't pick up the default value.
 define('PLN_DEFAULT_NETWORK', 'https://pkp-pn.lib.sfu.ca');
 
-define('PLN_DEFAULT_STATUS_SUFFIX', '/docs/status');
-
-define('PLN_PLUGIN_HTTP_STATUS_OK', 200);
-define('PLN_PLUGIN_HTTP_STATUS_CREATED', 201);
-
-define('PLN_PLUGIN_XML_NAMESPACE', 'http://pkp.sfu.ca/SWORD');
-
 // base IRI for the SWORD server. IRIs are constructed by appending to
 // this constant.
 define('PLN_PLUGIN_BASE_IRI', '/api/sword/2.0');
@@ -242,8 +235,6 @@ class PLNPlugin extends GenericPlugin {
 				break;
 			case 'pln_network':
 				return Config::getVar('lockss', 'pln_url', PLN_DEFAULT_NETWORK);
-			case 'pln_status_docs':
-				return Config::getVar('lockss', 'pln_status_docs', Config::getVar('lockss', 'pln_url', PLN_DEFAULT_NETWORK) . PLN_DEFAULT_STATUS_SUFFIX);
 		}
 		return parent::getSetting($journalId, $settingName);
 	}
@@ -425,7 +416,7 @@ class PLNPlugin extends GenericPlugin {
 		);
 
 		// stop here if we didn't get an OK
-		if ($result['status'] != PLN_PLUGIN_HTTP_STATUS_OK) {
+		if (intdiv((int) $result['status'], 100) !== 2) {
 			if($result['status'] === FALSE) {
 				error_log(__('plugins.generic.pln.error.network.servicedocument', array('error' => $result['error'])));
 			} else {

@@ -98,7 +98,7 @@ class Depositor extends ScheduledTask {
 			// get the sword service document
 			$sdResult = $this->_plugin->getServiceDocument($journal->getId());
 			// if for some reason we didn't get a valid response, skip this journal
-			if ($sdResult != PLN_PLUGIN_HTTP_STATUS_OK) {
+			if (intdiv((int) $sdResult, 100) !== 2) {
 				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR);
 				continue;
@@ -221,10 +221,7 @@ class Depositor extends ScheduledTask {
 		$plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
 
 		// make sure the pln work directory exists
-		// TODO: use FileManager calls instead of PHP ones where possible
-		if ($fileManager->fileExists($plnDir, 'dir') !== true) {
-			$fileManager->mkdirtree($plnDir);
-		}
+		$fileManager->mkdirtree($plnDir);
 
 		// loop though all of the deposits that need packaging
 		while ($deposit = $depositQueue->next()) {
@@ -293,7 +290,8 @@ class Depositor extends ScheduledTask {
 					unset($newObject);
 				}
 				break;
-			default: assert(false);
+			default:
+				throw new Exception("Invalid object type \"{$objectType}\"");
 		}
 	}
 
