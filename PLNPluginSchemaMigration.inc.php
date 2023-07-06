@@ -22,20 +22,6 @@ class PLNPluginSchemaMigration extends Migration {
 	 * @return void
 	 */
 	public function up() {
-		// Before the version 2.0.4.3, it's needed to check for a missing "export_deposit_error" field
-		if (Schema::hasTable('pln_deposits') && !Schema::hasColumn('pln_deposits', 'export_deposit_error')) {
-			Schema::table('pln_deposits', function (Blueprint $table) {
-				$table->string('export_deposit_error', 1000)->nullable();
-			});
-		}
-
-		// Introduced after version 2.0.4.3
-		if (Schema::hasTable('pln_deposits') && !Schema::hasColumn('pln_deposits', 'date_preserved')) {
-			Schema::table('pln_deposits', function (Blueprint $table) {
-				$table->datetime('date_preserved')->nullable();
-			});
-		}
-
 		// PLN Deposit Objects
 		if (!Schema::hasTable('pln_deposit_objects')) {
 			Schema::create('pln_deposit_objects', function (Blueprint $table) {
@@ -56,6 +42,8 @@ class PLNPluginSchemaMigration extends Migration {
 				$table->bigInteger('journal_id');
 				$table->string('uuid', 36)->nullable();
 				$table->bigInteger('status')->default(0)->nullable();
+				$table->string('staging_state')->nullable();
+				$table->string('lockss_state')->nullable();
 				$table->datetime('date_status')->nullable();
 				$table->datetime('date_created');
 				$table->datetime('date_modified')->nullable();
@@ -66,5 +54,30 @@ class PLNPluginSchemaMigration extends Migration {
 
 		// Create a new scheduled_tasks entry for this plugin
 		DB::table('scheduled_tasks')->insertOrIgnore(['class_name' => 'plugins.generic.pln.classes.tasks.Depositor']);
+
+		$this->upgrade();
+	}
+
+	/**
+	 * Upgrade and fixes
+	 */
+	protected function upgrade() {
+		// Before the version 2.0.4.3, it's needed to check for a missing "export_deposit_error" field
+		if (!Schema::hasColumn('pln_deposits', 'export_deposit_error')) {
+			Schema::table('pln_deposits', function (Blueprint $table) {
+				$table->string('export_deposit_error', 1000)->nullable();
+			});
+		}
+
+		// Changes introduced at version 3.0.0.0
+		if (!Schema::hasColumn('pln_deposits', 'date_preserved')) {
+			Schema::table('pln_deposits', function (Blueprint $table) {
+				$table->datetime('date_preserved')->nullable();
+				$table->string('staging_state')->nullable();
+				$table->string('lockss_state')->nullable();
+			});
+			// Reset status
+			DB::table('pln_deposits')->update(['status', null]);
+		}
 	}
 }

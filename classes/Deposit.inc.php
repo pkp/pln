@@ -405,6 +405,38 @@ class Deposit extends DataObject {
 	}
 
 	/**
+	 * Retrieves the staging server state
+	 * @return ?string
+	 */
+	public function getStagingState() {
+		return $this->getData('stagingState');
+	}
+
+	/**
+	 * Sets the staging server state
+	 * @param ?string $date
+	 */
+	public function setStagingState($date) {
+		$this->setData('stagingState', $date);
+	}
+
+	/**
+	 * Retrieves the LOCKSS server state
+	 * @return ?string
+	 */
+	public function getLockssState() {
+		return $this->getData('lockssState');
+	}
+
+	/**
+	 * Sets the LOCKSS server state
+	 * @param ?string $state
+	 */
+	public function setLockssState($state) {
+		$this->setData('lockssState', $state);
+	}
+
+	/**
 	 * Resets the deposit
 	 */
 	public function reset() {

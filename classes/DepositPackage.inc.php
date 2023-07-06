@@ -584,6 +584,7 @@ class DepositPackage {
 
 		// Clear previous error messages
 		$this->_deposit->setExportDepositError(null);
+		$this->_deposit->setStagingState($processingState ?: null);
 		// Handle the local state
 		switch ($processingState) {
 			case 'depositedByJournal':
@@ -628,6 +629,7 @@ class DepositPackage {
 		}
 
 		$lockssState = $contentDOM->getElementsByTagName('category')->item(1)->getAttribute('term');
+		$this->_deposit->setLockssState($lockssState ?: null);
 		switch ($lockssState) {
 			case '':
 				// do nothing.
