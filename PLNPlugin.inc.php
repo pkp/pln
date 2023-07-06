@@ -274,7 +274,7 @@ class PLNPlugin extends GenericPlugin {
 			PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED => __('plugins.generic.pln.notifications.terms_updated'),
 			PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING => __('plugins.generic.pln.notifications.issn_missing'),
 			PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR => __('plugins.generic.pln.notifications.http_error'),
-			PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING => __('plugins.generic.pln.notifications.http_error')
+			PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING => __('plugins.generic.pln.notifications.zip_missing')
 		];
 		$message = $notificationByType[$type] ?? $message;
 		return false;
@@ -409,7 +409,7 @@ class PLNPlugin extends GenericPlugin {
 		// stop here if we didn't get an OK
 		if (intdiv((int) $result['status'], 100) !== 2) {
 			if ($result['status']) {
-				error_log(__('plugins.generic.pln.error.http.servicedocument', array('error' => $result['status'])));
+				error_log(__('plugins.generic.pln.error.http.servicedocument', array('error' => $result['status'], 'message' => $result['error'])));
 			} else {
 				error_log(__('plugins.generic.pln.error.network.servicedocument', array('error' => $result['error'])));
 			}
@@ -508,18 +508,28 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function curlGet($url, $headers=[]) {
 		$httpClient = Application::get()->getHttpClient();
+		$response = null;
+		$body = null;
+		$error = null;
 		try {
-			$response = $httpClient->request('GET', $url, [
-				'headers' => $headers,
-			]);
+			$response = $httpClient->request('GET', $url, ['headers' => $headers]);
+			$body = (string) $response->getBody();
 		} catch (GuzzleHttp\Exception\RequestException $e) {
-			$response = $e->hasResponse() ? $e->getResponse() : null;
-			return ['error' => $e->getMessage(), 'status' => $response ? $response->getStatusCode() : null, 'result' => $response ? (string) $response->getBody() : null];
+			$response = $e->getResponse();
+			$body = $response ? (string) $response->getBody() : null;
+			$error = $e->getMessage();
+			if (strlen($body)) {
+				try {
+					$error = (new SimpleXMLElement($body))->summary ?: $error;
+				} catch (Exception $e) {
+				}
+			}
 		}
-		return array(
-			'status' => $response->getStatusCode(),
-			'result' => (string) $response->getBody(),
-		);
+		return [
+			'status' => $response ? $response->getStatusCode() : null,
+			'result' => $body,
+			'error' => $error
+		];
 	}
 
 	/**

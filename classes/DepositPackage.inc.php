@@ -436,17 +436,17 @@ class DepositPackage {
 		$journalUuid = $plnPlugin->getSetting($journalId, 'journal_uuid');
 		$baseContUrl = $baseUrl . PLN_PLUGIN_CONT_IRI . "/{$journalUuid}/{$this->_deposit->getUUID()}";
 
-		$result = $plnPlugin->curlGet($baseContUrl . '/state');
+		$result = $plnPlugin->curlGet("{$baseContUrl}/state");
 		$status = intdiv((int) $result['status'], 100);
 		// Abort if status not 2XX or 4XX
 		if ($status !== 2 && $status !== 4) {
 			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
 				array('depositId' => $this->_deposit->getId(),
 					'error' => $result['status'],
-					'result' => $result['result'])),
+					'result' => $result['error'])),
 				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
-			$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
+			$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'], 'message' => $result['error'])));
+			$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'], 'message' => $result['error'])));
 			$this->_deposit->setLastStatusDate(Core::getCurrentDate());
 			$depositDao->updateObject($this->_deposit);
 			return;
@@ -483,22 +483,21 @@ class DepositPackage {
 
 			$this->_deposit->setTransferredStatus();
 			$this->_deposit->setExportDepositError(null);
-		} elseif ($result['status']) {
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
-				array('depositId' => $this->_deposit->getId(),
-					'error' => $result['status'],
-					'result' => $result['result'])),
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
-			$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
 		} else {
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
-				array('depositId' => $this->_deposit->getId(),
-					'error' => $result['error'],
-					'result' => $result['result'])),
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_logMessage(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
-			$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
+			$this->_task->addExecutionLogEntry(
+				__(
+					'plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
+					['depositId' => $this->_deposit->getId(), 'error' => $result['status'], 'result' => $result['error']]
+				),
+				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE
+			);
+			if ($result['status']) {
+				$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'], 'message' => $result['error'])));
+				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'], 'message' => $result['error'])));
+			} else {
+				$this->_logMessage(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
+				$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
+			}
 		}
 
 		$this->_deposit->setLastStatusDate(Core::getCurrentDate());
@@ -572,10 +571,9 @@ class DepositPackage {
 
 		// retrieve the content document
 		$result = $plnPlugin->curlGet($url);
-
 		if (intdiv((int) $result['status'], 100) !== 2) {
 			if ($result['status']) {
-				error_log(__('plugins.generic.pln.error.http.swordstatement', array('error' => $result['status'])));
+				error_log(__('plugins.generic.pln.error.http.swordstatement', array('error' => $result['status'], 'message' => $result['error'])));
 
 				// Status 4XX means the deposit doesn't exist or isn't related to the given journal, so we restart the deposit
 				if (intdiv($result['status'], 100) === 4) {
@@ -586,7 +584,7 @@ class DepositPackage {
 				return;
 			}
 
-			error_log(__('plugins.generic.pln.error.network.swordstatement', array('error' => $result['error'] ?? 'Unknown error')));
+			error_log(__('plugins.generic.pln.error.network.swordstatement', array('error' => $result['error'] ?: 'Unexpected error')));
 			return;
 		}
 

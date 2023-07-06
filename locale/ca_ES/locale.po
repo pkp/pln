@@ -143,16 +143,19 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "No es pot trobar l'arxiu empaquetat {$file}."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "El servidor de PN ha retornat l'error HTTP {$error} quan comprovava l'estat "
 "del dipòsit."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "El servidor de PN ha retornat l'error HTTP {$error} quan enviava el dipòsit."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "El servidor de PN ha retornat l'error HTTP {$error} quan intentava obtenir "
 "el document de servei."
 
