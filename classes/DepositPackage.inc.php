@@ -439,8 +439,23 @@ class DepositPackage {
 		$journalUuid = $plnPlugin->getSetting($journalId, 'journal_uuid');
 		$baseContUrl = $baseUrl . PLN_PLUGIN_CONT_IRI . "/{$journalUuid}/{$this->_deposit->getUUID()}";
 
+		$result = $plnPlugin->curlGet($baseContUrl . '/state');
+		$status = intdiv((int) $result['status'], 100);
+		// Abort if status not 2XX or 4XX
+		if ($status !== 2 && $status !== 4) {
+			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
+				array('depositId' => $this->_deposit->getId(),
+					'error' => $result['status'],
+					'result' => $result['result'])),
+				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
+			$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
+			$this->_deposit->setLastStatusDate(Core::getCurrentDate());
+			$depositDao->updateObject($this->_deposit);
+			return;
+		}
 		// Status 2XX at this URL means the content has been deposited before
-		$isNewDeposit = intdiv((int) $plnPlugin->curlGet($baseContUrl . '/state')['status'], 100) !== 2;
+		$isNewDeposit = $status !== 2;
 		$url = $isNewDeposit ? $baseUrl . PLN_PLUGIN_COL_IRI . "/{$journalUuid}" : "{$baseContUrl}/edit";
 
 		$this->_task->addExecutionLogEntry(
