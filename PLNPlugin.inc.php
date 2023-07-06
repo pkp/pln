@@ -417,10 +417,10 @@ class PLNPlugin extends GenericPlugin {
 
 		// stop here if we didn't get an OK
 		if (intdiv((int) $result['status'], 100) !== 2) {
-			if($result['status'] === FALSE) {
-				error_log(__('plugins.generic.pln.error.network.servicedocument', array('error' => $result['error'])));
-			} else {
+			if ($result['status']) {
 				error_log(__('plugins.generic.pln.error.http.servicedocument', array('error' => $result['status'])));
+			} else {
+				error_log(__('plugins.generic.pln.error.network.servicedocument', array('error' => $result['error'])));
 			}
 			return $result['status'];
 		}
@@ -527,7 +527,8 @@ class PLNPlugin extends GenericPlugin {
 				'headers' => $headers,
 			]);
 		} catch (GuzzleHttp\Exception\RequestException $e) {
-			return ['error' => $e->getMessage(), 'status' => null];
+			$response = $e->hasResponse() ? $e->getResponse() : null;
+			return ['error' => $e->getMessage(), 'status' => $response ? $response->getStatusCode() : null, 'result' => $response ? (string) $response->getBody() : null];
 		}
 		return array(
 			'status' => $response->getStatusCode(),

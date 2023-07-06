@@ -471,15 +471,7 @@ class DepositPackage {
 
 			$this->_deposit->setTransferredStatus();
 			$this->_deposit->setExportDepositError(null);
-		} elseif(!$result['status']) {
-			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
-				array('depositId' => $this->_deposit->getId(),
-					'error' => $result['error'],
-					'result' => $result['result'])),
-				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			$this->_logMessage(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
-			$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
-		} else {
+		} elseif ($result['status']) {
 			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
 				array('depositId' => $this->_deposit->getId(),
 					'error' => $result['status'],
@@ -487,6 +479,14 @@ class DepositPackage {
 				ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			$this->_logMessage(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
 			$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', array('error' => $result['status'])));
+		} else {
+			$this->_task->addExecutionLogEntry(__('plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
+				array('depositId' => $this->_deposit->getId(),
+					'error' => $result['error'],
+					'result' => $result['result'])),
+				SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			$this->_logMessage(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
+			$this->_deposit->setExportDepositError(__('plugins.generic.pln.error.network.deposit', array('error' => $result['error'])));
 		}
 
 		$this->_deposit->setLastStatusDate(Core::getCurrentDate());
@@ -562,13 +562,12 @@ class DepositPackage {
 		$result = $plnPlugin->curlGet($url);
 
 		if (intdiv((int) $result['status'], 100) !== 2) {
-			// stop here if we didn't get an OK
-			if($result['status'] === FALSE) {
-				error_log(__('plugins.generic.pln.error.network.swordstatement', array('error' => $result['error'])));
-			} else {
+			if ($result['status']) {
 				error_log(__('plugins.generic.pln.error.http.swordstatement', array('error' => $result['status'])));
+				return;
 			}
 
+			error_log(__('plugins.generic.pln.error.network.swordstatement', array('error' => $result['error'] ?? 'Unknown error')));
 			return;
 		}
 
