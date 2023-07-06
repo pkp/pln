@@ -440,13 +440,4 @@ class Deposit extends DataObject {
 	public function setLockssState($state) {
 		$this->setData('lockssState', $state);
 	}
-
-	/**
-	 * Resets the deposit
-	 */
-	public function reset() {
-		$this->setNewStatus();
-		$this->setLastStatusDate(null);
-		$this->setExportDepositError(null);
-	}
 }

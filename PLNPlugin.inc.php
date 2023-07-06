@@ -348,7 +348,7 @@ class PLNPlugin extends GenericPlugin {
 					foreach ($deposit_ids as $deposit_id) {
 						$deposit = $depositDao->getById($deposit_id); /** @var Deposit $deposit */
 
-						$deposit->reset();
+						$deposit->setNewStatus();
 
 						$depositDao->updateObject($deposit);
 					}

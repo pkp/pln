@@ -119,7 +119,7 @@ class PLNStatusGridHandler extends GridHandler {
 		if (!is_null($depositId)) {
 			$deposit = $depositDao->getById($depositId, $journal->getId()); /** @var Deposit $deposit */
 
-			$deposit->reset();
+			$deposit->setNewStatus();
 
 			$depositDao->updateObject($deposit);
 		}
