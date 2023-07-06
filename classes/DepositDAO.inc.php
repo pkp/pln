@@ -269,8 +269,13 @@ class DepositDAO extends \PKP\db\DAO {
 			'SELECT *
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
-			AND d.status & ? <> 0
-			AND d.status & ? = 0
+			AND (
+				d.status IS NULL
+				OR (
+					d.status & ? <> 0
+					AND d.status & ? = 0
+				)
+			)
 			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,

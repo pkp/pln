@@ -169,6 +169,11 @@ class Deposit extends DataObject {
 	 */
 	public function setNewStatus() {
 		$this->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_NEW);
+		$this->setLastStatusDate(null);
+		$this->setExportDepositError(null);
+		$this->setStagingState(null);
+		$this->setLockssState(null);
+
 	}
 
 	/**
