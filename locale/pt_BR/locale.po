@@ -192,13 +192,16 @@ msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr "Erro de rede {$error} ao conectar à PKP PN para atualizar situação do depósito."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "O servidor da PKP PN retornou o erro HTTP {$error} ao tentar recuperar documento de serviço."
+msgstr "O servidor da PKP PN retornou o erro HTTP {$error} ao tentar recuperar documento de serviço.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "Servidor da PKP PN retornou erro HTTP {$error} ao enviar o depósito."
+msgstr "Servidor da PKP PN retornou erro HTTP {$error} ao enviar o depósito.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "O servidor da PKP PN retornou o erro HTTP {$error} ao verificar a situação de um depósito."
+msgstr "O servidor da PKP PN retornou o erro HTTP {$error} ao verificar a situação de um depósito.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Impossível encontrar arquivo de pacote {$file}."

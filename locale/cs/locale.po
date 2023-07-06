@@ -271,16 +271,19 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Nelze nalézt soubor balíčku {$file}."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "Při kontrole stavu zálohy vrátil server PN následující HTTP chybu {$error}."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "Při pokusu o odeslání zálohy vrátil server PN následující HTTP chybu "
 "{$error}."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "Při pokusu o získání servisního dokumentu vrátil server PN následující HTTP "
 "chybu {$error}."
 

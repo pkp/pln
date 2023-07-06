@@ -189,13 +189,16 @@ msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr "Errore di rete {$error} connettendosi alla PKP PN per ricevere gli aggiornamenti sullo stato del versamento."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "Il server PKP PN ha restituito un errore HTTP {$error} cercando di ricavere il service document."
+msgstr "Il server PKP PN ha restituito un errore HTTP {$error} cercando di ricavere il service document.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "Il server PKP PN ha restituito un errore HTTP {$error} durante l'invio di un versamento."
+msgstr "Il server PKP PN ha restituito un errore HTTP {$error} durante l'invio di un versamento.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "Il server PKP PN ha restituito un errore HTTP {$error} durante il controllo dello stato di un versamento."
+msgstr "Il server PKP PN ha restituito un errore HTTP {$error} durante il controllo dello stato di un versamento.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Non rieso a trovate il file del pacchetto {$file}."

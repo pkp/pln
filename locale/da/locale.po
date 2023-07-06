@@ -141,16 +141,19 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Kan ikke finde pakkefil {$file}."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "PN-server returnerede HTTP-fejl {$error} ved kontrol af deponeringsstatus."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "PN-server returnerede HTTP-fejl {$error}, under forsøget på at indsende "
 "deponeringen."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "PN-server returnerede HTTP-fejl {$error}, under forsøget på at hente "
 "servicedokumentet."
 
