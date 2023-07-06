@@ -561,6 +561,13 @@ class DepositPackage {
 		if (intdiv((int) $result['status'], 100) !== 2) {
 			if ($result['status']) {
 				error_log(__('plugins.generic.pln.error.http.swordstatement', array('error' => $result['status'])));
+
+				// Status 4XX means the deposit doesn't exist or isn't related to the given journal, so we restart the deposit
+				if (intdiv($result['status'], 100) === 4) {
+					$this->_deposit->setNewStatus();
+					$depositDao->updateObject($this->_deposit);
+				}
+
 				return;
 			}
 
@@ -618,6 +625,11 @@ class DepositPackage {
 		// The deposit file can be dropped once it's received by the PKP PN
 		if ($this->_deposit->getReceivedStatus()) {
 			$this->remove();
+		} elseif (!file_exists($this->getAtomDocumentPath())) {
+			// Otherwise the package must still exist at this point, if it doesn't, we restart the deposit
+			$this->_deposit->setNewStatus();
+			$depositDao->updateObject($this->_deposit);
+			return;
 		}
 
 		// Handle error messages
