@@ -52,17 +52,19 @@ class DepositDAO extends DAO {
 	 */
 	public function insertObject($deposit) {
 		$this->update(
-			sprintf('
-				INSERT INTO pln_deposits
+			sprintf(
+				'INSERT INTO pln_deposits
 					(journal_id,
 					uuid,
 					status,
+					staging_state,
+					lockss_state,
 					date_status,
 					date_created,
 					date_modified,
 					date_preserved)
 				VALUES
-					(?, ?, ?, %s, NOW(), %s, %s)',
+					(?, ?, ?, ?, ?, %s, CURRENT_TIMESTAMP, %s, %s)',
 				$this->datetimeToDB($deposit->getLastStatusDate()),
 				$this->datetimeToDB($deposit->getDateModified()),
 				$this->datetimeToDB($deposit->getPreservedDate())
@@ -70,7 +72,9 @@ class DepositDAO extends DAO {
 			[
 				(int) $deposit->getJournalId(),
 				$deposit->getUUID(),
-				(int) $deposit->getStatus()
+				(int) $deposit->getStatus(),
+				$deposit->getStagingState(),
+				$deposit->getLockssState()
 			]
 		);
 		$deposit->setId($this->getInsertId());
@@ -83,15 +87,17 @@ class DepositDAO extends DAO {
 	 */
 	public function updateObject($deposit) {
 		$this->update(
-			sprintf('
-				UPDATE pln_deposits SET
+			sprintf(
+				'UPDATE pln_deposits SET
 					journal_id = ?,
 					uuid = ?,
 					status = ?,
+					staging_state = ?,
+					lockss_state = ?,
 					date_status = %s,
 					date_created = %s,
 					date_preserved = %s,
-					date_modified = NOW(),
+					date_modified = CURRENT_TIMESTAMP,
 					export_deposit_error = ?
 				WHERE deposit_id = ?',
 				$this->datetimeToDB($deposit->getLastStatusDate()),
@@ -102,6 +108,8 @@ class DepositDAO extends DAO {
 				(int) $deposit->getJournalId(),
 				$deposit->getUUID(),
 				(int) $deposit->getStatus(),
+				$deposit->getStagingState(),
+				$deposit->getLockssState(),
 				$deposit->getExportDepositError(),
 				(int) $deposit->getId()
 			]
@@ -141,6 +149,8 @@ class DepositDAO extends DAO {
 		$deposit->setJournalId($row['journal_id']);
 		$deposit->setUUID($row['uuid']);
 		$deposit->setStatus($row['status']);
+		$deposit->setStagingState($row['staging_state']);
+		$deposit->setLockssState($row['lockss_state']);
 		$deposit->setLastStatusDate($this->datetimeFromDB($row['date_status']));
 		$deposit->setDateCreated($this->datetimeFromDB($row['date_created']));
 		$deposit->setDateModified($this->datetimeFromDB($row['date_modified']));
