@@ -436,6 +436,13 @@ class DepositPackage {
 		$baseUrl = $plnPlugin->getSetting($journalId, 'pln_network');
 		$atomPath = $this->getAtomDocumentPath();
 
+		// Reset deposit if the package doesn't exist
+		if (!file_exists($atomPath)) {
+			$this->_deposit->setNewStatus();
+			$depositDao->updateObject($this->_deposit);
+			return;
+		}
+
 		$journalUuid = $plnPlugin->getSetting($journalId, 'journal_uuid');
 		$baseContUrl = $baseUrl . PLN_PLUGIN_CONT_IRI . "/{$journalUuid}/{$this->_deposit->getUUID()}";
 
