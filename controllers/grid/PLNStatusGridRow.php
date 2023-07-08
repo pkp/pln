@@ -8,31 +8,34 @@
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNStatusGridRow
+ *
  * @brief Handle PLNStatus deposit grid row requests.
  */
 
 namespace APP\plugins\generic\pln\controllers\grid;
 
 use PKP\controllers\grid\GridRow;
-use PKP\linkAction\LinkAction;
-use PKP\linkAction\request\RemoteActionConfirmationModal;
 
-class PLNStatusGridRow extends GridRow {
-	//
-	// Overridden template methods
-	//
-	/**
-	 * @copydoc GridRow::initialize()
-	 */
-	public function initialize($request, $template = null) {
-		parent::initialize($request, PLNStatusGridHandler::$plugin->getTemplateResource('gridRow.tpl'));
-	}
+class PLNStatusGridRow extends GridRow
+{
+    //
+    // Overridden template methods
+    //
+    /**
+     * @copydoc GridRow::initialize()
+     *
+     * @param null|mixed $template
+     */
+    public function initialize($request, $template = null)
+    {
+        parent::initialize($request, PLNStatusGridHandler::$plugin->getTemplateResource('gridRow.tpl'));
+    }
 
-	/**
-	 * Retrieves the deposit
-	 */
-	public function getDeposit(): Deposit
-	{
-		return $this->getData();
-	}
+    /**
+     * Retrieves the deposit
+     */
+    public function getDeposit(): Deposit
+    {
+        return $this->getData();
+    }
 }
