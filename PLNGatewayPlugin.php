@@ -22,114 +22,99 @@ use PKP\db\DAORegistry;
 use PKP\plugins\GatewayPlugin;
 use PKP\plugins\PluginRegistry;
 use PKP\site\VersionCheck;
+use PKP\site\VersionDAO;
 use PKP\submission\PKPSubmission;
-
-define('PLN_PLUGIN_PING_ARTICLE_COUNT', 12);
 
 class PLNGatewayPlugin extends GatewayPlugin
 {
-    /** @var string $parentPluginName Name of parent plugin */
-    public $parentPluginName;
+    private const PING_ARTICLE_COUNT = 12;
 
     /**
      * Constructor.
-     *
-     * @param string $parentPluginName
      */
-    public function __construct($parentPluginName)
+    public function __construct(private string $parentPluginName)
     {
         parent::__construct();
-        $this->parentPluginName = $parentPluginName;
     }
 
     /**
-     * Hide this plugin from the management interface (it's subsidiary)
-     *
-     * @return boolean
+     * @copydoc Plugin::getHideManagement()
      */
-    public function getHideManagement()
+    public function getHideManagement(): bool
     {
         return true;
     }
 
     /**
-     * @copydoc Plugin::getName
+     * @copydoc Plugin::getName()
      */
-    public function getName()
+    public function getName(): string
     {
         return 'PLNGatewayPlugin';
     }
 
     /**
-     * @copydoc Plugin::getDisplayName
+     * @copydoc Plugin::getDisplayName()
      */
-    public function getDisplayName()
+    public function getDisplayName(): string
     {
         return __('plugins.generic.plngateway.displayName');
     }
 
     /**
-     * @copydoc Plugin::getDescription
+     * @copydoc Plugin::getDescription()
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return __('plugins.generic.plngateway.description');
     }
 
     /**
-     * Get the PLN plugin
-     *
-     * @return object
+     * Get the plugin
      */
-    public function getPLNPlugin()
+    public function getPlugin(): PLNPlugin
     {
-        return PluginRegistry::getPlugin('generic', $this->parentPluginName);
+        /** @var PLNPlugin */
+        $plugin = PluginRegistry::getPlugin('generic', $this->parentPluginName);
+        return $plugin;
     }
 
     /**
      * Override the builtin to get the correct plugin path.
-     *
-     * @return string
      */
-    public function getPluginPath()
+    public function getPluginPath(): string
     {
-        $plugin = $this->getPLNPlugin();
+        $plugin = $this->getPlugin();
         return $plugin->getPluginPath();
     }
 
     /**
      * Override the builtin to get the correct template path.
-     *
-     * @return string
      */
-    public function getTemplatePath($inCore = false)
+    public function getTemplatePath($inCore = false): string
     {
-        $plugin = $this->getPLNPlugin();
+        $plugin = $this->getPlugin();
         return $plugin->getTemplatePath($inCore);
     }
 
     /**
-     * Get whether or not this plugin is enabled. (Should always return true, as the
-     * parent plugin will take care of loading this one when needed)
-     *
-     * @return boolean
+     * @copydoc Plugin::getEnabled()
      */
     public function getEnabled()
     {
-        $plugin = $this->getPLNPlugin();
-        return $plugin->getEnabled(); // Should always be true anyway if this is loaded
+        return $this->getPlugin()->getEnabled(); // Should always be true anyway if this is loaded
     }
 
     /**
-     * @copydoc GatewayPlugin::fetch
+     * @copydoc GatewayPlugin::fetch()
      */
-    public function fetch($args, $request)
+    public function fetch($args, $request): void
     {
-        $plugin = $this->getPLNPlugin();
+        $plugin = $this->getPlugin();
         $templateMgr = TemplateManager::getManager($request);
         $journal = $request->getJournal();
 
-        $pluginVersionFile = $this->getPluginPath() . DIRECTORY_SEPARATOR . 'version.xml';
+        $pluginVersionFile = $this->getPluginPath() . '/version.xml';
         $pluginVersion = VersionCheck::parseVersionXml($pluginVersionFile);
         $templateMgr->assign('pluginVersion', $pluginVersion);
 
@@ -149,7 +134,6 @@ class PLNGatewayPlugin extends GatewayPlugin
             'phpVersion' => PHP_VERSION,
             'zipInstalled' => class_exists('ZipArchive') ? 'yes' : 'no',
             'acron' => isset($products['acron']) ? 'yes' : 'no',
-            //'tasks' => Config::getVar('general', 'scheduled_tasks', false) ? 'yes' : 'no',
         ];
         $templateMgr->assign('prerequisites', $prerequisites);
 
@@ -178,16 +162,14 @@ class PLNGatewayPlugin extends GatewayPlugin
                 continue;
             }
             $publications[] = $publication;
-            if (count($publications) == PLN_PLUGIN_PING_ARTICLE_COUNT) {
+            if (count($publications) === static::PING_ARTICLE_COUNT) {
                 break;
             }
         }
         $templateMgr->assign('publications', $publications);
         $templateMgr->assign('pln_network', $plugin->getSetting($journal->getId(), 'pln_network'));
 
-        header('Content-Type: text/xml; charset=' . Config::getVar('i18n', 'client_charset'));
+        header('content-type: text/xml; charset=UTF-8');
         $templateMgr->display($plugin->getTemplateResource('ping.tpl'));
-
-        return true;
     }
 }

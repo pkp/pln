@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @file classes/migration/install/PLNPluginSchemaMigration.php
+ * @file classes/migration/install/SchemaMigration.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * @class PLNPluginSchemaMigration
+ * @class SchemaMigration
  *
  * @brief Describe database table structures.
  */
@@ -20,12 +20,12 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use PKP\install\DowngradeNotSupportedException;
 
-class PLNPluginSchemaMigration extends Migration
+class SchemaMigration extends Migration
 {
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         // PLN Deposit Objects
         if (!Schema::hasTable('pln_deposit_objects')) {
@@ -64,7 +64,7 @@ class PLNPluginSchemaMigration extends Migration
     /**
      * Rollback the migrations.
      */
-    public function down()
+    public function down(): void
     {
         throw new DowngradeNotSupportedException();
     }

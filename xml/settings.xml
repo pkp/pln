@@ -38,7 +38,7 @@
 		<name>object_threshold</name>
 		<value>20</value>
 	</setting>
-	<!-- is the PLN accepting deposits -->
+	<!-- is the Preservation Network accepting deposits -->
 	<setting type="bool">
 		<name>pln_accepting</name>
 		<value>false</value>

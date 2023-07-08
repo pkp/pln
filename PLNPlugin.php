@@ -16,15 +16,20 @@ namespace APP\plugins\generic\pln;
 
 use APP\core\Application;
 use APP\core\PageRouter;
+use APP\core\Request;
 use APP\facades\Repo;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\classes\DepositObjectDAO;
-use APP\plugins\generic\pln\classes\form\PLNSettingsForm;
-use APP\plugins\generic\pln\classes\form\PLNStatusForm;
+use APP\plugins\generic\pln\classes\form\SettingsForm;
+use APP\plugins\generic\pln\classes\form\StatusForm;
+use APP\plugins\generic\pln\controllers\grid\StatusGridHandler;
+use APP\plugins\generic\pln\pages\PageHandler;
 use APP\plugins\generic\pln\classes\migration\install\PLNPluginSchemaMigration;
 use DOMDocument;
+use DOMElement;
+use Exception;
 use GuzzleHttp\Exception\RequestException;
 use PKP\config\Config;
 use PKP\core\JSONMessage;
@@ -37,6 +42,7 @@ use PKP\plugins\GenericPlugin;
 use PKP\plugins\Hook;
 use PKP\security\Role;
 use PKP\userGroup\UserGroup;
+use SimpleXMLElement;
 
 define('PLN_PLUGIN_NAME', 'plnplugin');
 
@@ -82,10 +88,8 @@ class PLNPlugin extends GenericPlugin
 {
     /**
      * @copydoc LazyLoadPlugin::register()
-     *
-     * @param null|mixed $mainContextId
      */
-    public function register($category, $path, $mainContextId = null)
+    public function register($category, $path, $mainContextId = null): bool
     {
         if (!parent::register($category, $path, $mainContextId)) {
             return false;
@@ -95,31 +99,27 @@ class PLNPlugin extends GenericPlugin
             Hook::add('PluginRegistry::loadCategory', [$this, 'callbackLoadCategory']);
             Hook::add('LoadHandler', [$this, 'callbackLoadHandler']);
             Hook::add('NotificationManager::getNotificationContents', [$this, 'callbackNotificationContents']);
-            Hook::add('LoadComponentHandler', [$this, 'setupComponentHandlers']);
-            $this->_disableRestrictions();
+            Hook::add('LoadComponentHandler', [$this, 'setupComponentHandler']);
+            $this->disableRestrictions();
         }
+        // The plugin might be disabled for this context, but the task can be executed to check other contexts.
         Hook::add('AcronPlugin::parseCronTab', [$this, 'callbackParseCronTab']);
         return true;
     }
 
     /**
      * Permit requests to the static pages grid handler
-     *
-     * @param string $hookName The name of the hook being invoked
      */
-    public function setupComponentHandlers($hookName, $params)
+    public function setupComponentHandler(string $hookName, array $params): bool
     {
         $component = $params[0];
-        switch ($component) {
-            case 'plugins.generic.pln.controllers.grid.PLNStatusGridHandler':
-                // Allow the PLNStatusGridHandler to get the plugin object
-                import($component);
-                $componentPieces = explode('.', $component);
-                $className = array_pop($componentPieces);
-                $className::setPlugin($this);
-                return true;
+        if ($component !== 'plugins.generic.pln.controllers.grid.StatusGridHandler') {
+            return Hook::CONTINUE;
         }
-        return false;
+
+        // Allow the StatusGridHandler to get the plugin object
+        StatusGridHandler::setPlugin($this);
+        return Hook::ABORT;
     }
 
     /**
@@ -127,7 +127,7 @@ class PLNPlugin extends GenericPlugin
      * - Redirecting non-logged users (the staging server) at contexts protected by login
      * - Redirecting non-logged users (the staging server) at non-public contexts to the login page (see more at: PKPPageRouter::route())
      */
-    private function _disableRestrictions()
+    private function disableRestrictions(): void
     {
         $request = $this->getRequest();
         // Avoid issues with the APIRouter
@@ -140,10 +140,10 @@ class PLNPlugin extends GenericPlugin
         $arguments = $request->getRequestedArgs();
         if ([$page, $operation] === ['pln', 'deposits'] || [$page, $operation, $arguments[0] ?? ''] === ['gateway', 'plugin', 'PLNGatewayPlugin']) {
             define('SESSION_DISABLE_INIT', true);
-            Hook::add('RestrictedSiteAccessPolicy::_getLoginExemptions', function ($hookName, $args) {
+            Hook::add('RestrictedSiteAccessPolicy::_getLoginExemptions', function (string $hookName, array $args): bool {
                 $exemptions = & $args[0];
                 array_push($exemptions, 'gateway', 'pln');
-                return false;
+                return Hook::CONTINUE;
             });
         }
     }
@@ -151,55 +151,57 @@ class PLNPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::getActions()
      */
-    public function getActions($request, $verb)
+    public function getActions($request, $verb): array
     {
+        $actions = parent::getActions($request, $verb);
+        if (!$this->getEnabled()) {
+            $actions;
+        }
+
         $router = $request->getRouter();
-        return array_merge(
-            $this->getEnabled() ? [
-                new LinkAction(
-                    'settings',
-                    new AjaxModal(
-                        $router->url($request, null, null, 'manage', null, ['verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic']),
-                        $this->getDisplayName()
-                    ),
-                    __('manager.plugins.settings'),
-                    null
+        array_unshift(
+            $options,
+            new LinkAction(
+                'settings',
+                new AjaxModal(
+                    $router->url(request: $request, op: 'manage', params: ['verb' => 'settings', 'plugin' => $this->getName(), 'category' => 'generic']),
+                    $this->getDisplayName()
                 ),
-                new LinkAction(
-                    'status',
-                    new AjaxModal(
-                        $router->url($request, null, null, 'manage', null, ['verb' => 'status', 'plugin' => $this->getName(), 'category' => 'generic']),
-                        $this->getDisplayName()
-                    ),
-                    __('common.status'),
-                    null
-                )
-            ] : [],
-            parent::getActions($request, $verb)
+                __('manager.plugins.settings')
+            ),
+            new LinkAction(
+                'status',
+                new AjaxModal(
+                    $router->url(request: $request, op: 'manage', params: ['verb' => 'status', 'plugin' => $this->getName(), 'category' => 'generic']),
+                    $this->getDisplayName()
+                ),
+                __('common.status')
+            )
         );
+        return $options;
     }
 
     /**
      * Register this plugin's DAOs with the application
      */
-    public function registerDAOs()
+    public function registerDAOs(): void
     {
         DAORegistry::registerDAO('DepositDAO', new DepositDAO());
         DAORegistry::registerDAO('DepositObjectDAO', new DepositObjectDAO());
     }
 
     /**
-     * @copydoc PKPPlugin::getDisplayName()
+     * @copydoc Plugin::getDisplayName()
      */
-    public function getDisplayName()
+    public function getDisplayName(): string
     {
         return __('plugins.generic.pln');
     }
 
     /**
-     * @copydoc PKPPlugin::getDescription()
+     * @copydoc Plugin::getDescription()
      */
-    public function getDescription()
+    public function getDescription(): string
     {
         return __('plugins.generic.pln.description');
     }
@@ -207,34 +209,34 @@ class PLNPlugin extends GenericPlugin
     /**
      * @copydoc Plugin::getInstallMigration()
      */
-    public function getInstallMigration()
+    public function getInstallMigration(): SchemaMigration
     {
-        return new PLNPluginSchemaMigration();
+        return new SchemaMigration();
     }
 
     /**
-     * @copydoc PKPPlugin::getHandlerPath()
+     * @copydoc Plugin::getHandlerPath()
      */
-    public function getHandlerPath()
+    public function getHandlerPath(): string
     {
-        return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'pages';
+        return "{$this->getPluginPath()}/pages";
     }
 
     /**
-     * @copydoc PKPPlugin::getContextSpecificPluginSettingsFile()
+     * @copydoc Plugin::getContextSpecificPluginSettingsFile()
      */
-    public function getContextSpecificPluginSettingsFile()
+    public function getContextSpecificPluginSettingsFile(): string
     {
-        return $this->getPluginPath() . DIRECTORY_SEPARATOR . 'xml' . DIRECTORY_SEPARATOR . 'settings.xml';
+        return "{$this->getPluginPath()}/xml/settings.xml";
     }
 
     /**
-     * @see PKPPlugin::getSetting()
+     * @see Plugin::getSetting()
      *
      * @param int $journalId
      * @param string $settingName
      */
-    public function getSetting($journalId, $settingName)
+    public function getSetting($journalId, $settingName): mixed
     {
         // if there isn't a journal_uuid, make one
         switch ($settingName) {
@@ -260,148 +262,129 @@ class PLNPlugin extends GenericPlugin
 
     /**
      * Register as a gateway plugin.
-     *
-     * @param string $hookName
-     * @param array $args
      */
-    public function callbackLoadCategory($hookName, $args)
+    public function callbackLoadCategory(string $hookName, array $args): bool
     {
-        $category = & $args[0];
+        $category = $args[0];
         $plugins = & $args[1];
-        switch ($category) {
-            case 'gateways':
-                $gatewayPlugin = new PLNGatewayPlugin($this->getName());
-                $plugins[$gatewayPlugin->getSeq()][$gatewayPlugin->getPluginPath()] = & $gatewayPlugin;
-                break;
+        if ($category === 'gateways') {
+            $gatewayPlugin = new PLNGatewayPlugin($this->getName());
+            $plugins[$gatewayPlugin->getSeq()][$gatewayPlugin->getPluginPath()] = $gatewayPlugin;
         }
 
-        return false;
+        return Hook::CONTINUE;
     }
 
     /**
      * @copydoc AcronPlugin::parseCronTab()
      */
-    public function callbackParseCronTab($hookName, $args)
+    public function callbackParseCronTab(string $hookName, array $args): bool
     {
         $taskFilesPath = & $args[0];
         $taskFilesPath[] = $this->getPluginPath() . '/xml/scheduledTasks.xml';
-        return false;
+        return Hook::CONTINUE;
     }
 
     /**
      * Hook registry function to provide notification messages
-     *
-     * @param string $hookName (NotificationManager::getNotificationContents)
-     * @param array $args ($notification, $message)
-     *
-     * @return boolean false to continue processing subsequent hooks
      */
-    public function callbackNotificationContents($hookName, $args)
+    public function callbackNotificationContents(string $hookName, array $args): bool
     {
         /** @var Notification */
         $notification = $args[0];
         $message = & $args[1];
 
-        $type = $notification->getType();
-        $notificationByType = [
+        $message = match ($notification->getType()) {
             PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED => __('plugins.generic.pln.notifications.terms_updated'),
             PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING => __('plugins.generic.pln.notifications.issn_missing'),
             PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR => __('plugins.generic.pln.notifications.http_error'),
-            PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING => __('plugins.generic.pln.notifications.zip_missing')
-        ];
-        $message = $notificationByType[$type] ?? $message;
-        return false;
+            PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING => __('plugins.generic.pln.notifications.zip_missing'),
+            default => $message
+        };
+        return Hook::CONTINUE;
     }
 
     /**
      * Callback for the LoadHandler hook
      */
-    public function callbackLoadHandler($hookName, $args)
+    public function callbackLoadHandler(string $hookName, array $args): bool
     {
-        $page = & $args[0];
-        if ($page == 'pln') {
-            $op = $args[1];
-            if ($op) {
-                if (in_array($op, ['deposits'])) {
-                    define('HANDLER_CLASS', 'PLNHandler');
-                    $handlerFile = & $args[2];
-                    $handlerFile = $this->getHandlerPath() . '/' . 'PLNHandler.php';
+        $page = $args[0];
+        $op = $args[1] ?? '';
+        if ($page !== 'pln' || $op !== 'deposits') {
+            return Hook::CONTINUE;
+        }
+        define('HANDLER_CLASS', PageHandler::class);
+        $handlerFile = & $args[2];
+        $handlerFile = "{$this->getHandlerPath()}/PageHandler.php";
+        return Hook::CONTINUE;
+    }
+
+    /**
+     * @copydoc Plugin::manage()
+     */
+    public function manage($args, $request): JSONMessage
+    {
+        $verb = $request->getUserVar('verb');
+        if ($verb === 'settings') {
+            $context = $request->getContext();
+            $form = new SettingsForm($this, $context->getId());
+
+            if ($request->getUserVar('refresh')) {
+                $this->getServiceDocument($context->getId());
+            } elseif ($request->getUserVar('save')) {
+                $form->readInputData();
+                if ($form->validate()) {
+                    $form->execute();
+
+                    // Add notification: Changes saved
+                    $notificationContent = __('plugins.generic.pln.settings.saved');
+                    $currentUser = $request->getUser();
+                    $notificationMgr = new NotificationManager();
+                    $notificationMgr->createTrivialNotification($currentUser->getId(), PKPNotification::NOTIFICATION_TYPE_SUCCESS, ['contents' => $notificationContent]);
+
+                    return new JSONMessage(true);
                 }
             }
+
+            $form->initData();
+
+            return new JSONMessage(true, $form->fetch($request));
         }
-        return false;
-    }
 
-    /**
-     * @copydoc PKPPlugin::manage()
-     */
-    public function manage($args, $request)
-    {
-        switch($request->getUserVar('verb')) {
-            case 'settings':
-                $context = $request->getContext();
-                $form = new PLNSettingsForm($this, $context->getId());
+        if ($verb === 'status') {
+            $depositDao = DAORegistry::getDAO('DepositDAO');
 
-                if ($request->getUserVar('refresh')) {
-                    $this->getServiceDocument($context->getId());
-                } else {
-                    if ($request->getUserVar('save')) {
-                        $form->readInputData();
-                        if ($form->validate()) {
-                            $form->execute();
+            $context = $request->getContext();
+            $form = new StatusForm($this, $context->getId());
 
-                            // Add notification: Changes saved
-                            $notificationContent = __('plugins.generic.pln.settings.saved');
-                            $currentUser = $request->getUser();
-                            $notificationMgr = new NotificationManager();
-                            $notificationMgr->createTrivialNotification($currentUser->getId(), PKPNotification::NOTIFICATION_TYPE_SUCCESS, ['contents' => $notificationContent]);
-
-                            return new JSONMessage(true);
-                        }
-                    }
-                }
-
-                $form->initData();
-
-                return new JSONMessage(true, $form->fetch($request));
-            case 'status':
+            if ($request->getUserVar('reset')) {
+                $depositIds = array_keys($request->getUserVar('reset'));
+                /** @var DepositDAO */
                 $depositDao = DAORegistry::getDAO('DepositDAO');
-
-                $context = $request->getContext();
-                $form = new PLNStatusForm($this, $context->getId());
-
-                if ($request->getUserVar('reset')) {
-                    $deposit_ids = array_keys($request->getUserVar('reset'));
-                    /** @var DepositDAO */
-                    $depositDao = DAORegistry::getDAO('DepositDAO');
-                    foreach ($deposit_ids as $deposit_id) {
-                        $deposit = $depositDao->getById($deposit_id);
-
-                        $deposit->setNewStatus();
-
-                        $depositDao->updateObject($deposit);
-                    }
+                foreach ($depositIds as $depositId) {
+                    $deposit = $depositDao->getById($depositId);
+                    $deposit->setNewStatus();
+                    $depositDao->updateObject($deposit);
                 }
+            }
 
-                return new JSONMessage(true, $form->fetch($request));
+            return new JSONMessage(true, $form->fetch($request));
         }
+
+        throw new Exception('Unexpected verb');
     }
 
     /**
-     * Check to see whether the PLN's terms have been agreed to
-     * to append.
-     *
-     * @param int $journalId
-     *
-     * @return boolean
+     * Check to see whether the PLN's terms have been agreed to to append.
      */
-    public function termsAgreed($journalId)
+    public function termsAgreed(int $journalId): bool
     {
         $terms = unserialize($this->getSetting($journalId, 'terms_of_use'));
         $termsAgreed = unserialize($this->getSetting($journalId, 'terms_of_use_agreement'));
 
         foreach (array_keys($terms) as $term) {
-            if (!isset($termsAgreed[$term]) || (!$termsAgreed[$term])) {
+            if ((!$termsAgreed[$term] ?? false)) {
                 return false;
             }
         }
@@ -412,11 +395,9 @@ class PLNPlugin extends GenericPlugin
     /**
      * Request service document at specified URL
      *
-     * @param int $contextId The journal id for the service document we wish to fetch
-     *
-     * @return int The HTTP response status or FALSE for a network error.
+     * @return int The HTTP response status.
      */
-    public function getServiceDocument($contextId)
+    public function getServiceDocument(int $contextId): int
     {
         $application = Application::get();
         $request = $application->getRequest();
@@ -497,11 +478,8 @@ class PLNPlugin extends GenericPlugin
 
     /**
      * Create notification for all journal managers
-     *
-     * @param int $contextId
-     * @param int $notificationType
      */
-    public function createJournalManagerNotification($contextId, $notificationType)
+    public function createJournalManagerNotification(int $contextId, int $notificationType): void
     {
         $userGroupIds = Repo::userGroup()
             ->getByRoleIds([Role::ROLE_ID_MANAGER], $contextId)
@@ -521,10 +499,8 @@ class PLNPlugin extends GenericPlugin
 
     /**
      * Get whether zip archive support is present
-     *
-     * @return boolean
      */
-    public function zipInstalled()
+    public function zipInstalled(): bool
     {
         return class_exists('ZipArchive');
     }
@@ -532,10 +508,8 @@ class PLNPlugin extends GenericPlugin
     /**
      * Check if acron is enabled, or if the scheduled_tasks config var is set.
      * The plugin needs to run periodically through one of those systems.
-     *
-     * @return boolean
      */
-    public function cronEnabled()
+    public function cronEnabled(): bool
     {
         $application = Application::get();
         $products = $application->getEnabledProducts('plugins.generic');
@@ -544,13 +518,8 @@ class PLNPlugin extends GenericPlugin
 
     /**
      * Get resource
-     *
-     * @param string $url
-     * @param array $headers
-     *
-     * @return array
      */
-    public function curlGet($url, $headers = [])
+    public function curlGet(string $url, array $headers = []): array
     {
         $httpClient = Application::get()->getHttpClient();
         $response = null;
@@ -579,50 +548,37 @@ class PLNPlugin extends GenericPlugin
 
     /**
      * Post a file to a resource
-     *
-     * @param string $url
-     *
-     * @return array
      */
-    public function curlPostFile($url, $filename)
+    public function curlPostFile(string $url, string $filename): array
     {
-        return $this->_sendFile('POST', $url, $filename);
+        return $this->sendFile('POST', $url, $filename);
     }
 
     /**
      * Put a file to a resource
-     *
-     * @param string $url
-     * @param string $filename
-     *
-     * @return array
      */
-    public function curlPutFile($url, $filename)
+    public function curlPutFile(string $url, string $filename): array
     {
-        return $this->_sendFile('PUT', $url, $filename);
+        return $this->sendFile('PUT', $url, $filename);
     }
 
     /**
      * Create a new UUID
-     *
-     * @return string
      */
-    public function newUUID()
+    public function newUUID(): string
     {
         return PKPString::generateUUID();
     }
 
     /**
      * Transfer a file to a resource.
-     *
-     * @param string $method PUT or POST
-     * @param string $url
-     *
-     * @return array
      */
-    protected function _sendFile($method, $url, $filename)
+    protected function sendFile(string $method, string $url, string $filename): array
     {
         $httpClient = Application::get()->getHttpClient();
+        $response = null;
+        $body = null;
+        $error = null;
         try {
             $response = $httpClient->request($method, $url, [
                 'headers' => [
@@ -631,19 +587,29 @@ class PLNPlugin extends GenericPlugin
                 ],
                 'body' => fopen($filename, 'r'),
             ]);
+            $body = (string) $response->getBody();
         } catch (RequestException $e) {
-            return ['error' => $e->getMessage()];
+            $response = $e->getResponse();
+            $body = $response ? (string) $response->getBody() : null;
+            $error = $e->getMessage();
+            if (strlen($body)) {
+                try {
+                    $error = (new SimpleXMLElement($body))->summary ?: $error;
+                } catch (Exception $e) {
+                }
+            }
         }
         return [
-            'status' => $response->getStatusCode(),
-            'result' => (string) $response->getBody(),
+            'status' => $response ? $response->getStatusCode() : null,
+            'result' => $body,
+            'error' => $error
         ];
     }
 
     /**
      * @copydoc LazyLoadPlugin::register()
      */
-    public function setEnabled($enabled)
+    public function setEnabled(bool $enabled): void
     {
         parent::setEnabled($enabled);
         if ($enabled) {

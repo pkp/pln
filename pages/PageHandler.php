@@ -1,20 +1,22 @@
 <?php
 
 /**
- * @file pages/PLNHandler.php
+ * @file pages/PageHandler.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * @class PLNHandler
+ * @class PageHandler
  *
  * @brief Handle PLN requests
  */
 
 namespace APP\plugins\generic\pln\pages;
 
+use APP\core\Request;
 use APP\handler\Handler;
+use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\classes\DepositPackage;
 use APP\template\TemplateManager;
 use PKP\core\PKPString;
@@ -23,15 +25,12 @@ use PKP\file\FileManager;
 use PKP\plugins\PluginRegistry;
 use PKP\security\authorization\ContextRequiredPolicy;
 
-class PLNHandler extends Handler
+class PageHandler extends Handler
 {
     /**
-     * Index handler: redirect to journal page.
-     *
-     * @param array $args
-     * @param PKPRequest $request
+     * @copydoc PKPHandler::index()
      */
-    public function index($args, $request)
+    public function index($args, $request): void
     {
         $request->redirect(null, 'index');
     }
@@ -39,7 +38,7 @@ class PLNHandler extends Handler
     /**
      * @copydoc PKPHandler::authorize()
      */
-    public function authorize($request, &$args, $roleAssignments)
+    public function authorize($request, &$args, $roleAssignments): bool
     {
         $this->addPolicy(new ContextRequiredPolicy($request));
 
@@ -48,13 +47,8 @@ class PLNHandler extends Handler
 
     /**
      * Provide an endpoint for the PLN staging server to retrieve a deposit
-     *
-     * @param array $args
-     * @param Request $request
-     *
-     * @return bool
      */
-    public function deposits($args, $request)
+    public function deposits(array $args, Request $request): bool
     {
         $journal = $request->getJournal();
         /** @var DepositDAO */
@@ -62,21 +56,18 @@ class PLNHandler extends Handler
         $fileManager = new FileManager();
         $dispatcher = $request->getDispatcher();
 
-        $depositUuid = (!isset($args[0]) || empty($args[0])) ? null : $args[0];
+        $depositUuid = $args[0] ?? '';
 
         // sanitize the input
         if (!preg_match('/^[[:xdigit:]]{8}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{4}-[[:xdigit:]]{12}$/', $depositUuid)) {
             error_log(__('plugins.generic.pln.error.handler.uuid.invalid'));
             $dispatcher->handle404();
-            return false;
         }
 
         $deposit = $depositDao->getByUUID($journal->getId(), $depositUuid);
-
         if (!$deposit) {
             error_log(__('plugins.generic.pln.error.handler.uuid.notfound'));
             $dispatcher->handle404();
-            return false;
         }
 
         $depositPackage = new DepositPackage($deposit, null);
@@ -85,7 +76,6 @@ class PLNHandler extends Handler
         if (!$fileManager->fileExists($depositBag)) {
             error_log('plugins.generic.pln.error.handler.file.notfound');
             $dispatcher->handle404();
-            return false;
         }
 
         return $fileManager->downloadByPath($depositBag, PKPString::mime_content_type($depositBag), true);
@@ -93,31 +83,13 @@ class PLNHandler extends Handler
 
     /**
      * Display status of deposit(s)
-     *
-     * @param array $args
-     * @param Request $request
      */
-    public function status($args, $request)
+    public function status(array $args, Request $request)
     {
         $router = $request->getRouter();
         $plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
         $templateMgr = TemplateManager::getManager();
         $templateMgr->assign('pageHierarchy', [[$router->url($request, null, 'about'), 'about.aboutTheJournal']]);
-        $templateMgr->display($plnPlugin->getTemplatePath() . DIRECTORY_SEPARATOR . 'status.tpl');
-    }
-
-    //
-    // Protected helper methods
-    //
-    /**
-     * Get the Usage Stats plugin object
-     *
-     * @return PLNPlugin
-     */
-    protected function _getPlugin()
-    {
-        /** @var  PLNPlugin $plugin */
-        $plugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
-        return $plugin;
+        $templateMgr->display("{$plnPlugin->getTemplatePath()}/status.tpl");
     }
 }

@@ -17,29 +17,23 @@ namespace APP\plugins\generic\pln\classes;
 use APP\plugins\generic\pln\form\Deposit;
 use PKP\db\DAO;
 use PKP\db\DAOResultFactory;
+use PKP\db\DBResultRange;
 use PKP\plugins\Hook;
 
 class DepositDAO extends DAO
 {
     /**
      * Construct a new deposit object.
-     *
-     * @return Deposit
      */
-    public function newDataObject()
+    public function newDataObject(): Deposit
     {
         return new Deposit(null);
     }
 
     /**
      * Retrieve deposit by ID.
-     *
-     * @param int $depositId
-     * @param int $journalId optional
-     *
-     * @return Deposit Object
      */
-    public function getById($depositId, $journalId = null)
+    public function getById(int $depositId, ?int $journalId = null): ?Deposit
     {
         $params = [(int) $depositId];
         if ($journalId !== null) {
@@ -47,43 +41,37 @@ class DepositDAO extends DAO
         }
         $result = $this->retrieve(
             'SELECT *
-			FROM pln_deposits
-			WHERE deposit_id = ?'
+            FROM pln_deposits
+            WHERE deposit_id = ?'
             . ($journalId !== null ? ' AND journal_id = ?' : ''),
             $params
         );
 
         $row = $result->current();
-        if ($row) {
-            return $this->_fromRow((array) $row);
-        }
-
-        return $row;
+        return $row ? $this->fromRow((array) $row) : null;
     }
 
     /**
      * Insert deposit object
      *
-     * @param Deposit $deposit
-     *
      * @return int inserted Deposit id
      */
-    public function insertObject($deposit)
+    public function insertObject(Deposit $deposit): int
     {
         $this->update(
             sprintf(
                 'INSERT INTO pln_deposits
-					(journal_id,
-					uuid,
-					status,
-					staging_state,
-					lockss_state,
-					date_status,
-					date_created,
-					date_modified,
-					date_preserved)
-				VALUES
-					(?, ?, ?, ?, ?, %s, CURRENT_TIMESTAMP, %s, %s)',
+                    (journal_id,
+                    uuid,
+                    status,
+                    staging_state,
+                    lockss_state,
+                    date_status,
+                    date_created,
+                    date_modified,
+                    date_preserved)
+                VALUES
+                    (?, ?, ?, ?, ?, %s, CURRENT_TIMESTAMP, %s, %s)',
                 $this->datetimeToDB($deposit->getLastStatusDate()),
                 $this->datetimeToDB($deposit->getDateModified()),
                 $this->datetimeToDB($deposit->getPreservedDate())
@@ -102,25 +90,23 @@ class DepositDAO extends DAO
 
     /**
      * Update deposit
-     *
-     * @param Deposit $deposit
      */
-    public function updateObject($deposit)
+    public function updateObject(Deposit $deposit): void
     {
         $this->update(
             sprintf(
                 'UPDATE pln_deposits SET
-					journal_id = ?,
-					uuid = ?,
-					status = ?,
-					staging_state = ?,
-					lockss_state = ?,
-					date_status = %s,
-					date_created = %s,
-					date_preserved = %s,
-					date_modified = CURRENT_TIMESTAMP,
-					export_deposit_error = ?
-				WHERE deposit_id = ?',
+                    journal_id = ?,
+                    uuid = ?,
+                    status = ?,
+                    staging_state = ?,
+                    lockss_state = ?,
+                    date_status = %s,
+                    date_created = %s,
+                    date_preserved = %s,
+                    date_modified = CURRENT_TIMESTAMP,
+                    export_deposit_error = ?
+                WHERE deposit_id = ?',
                 $this->datetimeToDB($deposit->getLastStatusDate()),
                 $this->datetimeToDB($deposit->getDateCreated()),
                 $this->datetimeToDB($deposit->getPreservedDate())
@@ -139,12 +125,8 @@ class DepositDAO extends DAO
 
     /**
      * Delete deposit
-     *
-     * @param Deposit $deposit
-     *
-     * @return bool True on success
      */
-    public function deleteObject($deposit)
+    public function deleteObject(Deposit $deposit): bool
     {
         if (!(new DepositPackage($deposit))->remove()) {
             return false;
@@ -155,21 +137,9 @@ class DepositDAO extends DAO
     }
 
     /**
-     * Get the ID of the last inserted deposit.
+     * Return a deposit from a row.
      */
-    public function getInsertId(): int
-    {
-        return $this->_getInsertId();
-    }
-
-    /**
-     * Internal function to return a deposit from a row.
-     *
-     * @param array $row
-     *
-     * @return Deposit
-     */
-    public function _fromRow($row)
+    public function fromRow(array $row): Deposit
     {
         $deposit = $this->newDataObject();
         $deposit->setId($row['deposit_id']);
@@ -184,94 +154,78 @@ class DepositDAO extends DAO
         $deposit->setPreservedDate($row['date_preserved'] ? $this->datetimeFromDB($row['date_preserved']) : null);
         $deposit->setExportDepositError($row['export_deposit_error']);
 
-        Hook::call('DepositDAO::_fromRow', [&$deposit, &$row]);
+        Hook::call('DepositDAO::fromRow', [&$deposit, &$row]);
 
         return $deposit;
     }
 
     /**
      * Retrieve a deposit by deposit uuid and journal id.
-     *
-     * @param int $journalId
-     * @param string $depositUuid
-     *
-     * @return Deposit
      */
-    public function getByUUID($journalId, $depositUuid)
+    public function getByUUID(int $journalId, string $depositUuid): Deposit
     {
         $result = $this->retrieve(
             'SELECT *
-			FROM pln_deposits
-			WHERE journal_id = ?
-			AND uuid = ?',
+            FROM pln_deposits
+            WHERE journal_id = ?
+            AND uuid = ?',
             [(int) $journalId, $depositUuid]
         );
 
         $row = $result->current();
-        if ($row) {
-            return $this->_fromRow((array) $row);
-        }
-
-        return $row;
+        return $row ? $this->fromRow((array) $row) : null;
     }
 
     /**
      * Retrieve all deposits.
      *
-     * @param int $journalId
-     * @param null|mixed $dbResultRange
-     *
-     * @return DAOResultFactory
+     * @return DAOResultFactory<Deposit>
      */
-    public function getByJournalId($journalId, $dbResultRange = null)
+    public function getByJournalId(int $journalId, ?DBResultRange $dbResultRange = null): DAOResultFactory
     {
         $params[] = $journalId;
 
         $result = $this->retrieveRange(
             $sql = 'SELECT *
-			FROM pln_deposits
-			WHERE journal_id = ?
-			ORDER BY export_deposit_error DESC, deposit_id DESC',
+            FROM pln_deposits
+            WHERE journal_id = ?
+            ORDER BY export_deposit_error DESC, deposit_id DESC',
             $params,
             $dbResultRange
         );
 
-        return new DAOResultFactory($result, $this, '_fromRow', [], $sql, $params, $dbResultRange);
+        return new DAOResultFactory($result, $this, 'fromRow', [], $sql, $params, $dbResultRange);
     }
 
     /**
      * Retrieve all newly-created deposits (ones with new status)
      *
-     * @param int $journalId
-     *
-     * @return DAOResultFactory
+     * @return DAOResultFactory<Deposit>
      */
-    public function getNew($journalId)
+    public function getNew(int $journalId): DAOResultFactory
     {
         $result = $this->retrieve(
             'SELECT * FROM pln_deposits WHERE journal_id = ? AND status = ?',
             [(int) $journalId, (int) PLN_PLUGIN_DEPOSIT_STATUS_NEW]
         );
 
-        return new DAOResultFactory($result, $this, '_fromRow');
+        return new DAOResultFactory($result, $this, 'fromRow');
     }
 
     /**
      * Retrieve all deposits that need to be transferred
      *
-     * @param int $journalId
-     *
-     * @return DAOResultFactory
+     * @return DAOResultFactory<Deposit>
      */
-    public function getNeedTransferring($journalId)
+    public function getNeedTransferring(int $journalId): DAOResultFactory
     {
         $result = $this->retrieve(
             'SELECT *
-			FROM pln_deposits AS d
-			WHERE d.journal_id = ?
-			AND d.status & ? <> 0
-			AND d.status & ? = 0
-			ORDER BY d.export_deposit_error, d.deposit_id',
+            FROM pln_deposits AS d
+            WHERE d.journal_id = ?
+            AND d.status & ? <> 0
+            AND d.status & ? = 0
+            ORDER BY d.export_deposit_error, d.deposit_id',
             [
                 (int) $journalId,
                 (int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
@@ -279,54 +233,50 @@ class DepositDAO extends DAO
             ]
         );
 
-        return new DAOResultFactory($result, $this, '_fromRow');
+        return new DAOResultFactory($result, $this, 'fromRow');
     }
 
     /**
      * Retrieve all deposits that need packaging
      *
-     * @param int $journalId
-     *
-     * @return DAOResultFactory
+     * @return DAOResultFactory<Deposit>
      */
-    public function getNeedPackaging($journalId)
+    public function getNeedPackaging(int $journalId): DAOResultFactory
     {
         $result = $this->retrieve(
             'SELECT *
-			FROM pln_deposits AS d
-			WHERE d.journal_id = ?
-			AND d.status & ? = 0
-			ORDER BY d.export_deposit_error, d.deposit_id',
+            FROM pln_deposits AS d
+            WHERE d.journal_id = ?
+            AND d.status & ? = 0
+            ORDER BY d.export_deposit_error, d.deposit_id',
             [
                 (int) $journalId,
                 (int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED
             ]
         );
 
-        return new DAOResultFactory($result, $this, '_fromRow');
+        return new DAOResultFactory($result, $this, 'fromRow');
     }
 
     /**
      * Retrieve all deposits that need a status update
      *
-     * @param int $journalId
-     *
-     * @return DAOResultFactory
+     * @return DAOResultFactory<Deposit>
      */
-    public function getNeedStagingStatusUpdate($journalId)
+    public function getNeedStagingStatusUpdate(int $journalId): DAOResultFactory
     {
         $result = $this->retrieve(
             'SELECT *
-			FROM pln_deposits AS d
-			WHERE d.journal_id = ?
-			AND (
-				d.status IS NULL
-				OR (
-					d.status & ? <> 0
-					AND d.status & ? = 0
-				)
-			)
-			ORDER BY d.export_deposit_error, d.deposit_id',
+            FROM pln_deposits AS d
+            WHERE d.journal_id = ?
+            AND (
+                d.status IS NULL
+                OR (
+                    d.status & ? <> 0
+                    AND d.status & ? = 0
+                )
+            )
+            ORDER BY d.export_deposit_error, d.deposit_id',
             [
                 (int) $journalId,
                 (int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
@@ -334,7 +284,7 @@ class DepositDAO extends DAO
             ]
         );
 
-        return new DAOResultFactory($result, $this, '_fromRow');
+        return new DAOResultFactory($result, $this, 'fromRow');
     }
 
     /**
@@ -342,19 +292,19 @@ class DepositDAO extends DAO
      *
      * @return int[] Deposit IDs which failed to be removed
      */
-    public function pruneOrphaned()
+    public function pruneOrphaned(): array
     {
         $result = $this->retrieveRange(
             $sql = 'SELECT *
-			FROM pln_deposits
-			WHERE journal_id NOT IN (
-				SELECT journal_id
-				FROM journals
-			)
-			ORDER BY deposit_id'
+            FROM pln_deposits
+            WHERE journal_id NOT IN (
+                SELECT journal_id
+                FROM journals
+            )
+            ORDER BY deposit_id'
         );
         $failedIds = [];
-        $deposits = new DAOResultFactory($result, $this, '_fromRow', [], $sql);
+        $deposits = new DAOResultFactory($result, $this, 'fromRow', [], $sql);
         /** @var Deposit */
         foreach ($deposits->toIterator() as $deposit) {
             if (!$this->deleteObject($deposit)) {

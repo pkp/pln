@@ -25,7 +25,7 @@ class I28_FixDepositStatus extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         if (Schema::hasColumn('pln_deposits', 'date_preserved')) {
             return;
@@ -42,7 +42,7 @@ class I28_FixDepositStatus extends Migration
     /**
      * Rollback the migrations.
      */
-    public function down()
+    public function down(): void
     {
         throw new DowngradeNotSupportedException();
     }

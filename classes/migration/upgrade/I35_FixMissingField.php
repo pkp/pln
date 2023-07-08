@@ -24,7 +24,7 @@ class I35_FixMissingField extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
         if (Schema::hasColumn('pln_deposits', 'export_deposit_error')) {
             return;
@@ -37,7 +37,7 @@ class I35_FixMissingField extends Migration
     /**
      * Rollback the migrations.
      */
-    public function down()
+    public function down(): void
     {
         throw new DowngradeNotSupportedException();
     }

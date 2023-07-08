@@ -17,7 +17,11 @@ namespace APP\plugins\generic\pln\classes;
 use APP\core\Application;
 use APP\journal\Journal;
 use APP\journal\JournalDAO;
+use APP\plugins\generic\pln\classes\tasks\Depositor;
+use APP\plugins\generic\pln\form\Deposit;
+use APP\plugins\generic\pln\PLNPlugin;
 use APP\plugins\importexport\native\NativeImportExportPlugin;
+use Core;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
@@ -28,46 +32,30 @@ use PKP\file\ContextFileManager;
 use PKP\file\FileManager;
 use PKP\plugins\PluginRegistry;
 use PKP\scheduledTask\ScheduledTaskHelper;
+use PKP\site\VersionDAO;
 use PKP\submission\PKPSubmission;
+use Throwable;
+use whikloj\BagItTools\Bag;
 
 class DepositPackage
 {
-    public const PKP_NAMESPACE = 'http://pkp.sfu.ca/SWORD';
-
-    /** @var Deposit */
-    public $_deposit;
+    private const PKP_NAMESPACE = 'http://pkp.sfu.ca/SWORD';
 
     /**
-     * If the DepositPackage object was created as part of a scheduled task
-     * run, then save the task so error messages can be logged there.
-     *
-     * @var ScheduledTask;
+     * Constructor
      */
-    public $_task;
-
-    /**
-     * Constructor.
-     *
-     * @param Deposit $deposit
-     * @param ScheduledTask $task
-     */
-    public function __construct($deposit, $task = null)
+    public function __construct(private Deposit $deposit, private ?Depositor $task = null)
     {
-        $this->_deposit = $deposit;
-        $this->_task = $task;
     }
 
     /**
-     * Send a message to a log. If the deposit package is aware of a
-     * a scheduled task, the message will be sent to the task's
-     * log. Otherwise it will be sent to error_log().
-     *
-     * @param string $message Locale-specific message to be logged
+     * Send a message to a log.
+     * If the deposit package is aware of a a scheduled task, the message will be sent to the task's log, otherwise it will be sent to error_log().
      */
-    protected function _logMessage($message)
+    protected function logMessage(string $message): void
     {
-        if ($this->_task) {
-            $this->_task->addExecutionLogEntry($message, ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+        if ($this->task) {
+            $this->task->addExecutionLogEntry($message, ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
         } else {
             error_log($message);
         }
@@ -75,48 +63,35 @@ class DepositPackage
 
     /**
      * Get the directory used to store deposit data.
-     *
-     * @return string
      */
-    public function getDepositDir()
+    public function getDepositDir(): string
     {
-        $fileManager = new ContextFileManager($this->_deposit->getJournalId());
-        return $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER . DIRECTORY_SEPARATOR . $this->_deposit->getUUID();
+        $fileManager = new ContextFileManager($this->deposit->getJournalId());
+        return $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER . "/{$this->deposit->getUUID()}";
     }
 
     /**
      * Get the filename used to store the deposit's atom document.
-     *
-     * @return string
      */
-    public function getAtomDocumentPath()
+    public function getAtomDocumentPath(): string
     {
-        return $this->getDepositDir() . DIRECTORY_SEPARATOR . $this->_deposit->getUUID() . '.xml';
+        return "{$this->getDepositDir()}/{$this->deposit->getUUID()}.xml";
     }
 
     /**
      * Get the filename used to store the deposit's bag.
-     *
-     * @return string
      */
-    public function getPackageFilePath()
+    public function getPackageFilePath(): string
     {
-        return $this->getDepositDir() . DIRECTORY_SEPARATOR . $this->_deposit->getUUID() . '.zip';
+        return "{$this->getDepositDir()}/{$this->deposit->getUUID()}.zip";
     }
 
     /**
      * Create a DOMElement in the $dom, and set the element name, namespace, and
      * content. Any invalid UTF-8 characters will be dropped. The
      * content will be placed inside a CDATA section.
-     *
-     * @param DOMDocument $dom
-     * @param string $elementName
-     * @param string $content
-     * @param string $namespace
-     *
-     * @return DOMElement
      */
-    protected function _generateElement($dom, $elementName, $content, $namespace = null)
+    protected function createElement(DOMDocument $dom, string $elementName, ?string $content, ?string $namespace = null): DOMElement
     {
         // remove any invalid UTF-8.
         $original = mb_substitute_character();
@@ -124,8 +99,7 @@ class DepositPackage
         $filtered = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
         mb_substitute_character($original);
 
-        // put the filtered content in a CDATA, as it may contain markup that
-        // isn't valid XML.
+        // put the filtered content in a CDATA, as it may contain markup that isn't valid XML.
         $node = $dom->createCDATASection($filtered);
         $element = $dom->createElementNS($namespace, $elementName);
         $element->appendChild($node);
@@ -134,17 +108,15 @@ class DepositPackage
 
     /**
      * Create an atom document for this deposit.
-     *
-     * @return string
      */
-    public function generateAtomDocument()
+    public function generateAtomDocument(): string
     {
         $plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
         /** @var JournalDAO */
         $journalDao = DAORegistry::getDAO('JournalDAO');
         /** @var Journal */
-        $journal = $journalDao->getById($this->_deposit->getJournalId());
-        $fileManager = new ContextFileManager($this->_deposit->getJournalId());
+        $journal = $journalDao->getById($this->deposit->getJournalId());
+        $fileManager = new ContextFileManager($this->deposit->getJournalId());
 
         // set up folder and file locations
         $atomFile = $this->getAtomDocumentPath();
@@ -152,7 +124,7 @@ class DepositPackage
 
         // make sure our bag is present
         if (!$fileManager->fileExists($packageFile)) {
-            $this->_logMessage(__('plugins.generic.pln.error.depositor.missingpackage', ['file' => $packageFile]));
+            $this->logMessage(__('plugins.generic.pln.error.depositor.missingpackage', ['file' => $packageFile]));
             return false;
         }
 
@@ -161,46 +133,34 @@ class DepositPackage
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dcterms', 'http://purl.org/dc/terms/');
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', static::PKP_NAMESPACE);
 
-        $entry->appendChild($this->_generateElement($atom, 'email', $journal->getData('contactEmail')));
-        $entry->appendChild($this->_generateElement($atom, 'title', $journal->getLocalizedName()));
+        $entry->appendChild($this->createElement($atom, 'email', $journal->getData('contactEmail')));
+        $entry->appendChild($this->createElement($atom, 'title', $journal->getLocalizedName()));
 
         $request = Application::get()->getRequest();
         $dispatcher = Application::get()->getDispatcher();
 
-        $entry->appendChild($this->_generateElement($atom, 'pkp:journal_url', $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()), static::PKP_NAMESPACE));
+        $entry->appendChild($this->createElement($atom, 'pkp:journal_url', $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()), static::PKP_NAMESPACE));
+        $entry->appendChild($this->createElement($atom, 'pkp:publisherName', $journal->getData('publisherInstitution'), static::PKP_NAMESPACE));
+        $entry->appendChild($this->createElement($atom, 'pkp:publisherUrl', $journal->getData('publisherUrl'), static::PKP_NAMESPACE));
+        $entry->appendChild($this->createElement($atom, 'pkp:issn', $journal->getData('onlineIssn') ?: $journal->getData('printIssn'), static::PKP_NAMESPACE));
+        $entry->appendChild($this->createElement($atom, 'id', 'urn:uuid:' . $this->deposit->getUUID()));
+        $entry->appendChild($this->createElement($atom, 'updated', date('Y-m-d H:i:s', strtotime($this->deposit->getDateModified()))));
 
-        $entry->appendChild($this->_generateElement($atom, 'pkp:publisherName', $journal->getData('publisherInstitution'), static::PKP_NAMESPACE));
-
-        $entry->appendChild($this->_generateElement($atom, 'pkp:publisherUrl', $journal->getData('publisherUrl'), static::PKP_NAMESPACE));
-
-        $issn = '';
-        if ($journal->getData('onlineIssn')) {
-            $issn = $journal->getData('onlineIssn');
-        } elseif ($journal->getData('printIssn')) {
-            $issn = $journal->getData('printIssn');
-        }
-
-        $entry->appendChild($this->_generateElement($atom, 'pkp:issn', $issn, static::PKP_NAMESPACE));
-
-        $entry->appendChild($this->_generateElement($atom, 'id', 'urn:uuid:' . $this->_deposit->getUUID()));
-
-        $entry->appendChild($this->_generateElement($atom, 'updated', date('Y-m-d H:i:s', strtotime($this->_deposit->getDateModified()))));
-
-        $url = $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()) . '/' . PLN_PLUGIN_ARCHIVE_FOLDER . '/deposits/' . $this->_deposit->getUUID();
-        $pkpDetails = $this->_generateElement($atom, 'pkp:content', $url, static::PKP_NAMESPACE);
+        $url = $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()) . '/' . PLN_PLUGIN_ARCHIVE_FOLDER . '/deposits/' . $this->deposit->getUUID();
+        $pkpDetails = $this->createElement($atom, 'pkp:content', $url, static::PKP_NAMESPACE);
         $pkpDetails->setAttribute('size', ceil(filesize($packageFile) / 1000));
 
         $objectVolume = '';
         $objectIssue = '';
         $objectPublicationDate = 0;
 
-        switch ($this->_deposit->getObjectType()) {
+        $depositObjects = $this->deposit->getDepositObjects()->toIterator();
+        switch ($this->deposit->getObjectType()) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
             case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
-                $depositObjects = $this->_deposit->getDepositObjects();
                 /** @var SubmissionDAO */
                 $submissionDao = DAORegistry::getDAO('SubmissionDAO');
-                while ($depositObject = $depositObjects->next()) {
+                foreach ($depositObjects as $depositObject) {
                     $submission = $submissionDao->getById($depositObject->getObjectId());
                     $publication = $submission->getCurrentPublication();
                     $publicationDate = $publication ? $publication->getData('publicationDate') : null;
@@ -210,8 +170,7 @@ class DepositPackage
                 }
                 break;
             case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
-                $depositObjects = $this->_deposit->getDepositObjects();
-                while ($depositObject = $depositObjects->next()) {
+                foreach ($depositObjects as $depositObject) {
                     /** @var IssueDAO */
                     $issueDao = DAORegistry::getDAO('IssueDAO');
                     $issue = $issueDao->getById($depositObject->getObjectId());
@@ -250,25 +209,20 @@ class DepositPackage
 
         $locale = $journal->getPrimaryLocale();
         $license = $atom->createElementNS(static::PKP_NAMESPACE, 'license');
-        $license->appendChild($this->_generateElement($atom, 'openAccessPolicy', $journal->getLocalizedSetting('openAccessPolicy', $locale), static::PKP_NAMESPACE));
-        $license->appendChild($this->_generateElement($atom, 'licenseURL', $journal->getLocalizedSetting('licenseURL', $locale), static::PKP_NAMESPACE));
+        $license->appendChild($this->createElement($atom, 'openAccessPolicy', $journal->getLocalizedData('openAccessPolicy', $locale), static::PKP_NAMESPACE));
+        $license->appendChild($this->createElement($atom, 'licenseURL', $journal->getLocalizedData('licenseURL', $locale), static::PKP_NAMESPACE));
 
         $mode = $atom->createElementNS(static::PKP_NAMESPACE, 'publishingMode');
-        switch($journal->getData('publishingMode')) {
-            case Journal::PUBLISHING_MODE_OPEN:
-                $mode->nodeValue = 'Open';
-                break;
-            case Journal::PUBLISHING_MODE_SUBSCRIPTION:
-                $mode->nodeValue = 'Subscription';
-                break;
-            case Journal::PUBLISHING_MODE_NONE:
-                $mode->nodeValue = 'None';
-                break;
-        }
+        $mode->nodeValue = match ($journal->getData('publishingMode')) {
+            Journal::PUBLISHING_MODE_OPEN => 'Open',
+            Journal::PUBLISHING_MODE_SUBSCRIPTION => 'Subscription',
+            Journal::PUBLISHING_MODE_NONE => 'None',
+            default => ''
+        };
         $license->appendChild($mode);
-        $license->appendChild($this->_generateElement($atom, 'copyrightNotice', $journal->getLocalizedSetting('copyrightNotice', $locale), static::PKP_NAMESPACE));
-        $license->appendChild($this->_generateElement($atom, 'copyrightBasis', $journal->getLocalizedSetting('copyrightBasis'), static::PKP_NAMESPACE));
-        $license->appendChild($this->_generateElement($atom, 'copyrightHolder', $journal->getLocalizedSetting('copyrightHolder'), static::PKP_NAMESPACE));
+        $license->appendChild($this->createElement($atom, 'copyrightNotice', $journal->getLocalizedData('copyrightNotice', $locale), static::PKP_NAMESPACE));
+        $license->appendChild($this->createElement($atom, 'copyrightBasis', $journal->getLocalizedData('copyrightBasis'), static::PKP_NAMESPACE));
+        $license->appendChild($this->createElement($atom, 'copyrightHolder', $journal->getLocalizedData('copyrightHolder'), static::PKP_NAMESPACE));
 
         $entry->appendChild($license);
         $atom->save($atomFile);
@@ -277,12 +231,11 @@ class DepositPackage
     }
 
     /**
-     * Create a package containing the serialized deposit objects. If the
-     * bagit library fails to load, null will be returned.
+     * Create a package containing the serialized deposit objects. If the BagIt library fails to load, null will be returned.
      *
      * @return string The full path of the created zip archive
      */
-    public function generatePackage()
+    public function generatePackage(): string
     {
         require_once __DIR__ . '/../vendor/autoload.php';
 
@@ -295,37 +248,34 @@ class DepositPackage
         $submissionDao = DAORegistry::getDAO('SubmissionDAO');
         /** @var NativeImportExportPlugin */
         $exportPlugin = PluginRegistry::loadPlugin('importexport', 'native');
-        $supportsOptions = method_exists($exportPlugin, 'parseOpts');
         @ini_set('memory_limit', -1);
         $plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
 
-        $journal = $journalDao->getById($this->_deposit->getJournalId());
-        $depositObjects = $this->_deposit->getDepositObjects();
-
         // set up folder and file locations
-        $bagDir = $this->getDepositDir() . DIRECTORY_SEPARATOR . $this->_deposit->getUUID();
+        $bagDir = "{$this->getDepositDir()}/{$this->deposit->getUUID()}";
         $packageFile = $this->getPackageFilePath();
         $exportFile = tempnam(sys_get_temp_dir(), 'ojs-pln-export-');
         $termsFile = tempnam(sys_get_temp_dir(), 'ojs-pln-terms-');
 
-        $bag = \whikloj\BagItTools\Bag::create($bagDir);
+        $bag = Bag::create($bagDir);
 
         $fileList = [];
         $fileManager = new FileManager();
 
-        switch ($this->_deposit->getObjectType()) {
+        $journal = $journalDao->getById($this->deposit->getJournalId());
+        $depositObjects = $this->deposit->getDepositObjects();
+        switch ($this->deposit->getObjectType()) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
             case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
                 $submissionIds = [];
 
                 // we need to add all of the relevant submissions to an array to export as a batch
                 while ($depositObject = $depositObjects->next()) {
-                    $submission = $submissionDao->getById($this->_deposit->getObjectId());
-                    $currentPublication = $submission->getCurrentPublication();
-                    if ($submission->getContextId() != $journal->getId()) {
+                    $submission = $submissionDao->getById($this->deposit->getObjectId());
+                    if ($submission->getContextId() !== $journal->getId()) {
                         continue;
                     }
-                    if (!$currentPublication || $currentPublication->getData('status') != PKPSubmission::STATUS_PUBLISHED) {
+                    if ($submission->getCurrentPublication()?->getData('status') !== PKPSubmission::STATUS_PUBLISHED) {
                         continue;
                     }
 
@@ -337,9 +287,7 @@ class DepositPackage
                 if (!$exportXml) {
                     throw new Exception(__('plugins.generic.pln.error.depositor.export.articles.error'));
                 }
-                if ($supportsOptions) {
-                    $exportXml = $this->_cleanFileList($exportXml, $fileList);
-                }
+                $exportXml = $this->cleanFileList($exportXml, $fileList);
                 $fileManager->writeFile($exportFile, $exportXml);
                 break;
             case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
@@ -356,12 +304,9 @@ class DepositPackage
                 );
 
                 if (!$exportXml) {
-                    throw new $exception($this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.error')));
+                    throw new $exception($this->logMessage(__('plugins.generic.pln.error.depositor.export.issue.error')));
                 }
-
-                if ($supportsOptions) {
-                    $exportXml = $this->_cleanFileList($exportXml, $fileList);
-                }
+                $exportXml = $this->cleanFileList($exportXml, $fileList);
                 $fileManager->writeFile($exportFile, $exportXml);
                 break;
             default:
@@ -374,8 +319,8 @@ class DepositPackage
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dcterms', 'http://purl.org/dc/terms/');
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', PLN_PLUGIN_NAME);
 
-        $terms = unserialize($plnPlugin->getSetting($this->_deposit->getJournalId(), 'terms_of_use'));
-        $agreement = unserialize($plnPlugin->getSetting($this->_deposit->getJournalId(), 'terms_of_use_agreement'));
+        $terms = unserialize($plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use'));
+        $agreement = unserialize($plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use_agreement'));
 
         $pkpTermsOfUse = $termsXml->createElementNS(PLN_PLUGIN_NAME, 'pkp:terms_of_use');
         foreach ($terms as $termName => $termData) {
@@ -390,7 +335,7 @@ class DepositPackage
         $termsXml->save($termsFile);
 
         // add the exported content to the bag
-        $bag->addFile($exportFile, $this->_deposit->getObjectType() . $this->_deposit->getUUID() . '.xml');
+        $bag->addFile($exportFile, $this->deposit->getObjectType() . $this->deposit->getUUID() . '.xml');
         foreach ($fileList as $sourcePath => $targetPath) {
             // $sourcePath is a relative path to the files directory; add the files directory to the front
             $sourcePath = rtrim(Config::getVar('files', 'files_dir'), '/') . '/' . $sourcePath;
@@ -417,7 +362,7 @@ class DepositPackage
         $bag->createFile(file_get_contents('lib/pkp/xml/importexport.xsd'), 'importexport.xsd');
 
         // add the exported content to the bag
-        $bag->addFile($termsFile, 'terms' . $this->_deposit->getUUID() . '.xml');
+        $bag->addFile($termsFile, 'terms' . $this->deposit->getUUID() . '.xml');
 
         // Add OJS Version
         /** @var VersionDAO */
@@ -441,12 +386,9 @@ class DepositPackage
     /**
      * Read a list of file paths from the specified native XML string and clean up the XML's pathnames.
      *
-     * @param string $xml
      * @param array $fileList Reference to array to receive file list
-     *
-     * @return string
      */
-    public function _cleanFileList($xml, &$fileList)
+    public function cleanFileList(string $xml, array &$fileList): string
     {
         $doc = new DOMDocument();
         $doc->loadXML($xml);
@@ -462,11 +404,11 @@ class DepositPackage
     }
 
     /**
-     * Transfer the atom document to the PLN.
+     * Transfer the atom document to the PN.
      */
-    public function transferDeposit()
+    public function transferDeposit(): void
     {
-        $journalId = $this->_deposit->getJournalId();
+        $journalId = $this->deposit->getJournalId();
         /** @var DepositDAO */
         $depositDao = DAORegistry::getDAO('DepositDAO');
         /** @var PLNPlugin */
@@ -478,45 +420,45 @@ class DepositPackage
 
         // Reset deposit if the package doesn't exist
         if (!file_exists($atomPath)) {
-            $this->_deposit->setNewStatus();
-            $depositDao->updateObject($this->_deposit);
+            $this->deposit->setNewStatus();
+            $depositDao->updateObject($this->deposit);
             return;
         }
 
         $journalUuid = $plnPlugin->getSetting($journalId, 'journal_uuid');
-        $baseContUrl = $baseUrl . PLN_PLUGIN_CONT_IRI . "/{$journalUuid}/{$this->_deposit->getUUID()}";
+        $baseContUrl = $baseUrl . PLN_PLUGIN_CONT_IRI . "/{$journalUuid}/{$this->deposit->getUUID()}";
 
         $result = $plnPlugin->curlGet("{$baseContUrl}/state");
         $status = intdiv((int) $result['status'], 100);
         // Abort if status not 2XX or 4XX
         if ($status !== 2 && $status !== 4) {
-            $this->_task->addExecutionLogEntry(
+            $this->task->addExecutionLogEntry(
                 __(
                     'plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
-                    ['depositId' => $this->_deposit->getId(),
+                    ['depositId' => $this->deposit->getId(),
                         'error' => $result['status'],
                         'result' => $result['error']]
                 ),
-                SCHEDULED_TASK_MESSAGE_TYPE_NOTICE
+                ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE
             );
-            $this->_logMessage(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
-            $this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
-            $this->_deposit->setLastStatusDate(Core::getCurrentDate());
-            $depositDao->updateObject($this->_deposit);
+            $this->logMessage(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
+            $this->deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
+            $this->deposit->setLastStatusDate(Core::getCurrentDate());
+            $depositDao->updateObject($this->deposit);
             return;
         }
         // Status 2XX at this URL means the content has been deposited before
         $isNewDeposit = $status !== 2;
         $url = $isNewDeposit ? $baseUrl . PLN_PLUGIN_COL_IRI . "/{$journalUuid}" : "{$baseContUrl}/edit";
 
-        $this->_task->addExecutionLogEntry(
+        $this->task->addExecutionLogEntry(
             __(
                 'plugins.generic.pln.depositor.transferringdeposits.processing.postAtom',
                 [
-                    'depositId' => $this->_deposit->getId(),
-                    'statusLocal' => $this->_deposit->getLocalStatus(),
-                    'statusProcessing' => $this->_deposit->getProcessingStatus(),
-                    'statusLockss' => $this->_deposit->getLockssStatus(),
+                    'depositId' => $this->deposit->getId(),
+                    'statusLocal' => $this->deposit->getLocalStatus(),
+                    'statusProcessing' => $this->deposit->getProcessingStatus(),
+                    'statusLockss' => $this->deposit->getLockssStatus(),
                     'atomPath' => $atomPath,
                     'url' => $url,
                     'method' => $isNewDeposit ? 'PostFile' : 'PutFile'
@@ -531,45 +473,45 @@ class DepositPackage
 
         // If we get a 2XX, set the status as transferred
         if (intdiv((int) $result['status'], 100) === 2) {
-            $this->_task->addExecutionLogEntry(
+            $this->task->addExecutionLogEntry(
                 __(
                     'plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded',
-                    ['depositId' => $this->_deposit->getId()]
+                    ['depositId' => $this->deposit->getId()]
                 ),
                 ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE
             );
 
-            $this->_deposit->setTransferredStatus();
-            $this->_deposit->setExportDepositError(null);
+            $this->deposit->setTransferredStatus();
+            $this->deposit->setExportDepositError(null);
         } else {
-            $this->_task->addExecutionLogEntry(
+            $this->task->addExecutionLogEntry(
                 __(
                     'plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed',
-                    ['depositId' => $this->_deposit->getId(), 'error' => $result['status'], 'result' => $result['error']]
+                    ['depositId' => $this->deposit->getId(), 'error' => $result['status'], 'result' => $result['error']]
                 ),
                 ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE
             );
             if ($result['status']) {
-                $this->_logMessage(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
-                $this->_deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
+                $this->logMessage(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
+                $this->deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
             } else {
-                $this->_logMessage(__('plugins.generic.pln.error.network.deposit', ['error' => $result['error']]));
-                $this->_deposit->setExportDepositError(__('plugins.generic.pln.error.network.deposit', ['error' => $result['error']]));
+                $this->logMessage(__('plugins.generic.pln.error.network.deposit', ['error' => $result['error']]));
+                $this->deposit->setExportDepositError(__('plugins.generic.pln.error.network.deposit', ['error' => $result['error']]));
             }
         }
 
-        $this->_deposit->setLastStatusDate(Core::getCurrentDate());
-        $depositDao->updateObject($this->_deposit);
+        $this->deposit->setLastStatusDate(Core::getCurrentDate());
+        $depositDao->updateObject($this->deposit);
     }
 
     /**
-     * Package a deposit for transfer to and retrieval by the PLN.
+     * Package a deposit for transfer to and retrieval by the PN.
      */
-    public function packageDeposit()
+    public function packageDeposit(): void
     {
         /** @var DepositDAO */
         $depositDao = DAORegistry::getDAO('DepositDAO');
-        $fileManager = new ContextFileManager($this->_deposit->getJournalId());
+        $fileManager = new ContextFileManager($this->deposit->getJournalId());
         $plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
 
         // make sure the pln work directory exists
@@ -586,45 +528,45 @@ class DepositPackage
             if (!$fileManager->fileExists($packagePath)) {
                 throw new Exception(__(
                     'plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed',
-                    ['depositId' => $this->_deposit->getId()]
+                    ['depositId' => $this->deposit->getId()]
                 ));
             }
 
             if (!$fileManager->fileExists($this->generateAtomDocument())) {
                 throw new Exception(__(
                     'plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed',
-                    ['depositId' => $this->_deposit->getId()]
+                    ['depositId' => $this->deposit->getId()]
                 ));
             }
         } catch (Throwable $exception) {
-            $this->_logMessage(__('plugins.generic.pln.error.depositor.export.issue.error') . $exception->getMessage());
-            $this->_deposit->setExportDepositError($exception->getMessage());
-            $this->_deposit->setLastStatusDate(Core::getCurrentDate());
-            $depositDao->updateObject($this->_deposit);
+            $this->logMessage(__('plugins.generic.pln.error.depositor.export.issue.error') . $exception->getMessage());
+            $this->deposit->setExportDepositError($exception->getMessage());
+            $this->deposit->setLastStatusDate(Core::getCurrentDate());
+            $depositDao->updateObject($this->deposit);
             return;
         }
 
-        $this->_task->addExecutionLogEntry(
+        $this->task->addExecutionLogEntry(
             __(
                 'plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded',
-                ['depositId' => $this->_deposit->getId()]
+                ['depositId' => $this->deposit->getId()]
             ),
             ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE
         );
 
         // update the deposit's status
-        $this->_deposit->setPackagedStatus();
-        $this->_deposit->setExportDepositError(null);
-        $this->_deposit->setLastStatusDate(Core::getCurrentDate());
-        $depositDao->updateObject($this->_deposit);
+        $this->deposit->setPackagedStatus();
+        $this->deposit->setExportDepositError(null);
+        $this->deposit->setLastStatusDate(Core::getCurrentDate());
+        $depositDao->updateObject($this->deposit);
     }
 
     /**
      * Update the deposit's status by checking with the PLN.
      */
-    public function updateDepositStatus()
+    public function updateDepositStatus(): void
     {
-        $journalId = $this->_deposit->getJournalId();
+        $journalId = $this->deposit->getJournalId();
         /** @var DepositDAO */
         $depositDao = DAORegistry::getDAO('DepositDAO');
         /** @var PLNPlugin */
@@ -632,7 +574,7 @@ class DepositPackage
 
         $url = $plnPlugin->getSetting($journalId, 'pln_network') . PLN_PLUGIN_CONT_IRI;
         $url .= '/' . $plnPlugin->getSetting($journalId, 'journal_uuid');
-        $url .= '/' . $this->_deposit->getUUID() . '/state';
+        $url .= '/' . $this->deposit->getUUID() . '/state';
 
         // retrieve the content document
         $result = $plnPlugin->curlGet($url);
@@ -642,8 +584,8 @@ class DepositPackage
 
                 // Status 4XX means the deposit doesn't exist or isn't related to the given journal, so we restart the deposit
                 if (intdiv($result['status'], 100) === 4) {
-                    $this->_deposit->setNewStatus();
-                    $depositDao->updateObject($this->_deposit);
+                    $this->deposit->setNewStatus();
+                    $depositDao->updateObject($this->deposit);
                 }
 
                 return;
@@ -659,97 +601,82 @@ class DepositPackage
 
         // get the remote deposit state
         $processingState = $contentDOM->getElementsByTagName('category')->item(0)->getAttribute('term');
-        $this->_task->addExecutionLogEntry(
+        $this->task->addExecutionLogEntry(
             __(
                 'plugins.generic.pln.depositor.statusupdates.processing.processingState',
-                ['depositId' => $this->_deposit->getId(),
+                ['depositId' => $this->deposit->getId(),
                     'processingState' => $processingState]
             ),
             ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE
         );
 
         // Clear previous error messages
-        $this->_deposit->setExportDepositError(null);
-        $this->_deposit->setStagingState($processingState ?: null);
+        $this->deposit->setExportDepositError(null);
+        $this->deposit->setStagingState($processingState ?: null);
         // Handle the local state
-        switch ($processingState) {
-            case 'depositedByJournal':
-            case 'harvest-error':
-                $this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED);
-                break;
-            case 'harvested':
-            case 'payload-validated':
-            case 'bag-validated':
-            case 'xml-validated':
-            case 'virus-checked':
-            case 'payload-error':
-            case 'bag-error':
-            case 'xml-error':
-            case 'virus-error':
-                $this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED);
-                break;
-            case 'reserialized':
-            case 'hold':
-            case 'reserialize-error':
-            case 'deposit-error':
-                $this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED);
-                break;
-            case 'deposited':
-            case 'status-error':
-                $this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT);
-                break;
-            default:
-                $this->_deposit->setExportDepositError('Unknown processing state ' . $processingState);
-                $this->_logMessage('Deposit ' . $this->_deposit->getId() . ' has unknown processing state ' . $processingState);
-                break;
+        $newStatus = match ($processingState) {
+            'depositedByJournal', 'harvest-error'
+                => PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
+            'harvested', 'payload-validated', 'bag-validated', 'xml-validated', 'virus-checked', 'payload-error', 'bag-error', 'xml-error', 'virus-error'
+                => PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED,
+            'reserialized', 'hold', 'reserialize-error', 'deposit-error'
+                => PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED,
+            'deposited', 'status-error'
+                => PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT,
+            default => null
+        };
+
+        if ($newStatus) {
+            $this->deposit->setStatus($newStatus);
+        } else {
+            $this->deposit->setExportDepositError('Unknown processing state ' . $processingState);
+            $this->logMessage('Deposit ' . $this->deposit->getId() . ' has unknown processing state ' . $processingState);
         }
 
         // The deposit file can be dropped once it's received by the PKP PN
-        if ($this->_deposit->getReceivedStatus()) {
+        if ($this->deposit->getReceivedStatus()) {
             $this->remove();
         } elseif (!file_exists($this->getAtomDocumentPath())) {
             // Otherwise the package must still exist at this point, if it doesn't, we restart the deposit
-            $this->_deposit->setNewStatus();
-            $depositDao->updateObject($this->_deposit);
+            $this->deposit->setNewStatus();
+            $depositDao->updateObject($this->deposit);
             return;
         }
 
         // Handle error messages
         if (in_array($processingState, ['hold', 'harvest-error', 'deposit-error', 'reserialize-error', 'virus-error', 'xml-error', 'payload-error', 'bag-error', 'status-error'])) {
-            $this->_deposit->setExportDepositError(__('plugins.generic.pln.status.error.' . $processingState));
+            $this->deposit->setExportDepositError(__('plugins.generic.pln.status.error.' . $processingState));
         }
 
         $lockssState = $contentDOM->getElementsByTagName('category')->item(1)->getAttribute('term');
-        $this->_deposit->setLockssState($lockssState ?: null);
+        $this->deposit->setLockssState($lockssState ?: null);
         switch ($lockssState) {
             case '':
                 // do nothing.
                 break;
             case 'inProgress':
-                $this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
+                $this->deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
                 break;
             case 'agreement':
-                $this->_deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT);
-                $this->_deposit->setPreservedDate(Core::getCurrentDate());
+                $this->deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT);
+                $this->deposit->setPreservedDate(Core::getCurrentDate());
                 break;
             default:
-                $this->_deposit->setExportDepositError('Unknown LOCKSS state ' . $lockssState);
-                $this->_logMessage('Deposit ' . $this->_deposit->getId() . ' has unknown LOCKSS state ' . $lockssState);
+                $this->deposit->setExportDepositError('Unknown LOCKSS state ' . $lockssState);
+                $this->logMessage('Deposit ' . $this->deposit->getId() . ' has unknown LOCKSS state ' . $lockssState);
                 break;
         }
 
-        $this->_deposit->setLastStatusDate(Core::getCurrentDate());
-        $depositDao->updateObject($this->_deposit);
+        $this->deposit->setLastStatusDate(Core::getCurrentDate());
+        $depositDao->updateObject($this->deposit);
     }
 
     /**
      * Delete a deposit package from the disk
-     *
-     * @return bool True on success
      */
-    public function remove()
+    public function remove(): bool
     {
-        return (new ContextFileManager($this->_deposit->getJournalId()))
+        return (new ContextFileManager($this->deposit->getJournalId()))
             ->rmtree($this->getDepositDir());
     }
 }

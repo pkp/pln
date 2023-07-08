@@ -1,34 +1,30 @@
 <?php
 
 /**
- * @file controllers/grid/PLNStatusGridRow.php
+ * @file controllers/grid/StatusGridRow.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * @class PLNStatusGridRow
+ * @class StatusGridRow
  *
  * @brief Handle PLNStatus deposit grid row requests.
  */
 
 namespace APP\plugins\generic\pln\controllers\grid;
 
+use APP\plugins\generic\pln\form\Deposit;
 use PKP\controllers\grid\GridRow;
 
-class PLNStatusGridRow extends GridRow
+class StatusGridRow extends GridRow
 {
-    //
-    // Overridden template methods
-    //
     /**
      * @copydoc GridRow::initialize()
-     *
-     * @param null|mixed $template
      */
-    public function initialize($request, $template = null)
+    public function initialize($request, $template = null): void
     {
-        parent::initialize($request, PLNStatusGridHandler::$plugin->getTemplateResource('gridRow.tpl'));
+        parent::initialize($request, StatusGridHandler::$plugin->getTemplateResource('gridRow.tpl'));
     }
 
     /**
