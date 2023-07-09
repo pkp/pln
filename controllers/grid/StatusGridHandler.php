@@ -44,7 +44,7 @@ class StatusGridHandler extends GridHandler
             ['fetchGrid', 'fetchRow', 'resetDeposit']
         );
         /** @var PLNPlugin */
-        $plugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
+        $plugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
         self::$plugin = $plugin;
     }
 

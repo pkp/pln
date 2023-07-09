@@ -68,7 +68,7 @@ class DepositPackage
     public function getDepositDir(): string
     {
         $fileManager = new ContextFileManager($this->deposit->getJournalId());
-        return $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER . "/{$this->deposit->getUUID()}";
+        return $fileManager->getBasePath() . PLNPlugin::DEPOSIT_FOLDER . "/{$this->deposit->getUUID()}";
     }
 
     /**
@@ -112,7 +112,7 @@ class DepositPackage
      */
     public function generateAtomDocument(): string
     {
-        $plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
+        $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
         /** @var JournalDAO */
         $journalDao = DAORegistry::getDAO('JournalDAO');
         /** @var Journal */
@@ -147,7 +147,7 @@ class DepositPackage
         $entry->appendChild($this->createElement($atom, 'id', 'urn:uuid:' . $this->deposit->getUUID()));
         $entry->appendChild($this->createElement($atom, 'updated', date('Y-m-d H:i:s', strtotime($this->deposit->getDateModified()))));
 
-        $url = $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()) . '/' . PLN_PLUGIN_ARCHIVE_FOLDER . '/deposits/' . $this->deposit->getUUID();
+        $url = $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()) . '/' . PLNPlugin::DEPOSIT_FOLDER . '/deposits/' . $this->deposit->getUUID();
         $pkpDetails = $this->createElement($atom, 'pkp:content', $url, static::PKP_NAMESPACE);
         $pkpDetails->setAttribute('size', ceil(filesize($packageFile) / 1000));
 
@@ -158,7 +158,7 @@ class DepositPackage
         $depositObjects = $this->deposit->getDepositObjects()->toIterator();
         switch ($this->deposit->getObjectType()) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
+            case PLNPlugin::DEPOSIT_TYPE_SUBMISSION:
                 foreach ($depositObjects as $depositObject) {
                     $submission = Repo::submission()->get($depositObject->getObjectId());
                     $publication = $submission->getCurrentPublication();
@@ -168,7 +168,7 @@ class DepositPackage
                     }
                 }
                 break;
-            case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
+            case PLNPlugin::DEPOSIT_TYPE_ISSUE:
                 foreach ($depositObjects as $depositObject) {
                     $issue = Repo::issue()->get($depositObject->getObjectId());
                     $objectVolume = $issue->getVolume();
@@ -242,7 +242,7 @@ class DepositPackage
         /** @var NativeImportExportPlugin */
         $exportPlugin = PluginRegistry::loadPlugin('importexport', 'native');
         @ini_set('memory_limit', -1);
-        $plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
+        $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
 
         // set up folder and file locations
         $bagDir = "{$this->getDepositDir()}/{$this->deposit->getUUID()}";
@@ -259,7 +259,7 @@ class DepositPackage
         $depositObjects = $this->deposit->getDepositObjects();
         switch ($this->deposit->getObjectType()) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
+            case PLNPlugin::DEPOSIT_TYPE_SUBMISSION:
                 $submissionIds = [];
 
                 // we need to add all of the relevant submissions to an array to export as a batch
@@ -283,7 +283,7 @@ class DepositPackage
                 $exportXml = $this->cleanFileList($exportXml, $fileList);
                 $fileManager->writeFile($exportFile, $exportXml);
                 break;
-            case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
+            case PLNPlugin::DEPOSIT_TYPE_ISSUE:
                 // we only ever do one issue at a time, so get that issue
                 $request = Application::get()->getRequest();
                 $depositObject = $depositObjects->next();
@@ -310,14 +310,14 @@ class DepositPackage
         $termsXml = new DOMDocument('1.0', 'utf-8');
         $entry = $termsXml->createElementNS('http://www.w3.org/2005/Atom', 'entry');
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dcterms', 'http://purl.org/dc/terms/');
-        $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', PLN_PLUGIN_NAME);
+        $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', PLNPlugin::getPluginName());
 
         $terms = unserialize($plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use'));
         $agreement = unserialize($plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use_agreement'));
 
-        $pkpTermsOfUse = $termsXml->createElementNS(PLN_PLUGIN_NAME, 'pkp:terms_of_use');
+        $pkpTermsOfUse = $termsXml->createElementNS(PLNPlugin::getPluginName(), 'pkp:terms_of_use');
         foreach ($terms as $termName => $termData) {
-            $element = $termsXml->createElementNS(PLN_PLUGIN_NAME, $termName, $termData['term']);
+            $element = $termsXml->createElementNS(PLNPlugin::getPluginName(), $termName, $termData['term']);
             $element->setAttribute('updated', $termData['updated']);
             $element->setAttribute('agreed', $agreement[$termName]);
             $pkpTermsOfUse->appendChild($element);
@@ -405,7 +405,7 @@ class DepositPackage
         /** @var DepositDAO */
         $depositDao = DAORegistry::getDAO('DepositDAO');
         /** @var PLNPlugin */
-        $plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
+        $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
 
         // post the atom document
         $baseUrl = $plnPlugin->getSetting($journalId, 'pln_network');
@@ -419,7 +419,7 @@ class DepositPackage
         }
 
         $journalUuid = $plnPlugin->getSetting($journalId, 'journal_uuid');
-        $baseContUrl = $baseUrl . PLN_PLUGIN_CONT_IRI . "/{$journalUuid}/{$this->deposit->getUUID()}";
+        $baseContUrl = "{$baseUrl}/api/sword/2.0/cont-iri/api/sword/2.0/cont-iri/{$journalUuid}/{$this->deposit->getUUID()}";
 
         $result = $plnPlugin->curlGet("{$baseContUrl}/state");
         $status = intdiv((int) $result['status'], 100);
@@ -442,7 +442,7 @@ class DepositPackage
         }
         // Status 2XX at this URL means the content has been deposited before
         $isNewDeposit = $status !== 2;
-        $url = $isNewDeposit ? $baseUrl . PLN_PLUGIN_COL_IRI . "/{$journalUuid}" : "{$baseContUrl}/edit";
+        $url = $isNewDeposit ? "{$baseUrl}/api/sword/2.0/col-iri/{$journalUuid}" : "{$baseContUrl}/edit";
 
         $this->task->addExecutionLogEntry(
             __(
@@ -505,7 +505,7 @@ class DepositPackage
         /** @var DepositDAO */
         $depositDao = DAORegistry::getDAO('DepositDAO');
         $fileManager = new ContextFileManager($this->deposit->getJournalId());
-        $plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
+        $plnDir = $fileManager->getBasePath() . PLNPlugin::DEPOSIT_FOLDER;
 
         // make sure the pln work directory exists
         if (!$fileManager->fileExists($plnDir, 'dir')) {
@@ -565,9 +565,9 @@ class DepositPackage
         /** @var PLNPlugin */
         $plnPlugin = PluginRegistry::getPlugin('generic', 'plnplugin');
 
-        $url = $plnPlugin->getSetting($journalId, 'pln_network') . PLN_PLUGIN_CONT_IRI;
-        $url .= '/' . $plnPlugin->getSetting($journalId, 'journal_uuid');
-        $url .= '/' . $this->deposit->getUUID() . '/state';
+        $network = $plnPlugin->getSetting($journalId, 'pln_network');
+        $journalUID = $plnPlugin->getSetting($journalId, 'journal_uuid');
+        $url = "{$network}/api/sword/2.0/cont-iri/{$journalUID}/{$this->deposit->getUUID()}/state";
 
         // retrieve the content document
         $result = $plnPlugin->curlGet($url);
@@ -609,13 +609,13 @@ class DepositPackage
         // Handle the local state
         $newStatus = match ($processingState) {
             'depositedByJournal', 'harvest-error'
-                => PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
+                => PLNPlugin::DEPOSIT_STATUS_PACKAGED | PLNPlugin::DEPOSIT_STATUS_TRANSFERRED,
             'harvested', 'payload-validated', 'bag-validated', 'xml-validated', 'virus-checked', 'payload-error', 'bag-error', 'xml-error', 'virus-error'
-                => PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED,
+                => PLNPlugin::DEPOSIT_STATUS_PACKAGED | PLNPlugin::DEPOSIT_STATUS_TRANSFERRED | PLNPlugin::DEPOSIT_STATUS_RECEIVED,
             'reserialized', 'hold', 'reserialize-error', 'deposit-error'
-                => PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED,
+                => PLNPlugin::DEPOSIT_STATUS_PACKAGED | PLNPlugin::DEPOSIT_STATUS_TRANSFERRED | PLNPlugin::DEPOSIT_STATUS_RECEIVED | PLNPlugin::DEPOSIT_STATUS_VALIDATED,
             'deposited', 'status-error'
-                => PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT,
+                => PLNPlugin::DEPOSIT_STATUS_PACKAGED | PLNPlugin::DEPOSIT_STATUS_TRANSFERRED | PLNPlugin::DEPOSIT_STATUS_RECEIVED | PLNPlugin::DEPOSIT_STATUS_VALIDATED | PLNPlugin::DEPOSIT_STATUS_SENT,
             default => null
         };
 
@@ -648,10 +648,10 @@ class DepositPackage
                 // do nothing.
                 break;
             case 'inProgress':
-                $this->deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
+                $this->deposit->setStatus(PLNPlugin::DEPOSIT_STATUS_PACKAGED | PLNPlugin::DEPOSIT_STATUS_TRANSFERRED | PLNPlugin::DEPOSIT_STATUS_RECEIVED | PLNPlugin::DEPOSIT_STATUS_VALIDATED | PLNPlugin::DEPOSIT_STATUS_SENT | PLNPlugin::DEPOSIT_STATUS_LOCKSS_RECEIVED);
                 break;
             case 'agreement':
-                $this->deposit->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED | PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED | PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED | PLN_PLUGIN_DEPOSIT_STATUS_SENT | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED | PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT);
+                $this->deposit->setStatus(PLNPlugin::DEPOSIT_STATUS_PACKAGED | PLNPlugin::DEPOSIT_STATUS_TRANSFERRED | PLNPlugin::DEPOSIT_STATUS_RECEIVED | PLNPlugin::DEPOSIT_STATUS_VALIDATED | PLNPlugin::DEPOSIT_STATUS_SENT | PLNPlugin::DEPOSIT_STATUS_LOCKSS_RECEIVED | PLNPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT);
                 $this->deposit->setPreservedDate(Core::getCurrentDate());
                 break;
             default:

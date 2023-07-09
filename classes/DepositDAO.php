@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\pln\classes;
 
 use APP\plugins\generic\pln\form\Deposit;
+use APP\plugins\generic\pln\PLNPlugin;
 use PKP\db\DAO;
 use PKP\db\DAOResultFactory;
 use PKP\db\DBResultRange;
@@ -206,7 +207,7 @@ class DepositDAO extends DAO
     {
         $result = $this->retrieve(
             'SELECT * FROM pln_deposits WHERE journal_id = ? AND status = ?',
-            [(int) $journalId, (int) PLN_PLUGIN_DEPOSIT_STATUS_NEW]
+            [(int) $journalId, (int) PLNPlugin::DEPOSIT_STATUS_NEW]
         );
 
         return new DAOResultFactory($result, $this, 'fromRow');
@@ -228,8 +229,8 @@ class DepositDAO extends DAO
             ORDER BY d.export_deposit_error, d.deposit_id',
             [
                 (int) $journalId,
-                (int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
-                (int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED
+                (int) PLNPlugin::DEPOSIT_STATUS_PACKAGED,
+                (int) PLNPlugin::DEPOSIT_STATUS_TRANSFERRED
             ]
         );
 
@@ -251,7 +252,7 @@ class DepositDAO extends DAO
             ORDER BY d.export_deposit_error, d.deposit_id',
             [
                 (int) $journalId,
-                (int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED
+                (int) PLNPlugin::DEPOSIT_STATUS_PACKAGED
             ]
         );
 
@@ -279,8 +280,8 @@ class DepositDAO extends DAO
             ORDER BY d.export_deposit_error, d.deposit_id',
             [
                 (int) $journalId,
-                (int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
-                (int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT
+                (int) PLNPlugin::DEPOSIT_STATUS_TRANSFERRED,
+                (int) PLNPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT
             ]
         );
 

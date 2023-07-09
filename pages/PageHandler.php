@@ -18,6 +18,7 @@ use APP\core\Request;
 use APP\handler\Handler;
 use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\classes\DepositPackage;
+use APP\plugins\generic\pln\PLNPlugin;
 use APP\template\TemplateManager;
 use PKP\core\PKPString;
 use PKP\db\DAORegistry;
@@ -87,7 +88,7 @@ class PageHandler extends Handler
     public function status(array $args, Request $request)
     {
         $router = $request->getRouter();
-        $plnPlugin = PluginRegistry::getPlugin('generic', PLN_PLUGIN_NAME);
+        $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
         $templateMgr = TemplateManager::getManager();
         $templateMgr->assign('pageHierarchy', [[$router->url($request, null, 'about'), 'about.aboutTheJournal']]);
         $templateMgr->display("{$plnPlugin->getTemplatePath()}/status.tpl");

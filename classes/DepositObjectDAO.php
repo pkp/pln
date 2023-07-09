@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\pln\classes;
 
 use APP\facades\Repo;
+use APP\plugins\generic\pln\PLNPlugin;
 use APP\submission\Submission;
 use Exception;
 use PKP\db\DAO;
@@ -78,7 +79,7 @@ class DepositObjectDAO extends DAO
 
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
+            case PLNPlugin::DEPOSIT_TYPE_SUBMISSION:
                 $result = $this->retrieve(
                     'SELECT pdo.deposit_object_id, s.last_modified FROM pln_deposit_objects pdo
                     JOIN submissions s ON pdo.object_id = s.submission_id
@@ -95,7 +96,7 @@ class DepositObjectDAO extends DAO
                     $depositDao->updateObject($deposit);
                 }
                 break;
-            case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
+            case PLNPlugin::DEPOSIT_TYPE_ISSUE:
                 $result = $this->retrieve(
                     'SELECT pdo.deposit_object_id, MAX(i.last_modified) as issue_modified, MAX(p.last_modified) as article_modified
                     FROM issues i
@@ -133,7 +134,7 @@ class DepositObjectDAO extends DAO
 
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
+            case PLNPlugin::DEPOSIT_TYPE_SUBMISSION:
                 $result = $this->retrieve(
                     'SELECT p.submission_id FROM publications p
                     JOIN submissions s ON s.current_publication_id = p.publication_id
@@ -145,7 +146,7 @@ class DepositObjectDAO extends DAO
                     $objects[] = Repo::submission()->get($row->submission_id);
                 }
                 break;
-            case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
+            case PLNPlugin::DEPOSIT_TYPE_ISSUE:
                 $result = $this->retrieve(
                     'SELECT i.issue_id
                     FROM issues i

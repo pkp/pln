@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\pln\classes;
 
 use APP\facades\Repo;
+use APP\plugins\generic\pln\PLNPlugin;
 use Exception;
 use Issue;
 use PKP\core\DataObject;
@@ -28,9 +29,9 @@ class DepositObject extends DataObject
     public function getContent(): Issue|Submission
     {
         return match ($this->getObjectType()) {
-            PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE => Repo::issue()->get($this->getObjectId(), $this->getJournalId()),
+            PLNPlugin::DEPOSIT_TYPE_ISSUE => Repo::issue()->get($this->getObjectId(), $this->getJournalId()),
             'PublishedArticle', // Legacy (OJS pre-3.2)
-            PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION => Repo::submission()->get($this->getObjectId(), $this->getJournalId()),
+            PLNPlugin::DEPOSIT_TYPE_SUBMISSION => Repo::submission()->get($this->getObjectId(), $this->getJournalId()),
             default => throw new Exception('Unknown object type')
         };
     }

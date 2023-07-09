@@ -43,48 +43,37 @@ use PKP\security\Role;
 use PKP\userGroup\UserGroup;
 use SimpleXMLElement;
 
-define('PLN_PLUGIN_NAME', 'plnplugin');
-
-// defined here in case an upgrade doesn't pick up the default value.
-define('PLN_DEFAULT_NETWORK', 'https://pkp-pn.lib.sfu.ca');
-
-// base IRI for the SWORD server. IRIs are constructed by appending to
-// this constant.
-define('PLN_PLUGIN_BASE_IRI', '/api/sword/2.0');
-// used to retrieve the service document
-define('PLN_PLUGIN_SD_IRI', PLN_PLUGIN_BASE_IRI . '/sd-iri');
-// used to submit a deposit
-define('PLN_PLUGIN_COL_IRI', PLN_PLUGIN_BASE_IRI . '/col-iri');
-// used to edit and query the state of a deposit
-define('PLN_PLUGIN_CONT_IRI', PLN_PLUGIN_BASE_IRI . '/cont-iri');
-
-define('PLN_PLUGIN_ARCHIVE_FOLDER', 'pln');
-
-// local statuses
-define('PLN_PLUGIN_DEPOSIT_STATUS_NEW', 0);
-define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED', 1);
-define('PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED', 2);
-
-// status on the processing server
-define('PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED', 4);
-define('PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED', 8);
-define('PLN_PLUGIN_DEPOSIT_STATUS_SENT', 16);
-
-// status in the LOCKSS PLN
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED', 64);
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT', 128);
-
-define('PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION', 'Submission');
-define('PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE', 'Issue');
-
-define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE', PKPNotification::NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 1);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 5);
-
 class PLNPlugin extends GenericPlugin
 {
+    public const DEFAULT_NETWORK_URL = 'https://pkp-pn.lib.sfu.ca';
+
+    public const DEPOSIT_FOLDER = 'pln';
+
+    // Notification types
+    public const NOTIFICATION_BASE = PKPNotification::NOTIFICATION_BASE + 0x10000000;
+    public const NOTIFICATION_TERMS_UPDATED = static::NOTIFICATION_BASE + 1;
+    public const NOTIFICATION_ISSN_MISSING = static::NOTIFICATION_BASE + 2;
+    public const NOTIFICATION_HTTP_ERROR = static::NOTIFICATION_BASE + 3;
+    public const NOTIFICATION_ZIP_MISSING = static::NOTIFICATION_BASE + 5;
+
+    // Deposit types
+    public const DEPOSIT_TYPE_SUBMISSION = 'Submission';
+    public const DEPOSIT_TYPE_ISSUE = 'Issue';
+
+    // Local status
+    public const DEPOSIT_STATUS_NEW = 0;
+    public const DEPOSIT_STATUS_PACKAGED = 1;
+    public const DEPOSIT_STATUS_TRANSFERRED = 2;
+
+    // Staging server status
+    public const DEPOSIT_STATUS_RECEIVED = 4;
+    public const DEPOSIT_STATUS_VALIDATED = 8;
+    public const DEPOSIT_STATUS_SENT = 16;
+
+    // LOCKSS server status
+    public const DEPOSIT_STATUS_LOCKSS_RECEIVED = 64;
+    public const DEPOSIT_STATUS_LOCKSS_AGREEMENT = 128;
+
     /**
      * @copydoc LazyLoadPlugin::register()
      *
@@ -253,10 +242,10 @@ class PLNPlugin extends GenericPlugin
                 if (! is_null($type)) {
                     return $type;
                 }
-                $this->updateSetting($journalId, $settingName, PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE);
+                $this->updateSetting($journalId, $settingName, static::DEPOSIT_TYPE_ISSUE);
                 break;
             case 'pln_network':
-                return Config::getVar('lockss', 'pln_url', PLN_DEFAULT_NETWORK);
+                return Config::getVar('lockss', 'pln_url', static::DEFAULT_NETWORK_URL);
         }
         return parent::getSetting($journalId, $settingName);
     }
@@ -296,10 +285,10 @@ class PLNPlugin extends GenericPlugin
         $message = & $args[1];
 
         $message = match ($notification->getType()) {
-            PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED => __('plugins.generic.pln.notifications.terms_updated'),
-            PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING => __('plugins.generic.pln.notifications.issn_missing'),
-            PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR => __('plugins.generic.pln.notifications.http_error'),
-            PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING => __('plugins.generic.pln.notifications.zip_missing'),
+            static::NOTIFICATION_TERMS_UPDATED => __('plugins.generic.pln.notifications.terms_updated'),
+            static::NOTIFICATION_ISSN_MISSING => __('plugins.generic.pln.notifications.issn_missing'),
+            static::NOTIFICATION_HTTP_ERROR => __('plugins.generic.pln.notifications.http_error'),
+            static::NOTIFICATION_ZIP_MISSING => __('plugins.generic.pln.notifications.zip_missing'),
             default => $message
         };
         return Hook::CONTINUE;
@@ -414,7 +403,7 @@ class PLNPlugin extends GenericPlugin
 
         // retrieve the service document
         $result = $this->curlGet(
-            $network . PLN_PLUGIN_SD_IRI,
+            "{$network}/api/sword/2.0/sd-iri",
             [
                 'On-Behalf-Of' => $this->getSetting($contextId, 'journal_uuid'),
                 'Journal-URL' => $dispatcher->url($request, Application::ROUTE_PAGE, $context->getPath()),
@@ -471,7 +460,7 @@ class PLNPlugin extends GenericPlugin
 
             $this->updateSetting($contextId, 'terms_of_use', $newTerms, 'object');
             $this->updateSetting($contextId, 'terms_of_use_agreement', serialize($termAgreements), 'object');
-            $this->createJournalManagerNotification($contextId, PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED);
+            $this->createJournalManagerNotification($contextId, static::NOTIFICATION_TERMS_UPDATED);
         }
 
         return $result['status'];
@@ -620,5 +609,14 @@ class PLNPlugin extends GenericPlugin
                 ['contents' => __('plugins.generic.pln.onPluginEnabledNotification')]
             );
         }
+    }
+
+    /**
+     * Retrieves the plugin name
+     */
+    public static function getPluginName(): string
+    {
+        static $name;
+        return $name ??= (new static)->getName();
     }
 }

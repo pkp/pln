@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\pln\form;
 
 use APP\plugins\generic\pln\classes\DepositObjectDAO;
+use APP\plugins\generic\pln\PLNPlugin;
 use PKP\core\DataObject;
 use PKP\core\PKPString;
 use PKP\db\DAORegistry;
@@ -167,7 +168,7 @@ class Deposit extends DataObject
      */
     public function getNewStatus(): int
     {
-        return $this->getStatus() == PLN_PLUGIN_DEPOSIT_STATUS_NEW;
+        return $this->getStatus() == PLNPlugin::DEPOSIT_STATUS_NEW;
     }
 
     /**
@@ -175,7 +176,7 @@ class Deposit extends DataObject
      */
     public function setNewStatus(): void
     {
-        $this->setStatus(PLN_PLUGIN_DEPOSIT_STATUS_NEW);
+        $this->setStatus(PLNPlugin::DEPOSIT_STATUS_NEW);
         $this->setLastStatusDate(null);
         $this->setExportDepositError(null);
         $this->setStagingState(null);
@@ -208,7 +209,7 @@ class Deposit extends DataObject
      */
     public function getPackagedStatus(): int
     {
-        return $this->getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED);
+        return $this->getStatusField(PLNPlugin::DEPOSIT_STATUS_PACKAGED);
     }
 
     /**
@@ -216,7 +217,7 @@ class Deposit extends DataObject
      */
     public function setPackagedStatus(bool $status = true): void
     {
-        $this->setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED);
+        $this->setStatusField($status, PLNPlugin::DEPOSIT_STATUS_PACKAGED);
     }
 
     /**
@@ -224,7 +225,7 @@ class Deposit extends DataObject
      */
     public function getTransferredStatus(): int
     {
-        return $this->getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED);
+        return $this->getStatusField(PLNPlugin::DEPOSIT_STATUS_TRANSFERRED);
     }
 
     /**
@@ -232,7 +233,7 @@ class Deposit extends DataObject
      */
     public function setTransferredStatus(bool $status = true): void
     {
-        $this->setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED);
+        $this->setStatusField($status, PLNPlugin::DEPOSIT_STATUS_TRANSFERRED);
     }
 
     /**
@@ -240,7 +241,7 @@ class Deposit extends DataObject
      */
     public function getReceivedStatus(): int
     {
-        return $this->getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED);
+        return $this->getStatusField(PLNPlugin::DEPOSIT_STATUS_RECEIVED);
     }
 
     /**
@@ -248,7 +249,7 @@ class Deposit extends DataObject
      */
     public function setReceivedStatus(bool $status = true): void
     {
-        $this->setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED);
+        $this->setStatusField($status, PLNPlugin::DEPOSIT_STATUS_RECEIVED);
     }
 
     /**
@@ -256,7 +257,7 @@ class Deposit extends DataObject
      */
     public function getValidatedStatus(): int
     {
-        return $this->getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED);
+        return $this->getStatusField(PLNPlugin::DEPOSIT_STATUS_VALIDATED);
     }
 
     /**
@@ -264,7 +265,7 @@ class Deposit extends DataObject
      */
     public function setValidatedStatus(bool $status = true): void
     {
-        $this->setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED);
+        $this->setStatusField($status, PLNPlugin::DEPOSIT_STATUS_VALIDATED);
     }
 
     /**
@@ -272,7 +273,7 @@ class Deposit extends DataObject
      */
     public function getSentStatus(): int
     {
-        return $this->getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_SENT);
+        return $this->getStatusField(PLNPlugin::DEPOSIT_STATUS_SENT);
     }
 
     /**
@@ -280,7 +281,7 @@ class Deposit extends DataObject
      */
     public function setSentStatus(bool $status = true): void
     {
-        $this->setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_SENT);
+        $this->setStatusField($status, PLNPlugin::DEPOSIT_STATUS_SENT);
     }
 
     /**
@@ -288,7 +289,7 @@ class Deposit extends DataObject
      */
     public function getLockssReceivedStatus(): int
     {
-        return $this->getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
+        return $this->getStatusField(PLNPlugin::DEPOSIT_STATUS_LOCKSS_RECEIVED);
     }
 
     /**
@@ -296,7 +297,7 @@ class Deposit extends DataObject
      */
     public function setLockssReceivedStatus(bool $status = true): void
     {
-        $this->setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED);
+        $this->setStatusField($status, PLNPlugin::DEPOSIT_STATUS_LOCKSS_RECEIVED);
     }
 
     /**
@@ -304,7 +305,7 @@ class Deposit extends DataObject
      */
     public function getLockssAgreementStatus(): int
     {
-        return $this->getStatusField(PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT);
+        return $this->getStatusField(PLNPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT);
     }
 
     /**
@@ -312,7 +313,7 @@ class Deposit extends DataObject
      */
     public function setLockssAgreementStatus(bool $status = true): void
     {
-        $this->setStatusField($status, PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT);
+        $this->setStatusField($status, PLNPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT);
     }
 
     /**
