@@ -15,15 +15,15 @@
 namespace APP\plugins\generic\pln;
 
 use APP\core\Application;
+use APP\facades\Repo;
+use APP\submission\Submission;
 use APP\template\TemplateManager;
-use PKP\config\Config;
 use PKP\core\ArrayItemIterator;
 use PKP\db\DAORegistry;
 use PKP\plugins\GatewayPlugin;
 use PKP\plugins\PluginRegistry;
 use PKP\site\VersionCheck;
 use PKP\site\VersionDAO;
-use PKP\submission\PKPSubmission;
 
 class PLNGatewayPlugin extends GatewayPlugin
 {
@@ -152,20 +152,15 @@ class PLNGatewayPlugin extends GatewayPlugin
         $versionDao = DAORegistry::getDAO('VersionDAO');
         $ojsVersion = $versionDao->getCurrentVersion();
         $templateMgr->assign('ojsVersion', $ojsVersion->getVersionString());
-        /** @var SubmissionDAO */
-        $submissionDao = DAORegistry::getDAO('SubmissionDAO');
-        $publications = [];
-        $submissions = $submissionDao->getByContextId($journal->getId());
-        while ($submission = $submissions->next()) {
-            $publication = $submission->getCurrentPublication();
-            if (!$publication || $publication->getData('status') != PKPSubmission::STATUS_PUBLISHED) {
-                continue;
-            }
-            $publications[] = $publication;
-            if (count($publications) === static::PING_ARTICLE_COUNT) {
-                break;
-            }
-        }
+        $publications = Repo::submission()
+            ->getCollector()
+            ->filterByContextIds([$journal->getId()])
+            ->filterByStatus([Submission::STATUS_PUBLISHED])
+            ->limit(static::PING_ARTICLE_COUNT)
+            ->getMany()
+            ->map(fn (Submission $submission) => $submission->getCurrentPublication())
+            ->toArray();
+
         $templateMgr->assign('publications', $publications);
         $templateMgr->assign('pln_network', $plugin->getSetting($journal->getId(), 'pln_network'));
 

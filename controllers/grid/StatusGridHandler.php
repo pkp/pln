@@ -58,6 +58,8 @@ class StatusGridHandler extends GridHandler
 
     /**
      * @copydoc Gridhandler::initialize()
+     *
+     * @param null|mixed $args
      */
     public function initialize($request, $args = null): void
     {

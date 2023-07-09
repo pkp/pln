@@ -16,7 +16,6 @@ namespace APP\plugins\generic\pln;
 
 use APP\core\Application;
 use APP\core\PageRouter;
-use APP\core\Request;
 use APP\facades\Repo;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
@@ -88,6 +87,8 @@ class PLNPlugin extends GenericPlugin
 {
     /**
      * @copydoc LazyLoadPlugin::register()
+     *
+     * @param null|mixed $mainContextId
      */
     public function register($category, $path, $mainContextId = null): bool
     {

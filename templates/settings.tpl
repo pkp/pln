@@ -15,17 +15,18 @@
 	{rdelim});
 </script>
 
-{if $prerequisitesMissing|@count > 0}
-	<ul>
-		{foreach from=$prerequisitesMissing item=message}
-			<li><span class='pkp_form_error'>{$message}</span></li>
-		{/foreach}
-	</ul>
-{/if}
-
 <div id="plnSettings">
 	<form class="pkp_form" id="plnSettingsForm" method="post" action="{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="settings" save=true}">
 		{include file="controllers/notification/inPlaceNotification.tpl" notificationId="PLNSettingsFormNotification"}
+
+		{fbvFormArea id="pnRequisites"}
+		{if $prerequisitesMissing|@count > 0}
+			<ul>
+				{foreach from=$prerequisitesMissing item=message}
+					<li><span class='pkp_form_error'>{$message}</span></li>
+				{/foreach}
+			</ul>
+		{/if}
 
 		{fbvFormArea id="PLNSettingsFormArea"}
 			{fbvFormSection title="plugins.generic.pln.settings.terms_of_use" list=true}

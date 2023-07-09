@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\pln\classes;
 
 use APP\core\Application;
+use APP\facades\Repo;
 use APP\journal\Journal;
 use APP\journal\JournalDAO;
 use APP\plugins\generic\pln\classes\tasks\Depositor;
@@ -158,10 +159,8 @@ class DepositPackage
         switch ($this->deposit->getObjectType()) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
             case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
-                /** @var SubmissionDAO */
-                $submissionDao = DAORegistry::getDAO('SubmissionDAO');
                 foreach ($depositObjects as $depositObject) {
-                    $submission = $submissionDao->getById($depositObject->getObjectId());
+                    $submission = Repo::submission()->get($depositObject->getObjectId());
                     $publication = $submission->getCurrentPublication();
                     $publicationDate = $publication ? $publication->getData('publicationDate') : null;
                     if ($publicationDate && strtotime($publicationDate) > $objectPublicationDate) {
@@ -171,9 +170,7 @@ class DepositPackage
                 break;
             case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
                 foreach ($depositObjects as $depositObject) {
-                    /** @var IssueDAO */
-                    $issueDao = DAORegistry::getDAO('IssueDAO');
-                    $issue = $issueDao->getById($depositObject->getObjectId());
+                    $issue = Repo::issue()->get($depositObject->getObjectId());
                     $objectVolume = $issue->getVolume();
                     $objectIssue = $issue->getNumber();
                     if ($issue->getDatePublished() > $objectPublicationDate) {
@@ -242,10 +239,6 @@ class DepositPackage
         // get DAOs, plugins and settings
         /** @var JournalDAO */
         $journalDao = DAORegistry::getDAO('JournalDAO');
-        /** @var IssueDAO */
-        $issueDao = DAORegistry::getDAO('IssueDAO');
-        /** @var SubmissionDAO */
-        $submissionDao = DAORegistry::getDAO('SubmissionDAO');
         /** @var NativeImportExportPlugin */
         $exportPlugin = PluginRegistry::loadPlugin('importexport', 'native');
         @ini_set('memory_limit', -1);

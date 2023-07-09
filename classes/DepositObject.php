@@ -14,10 +14,10 @@
 
 namespace APP\plugins\generic\pln\classes;
 
+use APP\facades\Repo;
 use Exception;
 use Issue;
 use PKP\core\DataObject;
-use PKP\db\DAORegistry;
 use Submission;
 
 class DepositObject extends DataObject
@@ -27,20 +27,12 @@ class DepositObject extends DataObject
      */
     public function getContent(): Issue|Submission
     {
-        switch ($this->getObjectType()) {
-            case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
-                $issueDao = DAORegistry::getDAO('IssueDAO'); /** @var IssueDAO $issueDao */
-                return $issueDao->getIssueById($this->getObjectId(), $this->getJournalId());
-            case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
-                $submissionDao = DAORegistry::getDAO('SubmissionDAO'); /** @var SubmissionDAO $submissionDao */
-                $submission = $submissionDao->getById($this->getObjectId());
-                if ($submission->getContextId() != $this->getJournalId()) {
-                    throw new Exception('Submission context and context ID do not agree!');
-                }
-                return $submission;
-        }
-        throw new Exception('Unknown object type!');
+        return match ($this->getObjectType()) {
+            PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE => Repo::issue()->get($this->getObjectId(), $this->getJournalId()),
+            'PublishedArticle', // Legacy (OJS pre-3.2)
+            PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION => Repo::submission()->get($this->getObjectId(), $this->getJournalId()),
+            default => throw new Exception('Unknown object type')
+        };
     }
 
     /**

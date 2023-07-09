@@ -14,12 +14,13 @@
 
 namespace APP\plugins\generic\pln\classes;
 
+use APP\facades\Repo;
+use APP\submission\Submission;
 use Exception;
 use PKP\db\DAO;
 use PKP\db\DAORegistry;
 use PKP\db\DAOResultFactory;
 use PKP\plugins\Hook;
-use PKP\submission\PKPSubmission;
 
 class DepositObjectDAO extends DAO
 {
@@ -69,10 +70,8 @@ class DepositObjectDAO extends DAO
 
     /**
      * Retrieve all deposit objects with no deposit id.
-     *
-     * @return DAOResultFactory<DepositObject>
      */
-    public function markHavingUpdatedContent(int $journalId, string $objectType): DAOResultFactory
+    public function markHavingUpdatedContent(int $journalId, string $objectType): void
     {
         /** @var DepositDAO */
         $depositDao = DAORegistry::getDAO('DepositDAO');
@@ -107,7 +106,7 @@ class DepositObjectDAO extends DAO
                     WHERE (pdo.date_modified < p.last_modified OR pdo.date_modified < i.last_modified)
                     AND (pdo.journal_id = ?)
                     GROUP BY pdo.deposit_object_id',
-                    ['issueId', PKPSubmission::STATUS_PUBLISHED, (int) $journalId]
+                    ['issueId', Submission::STATUS_PUBLISHED, (int) $journalId]
                 );
                 foreach ($result as $row) {
                     $depositObject = $this->getById($journalId, $row->deposit_object_id);
@@ -135,22 +134,18 @@ class DepositObjectDAO extends DAO
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
             case PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION:
-                /** @var SubmissionDAO */
-                $submissionDao = DAORegistry::getDAO('SubmissionDAO'); // Constants
                 $result = $this->retrieve(
                     'SELECT p.submission_id FROM publications p
                     JOIN submissions s ON s.current_publication_id = p.publication_id
                     LEFT JOIN pln_deposit_objects pdo ON s.submission_id = pdo.object_id
                     WHERE s.journal_id = ? AND pdo.object_id is null AND p.status = ?',
-                    [(int) $journalId, PKPSubmission::STATUS_PUBLISHED]
+                    [(int) $journalId, Submission::STATUS_PUBLISHED]
                 );
                 foreach ($result as $row) {
-                    $objects[] = $submissionDao->getById($row->submission_id);
+                    $objects[] = Repo::submission()->get($row->submission_id);
                 }
                 break;
             case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
-                /** @var IssueDAO */
-                $issueDao = DAORegistry::getDAO('IssueDAO');
                 $result = $this->retrieve(
                     'SELECT i.issue_id
                     FROM issues i
@@ -161,7 +156,7 @@ class DepositObjectDAO extends DAO
                     [(int) $journalId]
                 );
                 foreach ($result as $row) {
-                    $objects[] = $issueDao->getById($row->issue_id);
+                    $objects[] = Repo::issue()->get($row->issue_id);
                 }
                 break;
             default:
