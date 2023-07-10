@@ -26,10 +26,13 @@ use APP\plugins\generic\pln\classes\form\StatusForm;
 use APP\plugins\generic\pln\controllers\grid\StatusGridHandler;
 use APP\plugins\generic\pln\pages\PageHandler;
 use APP\plugins\generic\pln\classes\migration\install\PLNPluginSchemaMigration;
+use Carbon\Carbon;
+use DateTimeImmutable;
 use DOMDocument;
 use DOMElement;
 use Exception;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\DB;
 use PKP\config\Config;
 use PKP\core\JSONMessage;
 use PKP\core\PKPString;
@@ -491,20 +494,30 @@ class PLNPlugin extends GenericPlugin
     /**
      * Get whether zip archive support is present
      */
-    public function zipInstalled(): bool
+    public function hasZipArchive(): bool
     {
         return class_exists('ZipArchive');
     }
 
     /**
-     * Check if acron is enabled, or if the scheduled_tasks config var is set.
-     * The plugin needs to run periodically through one of those systems.
+     * Check if the Acron plugin is enabled, or if the scheduled task has been running lately.
      */
-    public function cronEnabled(): bool
+    public function hasScheduledTasks(): bool
     {
         $application = Application::get();
         $products = $application->getEnabledProducts('plugins.generic');
-        return isset($products['acron']) || Config::getVar('general', 'scheduled_tasks', false);
+        return isset($products['acron']) || (($lastRun = $this->getLastExecutionDate()) && Carbon::now()->diffInWeeks($lastRun) < 1);
+    }
+
+    /**
+     * Retrieves the last time the depositor task was executed
+     */
+    public function getLastExecutionDate(): ?DateTimeImmutable
+    {
+        $lastRun = DB::table('scheduled_tasks')
+            ->where('class_name', 'plugins.generic.pln.classes.tasks.Depositor')
+            ->soleValue('last_run');
+        return $lastRun ? new DateTimeImmutable($lastRun) : null;
     }
 
     /**

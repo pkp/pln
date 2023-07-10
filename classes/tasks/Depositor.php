@@ -73,7 +73,7 @@ class Depositor extends ScheduledTask
             $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.processing_for', ['title' => $journal->getLocalizedName()]), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
             // check to make sure zip is installed
-            if (!$this->plugin->zipInstalled()) {
+            if (!$this->plugin->hasZipArchive()) {
                 $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.zip_missing'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
                 $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_ZIP_MISSING);
                 continue;

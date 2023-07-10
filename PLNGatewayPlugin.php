@@ -14,7 +14,6 @@
 
 namespace APP\plugins\generic\pln;
 
-use APP\core\Application;
 use APP\facades\Repo;
 use APP\submission\Submission;
 use APP\template\TemplateManager;
@@ -27,7 +26,7 @@ use PKP\site\VersionDAO;
 
 class PLNGatewayPlugin extends GatewayPlugin
 {
-    private const PING_ARTICLE_COUNT = 12;
+    private const PING_ARTICLE_COUNT = 10;
 
     /**
      * Constructor.
@@ -128,14 +127,11 @@ class PLNGatewayPlugin extends GatewayPlugin
             $templateMgr->assign('termsAccepted', 'no');
         }
 
-        $application = Application::get();
-        $products = $application->getEnabledProducts('plugins.generic');
-        $prerequisites = [
+        $templateMgr->assign([
             'phpVersion' => PHP_VERSION,
-            'zipInstalled' => class_exists('ZipArchive') ? 'yes' : 'no',
-            'acron' => isset($products['acron']) ? 'yes' : 'no',
-        ];
-        $templateMgr->assign('prerequisites', $prerequisites);
+            'hasZipArchive' => $plugin->hasZipArchive() ? 'Yes' : 'No',
+            'hasTasks' => $plugin->hasScheduledTasks() ? 'Yes' : 'No',
+        ]);
 
         $termKeys = array_keys($terms);
         $termsDisplay = [];

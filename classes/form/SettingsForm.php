@@ -70,10 +70,10 @@ class SettingsForm extends Form
     {
         $messages = [];
 
-        if (!$this->plugin->zipInstalled()) {
+        if (!$this->plugin->hasZipArchive()) {
             $messages[] = __('plugins.generic.pln.notifications.zip_missing');
         }
-        if (!$this->plugin->cronEnabled()) {
+        if (!$this->plugin->hasScheduledTasks()) {
             $messages[] = __('plugins.generic.pln.settings.acron_required');
         }
         return $messages;

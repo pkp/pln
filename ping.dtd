@@ -14,15 +14,11 @@
 <!ELEMENT ojsInfo (release)>
 <!ELEMENT release (#PCDATA)>
 
-<!ELEMENT pluginInfo (release, releaseDate, installed, current, prerequisites, terms)>
+<!ELEMENT pluginInfo (release, releaseDate, installed, current, php, zipArchive, tasks, terms)>
 <!ELEMENT releaseDate (#PCDATA)>
 <!ELEMENT current (#PCDATA)>
-
-<!ELEMENT prerequisites (phpVersion, curlVersion, zipInstalled, acron, tasks)>
-<!ELEMENT phpVersion (#PCDATA)>
-<!ELEMENT curlVersion (#PCDATA)>
-<!ELEMENT zipInstalled (#PCDATA)>
-<!ELEMENT acron (#PCDATA)>
+<!ELEMENT php (#PCDATA)>
+<!ELEMENT zipArchive (#PCDATA)>
 <!ELEMENT tasks (#PCDATA)>
 
 <!ELEMENT terms (term*)>
