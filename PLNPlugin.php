@@ -41,6 +41,7 @@ use PKP\plugins\GenericPlugin;
 use PKP\plugins\Hook;
 use PKP\security\Role;
 use PKP\userGroup\UserGroup;
+use SessionManager;
 use SimpleXMLElement;
 
 class PLNPlugin extends GenericPlugin
@@ -129,7 +130,7 @@ class PLNPlugin extends GenericPlugin
         $operation = $request->getRequestedOp();
         $arguments = $request->getRequestedArgs();
         if ([$page, $operation] === ['pln', 'deposits'] || [$page, $operation, $arguments[0] ?? ''] === ['gateway', 'plugin', 'PLNGatewayPlugin']) {
-            define('SESSION_DISABLE_INIT', true);
+            SessionManager::disable();
             Hook::add('RestrictedSiteAccessPolicy::_getLoginExemptions', function (string $hookName, array $args): bool {
                 $exemptions = & $args[0];
                 array_push($exemptions, 'gateway', 'pln');
