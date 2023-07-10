@@ -14,6 +14,7 @@
 
 namespace APP\plugins\generic\pln\classes\migration\install;
 
+use APP\plugins\generic\pln\classes\tasks\Depositor;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
@@ -58,7 +59,7 @@ class SchemaMigration extends Migration
         }
 
         // Create a new scheduled_tasks entry for this plugin
-        DB::table('scheduled_tasks')->insertOrIgnore(['class_name' => 'plugins.generic.pln.classes.tasks.Depositor']);
+        DB::table('scheduled_tasks')->insertOrIgnore(['class_name' => Depositor::class]);
     }
 
     /**

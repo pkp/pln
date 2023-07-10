@@ -15,5 +15,6 @@
 	<upgrade>
 		<migration class="APP\plugins\generic\pln\classes\migration\upgrade\I35_FixMissingField" />
 		<migration class="APP\plugins\generic\pln\classes\migration\upgrade\I28_FixDepositStatus" />
+		<migration class="APP\plugins\generic\pln\classes\migration\upgrade\I57_RemoveScheduledTask" />
 	</upgrade>
 </install>
