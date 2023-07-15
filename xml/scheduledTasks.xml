@@ -18,7 +18,7 @@
 <!DOCTYPE scheduled_tasks SYSTEM "../../../../lib/pkp/dtd/scheduledTasks.dtd">
 
 <scheduled_tasks>
-	<task class="plugins.generic.pln.classes.tasks.Depositor">
+	<task class="APP\plugins\generic\pln\classes\tasks\Depositor">
 		<descr>Deposit content with the PKP Preservation Network</descr>
 		<frequency hour="0"/>
 		<arg>autoStage</arg>

@@ -23,6 +23,7 @@ use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\classes\DepositObjectDAO;
 use APP\plugins\generic\pln\classes\form\SettingsForm;
 use APP\plugins\generic\pln\classes\form\StatusForm;
+use APP\plugins\generic\pln\classes\tasks\Depositor;
 use APP\plugins\generic\pln\controllers\grid\StatusGridHandler;
 use APP\plugins\generic\pln\pages\PageHandler;
 use APP\plugins\generic\pln\classes\migration\install\PLNPluginSchemaMigration;
@@ -54,11 +55,11 @@ class PLNPlugin extends GenericPlugin
     public const DEPOSIT_FOLDER = 'pln';
 
     // Notification types
-    public const NOTIFICATION_BASE = PKPNotification::NOTIFICATION_BASE + 0x10000000;
-    public const NOTIFICATION_TERMS_UPDATED = static::NOTIFICATION_BASE + 1;
-    public const NOTIFICATION_ISSN_MISSING = static::NOTIFICATION_BASE + 2;
-    public const NOTIFICATION_HTTP_ERROR = static::NOTIFICATION_BASE + 3;
-    public const NOTIFICATION_ZIP_MISSING = static::NOTIFICATION_BASE + 5;
+    public const NOTIFICATION_BASE = PKPNotification::NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000;
+    public const NOTIFICATION_TERMS_UPDATED = self::NOTIFICATION_BASE + 1;
+    public const NOTIFICATION_ISSN_MISSING = self::NOTIFICATION_BASE + 2;
+    public const NOTIFICATION_HTTP_ERROR = self::NOTIFICATION_BASE + 3;
+    public const NOTIFICATION_ZIP_MISSING = self::NOTIFICATION_BASE + 5;
 
     // Deposit types
     public const DEPOSIT_TYPE_SUBMISSION = 'Submission';
@@ -154,7 +155,7 @@ class PLNPlugin extends GenericPlugin
 
         $router = $request->getRouter();
         array_unshift(
-            $options,
+            $actions,
             new LinkAction(
                 'settings',
                 new AjaxModal(
@@ -172,7 +173,7 @@ class PLNPlugin extends GenericPlugin
                 __('common.status')
             )
         );
-        return $options;
+        return $actions;
     }
 
     /**
@@ -515,7 +516,7 @@ class PLNPlugin extends GenericPlugin
     public function getLastExecutionDate(): ?DateTimeImmutable
     {
         $lastRun = DB::table('scheduled_tasks')
-            ->where('class_name', 'plugins.generic.pln.classes.tasks.Depositor')
+            ->where('class_name', Depositor::class)
             ->soleValue('last_run');
         return $lastRun ? new DateTimeImmutable($lastRun) : null;
     }
@@ -613,7 +614,7 @@ class PLNPlugin extends GenericPlugin
     /**
      * @copydoc LazyLoadPlugin::register()
      */
-    public function setEnabled(bool $enabled): void
+    public function setEnabled($enabled): void
     {
         parent::setEnabled($enabled);
         if ($enabled) {
