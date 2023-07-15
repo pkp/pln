@@ -15,8 +15,7 @@
 namespace APP\plugins\generic\pln\controllers\grid;
 
 use APP\core\Application;
-use APP\plugins\generic\pln\classes\DepositObject;
-use APP\plugins\generic\pln\form\Deposit;
+use APP\plugins\generic\pln\classes\deposit\Deposit;
 use Exception;
 use LinkAction;
 use PKP\controllers\grid\GridCellProvider;
@@ -37,7 +36,6 @@ class StatusGridCellProvider extends GridCellProvider
                 return ['label' => $deposit->getId()];
             case 'objectId':
                 $label = [];
-                /** @var DepositObject $object */
                 foreach ($deposit->getDepositObjects()->toIterator() as $object) {
                     $content = $object->getContent();
                     if ($content instanceof Issue) {

@@ -16,10 +16,12 @@ namespace APP\plugins\generic\pln\classes\tasks;
 
 use APP\journal\Journal;
 use APP\journal\JournalDAO;
+use APP\plugins\generic\pln\classes\deposit\Repository as DepositRepository;
+use APP\plugins\generic\pln\classes\depositObject\Repository as DepositObjectRepository;
 use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\classes\DepositObjectDAO;
 use APP\plugins\generic\pln\classes\DepositPackage;
-use APP\plugins\generic\pln\form\Deposit;
+use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\PLNPlugin;
 use Exception;
 use PKP\db\DAORegistry;
@@ -59,7 +61,7 @@ class Depositor extends ScheduledTask
     public function executeActions(): bool
     {
         $this->addExecutionLogEntry('PKP Preservation Network Processor', ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-        $this->plugin->registerDAOs();
+        $this->plugin->registerSchemas();
 
         /** @var JournalDAO */
         $journalDao = DAORegistry::getDAO('JournalDAO');
@@ -161,8 +163,7 @@ class Depositor extends ScheduledTask
     protected function processStatusUpdates(Journal $journal): void
     {
         // get deposits that need status updates
-        $depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
-        $depositQueue = $depositDao->getNeedStagingStatusUpdate($journal->getId());
+        $depositQueue = DepositRepository::instance()->getNeedStagingStatusUpdate($journal->getId());
 
         while ($deposit = $depositQueue->next()) {
             $this->addExecutionLogEntry(
@@ -189,8 +190,7 @@ class Depositor extends ScheduledTask
     protected function processHavingUpdatedContent(Journal $journal): void
     {
         // get deposits that have updated content
-        $depositObjectDao = DAORegistry::getDAO('DepositObjectDAO'); /** @var DepositObjectDAO $depositObjectDao */
-        $depositObjectDao->markHavingUpdatedContent($journal->getId(), $this->plugin->getSetting($journal->getId(), 'object_type'));
+        DepositObjectRepository::instance()->markHavingUpdatedContent($journal->getId(), $this->plugin->getSetting($journal->getId(), 'object_type'));
     }
 
     /**
@@ -199,8 +199,7 @@ class Depositor extends ScheduledTask
     protected function processNeedTransferring(Journal $journal): void
     {
         // fetch the deposits we need to send to the pln
-        $depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
-        $depositQueue = $depositDao->getNeedTransferring($journal->getId());
+        $depositQueue = DepositRepository::instance()->getNeedTransferring($journal->getId());
 
         while ($deposit = $depositQueue->next()) {
             $this->addExecutionLogEntry(
@@ -227,8 +226,7 @@ class Depositor extends ScheduledTask
      */
     protected function processNeedPackaging(Journal $journal): void
     {
-        $depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
-        $depositQueue = $depositDao->getNeedPackaging($journal->getId());
+        $depositQueue = DepositRepository::instance()->getNeedPackaging($journal->getId());
         $fileManager = new ContextFileManager($journal->getId());
         $plnDir = $fileManager->getBasePath() . PLNPlugin::DEPOSIT_FOLDER;
 
@@ -264,12 +262,10 @@ class Depositor extends ScheduledTask
         $objectType = $this->plugin->getSetting($journal->getId(), 'object_type');
 
         // create new deposit objects for any new OJS content
-        $depositDao = DAORegistry::getDAO('DepositDAO'); /** @var DepositDAO $depositDao */
-        $depositObjectDao = DAORegistry::getDAO('DepositObjectDAO'); /** @var DepositObjectDAO $depositObjectDao */
-        $depositObjectDao->createNew($journal->getId(), $objectType);
+        DepositObjectRepository::instance()->createNew($journal->getId(), $objectType);
 
         // retrieve all deposit objects that don't belong to a deposit
-        $newObjects = $depositObjectDao->getNew($journal->getId());
+        $newObjects = DepositObjectRepository::instance()->getNew($journal->getId());
 
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
@@ -283,12 +279,12 @@ class Depositor extends ScheduledTask
                         //create a new deposit
                         $newDeposit = new Deposit($this->plugin->newUUID());
                         $newDeposit->setJournalId($journal->getId());
-                        $depositDao->insertObject($newDeposit);
+                        DepositRepository::instance()->add($newDeposit);
 
                         // add each object to the deposit
                         foreach ($newObject_array as $newObject) {
                             $newObject->setDepositId($newDeposit->getId());
-                            $depositObjectDao->updateObject($newObject);
+                            DepositObjectRepository::instance()->edit($newObject);
                         }
                     }
                 }
@@ -298,9 +294,9 @@ class Depositor extends ScheduledTask
                 while ($newObject = $newObjects->next()) {
                     $newDeposit = new Deposit($this->plugin->newUUID());
                     $newDeposit->setJournalId($journal->getId());
-                    $depositDao->insertObject($newDeposit);
+                    DepositRepository::instance()->add($newDeposit);
                     $newObject->setDepositId($newDeposit->getId());
-                    $depositObjectDao->updateObject($newObject);
+                    DepositObjectRepository::instance()->edit($newObject);
                     unset($newObject);
                 }
                 break;
@@ -317,14 +313,10 @@ class Depositor extends ScheduledTask
     {
         $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pruningOrphanedDeposits'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
-        /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
-        if (count($failedDepositIds = $depositDao->pruneOrphaned())) {
+        if (count($failedDepositIds = DepositRepository::instance()->pruneOrphaned())) {
             $this->addExecutionLogEntry(__('plugins.generic.pln.depositor.pruningDeposits.error', ['depositIds' => implode(', ', $failedDepositIds)]), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
         }
 
-        /** @var DepositObjectDAO */
-        $depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
-        $depositObjectDao->pruneOrphaned();
+        DepositObjectRepository::instance()->pruneOrphaned();
     }
 }

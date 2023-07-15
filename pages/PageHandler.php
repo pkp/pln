@@ -16,6 +16,7 @@ namespace APP\plugins\generic\pln\pages;
 
 use APP\core\Request;
 use APP\handler\Handler;
+use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\classes\DepositPackage;
 use APP\plugins\generic\pln\PLNPlugin;
@@ -52,8 +53,6 @@ class PageHandler extends Handler
     public function deposits(array $args, Request $request): bool
     {
         $journal = $request->getJournal();
-        /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
         $fileManager = new FileManager();
         $dispatcher = $request->getDispatcher();
 
@@ -65,7 +64,13 @@ class PageHandler extends Handler
             $dispatcher->handle404();
         }
 
-        $deposit = $depositDao->getByUUID($journal->getId(), $depositUuid);
+        $deposit = Repository::instance()
+            ->getCollector()
+            ->filterByContextIds([$journal->getId()])
+            ->filterByUUIDs([$depositUuid])
+            ->getMany()
+            ->first();
+
         if (!$deposit) {
             error_log(__('plugins.generic.pln.error.handler.uuid.notfound'));
             $dispatcher->handle404();

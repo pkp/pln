@@ -1,61 +1,168 @@
 <?php
-
 /**
- * @file classes/DepositObjectDAO.php
+ * @file classes/depositObject/Repository.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * @class DepositObjectDAO
+ * @class Repository
  *
- * @brief Operations for adding a PLN deposit object
+ * @brief A repository to find and manage deposit objects.
  */
 
-namespace APP\plugins\generic\pln\classes;
+namespace APP\plugins\generic\pln\classes\depositObject;
 
-use APP\facades\Repo;
+use APP\core\Request;
+use APP\core\Services;
 use APP\plugins\generic\pln\PLNPlugin;
-use APP\submission\Submission;
-use Exception;
-use PKP\db\DAO;
-use PKP\db\DAORegistry;
 use PKP\db\DAOResultFactory;
 use PKP\plugins\Hook;
+use PKP\services\PKPSchemaService;
+use PKP\validation\ValidatorFactory;
 
-class DepositObjectDAO extends DAO
+class Repository
 {
-    /**
-     * Retrieve a deposit object by deposit object ID.
-     */
-    public function getById(int $journalId, int $depositObjectId): DepositObject
-    {
-        $result = $this->retrieve(
-            'SELECT * FROM pln_deposit_objects WHERE journal_id = ? and deposit_object_id = ?',
-            [(int) $journalId, (int) $depositObjectId]
-        );
+    public DAO $dao;
 
-        $row = $result->current();
-        return $row ? $this->fromRow((array) $row) : null;
+    /** The name of the class to map this entity to its schema */
+    public string $schemaMap = Schema::class;
+
+    protected Request $request;
+
+    /** @var PKPSchemaService<DepositObject> */
+    protected PKPSchemaService $schemaService;
+
+    public function __construct(DAO $dao, Request $request, PKPSchemaService $schemaService)
+    {
+        $this->dao = $dao;
+        $this->request = $request;
+        $this->schemaService = $schemaService;
+    }
+
+    /** @copydoc DAO::newDataObject() */
+    public function newDataObject(array $params = [])
+    {
+        $object = $this->dao->newDataObject();
+        if (!empty($params)) {
+            $object->setAllData($params);
+        }
+        return $object;
+    }
+
+    /** @copydoc DAO::get() */
+    public function get(int $id, int $contextId = null): ?DepositObject
+    {
+        return $this->dao->get($id, $contextId);
+    }
+
+    /** @copydoc DAO::exists() */
+    public function exists(int $id, int $contextId = null): bool
+    {
+        return $this->dao->exists($id, $contextId);
     }
 
     /**
-     * Retrieve all deposit objects by deposit id.
+     * Retrieves the collector
+     */
+    public function getCollector(): Collector
+    {
+        return app(Collector::class);
+    }
+
+    /**
+     * Get an instance of the map class for mapping deposit objects to their schema
+     */
+    public function getSchemaMap(): Schema
+    {
+        return app('maps')->withExtensions($this->schemaMap);
+    }
+
+    /**
+     * Validate properties for a deposit object
      *
-     * @return DAOResultFactory<DepositObject>
+     * Perform validation checks on data used to add or edit a deposit object.
+     *
+     * @param DepositObject|null $depositObject The deposit object being edited. Pass `null` if creating a new deposit object
+     * @param array $props A key/value array with the new data to validate
+     * @param array $allowedLocales The context's supported submission locales
+     * @param string $primaryLocale The submission's primary locale
+     *
+     * @return array A key/value array with validation errors. Empty if no errors
      */
-    public function getByDepositId(int $journalId, int $depositId): DAOResultFactory
+    public function validate($depositObject, $props, $allowedLocales, $primaryLocale)
     {
-        $result = $this->retrieve(
-            'SELECT * FROM pln_deposit_objects WHERE journal_id = ? AND deposit_id = ?',
-            [(int) $journalId, (int) $depositId]
+        /** @var PKPSchemaService */
+        $schemaService = Services::get('schema');
+
+        $validator = ValidatorFactory::make(
+            $props,
+            $schemaService->getValidationRules(Schema::SCHEMA_NAME, $allowedLocales)
         );
 
-        return new DAOResultFactory($result, $this, 'fromRow');
+        // Check required fields
+        ValidatorFactory::required(
+            $validator,
+            $depositObject,
+            $schemaService->getRequiredProps(Schema::SCHEMA_NAME),
+            $schemaService->getMultilingualProps(Schema::SCHEMA_NAME),
+            $allowedLocales,
+            $primaryLocale
+        );
+
+        // Check for input from disallowed locales
+        ValidatorFactory::allowedLocales($validator, $schemaService->getMultilingualProps(Schema::SCHEMA_NAME), $allowedLocales);
+
+        $errors = [];
+        if ($validator->fails()) {
+            $errors = $schemaService->formatValidationErrors($validator->errors());
+        }
+
+        Hook::call('PreservationNetwork::DepositObject::validate', [$errors, $depositObject, $props, $allowedLocales, $primaryLocale]);
+
+        return $errors;
+    }
+
+    public function add(DepositObject $depositObject): int
+    {
+        $depositObjectId = $this->dao->insert($depositObject);
+        $depositObject = $this->get($depositObjectId);
+
+        Hook::call('PreservationNetwork::DepositObject::add', [$depositObject]);
+
+        return $depositObject->getId();
+    }
+
+    public function edit(DepositObject $depositObject, array $params = [])
+    {
+        $newDeposit = $this->newDataObject(array_merge($depositObject->_data, $params));
+
+        Hook::call('PreservationNetwork::DepositObject::edit', [$newDeposit, $depositObject, $params]);
+
+        $this->dao->update($newDeposit);
+
+        $this->get($newDeposit->getId());
+    }
+
+    public function delete(DepositObject $depositObject)
+    {
+        Hook::call('PreservationNetwork::DepositObject::delete::before', [$depositObject]);
+
+        $this->dao->delete($depositObject);
+
+        Hook::call('PreservationNetwork::DepositObject::delete', [$depositObject]);
     }
 
     /**
-     * Retrieve all deposit objects with no deposit id.
+     * Retrieves an instance o this repository
+     */
+    public static function instance(): static
+    {
+        return app(static::class);
+    }
+
+    /**
+     * Retrieve all deposit object objects with no deposit object id.
      *
      * @return DAOResultFactory<DepositObject>
      */
@@ -70,12 +177,12 @@ class DepositObjectDAO extends DAO
     }
 
     /**
-     * Retrieve all deposit objects with no deposit id.
+     * Retrieve all deposit object objects with no deposit object id.
      */
     public function markHavingUpdatedContent(int $journalId, string $objectType): void
     {
         /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
+        $depositObjectDao = DAORegistry::getDAO('DepositDAO');
 
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
@@ -89,11 +196,11 @@ class DepositObjectDAO extends DAO
                 );
                 foreach ($result as $row) {
                     $depositObject = $this->getById($journalId, $row->deposit_object_id);
-                    $deposit = $depositDao->getById($depositObject->getDepositId());
+                    $depositObject = $depositObjectDao->getById($depositObject->getDepositId());
                     $depositObject->setDateModified($row->last_modified);
                     $this->updateObject($depositObject);
-                    $deposit->setNewStatus();
-                    $depositDao->updateObject($deposit);
+                    $depositObject->setNewStatus();
+                    $depositObjectDao->updateObject($depositObject);
                 }
                 break;
             case PLNPlugin::DEPOSIT_TYPE_ISSUE:
@@ -111,11 +218,11 @@ class DepositObjectDAO extends DAO
                 );
                 foreach ($result as $row) {
                     $depositObject = $this->getById($journalId, $row->deposit_object_id);
-                    $deposit = $depositDao->getById($depositObject->getDepositId());
+                    $depositObject = $depositObjectDao->getById($depositObject->getDepositId());
                     $depositObject->setDateModified(max($row->issue_modified, $row->article_modified));
                     $this->updateObject($depositObject);
-                    $deposit->setNewStatus();
-                    $depositDao->updateObject($deposit);
+                    $depositObject->setNewStatus();
+                    $depositObjectDao->updateObject($depositObject);
                 }
                 break;
             default:
@@ -124,7 +231,7 @@ class DepositObjectDAO extends DAO
     }
 
     /**
-     * Create a new deposit object for OJS content that doesn't yet have one
+     * Create a new deposit object object for OJS content that doesn't yet have one
      *
      * @return DepositObject[] Deposit objects ordered by sequence
      */
@@ -164,108 +271,20 @@ class DepositObjectDAO extends DAO
                 throw new Exception("Invalid object type \"{$objectType}\"");
         }
 
-        $depositObjects = [];
+        $depositObjectObjects = [];
         foreach ($objects as $object) {
             $depositObject = $this->newDataObject();
             $depositObject->setContent($object);
             $depositObject->setJournalId($journalId);
             $this->insertObject($depositObject);
-            $depositObjects[] = $depositObject;
+            $depositObjectObjects[] = $depositObject;
         }
 
-        return $depositObjects;
+        return $depositObjectObjects;
     }
 
     /**
-     * Insert deposit object
-     *
-     * @return int inserted DepositObject id
-     */
-    public function insertObject(DepositObject $depositObject): int
-    {
-        $this->update(
-            sprintf(
-                '
-                INSERT INTO pln_deposit_objects
-                    (journal_id,
-                    object_id,
-                    object_type,
-                    deposit_id,
-                    date_created,
-                    date_modified)
-                VALUES
-                    (?, ?, ?, ?, NOW(), %s)',
-                $this->datetimeToDB($depositObject->getDateModified())
-            ),
-            [
-                (int) $depositObject->getJournalId(),
-                (int) $depositObject->getObjectId(),
-                $depositObject->getObjectType(),
-                (int)$depositObject->getDepositId()
-            ]
-        );
-
-        $depositObject->setId($this->getInsertId());
-        return $depositObject->getId();
-    }
-
-    /**
-     * Update deposit object
-     */
-    public function updateObject(DepositObject $depositObject): void
-    {
-        $this->update(
-            sprintf(
-                '
-                UPDATE pln_deposit_objects SET
-                    journal_id = ?,
-                    object_type = ?,
-                    object_id = ?,
-                    deposit_id = ?,
-                    date_created = %s,
-                    date_modified = NOW()
-                WHERE deposit_object_id = ?',
-                $this->datetimeToDB($depositObject->getDateCreated())
-            ),
-            [
-                (int) $depositObject->getJournalId(),
-                $depositObject->getObjectType(),
-                (int) $depositObject->getObjectId(),
-                (int) $depositObject->getDepositId(),
-                (int) $depositObject->getId()
-            ]
-        );
-    }
-
-    /**
-     * Construct a new data object corresponding to this DAO.
-     */
-    public function newDataObject(): DepositObject
-    {
-        return new DepositObject();
-    }
-
-    /**
-     * Return a deposit object from a row.
-     */
-    public function fromRow(array $row): DepositObject
-    {
-        $depositObject = $this->newDataObject();
-        $depositObject->setId($row['deposit_object_id']);
-        $depositObject->setJournalId($row['journal_id']);
-        $depositObject->setObjectType($row['object_type']);
-        $depositObject->setObjectId($row['object_id']);
-        $depositObject->setDepositId($row['deposit_id']);
-        $depositObject->setDateCreated($this->datetimeFromDB($row['date_created']));
-        $depositObject->setDateModified($this->datetimeFromDB($row['date_modified']));
-
-        Hook::call('DepositObjectDAO::fromRow', [&$depositObject, &$row]);
-
-        return $depositObject;
-    }
-
-    /**
-     * Delete deposit objects assigned to non-existent journal/deposit IDs.
+     * Delete deposit object objects assigned to non-existent journal/deposit IDs.
      */
     public function pruneOrphaned(): void
     {

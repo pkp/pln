@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file classes/Deposit.php
+ * @file classes/deposit/Deposit.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
@@ -12,10 +12,12 @@
  * @brief Container for deposit objects that are submitted to a PLN
  */
 
-namespace APP\plugins\generic\pln\form;
+namespace APP\plugins\generic\pln\classes\deposit;
 
+use APP\plugins\generic\pln\classes\depositObject\Repository;
 use APP\plugins\generic\pln\classes\DepositObjectDAO;
 use APP\plugins\generic\pln\PLNPlugin;
+use Illuminate\Support\LazyCollection;
 use PKP\core\DataObject;
 use PKP\core\PKPString;
 use PKP\db\DAORegistry;
@@ -55,13 +57,15 @@ class Deposit extends DataObject
     /**
      * Get all deposit objects of this deposit.
      *
-     * @return DAOResultFactory<Deposit> List of DepositObject
+     * @return LazyCollection<Deposit> List of DepositObject
      */
-    public function getDepositObjects(): DAOResultFactory
+    public function getDepositObjects(): LazyCollection
     {
-        /** @var DepositObjectDAO */
-        $depositObjectDao = DAORegistry::getDAO('DepositObjectDAO');
-        return $depositObjectDao->getByDepositId($this->getJournalId(), $this->getId());
+        return Repository::instance()
+            ->getCollector()
+            ->filterByContextIds([$this->getJournalId()])
+            ->filterByDepositIds([$this->getId()])
+            ->getMany();
     }
 
     /**

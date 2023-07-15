@@ -19,8 +19,9 @@ use APP\core\PageRouter;
 use APP\facades\Repo;
 use APP\notification\Notification;
 use APP\notification\NotificationManager;
-use APP\plugins\generic\pln\classes\DepositDAO;
-use APP\plugins\generic\pln\classes\DepositObjectDAO;
+use APP\plugins\generic\pln\classes\deposit\Repository;
+use APP\plugins\generic\pln\classes\deposit\Schema as DepositSchema;
+use APP\plugins\generic\pln\classes\depositObject\Schema as DepositObjectSchema;
 use APP\plugins\generic\pln\classes\form\SettingsForm;
 use APP\plugins\generic\pln\classes\form\StatusForm;
 use APP\plugins\generic\pln\classes\tasks\Depositor;
@@ -37,7 +38,6 @@ use Illuminate\Support\Facades\DB;
 use PKP\config\Config;
 use PKP\core\JSONMessage;
 use PKP\core\PKPString;
-use PKP\db\DAORegistry;
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
 use PKP\notification\PKPNotification;
@@ -89,8 +89,10 @@ class PLNPlugin extends GenericPlugin
         if (!parent::register($category, $path, $mainContextId)) {
             return false;
         }
+
+        $this->registerSchemas();
+
         if ($this->getEnabled()) {
-            $this->registerDAOs();
             Hook::add('PluginRegistry::loadCategory', [$this, 'callbackLoadCategory']);
             Hook::add('LoadHandler', [$this, 'callbackLoadHandler']);
             Hook::add('NotificationManager::getNotificationContents', [$this, 'callbackNotificationContents']);
@@ -177,12 +179,12 @@ class PLNPlugin extends GenericPlugin
     }
 
     /**
-     * Register this plugin's DAOs with the application
+     * Register the plugin's schemas within the application
      */
-    public function registerDAOs(): void
+    public function registerSchemas(): void
     {
-        DAORegistry::registerDAO('DepositDAO', new DepositDAO());
-        DAORegistry::registerDAO('DepositObjectDAO', new DepositObjectDAO());
+        DepositSchema::register();
+        DepositObjectSchema::register();
     }
 
     /**
@@ -262,7 +264,7 @@ class PLNPlugin extends GenericPlugin
     {
         $category = $args[0];
         $plugins = & $args[1];
-        if ($category === 'gateways') {
+        if ($category !== 'gateways') {
             $gatewayPlugin = new PLNGatewayPlugin($this->getName());
             $plugins[$gatewayPlugin->getSeq()][$gatewayPlugin->getPluginPath()] = $gatewayPlugin;
         }
@@ -348,19 +350,20 @@ class PLNPlugin extends GenericPlugin
         }
 
         if ($verb === 'status') {
-            $depositDao = DAORegistry::getDAO('DepositDAO');
-
             $context = $request->getContext();
             $form = new StatusForm($this, $context->getId());
 
             if ($request->getUserVar('reset')) {
                 $depositIds = array_keys($request->getUserVar('reset'));
-                /** @var DepositDAO */
-                $depositDao = DAORegistry::getDAO('DepositDAO');
-                foreach ($depositIds as $depositId) {
-                    $deposit = $depositDao->getById($depositId);
+                $repo = Repository::instance();
+                $deposits = $repo
+                    ->getCollector()
+                    ->filterByIds($depositIds)
+                    ->filterByContextIds([$context->getId()])
+                    ->getMany();
+                foreach ($deposits as $deposit) {
                     $deposit->setNewStatus();
-                    $depositDao->updateObject($deposit);
+                    $repo->edit($deposit);
                 }
             }
 

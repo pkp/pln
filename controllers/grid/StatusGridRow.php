@@ -14,7 +14,7 @@
 
 namespace APP\plugins\generic\pln\controllers\grid;
 
-use APP\plugins\generic\pln\form\Deposit;
+use APP\plugins\generic\pln\classes\deposit\Deposit;
 use PKP\controllers\grid\GridRow;
 
 class StatusGridRow extends GridRow

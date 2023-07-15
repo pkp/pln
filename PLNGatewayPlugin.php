@@ -14,15 +14,14 @@
 
 namespace APP\plugins\generic\pln;
 
+use APP\core\Application;
 use APP\facades\Repo;
 use APP\submission\Submission;
 use APP\template\TemplateManager;
 use PKP\core\ArrayItemIterator;
-use PKP\db\DAORegistry;
 use PKP\plugins\GatewayPlugin;
 use PKP\plugins\PluginRegistry;
 use PKP\site\VersionCheck;
-use PKP\site\VersionDAO;
 
 class PLNGatewayPlugin extends GatewayPlugin
 {
@@ -120,18 +119,9 @@ class PLNGatewayPlugin extends GatewayPlugin
         $terms = [];
         $termsAccepted = $plugin->termsAgreed($journal->getId());
         if ($termsAccepted) {
-            $templateMgr->assign('termsAccepted', 'yes');
             $terms = unserialize($plugin->getSetting($journal->getId(), 'terms_of_use'));
             $termsAgreement = unserialize($plugin->getSetting($journal->getId(), 'terms_of_use_agreement'));
-        } else {
-            $templateMgr->assign('termsAccepted', 'no');
         }
-
-        $templateMgr->assign([
-            'phpVersion' => PHP_VERSION,
-            'hasZipArchive' => $plugin->hasZipArchive() ? 'Yes' : 'No',
-            'hasTasks' => $plugin->hasScheduledTasks() ? 'Yes' : 'No',
-        ]);
 
         $termKeys = array_keys($terms);
         $termsDisplay = [];
@@ -143,11 +133,7 @@ class PLNGatewayPlugin extends GatewayPlugin
                 'accepted' => $termsAgreement[$key]
             ];
         }
-        $templateMgr->assign('termsDisplay', new ArrayItemIterator($termsDisplay));
-        /** @var VersionDAO */
-        $versionDao = DAORegistry::getDAO('VersionDAO');
-        $ojsVersion = $versionDao->getCurrentVersion();
-        $templateMgr->assign('ojsVersion', $ojsVersion->getVersionString());
+
         $publications = Repo::submission()
             ->getCollector()
             ->filterByContextIds([$journal->getId()])
@@ -157,10 +143,18 @@ class PLNGatewayPlugin extends GatewayPlugin
             ->map(fn (Submission $submission) => $submission->getCurrentPublication())
             ->toArray();
 
-        $templateMgr->assign('publications', $publications);
-        $templateMgr->assign('pln_network', $plugin->getSetting($journal->getId(), 'pln_network'));
+        $templateMgr->assign([
+            'termsAccepted' => $termsAccepted ? 'yes' : 'no',
+            'phpVersion' => PHP_VERSION,
+            'hasZipArchive' => $plugin->hasZipArchive() ? 'Yes' : 'No',
+            'hasTasks' => $plugin->hasScheduledTasks() ? 'Yes' : 'No',
+            'termsDisplay' => new ArrayItemIterator($termsDisplay),
+            'ojsVersion' => Application::get()->getCurrentVersion()->getVersionString(),
+            'publications' => $publications,
+            'pln_network' => $plugin->getSetting($journal->getId(), 'pln_network')
+        ]);
 
-        header('content-type: text/xml; charset=UTF-8');
+        header('content-type: text/xml; charset=utf-8');
         $templateMgr->display($plugin->getTemplateResource('ping.tpl'));
     }
 }

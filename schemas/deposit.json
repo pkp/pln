@@ -1,0 +1,79 @@
+{
+	"title": "Deposit",
+	"description": "A deposit for the PKP Preservation Network.",
+	"type": "object",
+	"required": [
+		"journalId",
+		"uuid",
+		"status",
+		"dateCreated"
+	],
+	"properties": {
+		"id": {
+			"type": "integer",
+			"readOnly": true,
+			"apiSummary": true
+		},
+		"journalId": {
+			"type": "integer",
+			"apiSummary": true
+		},
+		"uuid": {
+			"type": "string",
+			"apiSummary": true
+		},
+		"status": {
+			"type": "integer",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		},
+		"stagingState": {
+			"type": "string",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		},
+		"lockssState": {
+			"type": "string",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		},
+		"dateStatus": {
+			"type": "string",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		},
+		"dateCreated": {
+			"type": "string",
+			"apiSummary": true
+		},
+		"dateModified": {
+			"type": "string",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		},
+		"exportDepositError": {
+			"type": "string",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		},
+		"datePreserved": {
+			"type": "string",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		}
+	}
+}

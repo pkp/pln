@@ -14,6 +14,7 @@
 
 namespace APP\plugins\generic\pln\classes\form;
 
+use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\PLNPlugin;
 use APP\template\TemplateManager;
@@ -39,12 +40,9 @@ class StatusForm extends Form
     public function fetch($request, $template = null, $display = false): string
     {
         $context = $request->getContext();
-        /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
         $networkStatus = $this->plugin->getSetting($context->getId(), 'pln_accepting');
         $networkStatusMessage = $this->plugin->getSetting($context->getId(), 'pln_accepting_message')
             ?: __($networkStatus ? 'plugins.generic.pln.notifications.pln_accepting' : 'plugins.generic.pln.notifications.pln_not_accepting');
-        $rangeInfo = PKPHandler::getRangeInfo($request, 'deposits');
 
         $templateMgr = TemplateManager::getManager($request);
         $templateMgr->assign([

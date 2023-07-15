@@ -18,8 +18,9 @@ use APP\core\Application;
 use APP\facades\Repo;
 use APP\journal\Journal;
 use APP\journal\JournalDAO;
+use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\classes\tasks\Depositor;
-use APP\plugins\generic\pln\form\Deposit;
+use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\PLNPlugin;
 use APP\plugins\importexport\native\NativeImportExportPlugin;
 use Core;
@@ -33,7 +34,6 @@ use PKP\file\ContextFileManager;
 use PKP\file\FileManager;
 use PKP\plugins\PluginRegistry;
 use PKP\scheduledTask\ScheduledTaskHelper;
-use PKP\site\VersionDAO;
 use PKP\submission\PKPSubmission;
 use Throwable;
 use whikloj\BagItTools\Bag;
@@ -185,10 +185,7 @@ class DepositPackage
         $pkpDetails->setAttribute('pubdate', date('Y-m-d', strtotime($objectPublicationDate)));
 
         // Add OJS Version
-        /** @var VersionDAO */
-        $versionDao = DAORegistry::getDAO('VersionDAO');
-        $currentVersion = $versionDao->getCurrentVersion();
-        $pkpDetails->setAttribute('ojsVersion', $currentVersion->getVersionString());
+        $pkpDetails->setAttribute('ojsVersion', Application::get()->getCurrentVersion()->getVersionString());
 
         switch ($plnPlugin->getSetting($journal->getId(), 'checksum_type')) {
             case 'SHA-1':
@@ -358,11 +355,8 @@ class DepositPackage
         $bag->addFile($termsFile, 'terms' . $this->deposit->getUUID() . '.xml');
 
         // Add OJS Version
-        /** @var VersionDAO */
-        $versionDao = DAORegistry::getDAO('VersionDAO');
-        $currentVersion = $versionDao->getCurrentVersion();
         $bag->setExtended(true);
-        $bag->addBagInfoTag('PKP-PLN-OJS-Version', $currentVersion->getVersionString());
+        $bag->addBagInfoTag('PKP-PLN-OJS-Version', Application::get()->getCurrentVersion()->getVersionString());
 
         $bag->update();
 
@@ -402,8 +396,6 @@ class DepositPackage
     public function transferDeposit(): void
     {
         $journalId = $this->deposit->getJournalId();
-        /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
         /** @var PLNPlugin */
         $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
 
@@ -414,7 +406,7 @@ class DepositPackage
         // Reset deposit if the package doesn't exist
         if (!file_exists($atomPath)) {
             $this->deposit->setNewStatus();
-            $depositDao->updateObject($this->deposit);
+            Repository::instance()->edit($this->deposit);
             return;
         }
 
@@ -437,7 +429,7 @@ class DepositPackage
             $this->logMessage(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
             $this->deposit->setExportDepositError(__('plugins.generic.pln.error.http.deposit', ['error' => $result['status'], 'message' => $result['error']]));
             $this->deposit->setLastStatusDate(Core::getCurrentDate());
-            $depositDao->updateObject($this->deposit);
+            Repository::instance()->edit($this->deposit);
             return;
         }
         // Status 2XX at this URL means the content has been deposited before
@@ -494,7 +486,7 @@ class DepositPackage
         }
 
         $this->deposit->setLastStatusDate(Core::getCurrentDate());
-        $depositDao->updateObject($this->deposit);
+        Repository::instance()->edit($this->deposit);
     }
 
     /**
@@ -502,8 +494,6 @@ class DepositPackage
      */
     public function packageDeposit(): void
     {
-        /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
         $fileManager = new ContextFileManager($this->deposit->getJournalId());
         $plnDir = $fileManager->getBasePath() . PLNPlugin::DEPOSIT_FOLDER;
 
@@ -535,7 +525,7 @@ class DepositPackage
             $this->logMessage(__('plugins.generic.pln.error.depositor.export.issue.error') . $exception->getMessage());
             $this->deposit->setExportDepositError($exception->getMessage());
             $this->deposit->setLastStatusDate(Core::getCurrentDate());
-            $depositDao->updateObject($this->deposit);
+            Repository::instance()->edit($this->deposit);
             return;
         }
 
@@ -551,7 +541,7 @@ class DepositPackage
         $this->deposit->setPackagedStatus();
         $this->deposit->setExportDepositError(null);
         $this->deposit->setLastStatusDate(Core::getCurrentDate());
-        $depositDao->updateObject($this->deposit);
+        Repository::instance()->edit($this->deposit);
     }
 
     /**
@@ -560,8 +550,6 @@ class DepositPackage
     public function updateDepositStatus(): void
     {
         $journalId = $this->deposit->getJournalId();
-        /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
         /** @var PLNPlugin */
         $plnPlugin = PluginRegistry::getPlugin('generic', 'plnplugin');
 
@@ -578,7 +566,7 @@ class DepositPackage
                 // Status 4XX means the deposit doesn't exist or isn't related to the given journal, so we restart the deposit
                 if (intdiv($result['status'], 100) === 4) {
                     $this->deposit->setNewStatus();
-                    $depositDao->updateObject($this->deposit);
+                    Repository::instance()->edit($this->deposit);
                 }
 
                 return;
@@ -632,7 +620,7 @@ class DepositPackage
         } elseif (!file_exists($this->getAtomDocumentPath())) {
             // Otherwise the package must still exist at this point, if it doesn't, we restart the deposit
             $this->deposit->setNewStatus();
-            $depositDao->updateObject($this->deposit);
+            Repository::instance()->edit($this->deposit);
             return;
         }
 
@@ -661,7 +649,7 @@ class DepositPackage
         }
 
         $this->deposit->setLastStatusDate(Core::getCurrentDate());
-        $depositDao->updateObject($this->deposit);
+        Repository::instance()->edit($this->deposit);
     }
 
     /**

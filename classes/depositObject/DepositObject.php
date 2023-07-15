@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file classes/DepositObject.php
+ * @file classes/depositObject.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
@@ -9,10 +9,10 @@
  *
  * @class DepositObject
  *
- * @brief Basic class describing a deposit stored in the PLN
+ * @brief Basic class describing a deposit object stored in the PLN
  */
 
-namespace APP\plugins\generic\pln\classes;
+namespace APP\plugins\generic\pln\classes\depositObject;
 
 use APP\facades\Repo;
 use APP\plugins\generic\pln\PLNPlugin;
@@ -24,7 +24,7 @@ use Submission;
 class DepositObject extends DataObject
 {
     /**
-     * Get the content object that's referenced by this deposit object
+     * Get the content object that's referenced by this deposit object object
      */
     public function getContent(): Issue|Submission
     {
@@ -37,7 +37,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Set the content object that's referenced by this deposit object
+     * Set the content object that's referenced by this deposit object object
      */
     public function setContent(object $content): void
     {
@@ -49,7 +49,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Get type of the object being referenced by this deposit object
+     * Get type of the object being referenced by this deposit object object
      */
     public function getObjectType(): string
     {
@@ -57,7 +57,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Set type of the object being referenced by this deposit object
+     * Set type of the object being referenced by this deposit object object
      */
     public function setObjectType(string $objectType): void
     {
@@ -65,7 +65,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Get the id of the object being referenced by this deposit object
+     * Get the id of the object being referenced by this deposit object object
      */
     public function getObjectId(): int
     {
@@ -73,7 +73,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Set the id of the object being referenced by this deposit object
+     * Set the id of the object being referenced by this deposit object object
      */
     public function setObjectId(int $objectId): void
     {
@@ -81,7 +81,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Get the journal id of this deposit object
+     * Get the journal id of this deposit object object
      */
     public function getJournalId(): int
     {
@@ -89,7 +89,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Set the journal id of this deposit object
+     * Set the journal id of this deposit object object
      */
     public function setJournalId(int $journalId): void
     {
@@ -97,7 +97,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Get the id of the deposit which includes this deposit object
+     * Get the id of the deposit object which includes this deposit object object
      */
     public function getDepositId(): int
     {
@@ -105,15 +105,15 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Set the id of the deposit which includes this deposit object
+     * Set the id of the deposit object which includes this deposit object object
      */
-    public function setDepositId(int $depositId): void
+    public function setDepositId(int $depositObjectId): void
     {
-        $this->setData('depositId', $depositId);
+        $this->setData('depositId', $depositObjectId);
     }
 
     /**
-     * Get the date of deposit object creation
+     * Get the date of deposit object object creation
      */
     public function getDateCreated(): string
     {
@@ -121,7 +121,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Set the date of deposit object creation
+     * Set the date of deposit object object creation
      */
     public function setDateCreated(string $dateCreated): void
     {
@@ -129,7 +129,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Get the modification date of the deposit object
+     * Get the modification date of the deposit object object
      */
     public function getDateModified(): string
     {
@@ -137,7 +137,7 @@ class DepositObject extends DataObject
     }
 
     /**
-     * Set the modification date of the deposit object
+     * Set the modification date of the deposit object object
      */
     public function setDateModified(string $dateModified): void
     {

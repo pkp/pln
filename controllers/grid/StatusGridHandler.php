@@ -15,16 +15,14 @@
 namespace APP\plugins\generic\pln\controllers\grid;
 
 use APP\core\Request;
-use APP\plugins\generic\pln\classes\DepositDAO;
-use APP\plugins\generic\pln\form\Deposit;
+use APP\plugins\generic\pln\classes\deposit\Deposit;
+use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\PLNPlugin;
 use PKP\controllers\grid\feature\PagingFeature;
 use PKP\controllers\grid\GridColumn;
 use PKP\controllers\grid\GridHandler;
 use PKP\core\JSONMessage;
 use PKP\db\DAO;
-use PKP\db\DAORegistry;
-use PKP\db\DAOResultFactory;
 use PKP\plugins\PluginRegistry;
 use PKP\security\authorization\ContextAccessPolicy;
 use PKP\security\Role;
@@ -108,15 +106,18 @@ class StatusGridHandler extends GridHandler
     /**
      * @copydoc GridHandler::loadData()
      *
-     * @return DAOResultFactory<Deposit>
+     * @return iterable<Deposit>
      */
-    protected function loadData($request, $filter): DAOResultFactory
+    protected function loadData($request, $filter): iterable
     {
         $context = $request->getContext();
-        /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
         $rangeInfo = $this->getGridRangeInfo($request, $this->getId());
-        return $depositDao->getByJournalId($context->getId(), $rangeInfo);
+        return Repository::instance()
+            ->getCollector()
+            ->filterByContextIds([$context->getId()])
+            ->limit($rangeInfo->getCount())
+            ->offset(($rangeInfo->getPage() - 1) * $rangeInfo->getCount())
+            ->getMany();
     }
 
     /**
@@ -125,16 +126,12 @@ class StatusGridHandler extends GridHandler
     public function resetDeposit(array $args, Request $request): JSONMessage
     {
         $depositId = $args['depositId'];
-        /** @var DepositDAO */
-        $depositDao = DAORegistry::getDAO('DepositDAO');
         $journal = $request->getJournal();
 
         if ($depositId) {
-            $deposit = $depositDao->getById($depositId, $journal->getId());
-
+            $deposit = Repository::instance()->get($depositId, $journal->getId());
             $deposit->setNewStatus();
-
-            $depositDao->updateObject($deposit);
+            Repository::instance()->edit($deposit);
         }
 
         return DAO::getDataChangedEvent();
