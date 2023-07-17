@@ -20,13 +20,15 @@
 		{include file="controllers/notification/inPlaceNotification.tpl" notificationId="PLNSettingsFormNotification"}
 
 		{fbvFormArea id="pnRequisites"}
-		{if $prerequisitesMissing|@count > 0}
-			<ul>
-				{foreach from=$prerequisitesMissing item=message}
-					<li><span class='pkp_form_error'>{$message}</span></li>
-				{/foreach}
-			</ul>
-		{/if}
+			{fbvFormSection title="common.required" list=true}
+				{if $prerequisitesMissing|@count > 0}
+					<ul>
+						{foreach from=$prerequisitesMissing item=message}
+							<li><span class='pkp_form_error'>{$message}</span></li>
+						{/foreach}
+					</ul>
+				{/if}
+			{/fbvFormSection}
 		{/fbvFormArea}
 
 		{fbvFormArea id="PLNSettingsFormArea"}

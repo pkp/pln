@@ -22,6 +22,8 @@ use PKP\plugins\PluginSettingsDAO;
 
 class SettingsForm extends Form
 {
+    private ?string $errorMessage = null;
+
     /**
      * Constructor
      */
@@ -37,7 +39,12 @@ class SettingsForm extends Form
     {
         $contextId = $this->contextId;
         if (!$this->plugin->getSetting($contextId, 'terms_of_use')) {
-            $this->plugin->getServiceDocument($contextId);
+            $result = $this->plugin->getServiceDocument($contextId);
+            if (intdiv((int) $result['status'], 100) !== 2) {
+                $this->errorMessage = $result['status']
+                    ? __('plugins.generic.pln.error.http.servicedocument', ['error' => $result['status'], 'message' => $result['error']])
+                    : __('plugins.generic.pln.error.network.servicedocument', ['error' => $result['error']]);
+            }
         }
         $this->setData('terms_of_use', $this->plugin->getSetting($contextId, 'terms_of_use'));
         $this->setData('terms_of_use_agreement', $this->plugin->getSetting($contextId, 'terms_of_use_agreement'));
@@ -76,6 +83,11 @@ class SettingsForm extends Form
         if (!$this->plugin->hasScheduledTasks()) {
             $messages[] = __('plugins.generic.pln.settings.acron_required');
         }
+
+        if ($this->errorMessage) {
+            $messages[] = $this->errorMessage;
+        }
+
         return $messages;
     }
 
@@ -96,6 +108,7 @@ class SettingsForm extends Form
             'journal_uuid' => $this->plugin->getSetting($this->contextId, 'journal_uuid'),
             'terms_of_use' => $this->plugin->getSetting($this->contextId, 'terms_of_use'),
             'terms_of_use_agreement' => $this->getData('terms_of_use_agreement'),
+            'errorMessage' => $this->getData('errorMessage')
         ]);
 
         return parent::fetch($request, $template, $display);

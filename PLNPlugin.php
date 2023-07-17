@@ -328,7 +328,13 @@ class PLNPlugin extends GenericPlugin
             $form = new SettingsForm($this, $context->getId());
 
             if ($request->getUserVar('refresh')) {
-                $this->getServiceDocument($context->getId());
+                $result = $this->getServiceDocument($context->getId());
+                if (intdiv((int) $result['status'], 100) !== 2) {
+                    $message = $result['status']
+                        ? __('plugins.generic.pln.error.http.servicedocument', ['error' => $result['status'], 'message' => $result['error']])
+                        : __('plugins.generic.pln.error.network.servicedocument', ['error' => $result['error']]);
+                    return new JSONMessage(false, $message);
+                }
             } elseif ($request->getUserVar('save')) {
                 $form->readInputData();
                 if ($form->validate()) {
@@ -393,9 +399,9 @@ class PLNPlugin extends GenericPlugin
     /**
      * Request service document at specified URL
      *
-     * @return int The HTTP response status.
+     * @return array{status:?int,result:?string,error:?string}
      */
-    public function getServiceDocument(int $contextId): ?int
+    public function getServiceDocument(int $contextId): array
     {
         $application = Application::get();
         $request = $application->getRequest();
@@ -426,7 +432,7 @@ class PLNPlugin extends GenericPlugin
             } else {
                 error_log(__('plugins.generic.pln.error.network.servicedocument', ['error' => $result['error']]));
             }
-            return $result['status'];
+            return $result;
         }
 
         $serviceDocument = new DOMDocument();
@@ -525,6 +531,8 @@ class PLNPlugin extends GenericPlugin
 
     /**
      * Get resource
+     *
+     * @return array{status:?int,result:?string,error:?string}
      */
     public function curlGet(string $url, array $headers = []): array
     {

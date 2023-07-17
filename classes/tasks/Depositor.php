@@ -103,9 +103,9 @@ class Depositor extends ScheduledTask
 
             $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.getting_servicedocument'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
             // get the sword service document
-            $serviceDocumentStatus = $this->plugin->getServiceDocument($journal->getId());
+            $result = $this->plugin->getServiceDocument($journal->getId());
             // if for some reason we didn't get a valid response, skip this journal
-            if (intdiv((int) $serviceDocumentStatus, 100) !== 2) {
+            if (intdiv((int) $result['status'], 100) !== 2) {
                 $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
                 $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_HTTP_ERROR);
                 continue;
