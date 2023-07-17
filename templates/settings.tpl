@@ -27,6 +27,7 @@
 				{/foreach}
 			</ul>
 		{/if}
+		{/fbvFormArea}
 
 		{fbvFormArea id="PLNSettingsFormArea"}
 			{fbvFormSection title="plugins.generic.pln.settings.terms_of_use" list=true}

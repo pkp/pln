@@ -264,7 +264,7 @@ class PLNPlugin extends GenericPlugin
     {
         $category = $args[0];
         $plugins = & $args[1];
-        if ($category !== 'gateways') {
+        if ($category === 'gateways') {
             $gatewayPlugin = new PLNGatewayPlugin($this->getName());
             $plugins[$gatewayPlugin->getSeq()][$gatewayPlugin->getPluginPath()] = $gatewayPlugin;
         }
@@ -395,7 +395,7 @@ class PLNPlugin extends GenericPlugin
      *
      * @return int The HTTP response status.
      */
-    public function getServiceDocument(int $contextId): int
+    public function getServiceDocument(int $contextId): ?int
     {
         $application = Application::get();
         $request = $application->getRequest();
@@ -545,6 +545,8 @@ class PLNPlugin extends GenericPlugin
                 } catch (Exception $e) {
                 }
             }
+        } catch (Exception $e) {
+            $error = $e->getMessage();
         }
         return [
             'status' => $response ? $response->getStatusCode() : null,
@@ -605,6 +607,8 @@ class PLNPlugin extends GenericPlugin
                 } catch (Exception $e) {
                 }
             }
+        } catch (Exception $e) {
+            $error = $e->getMessage();
         }
         return [
             'status' => $response ? $response->getStatusCode() : null,
