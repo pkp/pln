@@ -378,8 +378,8 @@ class PLNPlugin extends GenericPlugin
      */
     public function termsAgreed(int $journalId): bool
     {
-        $terms = unserialize($this->getSetting($journalId, 'terms_of_use'));
-        $termsAgreed = unserialize($this->getSetting($journalId, 'terms_of_use_agreement'));
+        $terms = $this->getSetting($journalId, 'terms_of_use');
+        $termsAgreed = $this->getSetting($journalId, 'terms_of_use_agreement');
 
         foreach (array_keys($terms) as $term) {
             if ((!$termsAgreed[$term] ?? false)) {
@@ -449,25 +449,24 @@ class PLNPlugin extends GenericPlugin
 
         // update the terms of use
         $termElements = $serviceDocument->getElementsByTagName('terms_of_use')->item(0)->childNodes;
-        $terms = [];
+        $newTerms = [];
         foreach ($termElements as $termElement) {
             if ($termElement instanceof DOMElement) {
-                $terms[$termElement->tagName] = ['updated' => $termElement->getAttribute('updated'), 'term' => $termElement->nodeValue];
+                $newTerms[$termElement->tagName] = ['updated' => $termElement->getAttribute('updated'), 'term' => $termElement->nodeValue];
             }
         }
 
-        $newTerms = serialize($terms);
         $oldTerms = $this->getSetting($contextId, 'terms_of_use');
 
         // if the new terms don't match the exiting ones we need to reset agreement
         if ($newTerms != $oldTerms) {
             $termAgreements = [];
-            foreach ($terms as $termName => $termText) {
+            foreach ($newTerms as $termName => $termText) {
                 $termAgreements[$termName] = null;
             }
 
             $this->updateSetting($contextId, 'terms_of_use', $newTerms, 'object');
-            $this->updateSetting($contextId, 'terms_of_use_agreement', serialize($termAgreements), 'object');
+            $this->updateSetting($contextId, 'terms_of_use_agreement', $termAgreements, 'object');
             $this->createJournalManagerNotification($contextId, static::NOTIFICATION_TERMS_UPDATED);
         }
 

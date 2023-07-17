@@ -119,8 +119,8 @@ class PLNGatewayPlugin extends GatewayPlugin
         $terms = [];
         $termsAccepted = $plugin->termsAgreed($journal->getId());
         if ($termsAccepted) {
-            $terms = unserialize($plugin->getSetting($journal->getId(), 'terms_of_use'));
-            $termsAgreement = unserialize($plugin->getSetting($journal->getId(), 'terms_of_use_agreement'));
+            $terms = $plugin->getSetting($journal->getId(), 'terms_of_use');
+            $termsAgreement = $plugin->getSetting($journal->getId(), 'terms_of_use_agreement');
         }
 
         $termKeys = array_keys($terms);

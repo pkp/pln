@@ -309,8 +309,8 @@ class DepositPackage
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dcterms', 'http://purl.org/dc/terms/');
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', PLNPlugin::getPluginName());
 
-        $terms = unserialize($plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use'));
-        $agreement = unserialize($plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use_agreement'));
+        $terms = $plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use');
+        $agreement = $plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use_agreement');
 
         $pkpTermsOfUse = $termsXml->createElementNS(PLNPlugin::getPluginName(), 'pkp:terms_of_use');
         foreach ($terms as $termName => $termData) {

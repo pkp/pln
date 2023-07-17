@@ -39,8 +39,8 @@ class SettingsForm extends Form
         if (!$this->plugin->getSetting($contextId, 'terms_of_use')) {
             $this->plugin->getServiceDocument($contextId);
         }
-        $this->setData('terms_of_use', unserialize($this->plugin->getSetting($contextId, 'terms_of_use')));
-        $this->setData('terms_of_use_agreement', unserialize($this->plugin->getSetting($contextId, 'terms_of_use_agreement')));
+        $this->setData('terms_of_use', $this->plugin->getSetting($contextId, 'terms_of_use'));
+        $this->setData('terms_of_use_agreement', $this->plugin->getSetting($contextId, 'terms_of_use_agreement'));
     }
 
     /**
@@ -94,7 +94,7 @@ class SettingsForm extends Form
             'hasIssn' => strlen($issn),
             'prerequisitesMissing' => $this->checkPrerequisites(),
             'journal_uuid' => $this->plugin->getSetting($this->contextId, 'journal_uuid'),
-            'terms_of_use' => unserialize($this->plugin->getSetting($this->contextId, 'terms_of_use')),
+            'terms_of_use' => $this->plugin->getSetting($this->contextId, 'terms_of_use'),
             'terms_of_use_agreement' => $this->getData('terms_of_use_agreement'),
         ]);
 
@@ -107,7 +107,7 @@ class SettingsForm extends Form
     public function execute(...$functionArgs)
     {
         parent::execute(...$functionArgs);
-        $this->plugin->updateSetting($this->contextId, 'terms_of_use_agreement', serialize($this->getData('terms_of_use_agreement')), 'object');
+        $this->plugin->updateSetting($this->contextId, 'terms_of_use_agreement', $this->getData('terms_of_use_agreement'), 'object');
 
         /** @var PluginSettingsDAO */
         $pluginSettingsDao = DAORegistry::getDAO('PluginSettingsDAO');

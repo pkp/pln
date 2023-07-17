@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\pln\classes\migration\install;
 
 use APP\plugins\generic\pln\classes\tasks\Depositor;
+use Exception;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
