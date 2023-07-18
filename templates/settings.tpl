@@ -19,18 +19,17 @@
 	<form class="pkp_form" id="plnSettingsForm" method="post" action="{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="settings" save=true}">
 		{include file="controllers/notification/inPlaceNotification.tpl" notificationId="PLNSettingsFormNotification"}
 
-		{fbvFormArea id="pnRequisites"}
-			{fbvFormSection title="common.required" list=true}
-				{if $prerequisitesMissing|@count > 0}
+		{if $prerequisitesMissing|@count > 0}
+			{fbvFormArea id="pnRequisites"}
+				{fbvFormSection title="common.required" list=true}
 					<ul>
 						{foreach from=$prerequisitesMissing item=message}
 							<li><span class='pkp_form_error'>{$message}</span></li>
 						{/foreach}
 					</ul>
-				{/if}
-			{/fbvFormSection}
-		{/fbvFormArea}
-
+				{/fbvFormSection}
+			{/fbvFormArea}
+		{/if}
 		{fbvFormArea id="PLNSettingsFormArea"}
 			{fbvFormSection title="plugins.generic.pln.settings.terms_of_use" list=true}
 				{if $hasIssn}
