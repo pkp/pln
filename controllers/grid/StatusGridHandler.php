@@ -17,20 +17,16 @@ namespace APP\plugins\generic\pln\controllers\grid;
 use APP\core\Request;
 use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\classes\deposit\Repository;
-use APP\plugins\generic\pln\PLNPlugin;
 use PKP\controllers\grid\feature\PagingFeature;
 use PKP\controllers\grid\GridColumn;
 use PKP\controllers\grid\GridHandler;
 use PKP\core\JSONMessage;
 use PKP\db\DAO;
-use PKP\plugins\PluginRegistry;
 use PKP\security\authorization\ContextAccessPolicy;
 use PKP\security\Role;
 
 class StatusGridHandler extends GridHandler
 {
-    public static PLNPlugin $plugin;
-
     /**
      * Constructor
      */
@@ -41,17 +37,6 @@ class StatusGridHandler extends GridHandler
             [Role::ROLE_ID_MANAGER],
             ['fetchGrid', 'fetchRow', 'resetDeposit']
         );
-        /** @var PLNPlugin */
-        $plugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
-        self::$plugin = $plugin;
-    }
-
-    /**
-     * Set the plugin
-     */
-    public static function setPlugin(PLNPlugin $plugin): void
-    {
-        self::$plugin = $plugin;
     }
 
     /**

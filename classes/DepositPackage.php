@@ -112,7 +112,7 @@ class DepositPackage
      */
     public function generateAtomDocument(): string
     {
-        $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
+        $plugin = PLNPlugin::loadPlugin();
         /** @var JournalDAO */
         $journalDao = DAORegistry::getDAO('JournalDAO');
         /** @var Journal */
@@ -187,7 +187,7 @@ class DepositPackage
         // Add OJS Version
         $pkpDetails->setAttribute('ojsVersion', Application::get()->getCurrentVersion()->getVersionString());
 
-        switch ($plnPlugin->getSetting($journal->getId(), 'checksum_type')) {
+        switch ($plugin->getSetting($journal->getId(), 'checksum_type')) {
             case 'SHA-1':
                 $pkpDetails->setAttribute('checksumType', 'SHA-1');
                 $pkpDetails->setAttribute('checksumValue', sha1_file($packageFile));
@@ -239,7 +239,7 @@ class DepositPackage
         /** @var NativeImportExportPlugin */
         $exportPlugin = PluginRegistry::loadPlugin('importexport', 'native');
         @ini_set('memory_limit', -1);
-        $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
+        $plugin = PLNPlugin::loadPlugin();
 
         // set up folder and file locations
         $bagDir = "{$this->getDepositDir()}/{$this->deposit->getUUID()}";
@@ -307,14 +307,14 @@ class DepositPackage
         $termsXml = new DOMDocument('1.0', 'utf-8');
         $entry = $termsXml->createElementNS('http://www.w3.org/2005/Atom', 'entry');
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dcterms', 'http://purl.org/dc/terms/');
-        $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', PLNPlugin::getPluginName());
+        $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', 'plnplugin');
 
-        $terms = $plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use');
-        $agreement = $plnPlugin->getSetting($this->deposit->getJournalId(), 'terms_of_use_agreement');
+        $terms = $plugin->getSetting($this->deposit->getJournalId(), 'terms_of_use');
+        $agreement = $plugin->getSetting($this->deposit->getJournalId(), 'terms_of_use_agreement');
 
-        $pkpTermsOfUse = $termsXml->createElementNS(PLNPlugin::getPluginName(), 'pkp:terms_of_use');
+        $pkpTermsOfUse = $termsXml->createElementNS('plnplugin', 'pkp:terms_of_use');
         foreach ($terms as $termName => $termData) {
-            $element = $termsXml->createElementNS(PLNPlugin::getPluginName(), $termName, $termData['term']);
+            $element = $termsXml->createElementNS('plnplugin', $termName, $termData['term']);
             $element->setAttribute('updated', $termData['updated']);
             $element->setAttribute('agreed', $agreement[$termName]);
             $pkpTermsOfUse->appendChild($element);
@@ -396,11 +396,10 @@ class DepositPackage
     public function transferDeposit(): void
     {
         $journalId = $this->deposit->getJournalId();
-        /** @var PLNPlugin */
-        $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
+        $plugin = PLNPlugin::loadPlugin();
 
         // post the atom document
-        $baseUrl = $plnPlugin->getSetting($journalId, 'pln_network');
+        $baseUrl = $plugin->getSetting($journalId, 'pln_network');
         $atomPath = $this->getAtomDocumentPath();
 
         // Reset deposit if the package doesn't exist
@@ -410,10 +409,10 @@ class DepositPackage
             return;
         }
 
-        $journalUuid = $plnPlugin->getSetting($journalId, 'journal_uuid');
+        $journalUuid = $plugin->getSetting($journalId, 'journal_uuid');
         $baseContUrl = "{$baseUrl}/api/sword/2.0/cont-iri/api/sword/2.0/cont-iri/{$journalUuid}/{$this->deposit->getUUID()}";
 
-        $result = $plnPlugin->curlGet("{$baseContUrl}/state");
+        $result = $plugin->curlGet("{$baseContUrl}/state");
         $status = intdiv((int) $result['status'], 100);
         // Abort if status not 2XX or 4XX
         if ($status !== 2 && $status !== 4) {
@@ -453,8 +452,8 @@ class DepositPackage
         );
 
         $result = $isNewDeposit
-            ? $plnPlugin->curlPostFile($url, $atomPath)
-            : $plnPlugin->curlPutFile($url, $atomPath);
+            ? $plugin->curlPostFile($url, $atomPath)
+            : $plugin->curlPutFile($url, $atomPath);
 
         // If we get a 2XX, set the status as transferred
         if (intdiv((int) $result['status'], 100) === 2) {
@@ -550,15 +549,14 @@ class DepositPackage
     public function updateDepositStatus(): void
     {
         $journalId = $this->deposit->getJournalId();
-        /** @var PLNPlugin */
-        $plnPlugin = PluginRegistry::getPlugin('generic', 'plnplugin');
+        $plugin = PLNPlugin::loadPlugin();
 
-        $network = $plnPlugin->getSetting($journalId, 'pln_network');
-        $journalUID = $plnPlugin->getSetting($journalId, 'journal_uuid');
+        $network = $plugin->getSetting($journalId, 'pln_network');
+        $journalUID = $plugin->getSetting($journalId, 'journal_uuid');
         $url = "{$network}/api/sword/2.0/cont-iri/{$journalUID}/{$this->deposit->getUUID()}/state";
 
         // retrieve the content document
-        $result = $plnPlugin->curlGet($url);
+        $result = $plugin->curlGet($url);
         if (intdiv((int) $result['status'], 100) !== 2) {
             if ($result['status']) {
                 error_log(__('plugins.generic.pln.error.http.swordstatement', ['error' => $result['status'], 'message' => $result['error']]));

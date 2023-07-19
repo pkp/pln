@@ -15,6 +15,7 @@
 namespace APP\plugins\generic\pln\controllers\grid;
 
 use APP\plugins\generic\pln\classes\deposit\Deposit;
+use APP\plugins\generic\pln\PLNPlugin;
 use PKP\controllers\grid\GridRow;
 
 class StatusGridRow extends GridRow
@@ -26,7 +27,7 @@ class StatusGridRow extends GridRow
      */
     public function initialize($request, $template = null): void
     {
-        parent::initialize($request, StatusGridHandler::$plugin->getTemplateResource('gridRow.tpl'));
+        parent::initialize($request, PLNPlugin::loadPlugin()->getTemplateResource('gridRow.tpl'));
     }
 
     /**

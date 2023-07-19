@@ -25,7 +25,6 @@ use APP\plugins\generic\pln\classes\depositObject\Schema as DepositObjectSchema;
 use APP\plugins\generic\pln\classes\form\SettingsForm;
 use APP\plugins\generic\pln\classes\form\StatusForm;
 use APP\plugins\generic\pln\classes\tasks\Depositor;
-use APP\plugins\generic\pln\controllers\grid\StatusGridHandler;
 use APP\plugins\generic\pln\pages\PageHandler;
 use APP\plugins\generic\pln\classes\migration\install\PLNPluginSchemaMigration;
 use Carbon\Carbon;
@@ -43,9 +42,10 @@ use PKP\linkAction\request\AjaxModal;
 use PKP\notification\PKPNotification;
 use PKP\plugins\GenericPlugin;
 use PKP\plugins\Hook;
+use PKP\plugins\PluginRegistry;
 use PKP\security\Role;
+use PKP\session\SessionManager;
 use PKP\userGroup\UserGroup;
-use SessionManager;
 use SimpleXMLElement;
 
 class PLNPlugin extends GenericPlugin
@@ -79,6 +79,8 @@ class PLNPlugin extends GenericPlugin
     public const DEPOSIT_STATUS_LOCKSS_RECEIVED = 64;
     public const DEPOSIT_STATUS_LOCKSS_AGREEMENT = 128;
 
+    protected static $instance;
+
     /**
      * @copydoc LazyLoadPlugin::register()
      *
@@ -86,6 +88,7 @@ class PLNPlugin extends GenericPlugin
      */
     public function register($category, $path, $mainContextId = null): bool
     {
+        static::$instance = $this;
         if (!parent::register($category, $path, $mainContextId)) {
             return false;
         }
@@ -114,8 +117,6 @@ class PLNPlugin extends GenericPlugin
             return Hook::CONTINUE;
         }
 
-        // Allow the StatusGridHandler to get the plugin object
-        StatusGridHandler::setPlugin($this);
         return Hook::ABORT;
     }
 
@@ -476,7 +477,7 @@ class PLNPlugin extends GenericPlugin
             $this->createJournalManagerNotification($contextId, static::NOTIFICATION_TERMS_UPDATED);
         }
 
-        return $result['status'];
+        return $result;
     }
 
     /**
@@ -641,11 +642,20 @@ class PLNPlugin extends GenericPlugin
     }
 
     /**
-     * Retrieves the plugin name
+     * @copydoc Plugin::getName()
      */
-    public static function getPluginName(): string
+    public function getName(): string
     {
-        static $name;
-        return $name ??= (new static)->getName();
+        return substr(static::class, strlen(__NAMESPACE__) + 1);
+    }
+
+    /**
+     * Self loads and registers the plugin
+     */
+    public static function loadPlugin(): static
+    {
+        /** @var static */
+        static::$instance ??= PluginRegistry::loadPlugin('generic', 'PLN');
+        return static::$instance;
     }
 }

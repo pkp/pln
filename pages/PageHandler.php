@@ -24,7 +24,6 @@ use APP\template\TemplateManager;
 use PKP\core\PKPString;
 use PKP\db\DAORegistry;
 use PKP\file\FileManager;
-use PKP\plugins\PluginRegistry;
 use PKP\security\authorization\ContextRequiredPolicy;
 
 class PageHandler extends Handler
@@ -90,12 +89,12 @@ class PageHandler extends Handler
     /**
      * Display status of deposit(s)
      */
-    public function status(array $args, Request $request)
+    public function status(array $args, Request $request): void
     {
         $router = $request->getRouter();
-        $plnPlugin = PluginRegistry::getPlugin('generic', PLNPlugin::getPluginName());
+        $plugin = PLNPlugin::loadPlugin();
         $templateMgr = TemplateManager::getManager();
         $templateMgr->assign('pageHierarchy', [[$router->url($request, null, 'about'), 'about.aboutTheJournal']]);
-        $templateMgr->display("{$plnPlugin->getTemplatePath()}/status.tpl");
+        $templateMgr->display("{$plugin->getTemplatePath()}/status.tpl");
     }
 }

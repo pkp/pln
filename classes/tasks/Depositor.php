@@ -26,7 +26,6 @@ use APP\plugins\generic\pln\PLNPlugin;
 use Exception;
 use PKP\db\DAORegistry;
 use PKP\file\ContextFileManager;
-use PKP\plugins\PluginRegistry;
 use PKP\scheduledTask\ScheduledTask;
 use PKP\scheduledTask\ScheduledTaskHelper;
 use Throwable;
@@ -41,10 +40,7 @@ class Depositor extends ScheduledTask
     public function _construct(array $args)
     {
         parent::__construct($args);
-
-        /** @var PLNPlugin */
-        $plugin = PluginRegistry::loadPlugin('generic', PLNPlugin::getPluginName());
-        $this->plugin = $plugin;
+        $this->plugin = PLNPlugin::loadPlugin();
     }
 
     /**
