@@ -1,16 +1,16 @@
-# Jordi LC <jordi.lacruz@uab.cat>, 2021.
+# Jordi LC <jordi.lacruz@uab.cat>, 2021, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-08-07 02:47+0000\n"
+"PO-Revision-Date: 2023-07-25 09:58+0000\n"
 "Last-Translator: Jordi LC <jordi.lacruz@uab.cat>\n"
-"Language-Team: Catalan <http://translate.pkp.sfu.ca/projects/plugins/pln/"
-"ca_ES/>\n"
-"Language: ca_ES\n"
+"Language-Team: Catalan <http://translate.pkp.sfu.ca/projects/plugins/pln/ca/>"
+"\n"
+"Language: ca\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln.status.description.title"
 msgstr "Descripció de l'estat"
@@ -370,3 +370,47 @@ msgstr ""
 
 msgid "plugins.generic.pln"
 msgstr "Mòdul PKP PN"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"El dipòsit ha fallat. Assegureu-vos que no excedeix la mida màxima suportada "
+"per la Preservation Network"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "El reempaquetat del dipòsit ha fallat, es tornarà a intentar l'operació"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr ""
+"El dipòsit no ha superat la validació del contingut. Hauríeu de tornar a "
+"enviar el dipòsit"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr ""
+"El dipòsit no ha superat la validació de càrrega. Hauríeu de tornar a enviar "
+"el dipòsit"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr ""
+"El dipòsit no ha superat la validació \"bag\". Hauríeu de tornar a enviar el "
+"dipòsit"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr ""
+"El dipòsit ha estat retingut perquè la versió del vostre sistema està per "
+"sobre de les expectatives"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"No s'ha pogut descarregar el dipòsit des del vostre sistema. L'operació es "
+"tornarà a intentar. Mentrestant podeu comprovar si el vostre sistema està "
+"darrere d'un tallafocs"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"El dipòsit no ha superat la comprovació antivirus. Hauríeu d'inspeccionar-ne "
+"els arxius i tornar-lo a enviar"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"El dipòsit s'està conservant, però no ha estat possible comprovar-ne "
+"l'estat. Es tornarà a intentar l'operació"
