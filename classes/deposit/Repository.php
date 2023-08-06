@@ -15,35 +15,28 @@ namespace APP\plugins\generic\pln\classes\deposit;
 
 use APP\core\Request;
 use APP\core\Services;
-use APP\plugins\generic\pln\classes\DepositPackage;
 use APP\plugins\generic\pln\PLNPlugin;
-use PKP\db\DAOResultFactory;
-use PKP\db\DBResultRange;
+use Illuminate\Support\LazyCollection;
+use PKP\core\Core;
+use PKP\file\ContextFileManager;
 use PKP\plugins\Hook;
 use PKP\services\PKPSchemaService;
 use PKP\validation\ValidatorFactory;
 
 class Repository
 {
-    public DAO $dao;
-
     /** The name of the class to map this entity to its schema */
     public string $schemaMap = Schema::class;
 
-    protected Request $request;
-
-    /** @var PKPSchemaService<Deposit> */
-    protected PKPSchemaService $schemaService;
-
-    public function __construct(DAO $dao, Request $request, PKPSchemaService $schemaService)
+    /**
+     * @param PKPSchemaService<Deposit> $schemaService
+     */
+    public function __construct(public DAO $dao, protected Request $request, protected PKPSchemaService $schemaService)
     {
-        $this->dao = $dao;
-        $this->request = $request;
-        $this->schemaService = $schemaService;
     }
 
     /** @copydoc DAO::newDataObject() */
-    public function newDataObject(array $params = [])
+    public function newDataObject(array $params = []): Deposit
     {
         $object = $this->dao->newDataObject();
         if (!empty($params)) {
@@ -92,7 +85,7 @@ class Repository
      *
      * @return array A key/value array with validation errors. Empty if no errors
      */
-    public function validate($deposit, $props, $allowedLocales, $primaryLocale)
+    public function validate($deposit, $props, $allowedLocales, $primaryLocale): array
     {
         /** @var PKPSchemaService */
         $schemaService = Services::get('schema');
@@ -125,8 +118,14 @@ class Repository
         return $errors;
     }
 
+    /**
+     * Adds a new deposit
+     */
     public function add(Deposit $deposit): int
     {
+        if (!$deposit->getDateCreated()) {
+            $deposit->setDateCreated(Core::getCurrentDate());
+        }
         $depositId = $this->dao->insert($deposit);
         $deposit = $this->get($depositId);
 
@@ -135,7 +134,10 @@ class Repository
         return $deposit->getId();
     }
 
-    public function edit(Deposit $deposit, array $params = [])
+    /**
+     * Edits a deposit
+     */
+    public function edit(Deposit $deposit, array $params = []): void
     {
         $newDeposit = $this->newDataObject(array_merge($deposit->_data, $params));
 
@@ -146,13 +148,24 @@ class Repository
         $this->get($newDeposit->getId());
     }
 
-    public function delete(Deposit $deposit)
+    /**
+     * Deletes a deposit
+     */
+    public function delete(Deposit $deposit): bool
     {
         Hook::call('PreservationNetwork::Deposit::delete::before', [$deposit]);
+
+        $fileManager = new ContextFileManager($deposit->getJournalId());
+        $path = $fileManager->getBasePath() . PLNPlugin::DEPOSIT_FOLDER . "/{$deposit->getUUID()}";
+        if (!$fileManager->rmtree($path)) {
+            return false;
+        }
 
         $this->dao->delete($deposit);
 
         Hook::call('PreservationNetwork::Deposit::delete', [$deposit]);
+
+        return true;
     }
 
     /**
@@ -164,93 +177,55 @@ class Repository
     }
 
     /**
-     * Retrieve all newly-created deposits (ones with new status)
+     * Retrieve deposits which match the new status
      *
-     * @return DAOResultFactory<Deposit>
+     * @return LazyCollection<int,Deposit>
      */
-    public function getNew(int $journalId): DAOResultFactory
+    public function getNew(int $contextId): LazyCollection
     {
-        $result = $this->retrieve(
-            'SELECT * FROM pln_deposits WHERE journal_id = ? AND status = ?',
-            [(int) $journalId, (int) PLNPlugin::DEPOSIT_STATUS_NEW]
-        );
-
-        return new DAOResultFactory($result, $this, 'fromRow');
+        $collector = $this->getCollector();
+        $collector->filterByContextIds([$contextId])
+            ->filterByStatus($collector::STATUS_NEW);
+        return $this->dao->getMany($collector);
     }
 
     /**
-     * Retrieve all deposits that need to be transferred
+     * Retrieve deposits that need to be transferred
      *
-     * @return DAOResultFactory<Deposit>
+     * @return LazyCollection<int,Deposit>
      */
-    public function getNeedTransferring(int $journalId): DAOResultFactory
+    public function getNeedTransferring(int $contextId): LazyCollection
     {
-        $result = $this->retrieve(
-            'SELECT *
-            FROM pln_deposits AS d
-            WHERE d.journal_id = ?
-            AND d.status & ? <> 0
-            AND d.status & ? = 0
-            ORDER BY d.export_deposit_error, d.deposit_id',
-            [
-                (int) $journalId,
-                (int) PLNPlugin::DEPOSIT_STATUS_PACKAGED,
-                (int) PLNPlugin::DEPOSIT_STATUS_TRANSFERRED
-            ]
-        );
-
-        return new DAOResultFactory($result, $this, 'fromRow');
+        $collector = $this->getCollector();
+        $collector->filterByContextIds([$contextId])
+            ->filterByStatus($collector::STATUS_READY_TO_TRANSFER);
+        return $this->dao->getMany($collector);
     }
 
     /**
-     * Retrieve all deposits that need packaging
+     * Retrieve deposits that need packaging
      *
-     * @return DAOResultFactory<Deposit>
+     * @return LazyCollection<int,Deposit>
      */
-    public function getNeedPackaging(int $journalId): DAOResultFactory
+    public function getNeedPackaging(int $contextId): LazyCollection
     {
-        $result = $this->retrieve(
-            'SELECT *
-            FROM pln_deposits AS d
-            WHERE d.journal_id = ?
-            AND d.status & ? = 0
-            ORDER BY d.export_deposit_error, d.deposit_id',
-            [
-                (int) $journalId,
-                (int) PLNPlugin::DEPOSIT_STATUS_PACKAGED
-            ]
-        );
-
-        return new DAOResultFactory($result, $this, 'fromRow');
+        $collector = $this->getCollector();
+        $collector->filterByContextIds([$contextId])
+            ->filterByStatus($collector::STATUS_READY_TO_PACKAGE);
+        return $this->dao->getMany($collector);
     }
 
     /**
-     * Retrieve all deposits that need a status update
+     * Retrieve deposits that need a status update
      *
-     * @return DAOResultFactory<Deposit>
+     * @return LazyCollection<int,Deposit>
      */
-    public function getNeedStagingStatusUpdate(int $journalId): DAOResultFactory
+    public function getNeedStagingStatusUpdate(int $contextId): LazyCollection
     {
-        $result = $this->retrieve(
-            'SELECT *
-            FROM pln_deposits AS d
-            WHERE d.journal_id = ?
-            AND (
-                d.status IS NULL
-                OR (
-                    d.status & ? <> 0
-                    AND d.status & ? = 0
-                )
-            )
-            ORDER BY d.export_deposit_error, d.deposit_id',
-            [
-                (int) $journalId,
-                (int) PLNPlugin::DEPOSIT_STATUS_TRANSFERRED,
-                (int) PLNPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT
-            ]
-        );
-
-        return new DAOResultFactory($result, $this, 'fromRow');
+        $collector = $this->getCollector();
+        $collector->filterByContextIds([$contextId])
+            ->filterByStatus($collector::STATUS_READY_FOR_UPDATE);
+        return $this->dao->getMany($collector);
     }
 
     /**
@@ -260,20 +235,10 @@ class Repository
      */
     public function pruneOrphaned(): array
     {
-        $result = $this->retrieveRange(
-            $sql = 'SELECT *
-            FROM pln_deposits
-            WHERE journal_id NOT IN (
-                SELECT journal_id
-                FROM journals
-            )
-            ORDER BY deposit_id'
-        );
+        $deposits = $this->dao->getOrphaned($this->getCollector());
         $failedIds = [];
-        $deposits = new DAOResultFactory($result, $this, 'fromRow', [], $sql);
-        /** @var Deposit */
-        foreach ($deposits->toIterator() as $deposit) {
-            if (!$this->deleteObject($deposit)) {
+        foreach ($deposits as $deposit) {
+            if (!$this->delete($deposit)) {
                 $failedIds[] = $deposit->getId();
             }
         }

@@ -15,10 +15,8 @@
 namespace APP\plugins\generic\pln\classes\form;
 
 use APP\plugins\generic\pln\classes\deposit\Repository;
-use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\PLNPlugin;
 use APP\template\TemplateManager;
-use PKP\db\DAORegistry;
 use PKP\form\Form;
 use PKP\handler\PKPHandler;
 

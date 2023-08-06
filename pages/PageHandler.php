@@ -17,12 +17,10 @@ namespace APP\plugins\generic\pln\pages;
 use APP\core\Request;
 use APP\handler\Handler;
 use APP\plugins\generic\pln\classes\deposit\Repository;
-use APP\plugins\generic\pln\classes\DepositDAO;
 use APP\plugins\generic\pln\classes\DepositPackage;
 use APP\plugins\generic\pln\PLNPlugin;
 use APP\template\TemplateManager;
 use PKP\core\PKPString;
-use PKP\db\DAORegistry;
 use PKP\file\FileManager;
 use PKP\security\authorization\ContextRequiredPolicy;
 

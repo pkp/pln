@@ -25,9 +25,6 @@ use PKP\plugins\Hook;
  */
 class Collector implements CollectorInterface
 {
-    /** @var DAO */
-    public $dao;
-
     public ?int $count = null;
 
     public ?int $offset = null;
@@ -42,9 +39,8 @@ class Collector implements CollectorInterface
     /** @var int[]|null */
     public ?array $depositIds = null;
 
-    public function __construct(DAO $dao)
+    public function __construct(public DAO $dao)
     {
-        $this->dao = $dao;
     }
 
     public function getCount(): int
@@ -62,6 +58,7 @@ class Collector implements CollectorInterface
 
     /**
      * @copydoc DAO::getMany()
+     *
      * @return LazyCollection<int,T>
      */
     public function getMany(): LazyCollection

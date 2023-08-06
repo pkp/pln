@@ -14,22 +14,14 @@
 namespace APP\plugins\generic\pln\classes\deposit;
 
 use Illuminate\Support\Enumerable;
-use PKP\context\Context;
-use PKP\core\PKPRequest;
 use PKP\plugins\Hook;
-use PKP\services\PKPSchemaService;
 
 class Schema extends \PKP\core\maps\Schema
 {
     public const SCHEMA_NAME = 'preservationNetworkDeposit';
     public string $schema = self::SCHEMA_NAME;
 
-    public function __construct(PKPRequest $request, Context $context, PKPSchemaService $schemaService)
-    {
-        parent::__construct($request, $context, $schemaService);
-    }
-
-        /**
+    /**
      * Registers schema
      */
     public static function register(): void

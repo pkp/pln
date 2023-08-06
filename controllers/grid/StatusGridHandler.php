@@ -102,7 +102,8 @@ class StatusGridHandler extends GridHandler
             ->filterByContextIds([$context->getId()])
             ->limit($rangeInfo->getCount())
             ->offset(($rangeInfo->getPage() - 1) * $rangeInfo->getCount())
-            ->getMany();
+            ->getMany()
+            ->toArray();
     }
 
     /**
@@ -122,3 +123,6 @@ class StatusGridHandler extends GridHandler
         return DAO::getDataChangedEvent();
     }
 }
+
+// Alias added to support the syntax {url component="plugins.generic.pln.controllers.grid.StatusGridHandler"}
+class_alias(StatusGridHandler::class, '\StatusGridHandler');

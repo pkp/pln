@@ -16,12 +16,10 @@ namespace APP\plugins\generic\pln\classes\tasks;
 
 use APP\journal\Journal;
 use APP\journal\JournalDAO;
+use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\classes\deposit\Repository as DepositRepository;
 use APP\plugins\generic\pln\classes\depositObject\Repository as DepositObjectRepository;
-use APP\plugins\generic\pln\classes\DepositDAO;
-use APP\plugins\generic\pln\classes\DepositObjectDAO;
 use APP\plugins\generic\pln\classes\DepositPackage;
-use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\PLNPlugin;
 use Exception;
 use PKP\db\DAORegistry;
@@ -37,7 +35,7 @@ class Depositor extends ScheduledTask
     /**
      * Constructor.
      */
-    public function _construct(array $args)
+    public function __construct(array $args)
     {
         parent::__construct($args);
         $this->plugin = PLNPlugin::loadPlugin();
@@ -57,7 +55,6 @@ class Depositor extends ScheduledTask
     public function executeActions(): bool
     {
         $this->addExecutionLogEntry('PKP Preservation Network Processor', ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-        $this->plugin->registerSchemas();
 
         /** @var JournalDAO */
         $journalDao = DAORegistry::getDAO('JournalDAO');
@@ -77,19 +74,6 @@ class Depositor extends ScheduledTask
                 continue;
             }
 
-            // if the pln isn't accepting deposits, skip the journal
-            if (!$this->plugin->getSetting($journal->getId(), 'pln_accepting')) {
-                $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-                continue;
-            }
-
-            // if the terms haven't been agreed to, skip transfer
-            if (!$this->plugin->termsAgreed($journal->getId())) {
-                $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.terms_updated'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-                $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_TERMS_UPDATED);
-                continue;
-            }
-
             // it's necessary that the journal have an issn set
             if (!$journal->getData('onlineIssn') && !$journal->getData('printIssn')) {
                 $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.issn_missing'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
@@ -104,6 +88,19 @@ class Depositor extends ScheduledTask
             if (intdiv((int) $result['status'], 100) !== 2) {
                 $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
                 $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_HTTP_ERROR);
+                continue;
+            }
+
+            // if the pln isn't accepting deposits, skip the journal
+            if (!$this->plugin->getSetting($journal->getId(), 'pln_accepting')) {
+                $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+                continue;
+            }
+
+            // if the terms haven't been agreed to, skip transfer
+            if (!$this->plugin->termsAgreed($journal->getId())) {
+                $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.terms_updated'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+                $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_TERMS_UPDATED);
                 continue;
             }
 
@@ -161,7 +158,7 @@ class Depositor extends ScheduledTask
         // get deposits that need status updates
         $depositQueue = DepositRepository::instance()->getNeedStagingStatusUpdate($journal->getId());
 
-        while ($deposit = $depositQueue->next()) {
+        foreach ($depositQueue as $deposit) {
             $this->addExecutionLogEntry(
                 __(
                     'plugins.generic.pln.depositor.statusupdates.processing',
@@ -197,7 +194,7 @@ class Depositor extends ScheduledTask
         // fetch the deposits we need to send to the pln
         $depositQueue = DepositRepository::instance()->getNeedTransferring($journal->getId());
 
-        while ($deposit = $depositQueue->next()) {
+        foreach ($depositQueue as $deposit) {
             $this->addExecutionLogEntry(
                 __(
                     'plugins.generic.pln.depositor.transferringdeposits.processing',
@@ -213,7 +210,6 @@ class Depositor extends ScheduledTask
 
             $depositPackage = new DepositPackage($deposit, $this);
             $depositPackage->transferDeposit();
-            unset($deposit);
         }
     }
 
@@ -230,7 +226,7 @@ class Depositor extends ScheduledTask
         $fileManager->mkdirtree($plnDir);
 
         // loop though all of the deposits that need packaging
-        while ($deposit = $depositQueue->next()) {
+        foreach ($depositQueue as $deposit) {
             $this->addExecutionLogEntry(
                 __(
                     'plugins.generic.pln.depositor.packagingdeposits.processing',
@@ -257,11 +253,8 @@ class Depositor extends ScheduledTask
         // get the object type we'll be dealing with
         $objectType = $this->plugin->getSetting($journal->getId(), 'object_type');
 
-        // create new deposit objects for any new OJS content
-        DepositObjectRepository::instance()->createNew($journal->getId(), $objectType);
-
-        // retrieve all deposit objects that don't belong to a deposit
-        $newObjects = DepositObjectRepository::instance()->getNew($journal->getId());
+        // create and retrieve new deposit objects for any new OJS content
+        $newObjects = DepositObjectRepository::instance()->createNew($journal->getId(), $objectType);
 
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
@@ -269,7 +262,7 @@ class Depositor extends ScheduledTask
 
                 // get the new object threshold per deposit and split the objects into arrays of that size
                 $objectThreshold = $this->plugin->getSetting($journal->getId(), 'object_threshold');
-                foreach (array_chunk($newObjects->toArray(), $objectThreshold) as $newObject_array) {
+                foreach (array_chunk($newObjects, $objectThreshold) as $newObject_array) {
                     // only create a deposit for the complete threshold, we'll worry about the remainder another day
                     if (count($newObject_array) == $objectThreshold) {
                         //create a new deposit
@@ -287,13 +280,12 @@ class Depositor extends ScheduledTask
                 break;
             case PLNPlugin::DEPOSIT_TYPE_ISSUE:
                 // create a new deposit for each deposit object
-                while ($newObject = $newObjects->next()) {
+                foreach ($newObjects as $newObject) {
                     $newDeposit = new Deposit($this->plugin->newUUID());
                     $newDeposit->setJournalId($journal->getId());
                     DepositRepository::instance()->add($newDeposit);
                     $newObject->setDepositId($newDeposit->getId());
                     DepositObjectRepository::instance()->edit($newObject);
-                    unset($newObject);
                 }
                 break;
             default:

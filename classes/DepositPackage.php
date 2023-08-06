@@ -18,17 +18,17 @@ use APP\core\Application;
 use APP\facades\Repo;
 use APP\journal\Journal;
 use APP\journal\JournalDAO;
+use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\classes\tasks\Depositor;
-use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\PLNPlugin;
 use APP\plugins\importexport\native\NativeImportExportPlugin;
-use Core;
 use DOMDocument;
 use DOMElement;
 use DOMXPath;
 use Exception;
 use PKP\config\Config;
+use PKP\core\Core;
 use PKP\db\DAORegistry;
 use PKP\file\ContextFileManager;
 use PKP\file\FileManager;
@@ -97,7 +97,7 @@ class DepositPackage
         // remove any invalid UTF-8.
         $original = mb_substitute_character();
         mb_substitute_character(0xFFFD);
-        $filtered = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
+        $filtered = mb_convert_encoding((string) $content, 'UTF-8', 'UTF-8');
         mb_substitute_character($original);
 
         // put the filtered content in a CDATA, as it may contain markup that isn't valid XML.
@@ -145,7 +145,7 @@ class DepositPackage
         $entry->appendChild($this->createElement($atom, 'pkp:publisherUrl', $journal->getData('publisherUrl'), static::PKP_NAMESPACE));
         $entry->appendChild($this->createElement($atom, 'pkp:issn', $journal->getData('onlineIssn') ?: $journal->getData('printIssn'), static::PKP_NAMESPACE));
         $entry->appendChild($this->createElement($atom, 'id', 'urn:uuid:' . $this->deposit->getUUID()));
-        $entry->appendChild($this->createElement($atom, 'updated', date('Y-m-d H:i:s', strtotime($this->deposit->getDateModified()))));
+        $entry->appendChild($this->createElement($atom, 'updated', $this->deposit->getDateModified() ? date('Y-m-d H:i:s', strtotime($this->deposit->getDateModified())) : ''));
 
         $url = $dispatcher->url($request, Application::ROUTE_PAGE, $journal->getPath()) . '/' . PLNPlugin::DEPOSIT_FOLDER . '/deposits/' . $this->deposit->getUUID();
         $pkpDetails = $this->createElement($atom, 'pkp:content', $url, static::PKP_NAMESPACE);
@@ -155,7 +155,7 @@ class DepositPackage
         $objectIssue = '';
         $objectPublicationDate = 0;
 
-        $depositObjects = $this->deposit->getDepositObjects()->toIterator();
+        $depositObjects = $this->deposit->getDepositObjects();
         switch ($this->deposit->getObjectType()) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
             case PLNPlugin::DEPOSIT_TYPE_SUBMISSION:
@@ -260,7 +260,7 @@ class DepositPackage
                 $submissionIds = [];
 
                 // we need to add all of the relevant submissions to an array to export as a batch
-                while ($depositObject = $depositObjects->next()) {
+                foreach ($depositObjects as $depositObject) {
                     $submission = $submissionDao->getById($this->deposit->getObjectId());
                     if ($submission->getContextId() !== $journal->getId()) {
                         continue;
@@ -283,8 +283,8 @@ class DepositPackage
             case PLNPlugin::DEPOSIT_TYPE_ISSUE:
                 // we only ever do one issue at a time, so get that issue
                 $request = Application::get()->getRequest();
-                $depositObject = $depositObjects->next();
-                $issue = $issueDao->getByBestId($depositObject->getObjectId(), $journal->getId());
+                $depositObject = $depositObjects->first();
+                $issue = Repo::issue()->getByBestId($depositObject->getObjectId(), $journal->getId());
 
                 $exportXml = $exportPlugin->exportIssues(
                     (array) $issue->getId(),
@@ -623,8 +623,20 @@ class DepositPackage
         }
 
         // Handle error messages
-        if (in_array($processingState, ['hold', 'harvest-error', 'deposit-error', 'reserialize-error', 'virus-error', 'xml-error', 'payload-error', 'bag-error', 'status-error'])) {
-            $this->deposit->setExportDepositError(__('plugins.generic.pln.status.error.' . $processingState));
+        $errorMessage = match ($processingState) {
+            'hold' => 'plugins.generic.pln.status.error.hold',
+            'harvest-error' => 'plugins.generic.pln.status.error.harvest-error',
+            'deposit-error' => 'plugins.generic.pln.status.error.deposit-error',
+            'reserialize-error' => 'plugins.generic.pln.status.error.reserialize-error',
+            'virus-error' => 'plugins.generic.pln.status.error.virus-error',
+            'xml-error' => 'plugins.generic.pln.status.error.xml-error',
+            'payload-error' => 'plugins.generic.pln.status.error.payload-error',
+            'bag-error' => 'plugins.generic.pln.status.error.bag-error',
+            'status-error' => 'plugins.generic.pln.status.error.status-error',
+            default => null
+        };
+        if ($errorMessage) {
+            $this->deposit->setExportDepositError(__($errorMessage));
         }
 
         $lockssState = $contentDOM->getElementsByTagName('category')->item(1)->getAttribute('term');

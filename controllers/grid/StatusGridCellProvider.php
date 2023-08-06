@@ -15,10 +15,11 @@
 namespace APP\plugins\generic\pln\controllers\grid;
 
 use APP\core\Application;
+use APP\issue\Issue;
 use APP\plugins\generic\pln\classes\deposit\Deposit;
 use Exception;
-use LinkAction;
 use PKP\controllers\grid\GridCellProvider;
+use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\RemoteActionConfirmationModal;
 
 class StatusGridCellProvider extends GridCellProvider
@@ -36,15 +37,9 @@ class StatusGridCellProvider extends GridCellProvider
                 return ['label' => $deposit->getId()];
             case 'objectId':
                 $label = [];
-                foreach ($deposit->getDepositObjects()->toIterator() as $object) {
+                foreach ($deposit->getDepositObjects() as $object) {
                     $content = $object->getContent();
-                    if ($content instanceof Issue) {
-                        $label[] = $content->getIssueIdentification();
-                    } elseif ($content) {
-                        $label[] = $content->getLocalizedData('title');
-                    } else {
-                        $label[] = __('plugins.generic.pln.status.unknown');
-                    }
+                    $label[] = "#{$content->getId()}: " . ($content ? ($content instanceof Issue ? $content->getIssueIdentification() : $content->getLocalizedData('title')) : __('plugins.generic.pln.status.unknown'));
                 }
                 return ['label' => implode(' ', $label)];
             case 'status':

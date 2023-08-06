@@ -15,13 +15,10 @@
 namespace APP\plugins\generic\pln\classes\deposit;
 
 use APP\plugins\generic\pln\classes\depositObject\Repository;
-use APP\plugins\generic\pln\classes\DepositObjectDAO;
 use APP\plugins\generic\pln\PLNPlugin;
 use Illuminate\Support\LazyCollection;
 use PKP\core\DataObject;
 use PKP\core\PKPString;
-use PKP\db\DAORegistry;
-use PKP\db\DAOResultFactory;
 
 class Deposit extends DataObject
 {
@@ -42,7 +39,7 @@ class Deposit extends DataObject
     public function getObjectType(): ?string
     {
         $depositObjects = $this->getDepositObjects();
-        return $depositObjects->next()?->getObjectType();
+        return $depositObjects->first()?->getObjectType();
     }
 
     /**
@@ -51,7 +48,7 @@ class Deposit extends DataObject
     public function getObjectId(): ?int
     {
         $depositObjects = $this->getDepositObjects();
-        return $depositObjects->next()?->getObjectId();
+        return $depositObjects->first()?->getObjectId();
     }
 
     /**
@@ -71,7 +68,7 @@ class Deposit extends DataObject
     /**
      * Get deposit UUID
      */
-    public function getUUID(): string
+    public function getUUID(): ?string
     {
         return $this->getData('uuid');
     }
@@ -79,7 +76,7 @@ class Deposit extends DataObject
     /**
      * Set deposit UUID
      */
-    public function setUUID(string $uuid)
+    public function setUUID(?string $uuid): void
     {
         $this->setData('uuid', $uuid);
     }
@@ -87,17 +84,17 @@ class Deposit extends DataObject
     /**
      * Get journal ID
      */
-    public function getJournalId(): int
+    public function getJournalId(): ?int
     {
-        return $this->getData('journal_id');
+        return $this->getData('journalId');
     }
 
     /**
      * Set journal ID
      */
-    public function setJournalId(int $journalId)
+    public function setJournalId(?int $journalId): void
     {
-        $this->setData('journal_id', $journalId);
+        $this->setData('journalId', $journalId);
     }
 
     /**
@@ -111,7 +108,7 @@ class Deposit extends DataObject
     /**
      * Set deposit status
      */
-    public function setStatus(?int $status)
+    public function setStatus(?int $status): void
     {
         $this->setData('status', $status);
     }
@@ -339,7 +336,7 @@ class Deposit extends DataObject
     /**
      * Get the date of deposit creation
      */
-    public function getDateCreated(): string
+    public function getDateCreated(): ?string
     {
         return $this->getData('dateCreated');
     }
@@ -347,7 +344,7 @@ class Deposit extends DataObject
     /**
      * Set the date of deposit creation
      */
-    public function setDateCreated(string $dateCreated): void
+    public function setDateCreated(?string $dateCreated): void
     {
         $this->setData('dateCreated', $dateCreated);
     }
@@ -355,7 +352,7 @@ class Deposit extends DataObject
     /**
      * Get the modification date of the deposit
      */
-    public function getDateModified(): string
+    public function getDateModified(): ?string
     {
         return $this->getData('dateModified');
     }
@@ -363,7 +360,7 @@ class Deposit extends DataObject
     /**
      * Set the modification date of the deposit
      */
-    public function setDateModified(string $dateModified): void
+    public function setDateModified(?string $dateModified): void
     {
         $this->setData('dateModified', $dateModified);
     }
@@ -389,7 +386,7 @@ class Deposit extends DataObject
      */
     public function getDisplayedStatus(): string
     {
-        if (strlen($this->getExportDepositError())) {
+        if (strlen((string) $this->getExportDepositError())) {
             $displayedStatus = __('plugins.generic.pln.displayedstatus.error');
         } elseif ($this->getLockssAgreementStatus()) {
             $displayedStatus = __('plugins.generic.pln.displayedstatus.completed');

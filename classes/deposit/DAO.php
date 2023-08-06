@@ -16,6 +16,7 @@
 
 namespace APP\plugins\generic\pln\classes\deposit;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\LazyCollection;
 use PKP\core\EntityDAO;
@@ -23,6 +24,7 @@ use PKP\core\traits\EntityWithParent;
 
 /**
  * @template T of Deposit
+ *
  * @extends EntityDAO<T>
  */
 class DAO extends EntityDAO
@@ -94,6 +96,7 @@ class DAO extends EntityDAO
 
     /**
      * Get a collection of publications matching the configured query
+     *
      * @return LazyCollection<int,T>
      */
     public function getMany(Collector $query): LazyCollection
@@ -130,7 +133,7 @@ class DAO extends EntityDAO
     /**
      * @copydoc EntityDAO::update()
      */
-    public function update(Deposit $deposit)
+    public function update(Deposit $deposit): void
     {
         parent::_update($deposit);
     }
@@ -138,8 +141,32 @@ class DAO extends EntityDAO
     /**
      * @copydoc EntityDAO::delete()
      */
-    public function delete(Deposit $deposit)
+    public function delete(Deposit $deposit): void
     {
         parent::_delete($deposit);
+    }
+
+    /**
+     * Get a collection of orphaned deposits
+     *
+     * @return LazyCollection<int,T>
+     */
+    public function getOrphaned(Collector $query): LazyCollection
+    {
+        $rows = $query
+            ->getQueryBuilder()
+            ->whereNotIn(
+                'd.journal_id',
+                fn (Builder $q) => $q
+                    ->from('journals AS j')
+                    ->select('j.journal_id')
+            )
+            ->get();
+
+        return LazyCollection::make(function () use ($rows) {
+            foreach ($rows as $row) {
+                yield $row->deposit_id => $this->fromRow($row);
+            }
+        });
     }
 }

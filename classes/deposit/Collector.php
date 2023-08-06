@@ -13,6 +13,7 @@
 
 namespace APP\plugins\generic\pln\classes\deposit;
 
+use APP\plugins\generic\pln\PLNPlugin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -25,8 +26,10 @@ use PKP\plugins\Hook;
  */
 class Collector implements CollectorInterface
 {
-    /** @var DAO */
-    public $dao;
+    public const STATUS_NEW = 'STATUS_NEW';
+    public const STATUS_READY_TO_TRANSFER = 'STATUS_READY_TO_TRANSFER';
+    public const STATUS_READY_TO_PACKAGE = 'STATUS_READY_TO_PACKAGE';
+    public const STATUS_READY_FOR_UPDATE = 'STATUS_READY_FOR_UPDATE';
 
     public ?int $count = null;
 
@@ -38,12 +41,14 @@ class Collector implements CollectorInterface
     /** @var int[]|null */
     public ?array $uuids = null;
 
-        /** @var int[]|null */
+    /** @var int[]|null */
     public ?array $contextIds = null;
 
-    public function __construct(DAO $dao)
+    /** @var ?string */
+    public ?string $status = null;
+
+    public function __construct(public DAO $dao)
     {
-        $this->dao = $dao;
     }
 
     public function getCount(): int
@@ -61,6 +66,7 @@ class Collector implements CollectorInterface
 
     /**
      * @copydoc DAO::getMany()
+     *
      * @return LazyCollection<int,T>
      */
     public function getMany(): LazyCollection
@@ -115,6 +121,15 @@ class Collector implements CollectorInterface
     }
 
     /**
+     * Limit results to deposits that match the given status
+     */
+    public function filterByStatus(?string $status): static
+    {
+        $this->status = $status;
+        return $this;
+    }
+
+    /**
      * @copydoc CollectorInterface::getQueryBuilder()
      */
     public function getQueryBuilder(): Builder
@@ -124,8 +139,30 @@ class Collector implements CollectorInterface
             ->when($this->ids !== null, fn (Builder $query) => $query->whereIn('d.deposit_id', $this->ids))
             ->when($this->uuids !== null, fn (Builder $query) => $query->whereIn('d.uuid', $this->uuids))
             ->when($this->contextIds !== null, fn (Builder $query) => $query->whereIn('d.journal_id', $this->contextIds))
-            ->orderByDesc('d.export_deposit_error')
-            ->orderByDesc('d.deposit_id');
+            ->when(
+                $this->status !== null,
+                fn (Builder $q) =>
+                match ($this->status) {
+                    static::STATUS_NEW => $q->where('d.status', '=', PLNPlugin::DEPOSIT_STATUS_NEW),
+                    static::STATUS_READY_TO_TRANSFER => $q
+                        ->whereRaw('d.status & ? <> 0', [PLNPlugin::DEPOSIT_STATUS_PACKAGED])
+                        ->whereRaw('d.status & ? = 0', [PLNPlugin::DEPOSIT_STATUS_TRANSFERRED]),
+                    static::STATUS_READY_TO_PACKAGE => $q
+                        ->whereRaw('d.status & ? = 0', [PLNPlugin::DEPOSIT_STATUS_PACKAGED]),
+                    static::STATUS_READY_FOR_UPDATE => $q->where(
+                        fn (Builder $q) => $q
+                            ->whereNull('d.status')
+                            ->orWhere(
+                                fn (Builder $q) => $q
+                                    ->whereRaw('d.status & ? <> 0', [PLNPlugin::DEPOSIT_STATUS_TRANSFERRED])
+                                    ->whereRaw('d.status & ? = 0', [PLNPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT])
+                            )
+                    ),
+                }
+            )
+            // First deposits without errors
+            ->orderBy('d.export_deposit_error')
+            ->orderBy('d.deposit_id');
 
         // Add app-specific query statements
         Hook::call('PreservationNetwork::Deposit::Collector', [&$q, $this]);
