@@ -117,7 +117,7 @@ class SettingsForm extends Form
     /**
      * @copydoc Form::execute()
      */
-    public function execute(...$functionArgs)
+    public function execute(...$functionArgs): void
     {
         parent::execute(...$functionArgs);
         $this->plugin->updateSetting($this->contextId, 'terms_of_use_agreement', $this->getData('terms_of_use_agreement'), 'object');

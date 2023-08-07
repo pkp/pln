@@ -48,7 +48,7 @@ class PLNGatewayPlugin extends GatewayPlugin
      */
     public function getName(): string
     {
-        return 'PLNGatewayPlugin';
+        return substr(static::class, strlen(__NAMESPACE__) + 1);
     }
 
     /**
@@ -106,7 +106,7 @@ class PLNGatewayPlugin extends GatewayPlugin
     /**
      * @copydoc GatewayPlugin::fetch()
      */
-    public function fetch($args, $request): void
+    public function fetch($args, $request): bool
     {
         $plugin = $this->getPlugin();
         $templateMgr = TemplateManager::getManager($request);
@@ -156,5 +156,6 @@ class PLNGatewayPlugin extends GatewayPlugin
 
         header('content-type: text/xml; charset=utf-8');
         $templateMgr->display($plugin->getTemplateResource('ping.tpl'));
+        return true;
     }
 }
