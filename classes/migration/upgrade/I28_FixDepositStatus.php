@@ -36,7 +36,7 @@ class I28_FixDepositStatus extends Migration
             $table->string('lockss_state')->nullable();
         });
         // Reset status
-        DB::table('pln_deposits')->update(['status', null]);
+        DB::table('pln_deposits')->update(['status' => null]);
     }
 
     /**

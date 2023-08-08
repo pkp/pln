@@ -40,7 +40,7 @@ class I57_UpdateSettings extends Migration
             DB::table('plugin_settings')
                 ->where('plugin_name', '=', 'plnplugin')
                 ->where('setting_name', '=', $name)
-                ->update(['setting_value' => unserialize($value)]);
+                ->update(['setting_value' => json_encode(unserialize($value))]);
         }
     }
 
