@@ -2,7 +2,7 @@
 # José Carvalho <jcarvalho@keep.pt>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-06-27 07:49+0000\n"
+"PO-Revision-Date: 2023-10-31 12:06+0000\n"
 "Last-Translator: José Carvalho <jcarvalho@keep.pt>\n"
 "Language-Team: Portuguese (Portugal) <http://translate.pkp.sfu.ca/projects/"
 "plugins/pln/pt_PT/>\n"
@@ -174,3 +174,220 @@ msgstr ""
 "A revista deve possuir um ISSN antes de concordar com os termos de serviço. "
 "Indique o ISSN no formulário de Detalhes da revista, na configuração. Os "
 "termos de serviço serão apresentados assim que o ISSN for inserido."
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Depósito em processo para {$title}."
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"Falha ao descarregar o depósito do seu sistema. A operação será repetida, "
+"enquanto isso, pode verificar se o seu sistema está protegido por um firewall"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr ""
+"O depósito não passou na validação de conteúdo, pode tentar reenviar o "
+"depósito"
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"Se por algum motivo não aparecerem os termos apresentados acima ou sabe que "
+"esses termos foram atualizados, clique em Atualizar para atualizar os termos "
+"acima."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"Tentativa de atualização do estado para {$depositId} ({$objectType}: "
+"{$objectId}) (Status local: [{$statusLocal}], Status de processamento: "
+"[{$statusProcessing}], Status Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Tentativa de depósito de pacote {$depositId} ({$objectType}: {$objectId}) ("
+"Status local: [{$statusLocal}], Status de processamento: "
+"[{$statusProcessing}], Status Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr ""
+"O depósito foi retido, a versão do seu sistema está acima das expectativas"
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"Impossível encontrar o ficheiro de depósito. Pode não ter sido empacotado "
+"ainda, ou o pacote foi removido."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "A empacotar conteúdo para depósito."
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"A enviar o ficheiro Atom no servidor de teste para depósito {$depositId} ("
+"Status local: [{$statusLocal}], Status de processamento: "
+"[{$statusProcessing}], Status de Lockss : [{$statusLockss}]) - (Url: [{$url}]"
+", AtomPath: [{$atomPath}], Método: [{$method}])"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Como contacto principal, aceito, de boa fé, os seguintes termos e condições "
+"de participação na Rede LOCKSS Privada do Public Knowledge Project (PKP-PLN):"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"Este é o identificador único da sua revista no PKP PN do PKP. Pode ser "
+"necessário apresentar este identificador aos administradores da PKP PN do "
+"PKP em casos de suporte."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"Erro ao ligar ao PKP PN do PKP - entre em contacto com o administrador do "
+"sistema."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"Erro de rede {$error} ao ligar a PKP PN para recuperar documento do serviço."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr "Erro de rede {$error} ao ligar a PKP PN para enviar o depósito."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"Erro de rede {$error} ao ligar a PKP PN para atualizar a situação do "
+"depósito."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr ""
+"O servidor PKP PN devolveu um erro HTTP {$error} ao tentar recuperar o "
+"documento do serviço."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr ""
+"O serviço PKP PN devolveu um erro HTTP {$error} quando enviou o depósito."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr ""
+"O serviço PKP PN devolveu um erro HTTP {$error} ao verificar a situação de "
+"um depósito."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "Impossível encontrar ficheiro {$file}."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"Ocorreu um erro ao exportar os artigos. O registo de erros do servidor pode "
+"conter mais informações."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"Ocorreu um erro ao exportar uma edição. O registo de erros do servidor pode "
+"conter mais informações."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "O UUID solicitado é inválido ou não está corretamente formatado."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "Não existe um depósito para o UUID solicitado."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "A atualizar a situação do depósito."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "A processar conteúdo atualizado."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "A processar conteúdo novo."
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "A enviar depósitos para PKP PN."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr ""
+"Estado de processamento obtido para {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "O empacotamento para o depósito {$depositId} falhou"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "O empacotamento para o depósito {$depositId} foi bem sucedido"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"A tentar transferir o depósito {$depositId} ({$objectType}: {$objectId}) ("
+"Status local: [{$statusLocal}], Status de processamento: "
+"[{$statusProcessing}], Status Lockss: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"O envio do ficheiro Atom para o servidor de teste para o depósito "
+"{$depositId} foi bem sucedido"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Falha ao enviar o ficheiro Atom no servidor de teste para o depósito "
+"{$depositId} (Erro: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "Gateway da PN"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Reporta a situação do PKP PN e títulos de artigos recentes para o servidor "
+"de pré-processamento."
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "À espera"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "O processo de depósito ainda não foi iniciado"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Em curso"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "O processo de depósito está em curso"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Concluído"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "O processo de depósito está concluído"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Erro"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Ocorreu um erro em relação ao processo de depósito"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Pode levar alguns dias para que um depósito seja totalmente processado."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Última atualização"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Descrição do estado"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"O depósito falhou, certifique-se de que não excedeu o tamanho máximo "
+"suportado pela Preservation Network (PN)"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Falha ao reempacotar o depósito, a operação será repetida"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"O depósito não passou na verificação do antivírus, deve verificar os seus "
+"ficheiros e reenviar"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr ""
+"O depósito não passou na validação de carga, pode tentar reenviar o depósito"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"O depósito está a ser preservado, mas não foi possível verificar o seu "
+"estado, a operação será repetida"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"O Plug-in nativo de importação/exportação falhou para o depósito {$depositId}"
+", ao tentar empacotá-lo"
