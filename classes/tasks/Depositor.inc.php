@@ -71,18 +71,6 @@ class Depositor extends ScheduledTask {
 				continue;
 			}
 
-			// if the pln isn't accepting deposits, skip the journal
-			if (!$this->_plugin->getSetting($journal->getId(), 'pln_accepting')) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-				continue;
-			}
-
-			// if the terms haven't been agreed to, skip transfer
-			if (!$this->_plugin->termsAgreed($journal->getId())) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.terms_updated'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED);
-				continue;
-			}
 
 			// it's necessary that the journal have an issn set
 			if (!$journal->getSetting('onlineIssn') &&
@@ -100,6 +88,19 @@ class Depositor extends ScheduledTask {
 			if (intdiv((int) $sdResult, 100) !== 2) {
 				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR);
+				continue;
+			}
+
+			// if the pln isn't accepting deposits, skip the journal
+			if (!$this->_plugin->getSetting($journal->getId(), 'pln_accepting')) {
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.pln_not_accepting'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+				continue;
+			}
+
+			// if the terms haven't been agreed to, skip transfer
+			if (!$this->_plugin->termsAgreed($journal->getId())) {
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.terms_updated'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED);
 				continue;
 			}
 

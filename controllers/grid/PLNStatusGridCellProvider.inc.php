@@ -36,8 +36,10 @@ class PLNStatusGridCellProvider extends GridCellProvider {
 					$content = $object->getContent();
 					if ($content instanceof Issue) {
 						$label[] = $content->getIssueIdentification();
-					} else {
+					} elseif ($content) {
 						$label[] = $content->getLocalizedTitle();
+					} else {
+						$label[] = __('plugins.generic.pln.status.unknown');
 					}
 				}
 				return array('label' => implode(' ', $label));

@@ -76,7 +76,7 @@ class PLNPluginSchemaMigration extends Migration {
 				$table->string('lockss_state')->nullable();
 			});
 			// Reset status
-			Capsule::table('pln_deposits')->update(['status', null]);
+			Capsule::table('pln_deposits')->update(['status' => null]);
 		}
 	}
 }
