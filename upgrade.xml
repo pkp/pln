@@ -12,4 +12,7 @@
   -->
 
 <install version="2.0.4.3">
+	<upgrade>
+		<migration class="plugins.generic.pln.PLNPluginSchemaUpgrade" />
+	</upgrade>
 </install>

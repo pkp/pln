@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file classes/migration/PLNPluginSchemaMigration.inc.php
+ * @file classes/PLNPluginSchemaMigration.inc.php
  *
  * Copyright (c) 2014-2022 Simon Fraser University
  * Copyright (c) 2000-2022 John Willinsky
@@ -14,6 +14,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Capsule\Manager as Capsule;
+use PKP\install\DowngradeNotSupportedException;
 
 class PLNPluginSchemaMigration extends Migration {
 	/**
@@ -53,30 +54,13 @@ class PLNPluginSchemaMigration extends Migration {
 
 		// Create a new scheduled_tasks entry for this plugin
 		Capsule::table('scheduled_tasks')->insertOrIgnore(['class_name' => 'plugins.generic.pln.classes.tasks.Depositor']);
-
-		$this->upgrade();
 	}
 
 	/**
-	 * Upgrade and fixes
+	 * Rollback the migrations.
+	 * @return void
 	 */
-	protected function upgrade() {
-		// Before the version 2.0.4.3, it's needed to check for a missing "export_deposit_error" field
-		if (!Capsule::schema()->hasColumn('pln_deposits', 'export_deposit_error')) {
-			Capsule::schema()->table('pln_deposits', function (Blueprint $table) {
-				$table->string('export_deposit_error', 1000)->nullable();
-			});
-		}
-
-		// Changes introduced after version 2.0.4.3
-		if (!Capsule::schema()->hasColumn('pln_deposits', 'date_preserved')) {
-			Capsule::schema()->table('pln_deposits', function (Blueprint $table) {
-				$table->datetime('date_preserved')->nullable();
-				$table->string('staging_state')->nullable();
-				$table->string('lockss_state')->nullable();
-			});
-			// Reset status
-			Capsule::table('pln_deposits')->update(['status' => null]);
-		}
+	public function down() {
+		throw new DowngradeNotSupportedException();
 	}
 }
