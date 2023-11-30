@@ -92,7 +92,7 @@
 {if $row->getDeposit()->getExportDepositError()}
 <tr id="{$rowId|escape|replace:" ":"_"}-control-row">
 	<td colspan="{$grid->getColumnsCount('indent')}">
-		{$row->getDeposit()->getExportDepositError()|escape}
+		{translate key="common.error"}: {$row->getDeposit()->getExportDepositError()|escape}
 	</td>
 </tr>
 {/if}
