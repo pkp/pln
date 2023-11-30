@@ -52,7 +52,6 @@ class PLNStatusForm extends Form {
 		}
 		$templateMgr = TemplateManager::getManager($request);
 		$templateMgr->assign(array(
-			'deposits' => $depositDao->getByJournalId($context->getId(), $rangeInfo),
 			'networkStatus' => $networkStatus,
 			'networkStatusMessage' => $networkStatusMessage
 		));

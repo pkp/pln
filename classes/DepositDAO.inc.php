@@ -193,7 +193,7 @@ class DepositDAO extends \PKP\db\DAO {
 			$sql = 'SELECT *
 			FROM pln_deposits
 			WHERE journal_id = ?
-			ORDER BY deposit_id',
+			ORDER BY export_deposit_error DESC, deposit_id DESC',
 			$params,
 			$dbResultRange
 		);
