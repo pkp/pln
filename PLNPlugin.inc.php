@@ -186,7 +186,7 @@ class PLNPlugin extends GenericPlugin {
 	 * @copydoc Plugin::getInstallMigration()
 	 */
 	function getInstallMigration() {
-		$this->import('PLNPluginSchemaMigration');
+		$this->import('classes.migration.install.PLNPluginSchemaMigration');
 		return new PLNPluginSchemaMigration();
 	}
 
