@@ -8,7 +8,7 @@
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class PLNPluginSchemaMigration
- * @brief Describe database table structures.
+ * @brief Placeholder file to avoid upgrade issues
  */
 
 use Illuminate\Database\Migrations\Migration;
@@ -19,6 +19,7 @@ class PLNPluginSchemaMigration extends Migration {
 	 * @return void
 	 */
 	public function up() {
+		// This file must be kept to avoid issues when upgrading the plugin from a previous version (< v2.0.4.3)
 	}
 
 	/**
