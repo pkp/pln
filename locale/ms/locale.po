@@ -93,14 +93,17 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Tidak dapat mencari fail pakej {$file}."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "Pelayan PN mengembalikan ralat HTTP {$error} semasa memeriksa status deposit."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "Pelayan PN mengembalikan ralat HTTP {$error} semasa menghantar deposit."
+msgstr "Pelayan PN mengembalikan ralat HTTP {$error} semasa menghantar deposit.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "Pelayan PN mengembalikan ralat HTTP {$error} ketika cuba mendapatkan dokumen "
 "perkhidmatan."
 

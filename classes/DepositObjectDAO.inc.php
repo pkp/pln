@@ -3,8 +3,8 @@
 /**
  * @file classes/DepositObjectDAO.inc.php
  *
- * Copyright (c) 2013-2023 Simon Fraser University
- * Copyright (c) 2003-2023 John Willinsky
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class DepositObjectDAO
@@ -83,14 +83,10 @@ class DepositObjectDAO extends \PKP\db\DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					if($deposit->getSentStatus() || !$deposit->getTransferredStatus()) {
-						// only update a deposit after it has been synced in LOCKSS.
-						$depositObject->setDateModified($row->last_modified);
-						$this->updateObject($depositObject);
-						$deposit->setNewStatus();
-						$deposit->setLockssAgreementStatus(true); // this is an update.
-						$depositDao->updateObject($deposit);
-					}
+					$depositObject->setDateModified($row->last_modified);
+					$this->updateObject($depositObject);
+					$deposit->setNewStatus();
+					$depositDao->updateObject($deposit);
 				}
 				break;
 			case PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE:
@@ -109,22 +105,14 @@ class DepositObjectDAO extends \PKP\db\DAO {
 				foreach ($result as $row) {
 					$depositObject = $this->getById($journalId, $row->deposit_object_id);
 					$deposit = $depositDao->getById($depositObject->getDepositId());
-					if ($deposit->getSentStatus() || !$deposit->getTransferredStatus()) {
-						// only update a deposit after it has been synced in LOCKSS.
-						if ($row->issue_modified > $row->article_modified) {
-							$depositObject->setDateModified($row->issue_modified);
-						} else {
-							$depositObject->setDateModified($row->article_modified);
-						}
-
-						$this->updateObject($depositObject);
-						$deposit->setNewStatus();
-						$deposit->setLockssAgreementStatus(true); // this is an update.
-						$depositDao->updateObject($deposit);
-					}
+					$depositObject->setDateModified(max($row->issue_modified, $row->article_modified));
+					$this->updateObject($depositObject);
+					$deposit->setNewStatus();
+					$depositDao->updateObject($deposit);
 				}
 				break;
-			default: assert(false);
+			default:
+				throw new Exception("Invalid object type \"{$objectType}\"");
 		}
 	}
 
@@ -170,7 +158,8 @@ class DepositObjectDAO extends \PKP\db\DAO {
 					$objects[] = $issueDao->getById($row->issue_id);
 				}
 				break;
-			default: assert(false);
+			default:
+				throw new Exception("Invalid object type \"{$objectType}\"");
 		}
 
 		$depositObjects = array();
@@ -248,7 +237,7 @@ class DepositObjectDAO extends \PKP\db\DAO {
 	 * @return int
 	 */
 	public function getInsertId(): int {
-		return $this->_getInsertId('pln_deposit_objects', 'object_id');
+		return $this->_getInsertId();
 	}
 
 	/**

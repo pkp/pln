@@ -4,7 +4,7 @@
  * @file controllers/grid/PLNStatusGridRow.inc.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
- * Copyright (c) 2003-2023 John Willinsky
+ * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNStatusGridRow
@@ -24,28 +24,14 @@ class PLNStatusGridRow extends GridRow {
 	 * @copydoc GridRow::initialize()
 	 */
 	public function initialize($request, $template = null) {
-		parent::initialize($request, $template);
+		parent::initialize($request, PLNStatusGridHandler::$plugin->getTemplateResource('gridRow.tpl'));
+	}
 
-		$rowId = $this->getId();
-		$actionArgs['depositId'] = $rowId;
-		if (!empty($rowId)) {
-			$router = $request->getRouter();
-
-			// Create the "reset deposit" action
-			$this->addAction(
-				new LinkAction(
-					'resetDeposit',
-					new RemoteActionConfirmationModal(
-						$request->getSession(),
-						__('plugins.generic.pln.status.confirmReset'),
-						__('common.reset'),
-
-						$router->url($request, null, null, 'resetDeposit', null, $actionArgs, 'modal_reset')
-					),
-					__('common.reset'),
-					'reset'
-				)
-			);
-		}
+	/**
+	 * Retrieves the deposit
+	 */
+	public function getDeposit(): Deposit
+	{
+		return $this->getData();
 	}
 }

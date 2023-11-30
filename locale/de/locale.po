@@ -186,13 +186,16 @@ msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr "Netzwerk-Fehler {$error} beim Versuch, von PKP PN ein Statusupdate für die Ablieferung zu holen."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet beim Versuch, das Service-Dokument zu holen."
+msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet beim Versuch, das Service-Dokument zu holen.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet beim Versuch, die Ablieferung zu senden."
+msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet beim Versuch, die Ablieferung zu senden.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet bei der Überprüfung des Status einer Ablieferung."
+msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet bei der Überprüfung des Status einer Ablieferung.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Kann die Datei {$file} des Pakets nicht finden."

@@ -3,8 +3,8 @@
 /**
  * @file PLNGatewayPlugin.inc.php
  *
- * Copyright (c) 2013-2023 Simon Fraser University
- * Copyright (c) 2003-2023 John Willinsky
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNGatewayPlugin
@@ -120,7 +120,7 @@ class PLNGatewayPlugin extends GatewayPlugin {
 			$templateMgr->assign('termsAccepted', 'no');
 		}
 
-		$application = PKPApplication::getApplication();
+		$application = Application::get();
 		$products = $application->getEnabledProducts('plugins.generic');
 		$prerequisites = array(
 			'phpVersion' => PHP_VERSION,
@@ -141,11 +141,11 @@ class PLNGatewayPlugin extends GatewayPlugin {
 			);
 		}
 		$templateMgr->assign('termsDisplay', new ArrayItemIterator($termsDisplay));
-
+		/** @var VersionDAO */
 		$versionDao = DAORegistry::getDAO('VersionDAO');
 		$ojsVersion = $versionDao->getCurrentVersion();
 		$templateMgr->assign('ojsVersion', $ojsVersion->getVersionString());
-
+		/** @var SubmissionDAO */
 		$submissionDao = DAORegistry::getDAO('SubmissionDAO');
 		$publications = array();
 		$submissions = $submissionDao->getByContextId($journal->getId());

@@ -142,17 +142,20 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "No se puede encontrar el archivo empaquetado {$file}."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "El servidor de PN ha devuelto el error HTTP {$error} cuando comprobaba el "
 "estado del depósito."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "El servidor de PN ha devuelto el error HTTP {$error} cuando enviaba el "
 "depósito."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "El servidor de PN ha devuelto el error HTTP {$error} cuando intentaba "
 "obtener el documento de servicio."
 

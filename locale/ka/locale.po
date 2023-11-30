@@ -242,15 +242,18 @@ msgstr ""
 "განახლების მისაღებად."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "სერვისის დოკუმენტის მიღების მცდელობისას, PN სერვერმა დაუბრუნა HTTP შეცდომა "
 "{$error}."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "ანაბრის გაგზავნისას PN სერვერმა დაუბრუნა HTTP შეცდომა {$error}."
+msgstr "ანაბრის გაგზავნისას PN სერვერმა დაუბრუნა HTTP შეცდომა {$error}.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "დეპოზიტის სტატუსის შემოწმებისას PN სერვერმა დაუბრუნა HTTP შეცდომა {$error}."
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"

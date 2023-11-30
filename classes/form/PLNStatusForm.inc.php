@@ -3,8 +3,8 @@
 /**
  * @file classes/form/PLNStatusForm.inc.php
  *
- * Copyright (c) 2013-2023 Simon Fraser University
- * Copyright (c) 2003-2023 John Willinsky
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNStatusForm
@@ -52,10 +52,8 @@ class PLNStatusForm extends Form {
 		}
 		$templateMgr = TemplateManager::getManager($request);
 		$templateMgr->assign(array(
-			'deposits' => $depositDao->getByJournalId($context->getId(), $rangeInfo),
 			'networkStatus' => $networkStatus,
-			'networkStatusMessage' => $networkStatusMessage,
-			'plnStatusDocs' => $this->_plugin->getSetting($context->getId(), 'pln_status_docs'),
+			'networkStatusMessage' => $networkStatusMessage
 		));
 
 		return parent::fetch($request, $template, $display);

@@ -187,13 +187,16 @@ msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr "Ошибка сети {$error} при подключении к PKP PN для получения обновленного статуса депонируемого объекта."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "Сервер PKP PN вернул ошибку HTTP {$error} при попытке получения служебного документа."
+msgstr "Сервер PKP PN вернул ошибку HTTP {$error} при попытке получения служебного документа.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "Сервер PKP PN вернул ошибку HTTP {$error} при отправке депонируемого объекта."
+msgstr "Сервер PKP PN вернул ошибку HTTP {$error} при отправке депонируемого объекта.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "PLN вернул ошибку HTTP {$error} при проверке статуса депонируемого объекта."
+msgstr "PLN вернул ошибку HTTP {$error} при проверке статуса депонируемого объекта.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Не удается найти файл пакета {$file}."
