@@ -3,8 +3,8 @@
 /**
  * @file controllers/grid/PLNStatusGridHandler.inc.php
  *
- * Copyright (c) 2014-2022 Simon Fraser University
- * Copyright (c) 2003-2022 John Willinsky
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNStatusGridHandler
@@ -57,11 +57,11 @@ class PLNStatusGridHandler extends GridHandler {
 
 		// Columns
 		$cellProvider = new PLNStatusGridCellProvider();
-		$this->addColumn(new GridColumn('id', 'common.id', null, null, $cellProvider));
 		$this->addColumn(new GridColumn('objectId', 'plugins.generic.pln.issueId', null, null, $cellProvider));
 		$this->addColumn(new GridColumn('status', 'plugins.generic.pln.status.status', null, null, $cellProvider));
 		$this->addColumn(new GridColumn('latestUpdate', 'plugins.generic.pln.status.latestupdate', null, null, $cellProvider));
-		$this->addColumn(new GridColumn('error', 'plugins.generic.pln.displayedstatus.error', null, null, $cellProvider));
+		$this->addColumn(new GridColumn('id', 'common.id', null, null, $cellProvider));
+		$this->addColumn(new GridColumn('actions', 'grid.columns.actions', null, null, $cellProvider));
 	}
 
 	/**
@@ -86,7 +86,7 @@ class PLNStatusGridHandler extends GridHandler {
 	public function authorize($request, &$args, $roleAssignments) {
 		import('lib.pkp.classes.security.authorization.ContextAccessPolicy');
 		$this->addPolicy(new ContextAccessPolicy($request, $roleAssignments));
-		return parent::authorize($request, $args, $roleAssignments, false);
+		return parent::authorize($request, $args, $roleAssignments);
 	}
 
 	/**
@@ -108,7 +108,7 @@ class PLNStatusGridHandler extends GridHandler {
 	 * @param array $args
 	 * @param Request $request
 	 *
-	 * @return string Serialized JSON object
+	 * @return JSONMessage Serialized JSON object
 	 */
 	public function resetDeposit($args, $request) {
 		$depositId = $args['depositId'];
@@ -119,7 +119,7 @@ class PLNStatusGridHandler extends GridHandler {
 		if (!is_null($depositId)) {
 			$deposit = $depositDao->getById($depositId, $journal->getId()); /** @var Deposit $deposit */
 
-			$deposit->reset();
+			$deposit->setNewStatus();
 
 			$depositDao->updateObject($deposit);
 		}

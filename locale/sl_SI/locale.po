@@ -147,13 +147,16 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Datoteke {$file} s paketom ni bilo mogoče najti."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "PN je vrnil HTTP napako {$error} pri preverjanju statusa depozita."
+msgstr "PN je vrnil HTTP napako {$error} pri preverjanju statusa depozita.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "PN je vrnil HTTP napako {$error} pri shranjevanju depozita."
+msgstr "PN je vrnil HTTP napako {$error} pri shranjevanju depozita.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "PN je vrnil HTTP napako {$error} pri pridobivanju servisnega dokumenta."
+msgstr "PN je vrnil HTTP napako {$error} pri pridobivanju servisnega dokumenta.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr ""

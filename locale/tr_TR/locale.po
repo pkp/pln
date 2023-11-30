@@ -255,15 +255,18 @@ msgstr ""
 "bağlanırken {$error} ağ hatası oluştu."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "PN sunucusu, hizmet belgesini almaya çalışırken {$error} HTTP hatası "
 "gönderdi."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "PN sunucusu saklama isteğini gönderirken HTTP hatası {$error} gönderdi."
+msgstr "PN sunucusu saklama isteğini gönderirken HTTP hatası {$error} gönderdi.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "PN sunucusu, saklama durumunu denetlerken {$error} HTTP hatası gönderdi."
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"

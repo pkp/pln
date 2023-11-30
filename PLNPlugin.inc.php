@@ -3,8 +3,8 @@
 /**
  * @file PLNPlugin.inc.php
  *
- * Copyright (c) 2013-2022 Simon Fraser University
- * Copyright (c) 2003-2022 John Willinsky
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNPlugin
@@ -21,13 +21,6 @@ define('PLN_PLUGIN_NAME', 'plnplugin');
 // defined here in case an upgrade doesn't pick up the default value.
 define('PLN_DEFAULT_NETWORK', 'https://pkp-pn.lib.sfu.ca');
 
-define('PLN_DEFAULT_STATUS_SUFFIX', '/docs/status');
-
-define('PLN_PLUGIN_HTTP_STATUS_OK', 200);
-define('PLN_PLUGIN_HTTP_STATUS_CREATED', 201);
-
-define('PLN_PLUGIN_XML_NAMESPACE', 'http://pkp.sfu.ca/SWORD');
-
 // base IRI for the SWORD server. IRIs are constructed by appending to
 // this constant.
 define('PLN_PLUGIN_BASE_IRI', '/api/sword/2.0');
@@ -41,31 +34,27 @@ define('PLN_PLUGIN_CONT_IRI', PLN_PLUGIN_BASE_IRI . '/cont-iri');
 define('PLN_PLUGIN_ARCHIVE_FOLDER', 'pln');
 
 // local statuses
-define('PLN_PLUGIN_DEPOSIT_STATUS_NEW',					0x000);
-define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED',			0x001);
-define('PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED',			0x002);
-define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED',	0x200);
+define('PLN_PLUGIN_DEPOSIT_STATUS_NEW', 0);
+define('PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED', 1);
+define('PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED', 2);
 
 // status on the processing server
-define('PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED',			0x004);
-define('PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED',			0x008);
-define('PLN_PLUGIN_DEPOSIT_STATUS_SENT',				0x010);
+define('PLN_PLUGIN_DEPOSIT_STATUS_RECEIVED', 4);
+define('PLN_PLUGIN_DEPOSIT_STATUS_VALIDATED', 8);
+define('PLN_PLUGIN_DEPOSIT_STATUS_SENT', 16);
 
 // status in the LOCKSS PLN
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED',		0x020);
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_SYNCING',		0x040);
-define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT',	0x080);
-
-define('PLN_PLUGIN_DEPOSIT_STATUS_UPDATE',				0x100);
+define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_RECEIVED', 64);
+define('PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT', 128);
 
 define('PLN_PLUGIN_DEPOSIT_OBJECT_SUBMISSION', 'Submission');
 define('PLN_PLUGIN_DEPOSIT_OBJECT_ISSUE', 'Issue');
 
-define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE',	NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 1);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
-define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING',	PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 5);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE', NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 1);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 2);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 3);
+define('PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING', PLN_PLUGIN_NOTIFICATION_TYPE_PLUGIN_BASE + 5);
 
 class PLNPlugin extends GenericPlugin {
 	/**
@@ -197,7 +186,7 @@ class PLNPlugin extends GenericPlugin {
 	 * @copydoc Plugin::getInstallMigration()
 	 */
 	function getInstallMigration() {
-		$this->import('PLNPluginSchemaMigration');
+		$this->import('classes.migration.install.PLNPluginSchemaMigration');
 		return new PLNPluginSchemaMigration();
 	}
 
@@ -237,8 +226,6 @@ class PLNPlugin extends GenericPlugin {
 				break;
 			case 'pln_network':
 				return Config::getVar('lockss', 'pln_url', PLN_DEFAULT_NETWORK);
-			case 'pln_status_docs':
-				return Config::getVar('lockss', 'pln_status_docs', Config::getVar('lockss', 'pln_url', PLN_DEFAULT_NETWORK) . PLN_DEFAULT_STATUS_SUFFIX);
 		}
 		return parent::getSetting($journalId, $settingName);
 	}
@@ -287,7 +274,7 @@ class PLNPlugin extends GenericPlugin {
 			PLN_PLUGIN_NOTIFICATION_TYPE_TERMS_UPDATED => __('plugins.generic.pln.notifications.terms_updated'),
 			PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING => __('plugins.generic.pln.notifications.issn_missing'),
 			PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR => __('plugins.generic.pln.notifications.http_error'),
-			PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING => __('plugins.generic.pln.notifications.http_error')
+			PLN_PLUGIN_NOTIFICATION_TYPE_ZIP_MISSING => __('plugins.generic.pln.notifications.zip_missing')
 		];
 		$message = $notificationByType[$type] ?? $message;
 		return false;
@@ -324,7 +311,7 @@ class PLNPlugin extends GenericPlugin {
 				$form = new PLNSettingsForm($this, $context->getId());
 
 				if ($request->getUserVar('refresh')) {
-					$this->getServiceDocument($context->getId(), $request);
+					$this->getServiceDocument($context->getId());
 				} else {
 					if ($request->getUserVar('save')) {
 
@@ -361,7 +348,7 @@ class PLNPlugin extends GenericPlugin {
 					foreach ($deposit_ids as $deposit_id) {
 						$deposit = $depositDao->getById($deposit_id); /** @var Deposit $deposit */
 
-						$deposit->reset();
+						$deposit->setNewStatus();
 
 						$depositDao->updateObject($deposit);
 					}
@@ -397,7 +384,7 @@ class PLNPlugin extends GenericPlugin {
 	 * @return int The HTTP response status or FALSE for a network error.
 	 */
 	public function getServiceDocument($contextId) {
-		$application = Application::getApplication();
+		$application = Application::get();
 		$request = $application->getRequest();
 		$contextDao = Application::getContextDAO();
 		$context = $contextDao->getById($contextId);
@@ -406,7 +393,7 @@ class PLNPlugin extends GenericPlugin {
 		$locale = $context->getPrimaryLocale();
 		$language = strtolower(str_replace('_', '-', $locale));
 		$network = $this->getSetting($context->getId(), 'pln_network');
-		$application = Application::getApplication();
+		$application = Application::get();
 		$dispatcher = $application->getDispatcher();
 
 		// retrieve the service document
@@ -420,11 +407,11 @@ class PLNPlugin extends GenericPlugin {
 		);
 
 		// stop here if we didn't get an OK
-		if ($result['status'] != PLN_PLUGIN_HTTP_STATUS_OK) {
-			if($result['status'] === FALSE) {
-				error_log(__('plugins.generic.pln.error.network.servicedocument', array('error' => $result['error'])));
+		if (intdiv((int) $result['status'], 100) !== 2) {
+			if ($result['status']) {
+				error_log(__('plugins.generic.pln.error.http.servicedocument', array('error' => $result['status'], 'message' => $result['error'])));
 			} else {
-				error_log(__('plugins.generic.pln.error.http.servicedocument', array('error' => $result['status'])));
+				error_log(__('plugins.generic.pln.error.network.servicedocument', array('error' => $result['error'])));
 			}
 			return $result['status'];
 		}
@@ -451,7 +438,9 @@ class PLNPlugin extends GenericPlugin {
 		$termElements = $serviceDocument->getElementsByTagName('terms_of_use')->item(0)->childNodes;
 		$terms = array();
 		foreach($termElements as $termElement) {
-			$terms[$termElement->tagName] = array('updated' => $termElement->getAttribute('updated'), 'term' => $termElement->nodeValue);
+			if ($termElement instanceof DOMElement) {
+				$terms[$termElement->tagName] = array('updated' => $termElement->getAttribute('updated'), 'term' => $termElement->nodeValue);
+			}
 		}
 
 		$newTerms = serialize($terms);
@@ -506,7 +495,7 @@ class PLNPlugin extends GenericPlugin {
 	 * @return boolean
 	 */
 	public function cronEnabled() {
-		$application = PKPApplication::getApplication();
+		$application = PKPApplication::get();
 		$products = $application->getEnabledProducts('plugins.generic');
 		return isset($products['acron']) || Config::getVar('general', 'scheduled_tasks', false);
 	}
@@ -519,17 +508,28 @@ class PLNPlugin extends GenericPlugin {
 	 */
 	public function curlGet($url, $headers=[]) {
 		$httpClient = Application::get()->getHttpClient();
+		$response = null;
+		$body = null;
+		$error = null;
 		try {
-			$response = $httpClient->request('GET', $url, [
-				'headers' => $headers,
-			]);
+			$response = $httpClient->request('GET', $url, ['headers' => $headers]);
+			$body = (string) $response->getBody();
 		} catch (GuzzleHttp\Exception\RequestException $e) {
-			return ['error' => $e->getMessage(), 'status' => null];
+			$response = $e->getResponse();
+			$body = $response ? (string) $response->getBody() : null;
+			$error = $e->getMessage();
+			if (strlen($body)) {
+				try {
+					$error = (new SimpleXMLElement($body))->summary ?: $error;
+				} catch (Exception $e) {
+				}
+			}
 		}
-		return array(
-			'status' => $response->getStatusCode(),
-			'result' => (string) $response->getBody(),
-		);
+		return [
+			'status' => $response ? $response->getStatusCode() : null,
+			'result' => $body,
+			'error' => $error
+		];
 	}
 
 	/**

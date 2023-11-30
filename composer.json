@@ -10,6 +10,9 @@
         "classmap-authoritative": true,
         "optimize-autoloader": true,
         "prepend-autoloader": false,
-        "sort-packages": true
+        "sort-packages": true,
+        "platform": {
+            "php": "7.3"
+        }
     }
 }

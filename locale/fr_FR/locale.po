@@ -195,13 +195,16 @@ msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr "Erreur réseau {$error} connexion au PKP PN pour obtenir une mise à jour du statut du dépôt."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "Erreur HTTP {$error} envoyée par le serveur PKP PN lors d'une tentative de connexion au document de service."
+msgstr "Erreur HTTP {$error} envoyée par le serveur PKP PN lors d'une tentative de connexion au document de service.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "Erreur HTTP {$error} envoyée par le serveur PKP PN lors de l'envoi du dépôt."
+msgstr "Erreur HTTP {$error} envoyée par le serveur PKP PN lors de l'envoi du dépôt.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "Erreur HTTP {$error} envoyée par le serveur PKP PN lors de la vérification du statut d'un dépôt."
+msgstr "Erreur HTTP {$error} envoyée par le serveur PKP PN lors de la vérification du statut d'un dépôt.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Impossible de trouver le dossier compressé {$file}."

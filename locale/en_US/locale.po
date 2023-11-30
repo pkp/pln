@@ -192,13 +192,16 @@ msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr "Network error {$error} connecting to the PKP PN to get a status update for deposit."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "PN server returned HTTP error {$error} when attempting to get the service document."
+msgstr "PN server returned HTTP error {$error} when attempting to get the service document.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "PN server returned HTTP error {$error} when sending the deposit."
+msgstr "PN server returned HTTP error {$error} when sending the deposit.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "PN server returned HTTP error {$error} when checking the status of a deposit."
+msgstr "PN server returned HTTP error {$error} when checking the status of a deposit.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Cannot find package file {$file}."

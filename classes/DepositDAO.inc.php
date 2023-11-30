@@ -3,8 +3,8 @@
 /**
  * @file classes/DepositDAO.inc.php
  *
- * Copyright (c) 2013-2022 Simon Fraser University
- * Copyright (c) 2003-2022 John Willinsky
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class DepositDAO
@@ -52,23 +52,29 @@ class DepositDAO extends DAO {
 	 */
 	public function insertObject($deposit) {
 		$this->update(
-			sprintf('
-				INSERT INTO pln_deposits
+			sprintf(
+				'INSERT INTO pln_deposits
 					(journal_id,
 					uuid,
 					status,
+					staging_state,
+					lockss_state,
 					date_status,
 					date_created,
-					date_modified)
+					date_modified,
+					date_preserved)
 				VALUES
-					(?, ?, ?, %s, NOW(), %s)',
+					(?, ?, ?, ?, ?, %s, CURRENT_TIMESTAMP, %s, %s)',
 				$this->datetimeToDB($deposit->getLastStatusDate()),
-				$this->datetimeToDB($deposit->getDateModified())
+				$this->datetimeToDB($deposit->getDateModified()),
+				$this->datetimeToDB($deposit->getPreservedDate())
 			),
 			[
 				(int) $deposit->getJournalId(),
 				$deposit->getUUID(),
-				(int) $deposit->getStatus()
+				(int) $deposit->getStatus(),
+				$deposit->getStagingState(),
+				$deposit->getLockssState()
 			]
 		);
 		$deposit->setId($this->getInsertId());
@@ -81,23 +87,29 @@ class DepositDAO extends DAO {
 	 */
 	public function updateObject($deposit) {
 		$this->update(
-			sprintf('
-				UPDATE pln_deposits SET
+			sprintf(
+				'UPDATE pln_deposits SET
 					journal_id = ?,
 					uuid = ?,
 					status = ?,
+					staging_state = ?,
+					lockss_state = ?,
 					date_status = %s,
 					date_created = %s,
-					date_modified = NOW(),
+					date_preserved = %s,
+					date_modified = CURRENT_TIMESTAMP,
 					export_deposit_error = ?
 				WHERE deposit_id = ?',
 				$this->datetimeToDB($deposit->getLastStatusDate()),
-				$this->datetimeToDB($deposit->getDateCreated())
+				$this->datetimeToDB($deposit->getDateCreated()),
+				$this->datetimeToDB($deposit->getPreservedDate())
 			),
 			[
 				(int) $deposit->getJournalId(),
 				$deposit->getUUID(),
 				(int) $deposit->getStatus(),
+				$deposit->getStagingState(),
+				$deposit->getLockssState(),
 				$deposit->getExportDepositError(),
 				(int) $deposit->getId()
 			]
@@ -123,7 +135,7 @@ class DepositDAO extends DAO {
 	 * @return int
 	 */
 	public function getInsertId() {
-		return $this->_getInsertId('pln_deposits', 'deposit_id');
+		return $this->_getInsertId();
 	}
 
 	/**
@@ -137,9 +149,12 @@ class DepositDAO extends DAO {
 		$deposit->setJournalId($row['journal_id']);
 		$deposit->setUUID($row['uuid']);
 		$deposit->setStatus($row['status']);
+		$deposit->setStagingState($row['staging_state']);
+		$deposit->setLockssState($row['lockss_state']);
 		$deposit->setLastStatusDate($this->datetimeFromDB($row['date_status']));
 		$deposit->setDateCreated($this->datetimeFromDB($row['date_created']));
 		$deposit->setDateModified($this->datetimeFromDB($row['date_modified']));
+		$deposit->setPreservedDate($row['date_preserved'] ? $this->datetimeFromDB($row['date_preserved']) : null);
 		$deposit->setExportDepositError($row['export_deposit_error']);
 
 		HookRegistry::call('DepositDAO::_fromRow', [&$deposit, &$row]);
@@ -180,7 +195,7 @@ class DepositDAO extends DAO {
 			$sql = 'SELECT *
 			FROM pln_deposits
 			WHERE journal_id = ?
-			ORDER BY deposit_id',
+			ORDER BY export_deposit_error DESC, deposit_id DESC',
 			$params,
 			$dbResultRange
 		);
@@ -203,7 +218,7 @@ class DepositDAO extends DAO {
 	}
 
 	/**
-	 * Retrieve all deposits that need packaging
+	 * Retrieve all deposits that need to be transferred
 	 * @param int $journalId
 	 * @return DAOResultFactory
 	 */
@@ -212,15 +227,13 @@ class DepositDAO extends DAO {
 			'SELECT *
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
-			AND d.status & ? = 0
-			AND d.status & ? = 0
+			AND d.status & ? <> 0
 			AND d.status & ? = 0
 			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT
+				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
+				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED
 			]
 		);
 
@@ -238,14 +251,10 @@ class DepositDAO extends DAO {
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
 			AND d.status & ? = 0
-			AND d.status & ? = 0
-			AND d.status & ? = 0
 			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED
+				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED
 			]
 		);
 
@@ -262,15 +271,18 @@ class DepositDAO extends DAO {
 			'SELECT *
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
-			AND d.status & ? <> 0
-			AND d.status & ? = 0
-			AND d.status & ? = 0
+			AND (
+				d.status IS NULL
+				OR (
+					d.status & ? <> 0
+					AND d.status & ? = 0
+				)
+			)
 			ORDER BY d.export_deposit_error, d.deposit_id',
 			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT,
-				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGING_FAILED
+				(int) PLN_PLUGIN_DEPOSIT_STATUS_LOCKSS_AGREEMENT
 			]
 		);
 

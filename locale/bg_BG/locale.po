@@ -159,15 +159,18 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Не може да се намери пакетен файл {$file}."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "PN сървърът върна HTTP грешка {$error} при проверка на състоянието на "
 "депозит."
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "PN сървърът върна HTTP грешка {$error} при изпращане на депозита."
+msgstr "PN сървърът върна HTTP грешка {$error} при изпращане на депозита.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr ""
+msgstr "\n"
+"{$message}"
 "PN сървърът върна HTTP грешка {$error} при опит да получи сервизния документ."
 
 msgid "plugins.generic.pln.error.network.swordstatement"

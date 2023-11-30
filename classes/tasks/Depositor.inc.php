@@ -3,8 +3,8 @@
 /**
  * @file classes/tasks/Depositor.inc.php
  *
- * Copyright (c) 2013-2022 Simon Fraser University
- * Copyright (c) 2003-2022 John Willinsky
+ * Copyright (c) 2014-2023 Simon Fraser University
+ * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class PLNPluginDepositor
@@ -71,12 +71,21 @@ class Depositor extends ScheduledTask {
 				continue;
 			}
 
+
+			// it's necessary that the journal have an issn set
+			if (!$journal->getSetting('onlineIssn') &&
+				!$journal->getSetting('printIssn') &&
+				!$journal->getSetting('issn')) {
+				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.issn_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
+				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING);
+				continue;
+			}
+
 			$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.getting_servicedocument'), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			// get the sword service document
 			$sdResult = $this->_plugin->getServiceDocument($journal->getId());
-
 			// if for some reason we didn't get a valid response, skip this journal
-			if ($sdResult != PLN_PLUGIN_HTTP_STATUS_OK) {
+			if (intdiv((int) $sdResult, 100) !== 2) {
 				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
 				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_HTTP_ERROR);
 				continue;
@@ -95,19 +104,10 @@ class Depositor extends ScheduledTask {
 				continue;
 			}
 
-			// it's necessary that the journal have an issn set
-			if (!$journal->getSetting('onlineIssn') &&
-				!$journal->getSetting('printIssn') &&
-				!$journal->getSetting('issn')) {
-				$this->addExecutionLogEntry(__('plugins.generic.pln.notifications.issn_missing'), SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-				$this->_plugin->createJournalManagerNotification($journal->getId(), PLN_PLUGIN_NOTIFICATION_TYPE_ISSN_MISSING);
-				continue;
-			}
-
-			// update the statuses of existing deposits
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.statusupdates"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			// create new deposits for new deposit objects
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.newcontent"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			try {
-				$this->_processStatusUpdates($journal);
+				$this->_processNewDepositObjects($journal);
 			} catch (Throwable $e) {
 				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
 			}
@@ -120,18 +120,18 @@ class Depositor extends ScheduledTask {
 				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
 			}
 
-			// create new deposits for new deposit objects
-			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.newcontent"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
-			try {
-				$this->_processNewDepositObjects($journal);
-			} catch (Throwable $e) {
-				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
-			}
-
 			// package any deposits that need packaging
 			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.packagingdeposits"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 			try {
 				$this->_processNeedPackaging($journal);
+			} catch (Throwable $e) {
+				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
+			}
+
+			// update the statuses of existing deposits
+			$this->addExecutionLogEntry(__("plugins.generic.pln.depositor.statusupdates"), SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+			try {
+				$this->_processStatusUpdates($journal);
 			} catch (Throwable $e) {
 				$this->addExecutionLogEntry($e, SCHEDULED_TASK_MESSAGE_TYPE_ERROR);
 			}
@@ -177,7 +177,7 @@ class Depositor extends ScheduledTask {
 	/**
 	 * @param Journal $journal Object
 	 *
-	 * Go thourgh the deposits and mark them as updated if they have been
+	 * Go through the deposits and mark them as updated if they have been
 	 */
 	protected function _processHavingUpdatedContent(&$journal) {
 		// get deposits that have updated content
@@ -221,10 +221,7 @@ class Depositor extends ScheduledTask {
 		$plnDir = $fileManager->getBasePath() . PLN_PLUGIN_ARCHIVE_FOLDER;
 
 		// make sure the pln work directory exists
-		// TOOD: use FileManager calls instead of PHP ones where possible
-		if ($fileManager->fileExists($plnDir, 'dir') !== true) {
-			$fileManager->mkdirtree($plnDir);
-		}
+		$fileManager->mkdirtree($plnDir);
 
 		// loop though all of the deposits that need packaging
 		while ($deposit = $depositQueue->next()) {
@@ -293,7 +290,8 @@ class Depositor extends ScheduledTask {
 					unset($newObject);
 				}
 				break;
-			default: assert(false);
+			default:
+				throw new Exception("Invalid object type \"{$objectType}\"");
 		}
 	}
 
