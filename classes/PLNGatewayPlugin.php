@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @file PLNGatewayPlugin.php
+ * @file classes/PLNGatewayPlugin.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
@@ -9,13 +9,14 @@
  *
  * @class PLNGatewayPlugin
  *
- * @brief Gateway component of web PLN plugin
+ * @brief PLNGatewayPlugin component of web PLN plugin
  */
 
-namespace APP\plugins\generic\pln;
+namespace APP\plugins\generic\pln\classes;
 
 use APP\core\Application;
 use APP\facades\Repo;
+use APP\plugins\generic\pln\PLNPlugin;
 use APP\submission\Submission;
 use APP\template\TemplateManager;
 use PKP\core\ArrayItemIterator;
@@ -155,7 +156,7 @@ class PLNGatewayPlugin extends GatewayPlugin
         ]);
 
         header('content-type: text/xml; charset=utf-8');
-        $templateMgr->display($plugin->getTemplateResource('ping.tpl'));
+        $templateMgr->display($plugin->getTemplateResource('handshake.tpl'));
         return true;
     }
 }

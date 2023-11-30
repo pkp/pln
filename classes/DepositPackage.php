@@ -307,14 +307,14 @@ class DepositPackage
         $termsXml = new DOMDocument('1.0', 'utf-8');
         $entry = $termsXml->createElementNS('http://www.w3.org/2005/Atom', 'entry');
         $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:dcterms', 'http://purl.org/dc/terms/');
-        $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', 'plnplugin');
+        $entry->setAttributeNS('http://www.w3.org/2000/xmlns/', 'xmlns:pkp', 'terms');
 
         $terms = $plugin->getSetting($this->deposit->getJournalId(), 'terms_of_use');
         $agreement = $plugin->getSetting($this->deposit->getJournalId(), 'terms_of_use_agreement');
 
-        $pkpTermsOfUse = $termsXml->createElementNS('plnplugin', 'pkp:terms_of_use');
+        $pkpTermsOfUse = $termsXml->createElementNS('terms', 'pkp:terms_of_use');
         foreach ($terms as $termName => $termData) {
-            $element = $termsXml->createElementNS('plnplugin', $termName, $termData['term']);
+            $element = $termsXml->createElementNS('terms', $termName, $termData['term']);
             $element->setAttribute('updated', $termData['updated']);
             $element->setAttribute('agreed', $agreement[$termName]);
             $pkpTermsOfUse->appendChild($element);
