@@ -1,12 +1,12 @@
 # PKP Preservation Network Plugin for OJS
 
 [![OJS compatibility](https://img.shields.io/badge/ojs-3.4-brightgreen)](https://github.com/pkp/ojs/tree/stable-3_4_0)
-![GitHub release](https://img.shields.io/github/v/release/pkp/pln?include_prereleases&label=latest%20release&filter=v3*)
+[![GitHub release](https://img.shields.io/github/v/release/pkp/pln?include_prereleases&label=latest%20release&filter=v3*)](https://github.com/pkp/pln/releases)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pkp/pln)
-![License type](https://img.shields.io/github/license/pkp/pln)
-![Number of downloads](https://img.shields.io/github/downloads/pkp/pln/total)
-![Commit activity per year](https://img.shields.io/github/commit-activity/y/pkp/pln)
-![Contributors](https://img.shields.io/github/contributors-anon/pkp/pln)
+[![License type](https://img.shields.io/github/license/pkp/pln)](https://github.com/pkp/pln/blob/main/LICENSE)
+[![Number of downloads](https://img.shields.io/github/downloads/pkp/pln/total)](https://github.com/pkp/pln/releases)
+[![Commit activity per year](https://img.shields.io/github/commit-activity/y/pkp/pln)](https://github.com/pkp/pln/graphs/code-frequency)
+[![Contributors](https://img.shields.io/github/contributors-anon/pkp/pln)](https://github.com/pkp/pln/graphs/contributors)
 
 ## About
 
