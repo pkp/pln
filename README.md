@@ -1,5 +1,5 @@
-[![OJS compatibility](https://img.shields.io/badge/ojs-3.4--x-brightgreen)](https://github.com/pkp/ojs/tree/stable-3_4_0)
-![GitHub release](https://img.shields.io/github/v/release/pkp/pln?include_prereleases&label=latest%20release&filter=v3*)
+[![OJS compatibility](https://img.shields.io/badge/ojs-3.3-brightgreen)](https://github.com/pkp/ojs/tree/stable-3_4_0)
+![GitHub release](https://img.shields.io/github/v/release/pkp/pln?include_prereleases&label=latest%20release&filter=v2*)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pkp/pln)
 ![License type](https://img.shields.io/github/license/pkp/pln)
 ![Number of downloads](https://img.shields.io/github/downloads/pkp/pln/total)
