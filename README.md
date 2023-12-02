@@ -1,12 +1,10 @@
-```
-================================================================
-=== PKP Preservation Network Plugin for OJS
-=== Version: (see version.xml)
-=== Author: Chris MacDonald <chris@fcts.ca>
-=== Author: Michael Joyce <ubermichael@gmail.com>
-=== Author: Dimitris Efstathiou <defstat@gmail.com>
-================================================================
-```
+[![OJS compatibility](https://img.shields.io/badge/ojs-3.4--x-brightgreen)](https://github.com/pkp/ojs/tree/stable-3_4_0)
+![GitHub release](https://img.shields.io/github/v/release/pkp/pln?include_prereleases&label=latest%20release&filter=v3*)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/pkp/pln)
+![License type](https://img.shields.io/github/license/pkp/pln)
+![Number of downloads](https://img.shields.io/github/downloads/pkp/pln/total)
+
+# PKP Preservation Network Plugin for OJS
 
 ## About
 
@@ -14,6 +12,8 @@ This plugin provides a means for OJS to preserve content in the PKP
 Preservation Network (PKP PN). The plugin checks for new and modified content
 and provided the PN's terms of use are met, will communicate with the PN's
 staging server to preserve your published content automatically.
+
+If you need support for older OJS releases, see the [available branches](https://github.com/pkp/pln/branches).
 
 ## License
 
@@ -99,3 +99,9 @@ not necessary.)
 
 - Whenever something doesn't work as expected, always check the error log for clues.
   If nothing helps, report your problem in the forum.
+
+## Original authors
+
+- Chris MacDonald <chris@fcts.ca>
+- Michael Joyce <ubermichael@gmail.com>
+- Dimitris Efstathiou <defstat@gmail.com>
