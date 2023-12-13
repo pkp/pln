@@ -416,7 +416,7 @@ class PLNPlugin extends GenericPlugin {
 			return $result['status'];
 		}
 
-		$serviceDocument = new DOMDocument();
+		$serviceDocument = new DOMDocument('1.0', 'utf-8');
 		$serviceDocument->preserveWhiteSpace = false;
 		$serviceDocument->loadXML($result['result']);
 
