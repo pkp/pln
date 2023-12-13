@@ -377,7 +377,7 @@ class DepositPackage
      */
     public function cleanFileList(string $xml, array &$fileList): string
     {
-        $doc = new DOMDocument();
+        $doc = new DOMDocument('1.0', 'utf-8');
         $doc->loadXML($xml);
         $xpath = new DOMXPath($doc);
         $xpath->registerNameSpace('pkp', 'http://pkp.sfu.ca');
@@ -574,7 +574,7 @@ class DepositPackage
             return;
         }
 
-        $contentDOM = new DOMDocument();
+        $contentDOM = new DOMDocument('1.0', 'utf-8');
         $contentDOM->preserveWhiteSpace = false;
         $contentDOM->loadXML($result['result']);
 
