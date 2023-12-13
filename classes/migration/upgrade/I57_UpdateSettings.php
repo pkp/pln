@@ -25,22 +25,31 @@ class I57_UpdateSettings extends Migration
      */
     public function up(): void
     {
-        // Drop extra serialization from settings
+        // Drop extra serialization from plugin settings
         $settings = DB::table('plugin_settings')
             ->where('plugin_name', '=', 'plnplugin')
             ->whereIn('setting_name', ['terms_of_use', 'terms_of_use_agreement'])
             ->pluck('setting_value', 'setting_name');
         foreach ($settings as $name => $value) {
+            $isSerialized = false;
             try {
                 $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
             } catch (Exception) {
+                error_clear_last();
                 $value = unserialize($value);
+                $isSerialized = !error_get_last();
             }
 
-            DB::table('plugin_settings')
-                ->where('plugin_name', '=', 'plnplugin')
-                ->where('setting_name', '=', $name)
-                ->update(['setting_value' => json_encode(unserialize($value))]);
+            error_clear_last();
+            $value = unserialize($value);
+            $isSerialized = !error_get_last() || $isSerialized;
+
+            if ($isSerialized) {
+                DB::table('plugin_settings')
+                    ->where('plugin_name', '=', 'plnplugin')
+                    ->where('setting_name', '=', $name)
+                    ->update(['setting_value' => json_encode($value)]);
+            }
         }
     }
 
