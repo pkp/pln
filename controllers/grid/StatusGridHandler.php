@@ -97,9 +97,10 @@ class StatusGridHandler extends GridHandler
     {
         $context = $request->getContext();
         $rangeInfo = $this->getGridRangeInfo($request, $this->getId());
-        return Repository::instance()
-            ->getCollector()
+        $collector = Repository::instance()->getCollector();
+        return $collector
             ->filterByContextIds([$context->getId()])
+            ->orderBy($collector::ORDER_BY_ERROR, $collector::ORDER_DIR_DESC)
             ->limit($rangeInfo->getCount())
             ->offset(($rangeInfo->getPage() - 1) * $rangeInfo->getCount())
             ->getMany()

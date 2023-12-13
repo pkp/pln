@@ -18,6 +18,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\LazyCollection;
+use InvalidArgumentException;
 use PKP\core\interfaces\CollectorInterface;
 use PKP\plugins\Hook;
 
@@ -30,6 +31,9 @@ class Collector implements CollectorInterface
     public const STATUS_READY_TO_TRANSFER = 'STATUS_READY_TO_TRANSFER';
     public const STATUS_READY_TO_PACKAGE = 'STATUS_READY_TO_PACKAGE';
     public const STATUS_READY_FOR_UPDATE = 'STATUS_READY_FOR_UPDATE';
+    public const ORDER_BY_ERROR = 'error';
+    public const ORDER_DIR_ASC = 'ASC';
+    public const ORDER_DIR_DESC = 'DESC';
 
     public ?int $count = null;
 
@@ -46,6 +50,9 @@ class Collector implements CollectorInterface
 
     /** @var ?string */
     public ?string $status = null;
+
+    public string $orderBy = self::ORDER_BY_ERROR;
+    public string $orderDirection = 'ASC';
 
     public function __construct(public DAO $dao)
     {
@@ -130,10 +137,30 @@ class Collector implements CollectorInterface
     }
 
     /**
+     * Order the results
+     *
+     * @param string $sorter One of the static::ORDER_BY_ constants
+     * @param string $direction One of the static::ORDER_DIR_ constants
+     */
+    public function orderBy(string $sorter, string $direction = self::ORDER_DIR_DESC): static
+    {
+        if (!in_array($sorter, [static::ORDER_BY_ERROR])) {
+            throw new InvalidArgumentException("Invalid order by: {$sorter}");
+        }
+        if (!in_array($direction, [static::ORDER_DIR_ASC, static::ORDER_DIR_DESC])) {
+            throw new InvalidArgumentException("Invalid order direction: {$direction}");
+        }
+        $this->orderBy = $sorter;
+        $this->orderDirection = $direction;
+        return $this;
+    }
+
+    /**
      * @copydoc CollectorInterface::getQueryBuilder()
      */
     public function getQueryBuilder(): Builder
     {
+        $orderBy = [static::ORDER_BY_ERROR => 'd.export_deposit_error'][$this->orderBy] ?? null;
         $q = DB::table('pln_deposits as d')
             ->select('d.*')
             ->when($this->ids !== null, fn (Builder $query) => $query->whereIn('d.deposit_id', $this->ids))
@@ -160,9 +187,10 @@ class Collector implements CollectorInterface
                     ),
                 }
             )
-            // First deposits without errors
-            ->orderBy('d.export_deposit_error')
-            ->orderBy('d.deposit_id');
+            ->when($orderBy, fn (Builder $q) => $q
+                ->orderBy($orderBy, $this->orderDirection)
+                ->orderBy('d.deposit_id')
+            );
 
         // Add app-specific query statements
         Hook::call('PreservationNetwork::Deposit::Collector', [&$q, $this]);
