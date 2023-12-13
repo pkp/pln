@@ -17,6 +17,20 @@ staging server to preserve your published content automatically.
 
 If you need support for older OJS releases, see the [available branches](https://github.com/pkp/pln/branches).
 
+## Installation Instructions
+
+We recommend installing this plugin using the Plugin Gallery within OJS. Log in
+with administrator privileges, navigate to `Settings` > `Website` > `Plugins`, and
+choose the Plugin Gallery. Find the `PN Plugin` there and install it.
+
+After installing and enabling the plugin, you need to access its settings:
+
+![image](https://github.com/pkp/pln/assets/361921/50ea976e-1bd7-41c3-954f-0455ce94787d)
+
+Then read and accept all terms of use, and click on the save button:
+
+![image](https://github.com/pkp/pln/assets/361921/6efac5d8-491f-477a-8bda-dbf7b41b9c09)
+
 ## License
 
 This plugin is licensed under the GNU General Public License v3. See the
@@ -55,13 +69,6 @@ pln_url = https://example.com
 You will need to clear the data caches after adding or changing this setting.
 There is a link to clear the caches at
 `Site Administration` > `Administration`
-
-## Installation Instructions
-
-We recommend installing this plugin using the Plugin Gallery within OJS. Log in
-with administrator privileges, navigate to `Settings` > `Website` > `Plugins`, and
-choose the Plugin Gallery. Find the `PN Plugin` there and follow the
-instructions to install it.
 
 ## Build Instructions
 
