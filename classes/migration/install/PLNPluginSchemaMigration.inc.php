@@ -54,6 +54,11 @@ class PLNPluginSchemaMigration extends Migration {
 
 		// Create a new scheduled_tasks entry for this plugin
 		Capsule::table('scheduled_tasks')->insertOrIgnore(['class_name' => 'plugins.generic.pln.classes.tasks.Depositor']);
+
+		foreach (['I35_FixMissingField', 'I28_FixDepositStatus'] as $class) {
+			import("plugins.generic.pln.classes.migration.upgrade.{$class}");
+			(new $class())->up();
+		}
 	}
 
 	/**
