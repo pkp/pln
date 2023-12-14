@@ -25,7 +25,9 @@ class I57_RemoveScheduledTask extends Migration
      */
     public function up(): void
     {
-        DB::table('scheduled_tasks')->delete(['class_name' => 'plugins.generic.pln.classes.tasks.Depositor']);
+        DB::table('scheduled_tasks')
+            ->where('class_name', '=', 'plugins.generic.pln.classes.tasks.Depositor')
+            ->delete();
     }
 
     /**

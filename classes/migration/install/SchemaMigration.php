@@ -14,6 +14,10 @@
 
 namespace APP\plugins\generic\pln\classes\migration\install;
 
+use APP\plugins\generic\pln\classes\migration\upgrade\I28_FixDepositStatus;
+use APP\plugins\generic\pln\classes\migration\upgrade\I35_FixMissingField;
+use APP\plugins\generic\pln\classes\migration\upgrade\I57_RemoveScheduledTask;
+use APP\plugins\generic\pln\classes\migration\upgrade\I57_UpdateSettings;
 use APP\plugins\generic\pln\classes\tasks\Depositor;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -60,6 +64,12 @@ class SchemaMigration extends Migration
 
         // Create a new scheduled_tasks entry for this plugin
         DB::table('scheduled_tasks')->insertOrIgnore(['class_name' => Depositor::class]);
+
+        /** @var class-string<Migration> $class */
+        foreach ([I35_FixMissingField::class, I28_FixDepositStatus::class, I57_RemoveScheduledTask::class, I57_UpdateSettings::class] as $class) {
+            $migration = new $class();
+            $migration->up();
+        }
     }
 
     /**
