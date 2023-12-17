@@ -20,7 +20,7 @@ use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\classes\deposit\Repository as DepositRepository;
 use APP\plugins\generic\pln\classes\depositObject\Repository as DepositObjectRepository;
 use APP\plugins\generic\pln\classes\DepositPackage;
-use APP\plugins\generic\pln\PLNPlugin;
+use APP\plugins\generic\pln\PlnPlugin;
 use Exception;
 use PKP\db\DAORegistry;
 use PKP\file\ContextFileManager;
@@ -30,7 +30,7 @@ use Throwable;
 
 class Depositor extends ScheduledTask
 {
-    private PLNPlugin $plugin;
+    private PlnPlugin $plugin;
 
     /**
      * Constructor.
@@ -38,7 +38,7 @@ class Depositor extends ScheduledTask
     public function __construct(array $args)
     {
         parent::__construct($args);
-        $this->plugin = PLNPlugin::loadPlugin();
+        $this->plugin = PlnPlugin::loadPlugin();
     }
 
     /**
@@ -70,14 +70,14 @@ class Depositor extends ScheduledTask
             // check to make sure zip is installed
             if (!$this->plugin->hasZipArchive()) {
                 $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.zip_missing'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-                $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_ZIP_MISSING);
+                $this->plugin->createJournalManagerNotification($journal->getId(), PlnPlugin::NOTIFICATION_ZIP_MISSING);
                 continue;
             }
 
             // it's necessary that the journal have an issn set
             if (!$journal->getData('onlineIssn') && !$journal->getData('printIssn')) {
                 $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.issn_missing'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-                $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_ISSN_MISSING);
+                $this->plugin->createJournalManagerNotification($journal->getId(), PlnPlugin::NOTIFICATION_ISSN_MISSING);
                 continue;
             }
 
@@ -87,7 +87,7 @@ class Depositor extends ScheduledTask
             // if for some reason we didn't get a valid response, skip this journal
             if (intdiv((int) $result['status'], 100) !== 2) {
                 $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.http_error'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-                $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_HTTP_ERROR);
+                $this->plugin->createJournalManagerNotification($journal->getId(), PlnPlugin::NOTIFICATION_HTTP_ERROR);
                 continue;
             }
 
@@ -100,7 +100,7 @@ class Depositor extends ScheduledTask
             // if the terms haven't been agreed to, skip transfer
             if (!$this->plugin->termsAgreed($journal->getId())) {
                 $this->addExecutionLogEntry(__('plugins.generic.pln.notifications.terms_updated'), ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_WARNING);
-                $this->plugin->createJournalManagerNotification($journal->getId(), PLNPlugin::NOTIFICATION_TERMS_UPDATED);
+                $this->plugin->createJournalManagerNotification($journal->getId(), PlnPlugin::NOTIFICATION_TERMS_UPDATED);
                 continue;
             }
 
@@ -220,7 +220,7 @@ class Depositor extends ScheduledTask
     {
         $depositQueue = DepositRepository::instance()->getNeedPackaging($journal->getId());
         $fileManager = new ContextFileManager($journal->getId());
-        $plnDir = $fileManager->getBasePath() . PLNPlugin::DEPOSIT_FOLDER;
+        $plnDir = $fileManager->getBasePath() . PlnPlugin::DEPOSIT_FOLDER;
 
         // make sure the pln work directory exists
         $fileManager->mkdirtree($plnDir);
@@ -258,7 +258,7 @@ class Depositor extends ScheduledTask
 
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PLNPlugin::DEPOSIT_TYPE_SUBMISSION:
+            case PlnPlugin::DEPOSIT_TYPE_SUBMISSION:
 
                 // get the new object threshold per deposit and split the objects into arrays of that size
                 $objectThreshold = $this->plugin->getSetting($journal->getId(), 'object_threshold');
@@ -278,7 +278,7 @@ class Depositor extends ScheduledTask
                     }
                 }
                 break;
-            case PLNPlugin::DEPOSIT_TYPE_ISSUE:
+            case PlnPlugin::DEPOSIT_TYPE_ISSUE:
                 // create a new deposit for each deposit object
                 foreach ($newObjects as $newObject) {
                     $newDeposit = new Deposit($this->plugin->newUUID());

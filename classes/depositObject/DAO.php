@@ -17,7 +17,7 @@
 namespace APP\plugins\generic\pln\classes\depositObject;
 
 use APP\facades\Repo;
-use APP\plugins\generic\pln\PLNPlugin;
+use APP\plugins\generic\pln\PlnPlugin;
 use APP\submission\Submission;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Database\Query\JoinClause;
@@ -157,7 +157,7 @@ class DAO extends EntityDAO
             ->getQueryBuilder()
             ->join('pln_deposit_objects AS do', 'do.object_id', '=', 's.submission_id')
             ->where('do.date_modified', '<', 's.last_modified')
-            ->where('do.object_type', '=', PLNPlugin::DEPOSIT_TYPE_SUBMISSION)
+            ->where('do.object_type', '=', PlnPlugin::DEPOSIT_TYPE_SUBMISSION)
             ->select('do.deposit_object_id', 's.last_modified')
             ->get();
     }
@@ -184,7 +184,7 @@ class DAO extends EntityDAO
                     ->where('p.status', '=', Submission::STATUS_PUBLISHED)
             )
             ->join('submissions AS s', 's.current_publication_id', '=', 'p.publication_id')
-            ->where('do.object_type', '=', PLNPlugin::DEPOSIT_TYPE_ISSUE)
+            ->where('do.object_type', '=', PlnPlugin::DEPOSIT_TYPE_ISSUE)
             ->where(
                 fn (Builder $q) => $q
                     ->where('do.date_modified', '<', 's.last_modified')

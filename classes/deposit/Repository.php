@@ -15,7 +15,7 @@ namespace APP\plugins\generic\pln\classes\deposit;
 
 use APP\core\Request;
 use APP\core\Services;
-use APP\plugins\generic\pln\PLNPlugin;
+use APP\plugins\generic\pln\PlnPlugin;
 use Illuminate\Support\LazyCollection;
 use PKP\core\Core;
 use PKP\file\ContextFileManager;
@@ -156,7 +156,7 @@ class Repository
         Hook::call('PreservationNetwork::Deposit::delete::before', [$deposit]);
 
         $fileManager = new ContextFileManager($deposit->getJournalId());
-        $path = $fileManager->getBasePath() . PLNPlugin::DEPOSIT_FOLDER . "/{$deposit->getUUID()}";
+        $path = $fileManager->getBasePath() . PlnPlugin::DEPOSIT_FOLDER . "/{$deposit->getUUID()}";
         if (!$fileManager->rmtree($path)) {
             return false;
         }

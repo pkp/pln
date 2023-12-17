@@ -16,7 +16,7 @@ namespace APP\plugins\generic\pln\classes;
 
 use APP\core\Application;
 use APP\facades\Repo;
-use APP\plugins\generic\pln\PLNPlugin;
+use APP\plugins\generic\pln\PlnPlugin;
 use APP\submission\Submission;
 use APP\template\TemplateManager;
 use PKP\core\ArrayItemIterator;
@@ -71,9 +71,9 @@ class PLNGatewayPlugin extends GatewayPlugin
     /**
      * Get the plugin
      */
-    public function getPlugin(): PLNPlugin
+    public function getPlugin(): PlnPlugin
     {
-        /** @var PLNPlugin */
+        /** @var PlnPlugin */
         $plugin = PluginRegistry::getPlugin('generic', $this->parentPluginName);
         return $plugin;
     }

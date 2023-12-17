@@ -17,5 +17,5 @@
 	<date>2023-11-30</date>
 	<lazy-load>1</lazy-load>
 	<sitewide>0</sitewide>
-	<class>PLNPlugin</class>
+	<class>PlnPlugin</class>
 </version>

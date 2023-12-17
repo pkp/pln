@@ -18,7 +18,7 @@ use APP\core\Request;
 use APP\handler\Handler;
 use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\classes\DepositPackage;
-use APP\plugins\generic\pln\PLNPlugin;
+use APP\plugins\generic\pln\PlnPlugin;
 use APP\template\TemplateManager;
 use PKP\core\PKPString;
 use PKP\file\FileManager;
@@ -90,7 +90,7 @@ class PageHandler extends Handler
     public function status(array $args, Request $request): void
     {
         $router = $request->getRouter();
-        $plugin = PLNPlugin::loadPlugin();
+        $plugin = PlnPlugin::loadPlugin();
         $templateMgr = TemplateManager::getManager();
         $templateMgr->assign('pageHierarchy', [[$router->url($request, null, 'about'), 'about.aboutTheJournal']]);
         $templateMgr->display("{$plugin->getTemplatePath()}/status.tpl");

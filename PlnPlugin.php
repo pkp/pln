@@ -1,13 +1,13 @@
 <?php
 
 /**
- * @file PLNPlugin.php
+ * @file PlnPlugin.php
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * @class PLNPlugin
+ * @class PlnPlugin
  *
  * @brief PLN plugin class
  */
@@ -49,7 +49,7 @@ use PKP\session\SessionManager;
 use PKP\userGroup\UserGroup;
 use SimpleXMLElement;
 
-class PLNPlugin extends GenericPlugin
+class PlnPlugin extends GenericPlugin
 {
     public const DEFAULT_NETWORK_URL = 'https://pkp-pn.lib.sfu.ca';
 

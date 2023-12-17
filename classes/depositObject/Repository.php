@@ -17,7 +17,7 @@ use APP\core\Request;
 use APP\core\Services;
 use APP\facades\Repo;
 use APP\plugins\generic\pln\classes\deposit\Repository as DepositRepository;
-use APP\plugins\generic\pln\PLNPlugin;
+use APP\plugins\generic\pln\PlnPlugin;
 use Exception;
 use PKP\core\Core;
 use PKP\plugins\Hook;
@@ -176,7 +176,7 @@ class Repository
     {
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PLNPlugin::DEPOSIT_TYPE_SUBMISSION:
+            case PlnPlugin::DEPOSIT_TYPE_SUBMISSION:
                 $outdatedSubmissions = $this->dao->getOutdatedSubmissions(
                     Repo::submission()->getCollector()->filterByContextIds([$journalId])
                 );
@@ -189,7 +189,7 @@ class Repository
                     DepositRepository::instance()->edit($deposit);
                 }
                 break;
-            case PLNPlugin::DEPOSIT_TYPE_ISSUE:
+            case PlnPlugin::DEPOSIT_TYPE_ISSUE:
                 $outdatedIssues = $this->dao->getOutdatedIssues(
                     Repo::issue()->getCollector()->filterByContextIds([$journalId])
                 );
@@ -217,7 +217,7 @@ class Repository
         $objects = [];
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PLNPlugin::DEPOSIT_TYPE_SUBMISSION:
+            case PlnPlugin::DEPOSIT_TYPE_SUBMISSION:
                 $objects = $this->dao
                     ->getNewSubmissions(
                         Repo::submission()
@@ -226,7 +226,7 @@ class Repository
                     )
                     ->toArray();
                 break;
-            case PLNPlugin::DEPOSIT_TYPE_ISSUE:
+            case PlnPlugin::DEPOSIT_TYPE_ISSUE:
                 $objects = $this->dao
                     ->getNewIssues(
                         Repo::issue()

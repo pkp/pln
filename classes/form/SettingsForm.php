@@ -14,7 +14,7 @@
 
 namespace APP\plugins\generic\pln\classes\form;
 
-use APP\plugins\generic\pln\PLNPlugin;
+use APP\plugins\generic\pln\PlnPlugin;
 use APP\template\TemplateManager;
 use PKP\db\DAORegistry;
 use PKP\form\Form;
@@ -27,7 +27,7 @@ class SettingsForm extends Form
     /**
      * Constructor
      */
-    public function __construct(private PLNPlugin $plugin, private int $contextId)
+    public function __construct(private PlnPlugin $plugin, private int $contextId)
     {
         parent::__construct($plugin->getTemplateResource('settings.tpl'));
     }

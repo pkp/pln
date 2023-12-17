@@ -13,7 +13,7 @@
 
 namespace APP\plugins\generic\pln\classes\deposit;
 
-use APP\plugins\generic\pln\PLNPlugin;
+use APP\plugins\generic\pln\PlnPlugin;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -170,19 +170,19 @@ class Collector implements CollectorInterface
                 $this->status !== null,
                 fn (Builder $q) =>
                 match ($this->status) {
-                    static::STATUS_NEW => $q->where('d.status', '=', PLNPlugin::DEPOSIT_STATUS_NEW),
+                    static::STATUS_NEW => $q->where('d.status', '=', PlnPlugin::DEPOSIT_STATUS_NEW),
                     static::STATUS_READY_TO_TRANSFER => $q
-                        ->whereRaw('d.status & ? <> 0', [PLNPlugin::DEPOSIT_STATUS_PACKAGED])
-                        ->whereRaw('d.status & ? = 0', [PLNPlugin::DEPOSIT_STATUS_TRANSFERRED]),
+                        ->whereRaw('d.status & ? <> 0', [PlnPlugin::DEPOSIT_STATUS_PACKAGED])
+                        ->whereRaw('d.status & ? = 0', [PlnPlugin::DEPOSIT_STATUS_TRANSFERRED]),
                     static::STATUS_READY_TO_PACKAGE => $q
-                        ->whereRaw('d.status & ? = 0', [PLNPlugin::DEPOSIT_STATUS_PACKAGED]),
+                        ->whereRaw('d.status & ? = 0', [PlnPlugin::DEPOSIT_STATUS_PACKAGED]),
                     static::STATUS_READY_FOR_UPDATE => $q->where(
                         fn (Builder $q) => $q
                             ->whereNull('d.status')
                             ->orWhere(
                                 fn (Builder $q) => $q
-                                    ->whereRaw('d.status & ? <> 0', [PLNPlugin::DEPOSIT_STATUS_TRANSFERRED])
-                                    ->whereRaw('d.status & ? = 0', [PLNPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT])
+                                    ->whereRaw('d.status & ? <> 0', [PlnPlugin::DEPOSIT_STATUS_TRANSFERRED])
+                                    ->whereRaw('d.status & ? = 0', [PlnPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT])
                             )
                     ),
                 }
