@@ -294,7 +294,7 @@ class DepositPackage
                 );
 
                 if (!$exportXml) {
-                    throw new $exception($this->logMessage(__('plugins.generic.pln.error.depositor.export.issue.error')));
+                    throw new Exception(__('plugins.generic.pln.error.depositor.export.issue.error'));
                 }
                 $exportXml = $this->cleanFileList($exportXml, $fileList);
                 $fileManager->writeFile($exportFile, $exportXml);
