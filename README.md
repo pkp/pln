@@ -23,6 +23,14 @@ We recommend installing this plugin using the Plugin Gallery within OJS. Log in
 with administrator privileges, navigate to `Settings` > `Website` > `Plugins`, and
 choose the Plugin Gallery. Find the `PN Plugin` there and install it.
 
+> If for some reason, you need to install it manually, there are two ways:
+> - Download the latest release (attention to the OJS version compatibility)
+> - Download the code from GitHub (attention to grab the code from the right branch), then run `composer install` at the main plugin folder.
+>
+> After downloading, create the folder `plugins/generic/pln` and place the plugin files in it.
+>
+> Run the command `php lib/pkp/tools/installPluginVersion.php plugins/generic/pln/version.xml` at the main OJS folder, this will ensure the plugin is installed/upgraded properly (e.g. new fields might be added to the database).
+
 After installing and enabling the plugin, you need to access its settings:
 
 ![image](https://github.com/pkp/pln/assets/361921/50ea976e-1bd7-41c3-954f-0455ce94787d)
