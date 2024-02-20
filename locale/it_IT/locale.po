@@ -234,7 +234,7 @@ msgid "plugins.generic.pln.depositor.transferringdeposits"
 msgstr "Invio del versamento alla PKP PN in corso."
 
 msgid "plugins.generic.plngateway.displayName"
-msgstr " Gateway PN"
+msgstr "Gateway PN"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "Mostra lo stato della PKP PN e i titoli degli articoli recenti in preparazione per il deposito."
