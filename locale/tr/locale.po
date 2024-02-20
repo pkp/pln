@@ -49,10 +49,10 @@ msgid "plugins.generic.pln.depositor.packagingdeposits"
 msgstr "Arşiv için içerik paketleniyor."
 
 msgid "plugins.generic.pln.depositor.transferringdeposits"
-msgstr "Arşivler PLN'ye gönderiliyor."
+msgstr "Arşivler PN'ye gönderiliyor."
 
 msgid "plugins.generic.plngateway.displayName"
-msgstr "PLN Yolu"
+msgstr "PN Yolu"
 
 msgid "plugins.generic.pln.settings"
 msgstr "Ayarlar"
@@ -163,7 +163,7 @@ msgstr "Kullanım Şartları"
 msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Dergi Yöneticisi olarak, iyi niyetle, Kamu Bilgisi Projesi'nin Saklama "
-"Ağı'na (PKP-PN) katılım için aşağıdaki hüküm ve koşulları kabul ediyor ve "
+"Ağı'na (PKP PN) katılım için aşağıdaki hüküm ve koşulları kabul ediyor ve "
 "onaylıyorum:"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"

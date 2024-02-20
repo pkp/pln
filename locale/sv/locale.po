@@ -34,7 +34,7 @@ msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Som tidskriftsansvarig, accepterar och bekräftar jag i god tro, följande "
 "villkor för deltagande i Public Knowledge Project’s Preservation Network "
-"(PKP-PN):"
+"(PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Användarvillkor"

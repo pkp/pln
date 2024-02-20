@@ -332,7 +332,7 @@ msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Jaz, kot upravljalec revije, v dobri veri sprejemam in potrjujem spodnje "
 "pravila in pogoje za sodelovanje v mreži Public Knowledge Project’s "
-"Preservation Network (PKP-PN):"
+"Preservation Network (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Pogoji uporabe"

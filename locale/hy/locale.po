@@ -330,7 +330,7 @@ msgstr "Համաձայն եմ"
 msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Որպես ամսագրի մենեջեր՝ ես, բարեխղճորեն, ընդունում և հաստատում եմ Public "
-"Knowledge Project-ի Preservation Network-ին (PKP-PN) մասնակցելու հետևյալ "
+"Knowledge Project-ի Preservation Network-ին (PKP PN) մասնակցելու հետևյալ "
 "դրույթներն ու պայմանները:"
 
 msgid "plugins.generic.pln.settings.terms_of_use"

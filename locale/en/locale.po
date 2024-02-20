@@ -42,7 +42,7 @@ msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Terms of Use"
 
 msgid "plugins.generic.pln.settings.terms_of_use_help"
-msgstr "As Journal Manager, I, in good faith, accept and confirm the following terms and conditions for participation in the Public Knowledge Project’s Preservation Network (PKP-PN):"
+msgstr "As Journal Manager, I, in good faith, accept and confirm the following terms and conditions for participation in the Public Knowledge Project’s Preservation Network (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "I Agree"
