@@ -15,10 +15,10 @@ msgid "plugins.generic.pln"
 msgstr "PKP PN 插件"
 
 msgid "plugins.generic.pln.description"
-msgstr "PKP PLN插件将您出版的内容存储在PKP Private LOCKSS Network中。"
+msgstr "PKP PN插件将您出版的内容存储在PKP Preservation Network中。"
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />请阅读 <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\"> PKP PN 概述</a> 并且完成 <a href=\"{$plnPluginURL}\">这个简单的表格</a>. 该操作可以使你的期刊收录到公共知识项目的Private LOCKSS Network (PKP PLN)中。"
+msgstr "<strong>PKP Preservation Network</strong><br /><br />请阅读 <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\"> PKP PN 概述</a> 并且完成 <a href=\"{$plnPluginURL}\">这个简单的表格</a>. 该操作可以使你的期刊收录到公共知识项目的Preservation Network (PKP PN)中。"
 
 msgid "plugins.generic.pln.settings"
 msgstr "设置"
@@ -39,7 +39,7 @@ msgid "plugins.generic.pln.settings.journal_uuid"
 msgstr "期刊标识符"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
-msgstr "这是您的期刊PKP PLN的唯一标识符。您可能需要与PKP PLN管理员分享以寻求支持。"
+msgstr "这是您的期刊PKP PN的唯一标识符。您可能需要与PKP PN管理员分享以寻求支持。"
 
 msgid "plugins.generic.pln.settings.refresh"
 msgstr "刷新"
@@ -54,7 +54,7 @@ msgid "plugins.generic.pln.required.object_threshold"
 msgstr "请选择存储对象入口。"
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
-msgstr "为了存放到PLN上，须同意网络的使用条款。"
+msgstr "为了存放到PN上，须同意网络的使用条款。"
 
 msgid "plugins.generic.pln.objects.article"
 msgstr "文章"
@@ -129,13 +129,13 @@ msgid "plugins.generic.pln.notifications.check_status"
 msgstr "检查您存储的状态。"
 
 msgid "plugins.generic.pln.notifications.issn_missing"
-msgstr "您的期刊需要具备一个ISSN以完成在PKP PLN上存储。"
+msgstr "您的期刊需要具备一个ISSN以完成在PKP PN上存储。"
 
 msgid "plugins.generic.pln.notifications.http_error"
-msgstr "链接PKP PLN时出现错误。请联系你的系统管理员。"
+msgstr "链接PKP PN时出现错误。请联系你的系统管理员。"
 
 msgid "plugins.generic.pln.notifications.terms_updated"
-msgstr "PKP PLN的使用条款需要更新。在继续存储前须同意网络的使用条款。"
+msgstr "PKP PN的使用条款需要更新。在继续存储前须同意网络的使用条款。"
 
 msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "开启ZipArchive 支持以继续进行。"

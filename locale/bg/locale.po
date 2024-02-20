@@ -349,7 +349,7 @@ msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Като мениджър на списанието, аз, добросъвестно, приемам и потвърждавам "
 "следните правила и условия за участие в мрежата за опазване на общественото "
-"знание (Public Knowledge Project’s Preservation Network - PKP-PN):"
+"знание (Public Knowledge Project’s Preservation Network - PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Условия за употреба"

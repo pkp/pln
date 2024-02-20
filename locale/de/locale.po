@@ -15,28 +15,28 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 
 msgid "plugins.generic.pln"
-msgstr "PKP-PLN-Plug-In"
+msgstr "PKP-PN-Plug-In"
 
 msgid "plugins.generic.pln.description"
-msgstr "Das PKP-PLN-Plug-In wird Ihre veröffentlichten Inhalte in das PKP Private LOCKSS Network zur Archivierung abliefern."
+msgstr "Das PKP-PN-Plug-In wird Ihre veröffentlichten Inhalte in das PKP Preservation Network zur Archivierung abliefern."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Bitte lesen Sie die <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">Übersicht zu PKP PLN</a> und füllen Sie <a href=\"{$plnPluginURL}\">dieses einfache Formular</a> aus. Diese Option wird die Aufnahme Ihrer Zeitschrift in das Public Knowledge Project Private LOCKSS Network (PKP PLN) aktivieren."
+msgstr "<strong>PKP Preservation Network</strong><br /><br />Bitte lesen Sie die <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">Übersicht zu PKP PN</a> und füllen Sie <a href=\"{$plnPluginURL}\">dieses einfache Formular</a> aus. Diese Option wird die Aufnahme Ihrer Zeitschrift in das Public Knowledge Project Preservation Network (PKP PN) aktivieren."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Einstellungen"
 
 msgid "plugins.generic.pln.settings.acron_required"
-msgstr "Das PKP-PLN-Plug-In benötigt entweder das Acron-Plug-In oder ein Tool für regelmäßig wiederholte Aktionen (wie 'cron')."
+msgstr "Das PKP-PN-Plug-In benötigt entweder das Acron-Plug-In oder ein Tool für regelmäßig wiederholte Aktionen (wie 'cron')."
 
 msgid "plugins.generic.pln.settings.saved"
-msgstr "PKP-PLN-Einstellungen gespeichert."
+msgstr "PKP-PN-Einstellungen gespeichert."
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Nutzungsbedingungen"
 
 msgid "plugins.generic.pln.settings.terms_of_use_help"
-msgstr "Als Zeitschriftenverwalter/in der Zeitschrift akzeptiere und bestätige ich die folgenden Nutzungsbedingungen zur Teilnahme am Private LOCKSS Network des Public Knowledge Projects (PKP-PLN):"
+msgstr "Als Zeitschriftenverwalter/in der Zeitschrift akzeptiere und bestätige ich die folgenden Nutzungsbedingungen zur Teilnahme am Preservation Network des Public Knowledge Projects (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "Ich stimme zu"
@@ -45,7 +45,7 @@ msgid "plugins.generic.pln.settings.journal_uuid"
 msgstr "Kennzeichnung der Zeitschrift"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
-msgstr "Dies ist die eindeutige Kennung Ihrer Zeitschrift für das PKP PLN. Sie müssen diese Kennung angeben, wenn Sie Support durch die Administrator/innen von PKP PN erhalten möchten."
+msgstr "Dies ist die eindeutige Kennung Ihrer Zeitschrift für das PKP PN. Sie müssen diese Kennung angeben, wenn Sie Support durch die Administrator/innen von PKP PN erhalten möchten."
 
 msgid "plugins.generic.pln.settings.refresh"
 msgstr "Aktualisieren"
@@ -78,7 +78,7 @@ msgid "plugins.generic.pln.status"
 msgstr "Status"
 
 msgid "plugins.generic.pln.status.docs"
-msgstr "Die <a href=\"{$statusDocsUrl}\">Statusangaben des PLN</a> sind hier beschrieben."
+msgstr "Die <a href=\"{$statusDocsUrl}\">Statusangaben des PN</a> sind hier beschrieben."
 
 msgid "plugins.generic.pln.status.id"
 msgstr "ID"
@@ -186,15 +186,15 @@ msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr "Netzwerk-Fehler {$error} beim Versuch, von PKP PN ein Statusupdate für die Ablieferung zu holen."
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet beim Versuch, das Service-Dokument zu holen.\n"
+msgstr "PN-Server hat einen HTTP-Fehler {$error} gemeldet beim Versuch, das Service-Dokument zu holen.\n"
 "{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
-msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet beim Versuch, die Ablieferung zu senden.\n"
+msgstr "PN-Server hat einen HTTP-Fehler {$error} gemeldet beim Versuch, die Ablieferung zu senden.\n"
 "{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "PLN-Server hat einen HTTP-Fehler {$error} gemeldet bei der Überprüfung des Status einer Ablieferung.\n"
+msgstr "PN-Server hat einen HTTP-Fehler {$error} gemeldet bei der Überprüfung des Status einer Ablieferung.\n"
 "{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
@@ -228,13 +228,13 @@ msgid "plugins.generic.pln.depositor.packagingdeposits"
 msgstr "Verpacke Inhalte zur Ablieferung."
 
 msgid "plugins.generic.pln.depositor.transferringdeposits"
-msgstr "Sende Ablieferungen an das PLN."
+msgstr "Sende Ablieferungen an das PN."
 
 msgid "plugins.generic.plngateway.displayName"
-msgstr "PLN-Schnittstelle"
+msgstr "PN-Schnittstelle"
 
 msgid "plugins.generic.plngateway.description"
-msgstr "Liefert den PLN-Status und die Titel der letzten Artikel an den Übergabeserver."
+msgstr "Liefert den PN-Status und die Titel der letzten Artikel an den Übergabeserver."
 
 msgid "plugins.generic.pln.status.packagingFailed"
 msgstr "Fehler beim Packen"

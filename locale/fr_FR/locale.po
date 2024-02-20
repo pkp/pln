@@ -12,13 +12,13 @@ msgstr ""
 "Language: \n"
 
 msgid "plugins.generic.pln"
-msgstr "Plugiciel PKP PLN"
+msgstr "Plugiciel PKP PN"
 
 msgid "plugins.generic.pln.description"
 msgstr "Le Plugiciel PKP PN déposera votre contenu publié dans le réseau privé LOCKSS de PKP pour le sécuriser."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>Réseau privé LOCKSS de PKP</strong><br /><br />Veuillez lire le <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">guide de PKP PLN</a> et compléter <a href=\"{$plnPluginURL}\">ce simple formulaire</a>. Cette option permettra l'inclusion de votre revue dans le réseau LOCKSS privé du Public Project Knowledge (PKP PLN)."
+msgstr "<strong>Réseau privé LOCKSS de PKP</strong><br /><br />Veuillez lire le <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">guide de PKP PN</a> et compléter <a href=\"{$plnPluginURL}\">ce simple formulaire</a>. Cette option permettra l'inclusion de votre revue dans le réseau LOCKSS privé du Public Project Knowledge (PKP PN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Paramètres"
@@ -39,7 +39,7 @@ msgid "plugins.generic.pln.settings.journal_uuid"
 msgstr "Identifiant de la revue"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
-msgstr "Ceci est l’identifiant unique de votre revue pour PKP PLN. Vous devrez le communiquer aux administrateurs de PKP PN en cas de demande d'assistance."
+msgstr "Ceci est l’identifiant unique de votre revue pour PKP PN. Vous devrez le communiquer aux administrateurs de PKP PN en cas de demande d'assistance."
 
 msgid "plugins.generic.pln.settings.refresh"
 msgstr "Rafraîchir"
@@ -54,7 +54,7 @@ msgid "plugins.generic.pln.required.object_threshold"
 msgstr "Veuillez choisir une limite de l'objet pour le dépôt."
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
-msgstr "L'acceptation des conditions d'utilisation du réseau est requise pour déposer sur le PLN."
+msgstr "L'acceptation des conditions d'utilisation du réseau est requise pour déposer sur le PN."
 
 msgid "plugins.generic.pln.objects.article"
 msgstr "Article"
@@ -114,7 +114,7 @@ msgid "plugins.generic.pln.status.no"
 msgstr "Non"
 
 msgid "plugins.generic.pln.depositorTask.name"
-msgstr "Tâche de dépôt PKP PLN"
+msgstr "Tâche de dépôt PKP PN"
 
 msgid "plugins.generic.pln.notifications.processing_for"
 msgstr "Déposant en traitement de"
@@ -129,7 +129,7 @@ msgid "plugins.generic.pln.notifications.check_status"
 msgstr "Vérifier les statuts de vos dépôts."
 
 msgid "plugins.generic.pln.notifications.issn_missing"
-msgstr "Votre revue doit avoir un ISSN pour déposer son contenu sur PKP PLN."
+msgstr "Votre revue doit avoir un ISSN pour déposer son contenu sur PKP PN."
 
 msgid "plugins.generic.pln.notifications.http_error"
 msgstr "Une erreur est survenue pendant la connexion à PKP PN - veuillez contacter votre administrateur système."
@@ -240,7 +240,7 @@ msgid "plugins.generic.pln.depositor.transferringdeposits"
 msgstr "Envoi des dépôts au PKP PN en cours."
 
 msgid "plugins.generic.plngateway.displayName"
-msgstr "Passerelle PLN"
+msgstr "Passerelle PN"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "Rapporte le statut du PKP PN et les titres d'article récents pour le serveur de test."

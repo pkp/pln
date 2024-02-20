@@ -16,13 +16,13 @@ msgstr ""
 "X-Generator: Weblate 3.9.1\n"
 
 msgid "plugins.generic.pln"
-msgstr "Плагин «PKP PLN»"
+msgstr "Плагин «PKP PN»"
 
 msgid "plugins.generic.pln.description"
-msgstr "Плагин «PKP PLN» отправляет ваш опубликованный контент для депонирования в Частную сеть LOCKSS от PKP."
+msgstr "Плагин «PKP PN» отправляет ваш опубликованный контент для депонирования в Частную сеть LOCKSS от PKP."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>Частная сеть LOCKSS от PKP</strong><br /><br />Пожалуйста, прочитайте <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">обзор PKP PLN</a> и заполните <a href=\"{$plnPluginURL}\">эту простую форму</a>. Эта настройка позволит включить ваш журналв Частную сеть LOCKSS, созданную Public Knowledge Project (PKP PLN)."
+msgstr "<strong>Частная сеть LOCKSS от PKP</strong><br /><br />Пожалуйста, прочитайте <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">обзор PKP PN</a> и заполните <a href=\"{$plnPluginURL}\">эту простую форму</a>. Эта настройка позволит включить ваш журналв Частную сеть LOCKSS, созданную Public Knowledge Project (PKP PN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Настройки"
@@ -37,7 +37,7 @@ msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Условия использования"
 
 msgid "plugins.generic.pln.settings.terms_of_use_help"
-msgstr "Как основное контактное лицо, я добросовестно принимаю и соглашаюсь со следующими условиями участия в частной сети LOCKSS, созданной Public Knowledge Project (PKP-PLN):"
+msgstr "Как основное контактное лицо, я добросовестно принимаю и соглашаюсь со следующими условиями участия в частной сети LOCKSS, созданной Public Knowledge Project (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "Я соглашаюсь"
@@ -46,7 +46,7 @@ msgid "plugins.generic.pln.settings.journal_uuid"
 msgstr "Идентификатор журнала"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
-msgstr "Это уникальный идентификатор вашего журнала для PKP PLN. Возможно Вам потребуется сообщить его администраторам PKP PN для поддержки Вашего журнала."
+msgstr "Это уникальный идентификатор вашего журнала для PKP PN. Возможно Вам потребуется сообщить его администраторам PKP PN для поддержки Вашего журнала."
 
 msgid "plugins.generic.pln.settings.refresh"
 msgstr "Обновить"
@@ -61,7 +61,7 @@ msgid "plugins.generic.pln.required.object_threshold"
 msgstr "Пожалуйста, выберите порог депонируемых объектов."
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
-msgstr "Принятие условий использования сети является обязательным для депонирования в PLN."
+msgstr "Принятие условий использования сети является обязательным для депонирования в PN."
 
 msgid "plugins.generic.pln.objects.article"
 msgstr "Статья"
@@ -79,7 +79,7 @@ msgid "plugins.generic.pln.status"
 msgstr "Статус"
 
 msgid "plugins.generic.pln.status.docs"
-msgstr "<a href=\"{$statusDocsUrl}\">Здесь описаны статусы депонирования в PLN</a>."
+msgstr "<a href=\"{$statusDocsUrl}\">Здесь описаны статусы депонирования в PN</a>."
 
 msgid "plugins.generic.pln.status.id"
 msgstr "ID"
@@ -145,7 +145,7 @@ msgid "plugins.generic.pln.status.remote_failure"
 msgstr "Удаленная ошибка"
 
 msgid "plugins.generic.pln.depositorTask.name"
-msgstr "Задача депонирования PKP PLN"
+msgstr "Задача депонирования PKP PN"
 
 msgid "plugins.generic.pln.notifications.processing_for"
 msgstr "Выполнение депонирования для {$title}."
@@ -163,7 +163,7 @@ msgid "plugins.generic.pln.notifications.check_status"
 msgstr "Проверьте статус ваших депонируемых объектов."
 
 msgid "plugins.generic.pln.notifications.issn_missing"
-msgstr "Ваш журнал должен иметь ISSN для депонирования контента в PKP PLN."
+msgstr "Ваш журнал должен иметь ISSN для депонирования контента в PKP PN."
 
 msgid "plugins.generic.pln.notifications.http_error"
 msgstr "Произошла ошибка при подключении к PKP PN — пожалуйста, свяжитесь с системным администратором."
@@ -195,7 +195,7 @@ msgstr "Сервер PKP PN вернул ошибку HTTP {$error} при от�
 "{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "PLN вернул ошибку HTTP {$error} при проверке статуса депонируемого объекта.\n"
+msgstr "PN вернул ошибку HTTP {$error} при проверке статуса депонируемого объекта.\n"
 "{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
@@ -229,10 +229,10 @@ msgid "plugins.generic.pln.depositor.packagingdeposits"
 msgstr "Упаковка контента для депонирования."
 
 msgid "plugins.generic.pln.depositor.transferringdeposits"
-msgstr "Отправка депонируемых объектов в PLN."
+msgstr "Отправка депонируемых объектов в PN."
 
 msgid "plugins.generic.plngateway.displayName"
-msgstr "Шлюз PLN"
+msgstr "Шлюз PN"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "Передает статус PKP PN и названия последних статей на сервер."
