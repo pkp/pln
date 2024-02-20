@@ -25,7 +25,7 @@ msgstr ""
 "Privada LOCKSS da PKP para preservação."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>Rede Privada LOCKSS da PKP</strong><br /><br />Por favor, leia o <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">resumo da PKP PN (Rede Privada LOCKSS) da PKP</a> e preencha <a href=\"{$plnPluginURL}\">este formulário</a>. Esta opção permitirá a inclusão de seu periódico no Public Knowledge Project Private LOCKSS Network (PLN do PKP)."
+msgstr "<strong>Rede de Preservação da PKP</strong><br /><br />Por favor, leia o <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">resumo da PKP PN (Rede de Preservação) da PKP</a> e preencha <a href=\"{$plnPluginURL}\">este formulário</a>. Esta opção permitirá a inclusão de seu periódico no Public Knowledge Project Preservation Network (PN do PKP)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Configurações"
@@ -36,13 +36,13 @@ msgstr ""
 "de ações como o \"cron\"."
 
 msgid "plugins.generic.pln.settings.saved"
-msgstr "PLN do PKP configurações salvas."
+msgstr "PN do PKP configurações salvas."
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Termos de uso"
 
 msgid "plugins.generic.pln.settings.terms_of_use_help"
-msgstr "Como o contato principal, aceito, de boa fé, os seguintes termos e condições de participação na Rede LOCKSS Privada do Public Knowledge Project (PKP-PLN):"
+msgstr "Como o contato principal, aceito, de boa fé, os seguintes termos e condições de participação na Rede de Preservação do Public Knowledge Project (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "Aceito"
@@ -66,7 +66,7 @@ msgid "plugins.generic.pln.required.object_threshold"
 msgstr "Por favor, escolha um limite para o depósito do objeto."
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
-msgstr "Para continuar o deposito na PLN, é necessário aceitar os termos de utilização da rede."
+msgstr "Para continuar o deposito na PN, é necessário aceitar os termos de utilização da rede."
 
 msgid "plugins.generic.pln.objects.article"
 msgstr "Artigo"
@@ -150,7 +150,7 @@ msgid "plugins.generic.pln.status.remote_failure"
 msgstr "Falha remota"
 
 msgid "plugins.generic.pln.depositorTask.name"
-msgstr "PLN do PKP - Tarefa de depositante"
+msgstr "PN do PKP - Tarefa de depositante"
 
 msgid "plugins.generic.pln.notifications.processing_for"
 msgstr "Depositante processando para {$title}."
@@ -234,10 +234,10 @@ msgid "plugins.generic.pln.depositor.packagingdeposits"
 msgstr "Empacotando conteúdo para depósito."
 
 msgid "plugins.generic.pln.depositor.transferringdeposits"
-msgstr "Enviando depósitos à PLN."
+msgstr "Enviando depósitos à PN."
 
 msgid "plugins.generic.plngateway.displayName"
-msgstr "Gateway da PLN"
+msgstr "Gateway da PN"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "Reporta situação da PKP PN e títulos de artigos recentes para o servidor de preprocessamento."

@@ -335,7 +335,7 @@ msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Како менаџер на списанието, јас, во добра волја, ги прифаќам и потврдувам "
 "следните услови за учество во Public Knowledge Project’s мрежа за сочувување "
-"(PKP-PN):"
+"(PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Услови на употреба"

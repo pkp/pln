@@ -17,13 +17,13 @@ msgstr ""
 "X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln"
-msgstr "إضافة مشروع المعرفة العامة PLN"
+msgstr "إضافة مشروع المعرفة العامة PN"
 
 msgid "plugins.generic.pln.description"
 msgstr "إن إضافة مشروع المعرفة العامة PKP PN ستقوم بإيداع محتوياتك المنشورة في شبكة LOCKSS الخاصة من أجل الحفاظ عليها."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>الشبكة الخاصة لمشروع المعرفة العامة LOCKSS</strong><br /><br />لطفاً، إقرأ <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">نظرة عامة على PKP PN لمشروع المعرفة العامة</a> ومن ثم أكمل <a href=\"{$plnPluginURL}\">هذا النموذج البسيط</a>. هذا الخيار سيمكنك من تضمين مجلتك في الشبكة الاصة لمشروع المعرفة العامة LOCKSS (PKP PLN)."
+msgstr "<strong>الشبكة الخاصة لمشروع المعرفة العامة LOCKSS</strong><br /><br />لطفاً، إقرأ <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">نظرة عامة على PKP PN لمشروع المعرفة العامة</a> ومن ثم أكمل <a href=\"{$plnPluginURL}\">هذا النموذج البسيط</a>. هذا الخيار سيمكنك من تضمين مجلتك في الشبكة الاصة لمشروع المعرفة العامة LOCKSS (PKP PN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "الإعدادات"
@@ -39,7 +39,7 @@ msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "شروط الاستعمال"
 
 msgid "plugins.generic.pln.settings.terms_of_use_help"
-msgstr "باعتباري فرد الاتصال الرئيسي، فإنني، وبإيمان ووعي مطلقين، أوافق على الشروط الآتية والمتعلقة بالمشاركة ضمن الشبكة الخاصة LOCKSS لمشروع المعرفة العامة، أو ما يسمى اختصاراً (PKP-PLN):"
+msgstr "باعتباري فرد الاتصال الرئيسي، فإنني، وبإيمان ووعي مطلقين، أوافق على الشروط الآتية والمتعلقة بالمشاركة ضمن الشبكة الخاصة LOCKSS لمشروع المعرفة العامة، أو ما يسمى اختصاراً (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "أوافق"
@@ -63,7 +63,7 @@ msgid "plugins.generic.pln.required.object_threshold"
 msgstr "لطفاً، إختر عتبة مكون الإيداع."
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
-msgstr "الموافقة على شروط استعمال الشبكة أمر ضروري لغرض الإيداع في PLN."
+msgstr "الموافقة على شروط استعمال الشبكة أمر ضروري لغرض الإيداع في PN."
 
 msgid "plugins.generic.pln.objects.article"
 msgstr "المؤلَّف"
@@ -240,10 +240,10 @@ msgid "plugins.generic.pln.depositor.packagingdeposits"
 msgstr "يجري رزم محتوى الإيداع."
 
 msgid "plugins.generic.pln.depositor.transferringdeposits"
-msgstr "يجري إرسال الإيداعات إلى PLN."
+msgstr "يجري إرسال الإيداعات إلى PN."
 
 msgid "plugins.generic.plngateway.displayName"
-msgstr "بوابة PLN"
+msgstr "بوابة PN"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "يقدم تقارير عن موقف PKP PN مع عناوين المؤلفات الأخيرة إلى الملقم المرحلي."
