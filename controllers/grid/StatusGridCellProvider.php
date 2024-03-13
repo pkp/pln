@@ -41,6 +41,9 @@ class StatusGridCellProvider extends GridCellProvider
                     $content = $object->getContent();
                     $label[] = "#{$content->getId()}: " . ($content ? ($content instanceof Issue ? $content->getIssueIdentification() : $content->getLocalizedData('title')) : __('plugins.generic.pln.status.unknown'));
                 }
+                if (!count($label)) {
+                    $label[] = __('plugins.generic.pln.status.unknown');
+                }
                 return ['label' => implode(' ', $label)];
             case 'status':
                 return ['label' => $deposit->getDisplayedStatus()];

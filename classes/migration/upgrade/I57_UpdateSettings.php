@@ -14,6 +14,7 @@
 
 namespace APP\plugins\generic\pln\classes\migration\upgrade;
 
+use Exception;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 use PKP\install\DowngradeNotSupportedException;
@@ -41,7 +42,7 @@ class I57_UpdateSettings extends Migration
             }
 
             error_clear_last();
-            $value = unserialize($value);
+            $value = unserialize((string) $value);
             $isSerialized = !error_get_last() || $isSerialized;
 
             if ($isSerialized) {

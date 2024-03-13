@@ -25,8 +25,9 @@ class DepositObject extends DataObject
 {
     /**
      * Get the content object that's referenced by this deposit object object
+     * @todo The method might return null for now, but adding foreign keys should address the problem
      */
-    public function getContent(): Issue|Submission
+    public function getContent(): Issue|Submission|null
     {
         return match ($this->getObjectType()) {
             PlnPlugin::DEPOSIT_TYPE_ISSUE => Repo::issue()->get($this->getObjectId(), $this->getJournalId()),
