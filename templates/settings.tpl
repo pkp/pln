@@ -54,7 +54,7 @@
 
 			{fbvFormSection title="plugins.generic.pln.settings.refresh" list=true}
 				<p>{translate key="plugins.generic.pln.settings.refresh_help"}</p>
-				<input type="submit" id="refresh" name="refresh" class="button" value="{translate key="plugins.generic.pln.settings.refresh"}"/>
+				<input type="submit" id="refresh" name="refresh" class="pkp_button" value="{translate key="plugins.generic.pln.settings.refresh"}"/>
 			{/fbvFormSection}
 
 			{fbvFormButtons id="plnPluginSettingsFormSubmit" submitText="common.save" hideCancel=true}
