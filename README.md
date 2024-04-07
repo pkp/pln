@@ -103,7 +103,7 @@ not necessary.)
   be present. If absent, the task is probably not being executed daily or
   there might be permission issues to create them.
 
-- The `plugins.generic.pln.classes.tasks.Depositor` task must be present in the
+- The `APP\plugins\generic\pln\classes\tasks\Depositor` task must be present in the
   `scheduled_tasks` table. If it's not, try to reload the scheduled tasks at the
   Acron plugin (the option `Reload Scheduled Tasks` at the plugin settings).
 

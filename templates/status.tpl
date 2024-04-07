@@ -5,7 +5,7 @@
  * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * PLN plugin settings
+ * Plugin status
  *}
 
 <script>
@@ -19,7 +19,7 @@
 <div id="plnStatus">
 	<h3>{translate key="plugins.generic.pln.status.deposits"}</h3>
 	<p>{translate key="plugins.generic.pln.status.network_status" networkStatusMessage=$networkStatusMessage}</p>
-	{capture assign="depositsGridUrl"}{url component="plugins.generic.pln.controllers.grid.PLNStatusGridHandler" op="fetchGrid" escape=false}{/capture}
+	{capture assign="depositsGridUrl"}{url component="plugins.generic.pln.controllers.grid.StatusGridHandler" op="fetchGrid" escape=false}{/capture}
 	{load_url_in_div id="depositsGridContainer" url=$depositsGridUrl}
 	<p>
 		<b>{translate key='plugins.generic.pln.status.description.title'}</b>

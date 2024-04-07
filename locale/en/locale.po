@@ -207,10 +207,10 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Cannot find package file {$file}."
 
 msgid "plugins.generic.pln.error.depositor.export.articles.error"
-msgstr "An error occured while exporting articles. The server's error log may have more information."
+msgstr "An error occurred while exporting articles. The server's error log may have more information."
 
 msgid "plugins.generic.pln.error.depositor.export.issue.error"
-msgstr "An error occured while exporting an issue. The server's error log may have more information."
+msgstr "An error occurred while exporting an issue. The server's error log may have more information."
 
 msgid "plugins.generic.pln.error.handler.uuid.invalid"
 msgstr "The requested UUID is not valid or is not formatted correctly."

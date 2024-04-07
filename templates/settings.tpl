@@ -5,7 +5,7 @@
  * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * PLN plugin settings
+ * Plugin settings
  *}
 
 <script>
@@ -15,18 +15,21 @@
 	{rdelim});
 </script>
 
-{if $prerequisitesMissing|@count > 0}
-	<ul>
-		{foreach from=$prerequisitesMissing item=message}
-			<li><span class='pkp_form_error'>{$message}</span></li>
-		{/foreach}
-	</ul>
-{/if}
-
 <div id="plnSettings">
 	<form class="pkp_form" id="plnSettingsForm" method="post" action="{url router=$smarty.const.ROUTE_COMPONENT op="manage" category="generic" plugin=$pluginName verb="settings" save=true}">
 		{include file="controllers/notification/inPlaceNotification.tpl" notificationId="PLNSettingsFormNotification"}
 
+		{if $prerequisitesMissing|@count > 0}
+			{fbvFormArea id="pnRequisites"}
+				{fbvFormSection title="common.required" list=true}
+					<ul>
+						{foreach from=$prerequisitesMissing item=message}
+							<li><span class='pkp_form_error'>{$message}</span></li>
+						{/foreach}
+					</ul>
+				{/fbvFormSection}
+			{/fbvFormArea}
+		{/if}
 		{fbvFormArea id="PLNSettingsFormArea"}
 			{fbvFormSection title="plugins.generic.pln.settings.terms_of_use" list=true}
 				{if $hasIssn}
@@ -51,7 +54,7 @@
 
 			{fbvFormSection title="plugins.generic.pln.settings.refresh" list=true}
 				<p>{translate key="plugins.generic.pln.settings.refresh_help"}</p>
-				<input type="submit" id="refresh" name="refresh" class="button" value="{translate key="plugins.generic.pln.settings.refresh"}"/>
+				<input type="submit" id="refresh" name="refresh" class="pkp_button" value="{translate key="plugins.generic.pln.settings.refresh"}"/>
 			{/fbvFormSection}
 
 			{fbvFormButtons id="plnPluginSettingsFormSubmit" submitText="common.save" hideCancel=true}

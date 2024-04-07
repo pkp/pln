@@ -1,0 +1,48 @@
+{
+	"title": "Deposit Object",
+	"description": "A deposit object for the PKP Preservation Network.",
+	"type": "object",
+	"required": [
+		"journalId",
+		"objectId",
+		"objectType",
+		"dateCreated"
+	],
+	"properties": {
+		"id": {
+			"type": "integer",
+			"readOnly": true,
+			"apiSummary": true
+		},
+		"journalId": {
+			"type": "integer",
+			"apiSummary": true
+		},
+		"objectId": {
+			"type": "integer",
+			"apiSummary": true
+		},
+		"objectType": {
+			"type": "string",
+			"apiSummary": true
+		},
+		"depositId": {
+			"type": "integer",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		},
+		"dateCreated": {
+			"type": "string",
+			"apiSummary": true
+		},
+		"dateModified": {
+			"type": "string",
+			"apiSummary": true,
+			"validation": [
+				"nullable"
+			]
+		}
+	}
+}

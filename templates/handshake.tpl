@@ -1,15 +1,15 @@
 {**
- * templates/ping.tpl
+ * templates/handshake.tpl
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
- * PLN plugin settings
+ * Handshake template
  *}
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plnplugin SYSTEM "ping.dtd">
-<plnplugin>
+<!DOCTYPE handshake SYSTEM "handshake.dtd">
+<handshake>
 	<ojsInfo>
 		<release>{$ojsVersion|escape}</release>
 	</ojsInfo>
@@ -17,13 +17,9 @@
 		<release>{$pluginVersion.release|escape}</release>
 		<releaseDate>{$pluginVersion.date|escape}</releaseDate>
 		<current>{$pluginVersion.version->getCurrent()|escape}</current>
-		<prerequisites>
-			<phpVersion>{$prerequisites.phpVersion|escape}</phpVersion>
-			<curlVersion>not required</curlVersion>
-			<zipInstalled>{$prerequisites.zipInstalled|escape}</zipInstalled>
-			<acron>{$prerequisites.acron|escape}</acron>
-			<tasks>{$prerequisites.tasks|escape}</tasks>
-		</prerequisites>
+		<php>{$phpVersion|escape}</php>
+		<zipArchive>{$hasZipArchive|escape}</zipArchive>
+		<tasks>{$hasTasks|escape}</tasks>
 		<terms termsAccepted="{$termsAccepted|escape}">
 			{iterate from=termsDisplay item=term}
 			<term key="{$term.key|escape}" updated="{$term.updated|escape}" accepted="{$term.accepted|escape}">{$term.term|escape}</term>
@@ -38,4 +34,4 @@
 			{/foreach}
 		</articles>
 	</journalInfo>
-</plnplugin>
+</handshake>
