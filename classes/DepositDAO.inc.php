@@ -11,6 +11,9 @@
  * @brief Operations for adding a PLN deposit
  */
 
+use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\MySqlConnection;
+
 import('lib.pkp.classes.db.DAO');
 
 class DepositDAO extends DAO {
@@ -224,12 +227,15 @@ class DepositDAO extends DAO {
 	 */
 	public function getNeedTransferring($journalId) {
 		$result = $this->retrieve(
-			'SELECT *
+			"SELECT *
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
 			AND d.status & ? <> 0
 			AND d.status & ? = 0
-			ORDER BY d.export_deposit_error, d.deposit_id',
+			ORDER BY d.export_deposit_error, CASE
+				WHEN d.export_deposit_error, '') = '' THEN d.deposit_id
+				ELSE {$this->getRandomFunction()}
+			END",
 			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED,
@@ -247,11 +253,14 @@ class DepositDAO extends DAO {
 	 */
 	public function getNeedPackaging($journalId) {
 		$result = $this->retrieve(
-			'SELECT *
+			"SELECT *
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
 			AND d.status & ? = 0
-			ORDER BY d.export_deposit_error, d.deposit_id',
+			ORDER BY d.export_deposit_error, CASE
+				WHEN d.export_deposit_error, '') = '' THEN d.deposit_id
+				ELSE {$this->getRandomFunction()}
+			END",
 			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_PACKAGED
@@ -268,7 +277,7 @@ class DepositDAO extends DAO {
 	 */
 	public function getNeedStagingStatusUpdate($journalId) {
 		$result = $this->retrieve(
-			'SELECT *
+			"SELECT *
 			FROM pln_deposits AS d
 			WHERE d.journal_id = ?
 			AND (
@@ -278,7 +287,10 @@ class DepositDAO extends DAO {
 					AND d.status & ? = 0
 				)
 			)
-			ORDER BY d.export_deposit_error, d.deposit_id',
+			ORDER BY d.export_deposit_error, CASE
+				WHEN d.export_deposit_error, '') = '' THEN d.deposit_id
+				ELSE {$this->getRandomFunction()}
+			END",
 			[
 				(int) $journalId,
 				(int) PLN_PLUGIN_DEPOSIT_STATUS_TRANSFERRED,
@@ -312,5 +324,13 @@ class DepositDAO extends DAO {
 			}
 		}
 		return $failedIds;
+	}
+
+	/**
+	 * Retrieves the SQL function which generates randomized values
+	 */
+	private function getRandomFunction(): string
+	{
+		return Capsule::connection() instanceof MySqlConnection ? 'RAND()' : 'RANDOM()';
 	}
 }
