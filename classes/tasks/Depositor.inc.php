@@ -47,10 +47,11 @@ class Depositor extends ScheduledTask {
 		$journalDao = DAORegistry::getDAO('JournalDAO');
 
 		// Get all journals
-		$journals = $journalDao->getAll(true);
+		$journals = $journalDao->getAll(true)->toArray();
+		shuffle($journals);
 
 		// For all journals
-		while ($journal = $journals->next()) {
+		foreach ($journals as $journal) {
 
 			// if the plugin isn't enabled for this journal, skip it
 			if (!$this->_plugin->getSetting($journal->getId(), 'enabled')) {
