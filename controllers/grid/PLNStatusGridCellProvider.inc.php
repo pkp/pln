@@ -28,7 +28,7 @@ class PLNStatusGridCellProvider extends GridCellProvider {
 		switch ($column->getId()) {
 			case 'id':
 				// The action has the label
-				return array('label' => $deposit->getId());
+				return array('label' => $deposit->getUUID());
 			case 'objectId':
 				$label = [];
 				/** @var DepositObject $object */
