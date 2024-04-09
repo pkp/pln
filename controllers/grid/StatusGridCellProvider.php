@@ -34,7 +34,7 @@ class StatusGridCellProvider extends GridCellProvider
         switch ($column->getId()) {
             case 'id':
                 // The action has the label
-                return ['label' => $deposit->getId()];
+                return ['label' => $deposit->getUUID()];
             case 'objectId':
                 $label = [];
                 foreach ($deposit->getDepositObjects() as $object) {
