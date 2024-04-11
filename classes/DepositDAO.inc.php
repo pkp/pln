@@ -233,7 +233,7 @@ class DepositDAO extends DAO {
 			AND d.status & ? <> 0
 			AND d.status & ? = 0
 			ORDER BY d.export_deposit_error, CASE
-				WHEN d.export_deposit_error, '') = '' THEN d.deposit_id
+				WHEN COALESCE(d.export_deposit_error, '') = '' THEN d.deposit_id
 				ELSE {$this->getRandomFunction()}
 			END",
 			[
@@ -258,7 +258,7 @@ class DepositDAO extends DAO {
 			WHERE d.journal_id = ?
 			AND d.status & ? = 0
 			ORDER BY d.export_deposit_error, CASE
-				WHEN d.export_deposit_error, '') = '' THEN d.deposit_id
+				WHEN COALESCE(d.export_deposit_error, '') = '' THEN d.deposit_id
 				ELSE {$this->getRandomFunction()}
 			END",
 			[
@@ -288,7 +288,7 @@ class DepositDAO extends DAO {
 				)
 			)
 			ORDER BY d.export_deposit_error, CASE
-				WHEN d.export_deposit_error, '') = '' THEN d.deposit_id
+				WHEN COALESCE(d.export_deposit_error, '') = '' THEN d.deposit_id
 				ELSE {$this->getRandomFunction()}
 			END",
 			[
