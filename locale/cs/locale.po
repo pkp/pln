@@ -16,13 +16,13 @@ msgstr ""
 "X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln"
-msgstr "Plugin PKP PLN"
+msgstr "Plugin PKP PN"
 
 msgid "plugins.generic.pln.description"
 msgstr "Plugin PKP PN uloží váš publikovaný obsah do PKP veřejné sítě LOCKSS pro jejich ochranu."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP soukromá síť LOCKSS</strong><br /><br />Přečtěte si <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">informace o PKP PLN</a> a vyplňte <a href=\"{$plnPluginURL}\">tento jednoduchý formulář</a>. Tato volba vám umožní zahrnutí vašeho časopisu do sítě Public Knowledge Project Private LOCKSS (PKP PLN)."
+msgstr "<strong>PKP soukromá síť LOCKSS</strong><br /><br />Přečtěte si <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">informace o PKP PN</a> a vyplňte <a href=\"{$plnPluginURL}\">tento jednoduchý formulář</a>. Tato volba vám umožní zahrnutí vašeho časopisu do sítě Public Knowledge Project Preservation Network (PKP PN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Nastavení"
@@ -36,7 +36,7 @@ msgstr "Podmínky užití"
 msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Jako správce časopisu v dobré víře přijímám a potvrzuji následující podmínky "
-"účasti v projektu Public Knowledge Project’s Preservation Network (PKP-PN):"
+"účasti v projektu Public Knowledge Project’s Preservation Network (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "Souhlas"
@@ -45,7 +45,7 @@ msgid "plugins.generic.pln.settings.journal_uuid"
 msgstr "Identifikátor časopisu"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
-msgstr "Toto je jedinečný identifikátor časopisu pro PKP PLN. Pokud budete potřebovat pomoc administrátorů PKP PLN, bude jim potřeba poskytnout tento identifikátor."
+msgstr "Toto je jedinečný identifikátor časopisu pro PKP PN. Pokud budete potřebovat pomoc administrátorů PKP PN, bude jim potřeba poskytnout tento identifikátor."
 
 msgid "plugins.generic.pln.settings.refresh"
 msgstr "Obnovit"
@@ -135,7 +135,7 @@ msgid "plugins.generic.pln.notifications.check_status"
 msgstr "Zkontrolujte status vašich uložení."
 
 msgid "plugins.generic.pln.notifications.issn_missing"
-msgstr "Váš časopis musí mít ISSN aby bylo možné ukládat obsah do PKP PLN."
+msgstr "Váš časopis musí mít ISSN aby bylo možné ukládat obsah do PKP PN."
 
 msgid "plugins.generic.pln.notifications.http_error"
 msgstr "Při připojování k PKP PN nastala chyba - kontaktujte, prosím, systémového administrátora."

@@ -15,10 +15,10 @@ msgid "plugins.generic.pln"
 msgstr "PKP PN Plugin"
 
 msgid "plugins.generic.pln.description"
-msgstr "De PKP PN plugin deponeert uw publicaties in het PKP Private LOCKSS Network ter preservatie."
+msgstr "De PKP PN plugin deponeert uw publicaties in het PKP Preservation Network ter preservatie."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Gelieve het <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">overshot van het PKP PLN</a> te lezen en <a href=\"{$plnPluginURL}\">dit formulier</a> in te vullen. Deze optie zorgt ervoor dat uw tijdschrift wordt opgenomen in het  Public Knowledge Project Private LOCKSS Network (PKP PLN)."
+msgstr "<strong>PKP Preservation Network</strong><br /><br />Gelieve het <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">overshot van het PKP PN</a> te lezen en <a href=\"{$plnPluginURL}\">dit formulier</a> in te vullen. Deze optie zorgt ervoor dat uw tijdschrift wordt opgenomen in het Public Knowledge Project Preservation Network (PKP PN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Instellingen"
@@ -39,7 +39,7 @@ msgid "plugins.generic.pln.settings.journal_uuid"
 msgstr "Tijdschrift identificatie"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
-msgstr "Dit is de unieke identificatie van uw tijdschrift voor het PKP PLN. Mogelijk heeft u dit nodig bij sondersteuningsvragen aan de  PKP PN beheerders.."
+msgstr "Dit is de unieke identificatie van uw tijdschrift voor het PKP PN. Mogelijk heeft u dit nodig bij sondersteuningsvragen aan de PKP PN beheerders."
 
 msgid "plugins.generic.pln.settings.refresh"
 msgstr "Verversen"
@@ -54,7 +54,7 @@ msgid "plugins.generic.pln.required.object_threshold"
 msgstr "Kies een drempelwaarde voor inzenden."
 
 msgid "plugins.generic.pln.required.terms_of_use_agreement"
-msgstr "U moet akkoord gaan met de gebruiksvoorwaarden om te kunnen deponeren in de PLN"
+msgstr "U moet akkoord gaan met de gebruiksvoorwaarden om te kunnen deponeren in de PN"
 
 msgid "plugins.generic.pln.objects.article"
 msgstr "Artikel"
@@ -129,7 +129,7 @@ msgid "plugins.generic.pln.notifications.check_status"
 msgstr "Controleer de status van uw inzendingen."
 
 msgid "plugins.generic.pln.notifications.issn_missing"
-msgstr "Uw tijdschrift heeft een ISSN nodig om te kunnen deponeren in het PKP PLN."
+msgstr "Uw tijdschrift heeft een ISSN nodig om te kunnen deponeren in het PKP PN."
 
 msgid "plugins.generic.pln.notifications.http_error"
 msgstr "De verbinding met het PKP PN is mislukt - neem contact op met uw systeembeheerder."

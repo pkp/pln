@@ -283,7 +283,7 @@ msgid "plugins.generic.pln.settings.terms_of_use_help"
 msgstr ""
 "Sebagai Pengurus Jurnal, saya, dengan niat baik, menerima dan mengesahkan "
 "terma dan syarat berikut untuk penyertaan dalam Public Knowledge Project’s "
-"Preservation Network (PKP-PN):"
+"Preservation Network (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Syarat Penggunaan"

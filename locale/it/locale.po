@@ -16,13 +16,13 @@ msgstr ""
 "X-Generator: Weblate 4.13.1\n"
 
 msgid "plugins.generic.pln"
-msgstr "Plugin PKP PLN"
+msgstr "Plugin PKP PN"
 
 msgid "plugins.generic.pln.description"
-msgstr "Il plugin PKP PN cura il versamento dei contenuti pubblicati dalla rivista nella PKP Private LOCKSS Network a fini di conservazione a lungo termine."
+msgstr "Il plugin PKP PN cura il versamento dei contenuti pubblicati dalla rivista nella PKP Preservation Network a fini di conservazione a lungo termine."
 
 msgid "plugins.generic.pln.manager.setup.description"
-msgstr "<strong>PKP Private LOCKSS Network</strong><br /><br />Leggi la <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">panoramica sulla PKP PLN</a> e completa <a href=\"{$plnPluginURL}\">questo semplice modulo</a>. Questa opzione permette l'inclusione della tua rivista nella Public Knowledge Project Private LOCKSS Network (PKP PLN)."
+msgstr "<strong>PKP Preservation Network</strong><br /><br />Leggi la <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">panoramica sulla PKP PN</a> e completa <a href=\"{$plnPluginURL}\">questo semplice modulo</a>. Questa opzione permette l'inclusione della tua rivista nella Public Knowledge Project Preservation Network (PKP PN)."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Impostazioni"
@@ -37,7 +37,7 @@ msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Condizioni d'uso"
 
 msgid "plugins.generic.pln.settings.terms_of_use_help"
-msgstr "Come contatto principale, Io, sotto la mia responsabilità, accetto e confermo i seguenti termini e condizioni per la partecipazione alla Public Knowledge Project's Private LOCKSS Network (PKP-PLN):"
+msgstr "Come contatto principale, Io, sotto la mia responsabilità, accetto e confermo i seguenti termini e condizioni per la partecipazione alla Public Knowledge Project's Preservation Network (PKP PN):"
 
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "Confermo"
@@ -46,7 +46,7 @@ msgid "plugins.generic.pln.settings.journal_uuid"
 msgstr "Identificatore della rivista"
 
 msgid "plugins.generic.pln.settings.journal_uuid_help"
-msgstr "Questo è l'identificatore unico della rivista per la PKP PLN. Potresti doverlo comunicare agli amministratori della PKP PN nelle richieste di supporto."
+msgstr "Questo è l'identificatore unico della rivista per la PKP PN. Potresti doverlo comunicare agli amministratori della PKP PN nelle richieste di supporto."
 
 msgid "plugins.generic.pln.settings.refresh"
 msgstr "Aggiorna"
@@ -106,7 +106,7 @@ msgid "plugins.generic.pln.status.complete"
 msgstr "Completo"
 
 msgid "plugins.generic.pln.status.confirmReset"
-msgstr "Vuoi davvero aggiornare questo versamento? Verrà reimpacchettato e rispedito nuovamente al server PKP PLN."
+msgstr "Vuoi davvero aggiornare questo versamento? Verrà reimpacchettato e rispedito nuovamente al server PKP PN."
 
 msgid "plugins.generic.pln.status.unknown"
 msgstr "Sconosciuto"
@@ -145,7 +145,7 @@ msgid "plugins.generic.pln.status.remote_failure"
 msgstr "Errore remoto"
 
 msgid "plugins.generic.pln.depositorTask.name"
-msgstr "Attività del versante in PKP PLN"
+msgstr "Attività del versante in PKP PN"
 
 msgid "plugins.generic.pln.notifications.processing_for"
 msgstr "Versamento in corso per {$title}."
@@ -163,7 +163,7 @@ msgid "plugins.generic.pln.notifications.check_status"
 msgstr "Verifica lo stato dei tuoi versamenti."
 
 msgid "plugins.generic.pln.notifications.issn_missing"
-msgstr "La rivista deve avere un ISSN per poter versare i propri contenuti nella PKP PLN."
+msgstr "La rivista deve avere un ISSN per poter versare i propri contenuti nella PKP PN."
 
 msgid "plugins.generic.pln.notifications.http_error"
 msgstr "Si è verificato un errore di connessione con la PKP PN - contatta l'amministratore di sistema."
@@ -234,13 +234,13 @@ msgid "plugins.generic.pln.depositor.transferringdeposits"
 msgstr "Invio del versamento alla PKP PN in corso."
 
 msgid "plugins.generic.plngateway.displayName"
-msgstr "Gateway PLN"
+msgstr "Gateway PN"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "Mostra lo stato della PKP PN e i titoli degli articoli recenti in preparazione per il deposito."
 
 msgid "plugins.generic.plnblock.preservedin"
-msgstr "Conservato nella PKP|PLN"
+msgstr "Conservato nella PKP PN"
 
 msgid "plugins.generic.plnblock.name"
 msgstr "Blocco \"Conservato in\""
