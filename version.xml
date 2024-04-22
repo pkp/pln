@@ -13,8 +13,8 @@
 <version>
 	<application>pln</application>
 	<type>plugins.generic</type>
-	<release>2.0.4.4</release><!-- 2.0.4.x is for OJS v.3.3 -->
-	<date>2024-04-11</date>
+	<release>2.0.4.5</release><!-- 2.0.4.x is for OJS v.3.3 -->
+	<date>2024-04-22</date>
 	<lazy-load>1</lazy-load>
 	<sitewide>0</sitewide>
 	<class>PLNPlugin</class>
