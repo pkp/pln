@@ -1,14 +1,15 @@
 # Salam Al-Khammasi <salam.alshemmari@uokufa.edu.iq>, 2023.
+# M. Ali <vorteem@gmail.com>, 2023.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2023-02-09 20:48+0000\n"
-"Last-Translator: Salam Al-Khammasi <salam.alshemmari@uokufa.edu.iq>\n"
-"Language-Team: Arabic <http://translate.pkp.sfu.ca/projects/plugins/pln/"
-"ar_IQ/>\n"
-"Language: ar_IQ\n"
+"PO-Revision-Date: 2023-03-30 15:48+0000\n"
+"Last-Translator: M. Ali <vorteem@gmail.com>\n"
+"Language-Team: Arabic <http://translate.pkp.sfu.ca/projects/plugins/pln/ar/>"
+"\n"
+"Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -349,3 +350,36 @@ msgstr "رمز تعريف العدد"
 
 msgid "plugins.generic.pln.objectId"
 msgstr "رمز تعريف مُكون النوع"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"الإيداع فشل، تأكد من أنه لا يتجاوز الحجم الإقصى الذي تدعمه شبكة جهة الحفظ"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"الإيداع لم يجتز عملية التحقق من الفيروسات، ينبغي عليك فحص ملفاته، ثم إعادة "
+"إرساله"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr "الإيداع لم يجتز عملية التحقق من المحتوى، يمكنك محاولة إعادة إرساله"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr "الإيداع لم يجتز عملية التحقق من الحقيبة، يمكنك محاولة إعادة إرساله"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr "الإيداع تم التحفظ عليه، إصدار نظامك يفوق توقعاته"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"فشلت عملية تنزيل الإيداع من نظامك. ستتم إعادة محاولة هذه العملية، يمكنك في "
+"هذه الأثناء التحقق فيما إذا كان نظامك يقبع خلف جدار حماية"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "فشلت عملية إعادة تعبئة الإيداع، وستتم إعادة محاولتها"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr "الإيداع لم يجتز عملية التحقق من الحمولة، يمكنك محاولة إعادة إرساله"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"الإيداع يجري حفظه، ولكن لم يكن ممكنًا التحقق من حالته، ستتم إعادة محاولة ذلك"

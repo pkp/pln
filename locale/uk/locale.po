@@ -1,0 +1,398 @@
+# Petro Bilous <petrobilous@ukr.net>, 2023.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2023-04-28 15:49+0000\n"
+"Last-Translator: Petro Bilous <petrobilous@ukr.net>\n"
+"Language-Team: Ukrainian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
+"uk/>\n"
+"Language: uk\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.13.1\n"
+
+msgid "plugins.generic.pln.settings"
+msgstr "Налаштування"
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr ""
+"Плагін PKP PN вимагає або плагіна Acron, або інструментів періодичного "
+"запуску за розкладом, таких як \"крон\"."
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "Налаштування PN PKP збережено."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "Плагін PKP PN включено."
+
+msgid "plugins.generic.pln.disabled"
+msgstr "Плагін PKP PN було виключено."
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Умови використання"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr ""
+"Як менеджер журналу я сумлінно приймаю та підтверджую такі умови участі в "
+"Мережі збереження Проєкту суспільних знань (PKP PN):"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Я погоджуюся"
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Ідентифікатор журналу"
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Оновити"
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr ""
+"Якщо з якихось причин вище не перелічено умови або ви знаєте, що ці умови "
+"оновлено, натисніть кнопку \"Оновити\", щоб оновити наведені вище умови."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Будь ласка, виберіть тип депонованого об'єкта."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Будь ласка, оберіть поріг депонованого об'єкта."
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Стаття"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Випуск"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Стан мережі: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Депонування"
+
+msgid "plugins.generic.pln.status"
+msgstr "Стан"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "ID типу об'єкта"
+
+msgid "plugins.generic.pln.issueId"
+msgstr "ID випуску"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr "<a href=\"{$statusDocsUrl}\">Тут описано стани депонувань PKP PN </a>."
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Тип"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Об'єкти"
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Стан"
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Невідомо"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Нове"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Упаковано"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Передано"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Отримано"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Перевірено"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Надіслано до LOCKSS"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Синхронізується"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Угода"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Локальна помилка"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Помилка пакування"
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PKP PN наразі не приймає депонування."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PN приймає депонування."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Перевірте стан своїх депонувань."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr ""
+"Сталася помилка підключення до PKP PN – будь ласка, зверніться до вашого "
+"системного адміністратора."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "Для продовження повинна бути включена підтримка ZipArchive."
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "Завдання депонента PKP PN"
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Депонент обробляє \"{$title}\"."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr ""
+"Помилка підключення {$error} мережі до PKP PN для отримання службового "
+"документа."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr ""
+"Помилка підключення {$error} мережі до PKP PN для відправки депонування."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr ""
+"Помилка підключення {$error} мережі до PKP PN, щоб отримати оновлення стану "
+"депонування."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr ""
+"PN-сервер повернув помилку HTTP {$error} при спробі отримати службовий "
+"документ."
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "PN-сервер повернув помилку HTTP {$error} при відправленні депонування."
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "Не вдається знайти файл пакета {$file}."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr ""
+"Під час експорту статей сталася помилка. Журнал помилок сервера може містити "
+"більше інформації."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "Запитаний UUID недійсний або відформатований неправильно."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "Депонування із запитуваним UUID відсутнє."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Триває обробка оновлень стану депонувань."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Триває обробка оновленого вмісту."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Триває обробка нового вмісту."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Триває пакування вмісту для депонування."
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Триває процес депонування в PKP PN."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "Отримано стан обробки для {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"Вбудований плагін імпорту / експорту не вдалося депонувати {$depositId} при "
+"спробі упакувати його"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Триває розміщення файлу Atom на проміжному сервері для депонування "
+"{$depositId} (локальний стан: [{$statusLocal}]; стан обробки: "
+"[{$statusProcessing}]; стан LOCKSS: [{$statusLockss}]) – (URL: [{$url}]; "
+"шлях Atom: [{$atomPath}]; метод: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Процес розміщення файлу Atom на проміжному сервері для депонування "
+"{$depositId} пройшов успішно"
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "Шлюз PN"
+
+msgid "plugins.generic.plngateway.description"
+msgstr ""
+"Повідомляє про стан PKP PN і останні назви статей для проміжного сервера."
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "В очікуванні"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Процес депонування ще не почався"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Виконується"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Виконується процес депонування"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Завершено"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Процес депонування завершено"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Помилка"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Сталася помилка, що стосується процесу депонування"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Повна обробка депозиту може зайняти кілька днів."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Останнє оновлення"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Опис стану"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"Не вдалося завантажити депонування із системи. Операцію буде повторено, тим "
+"часом ви можете перевірити, чи ваша система за брандмауером"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"Депонування не вдалося; переконайтеся, що воно не перевищує максимальний "
+"розмір, підтримуваний Мережею збереження"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Перепакування депонування не вдалося, операцію буде повторено"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"Депонування не пройшло антивірусну перевірку, вам слід перевірити його файли "
+"і відправити повторно"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr ""
+"Депонування не пройшло перевірку вмісту, ви можете спробувати повторно "
+"надіслати депонування"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr ""
+"Депонування не пройшло перевірку корисного навантаження, ви можете "
+"спробувати повторно надіслати депонування"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr ""
+"Депонування не пройшло перевірку багажу, ви можете спробувати повторно "
+"відправити депонування"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"Депонування зберігається, але перевірити його стан не вдалося, операцію буде "
+"повторено"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr "Депонування було утримано, версія вашої системи перевищує очікування"
+
+msgid "plugins.generic.pln"
+msgstr "Плагін PKP PN"
+
+msgid "plugins.generic.pln.description"
+msgstr ""
+"Плагін PKP PN розмістить ваш опублікований вміст у Мережі збереження PKP."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>PKP Preservation Network</strong><br /><br />Будь ласка, прочитайте "
+"<a href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">огляд PKP PN</a> і "
+"заповніть<a href=\"{$plnPluginURL}\">цю просту форму</a>. Ця опція включить "
+"ваш журнал до Мережі збереження Проєкту суспільних знань (Public Knowledge "
+"Project Preservation Network – PKP PN)."
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr ""
+"Це – унікальний ідентифікатор вашого журналу для PKP PN. Можливо, вам "
+"доведеться поділитися цим з адміністраторами PKP PN із метою підтримки."
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr ""
+"Згода з умовами користування мережею обов'язкова для депонування в PKP PN."
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr ""
+"Ви впевнені, що хочете перезавантажити це депонування? Його буде "
+"переупаковано і повторно відправлено на сервер обробки."
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Оновлено"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Віддалена помилка"
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Отримання службового документа."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "Ваш журнал повинен мати номер ISSN для внесення вмісту до PKP PN."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr ""
+"Оновлено умови використання PKP PN. Для продовження депонування необхідна "
+"угода з новими умовами."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr ""
+"Ваш журнал повинен мати номер ISSN, перш ніж ви зможете погодитися з умовами "
+"обслуговування. Ввести номер ISSN можна на сторінці налаштувань журналу. "
+"Після введення ISSN журналу умови надання послуг буде показано нижче."
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr ""
+"PN-сервер повернув помилку HTTP {$error} при перевірці стану депонування."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr ""
+"Під час експорту сталася помилка. Журнал помилок сервера може містити більше "
+"інформації."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr ""
+"Файл депонування не знайдено. Можливо, його ще не було упаковано або пакет "
+"було видалено."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"Триває спроба оновлення стану для {$depositId} ({$objectType}: {$objectId}) ("
+"локальний стан: [{$statusLocal}]; стан обробки: [{$statusProcessing}]; стан "
+"LOCKSS: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Триває спроба пакування депонування {$depositId} ({$objectType}: {$objectId})"
+" (локальний стан: [{$statusLocal}]; стан обробки: [{$statusProcessing}]; "
+"стан LOCKSS: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Пакування для депонування {$depositId} не вдалося"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "Процес пакування для депонування {$depositId} пройшов успішно"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"Триває спроба передачі депонування {$depositId} ({$objectType}: {$objectId}) "
+"(локальний стан: [{$statusLocal}]; стан обробки: [{$statusProcessing}]; стан "
+"LOCKSS: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"Розміщення файлу Atom на проміжному сервері для депонування {$depositId} не "
+"вдалося (помилка: [{$error} – [{$result}]])"
