@@ -1,11 +1,11 @@
 # Primož Svetek <primoz.svetek@gmail.com>, 2023.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-01-31 13:48+0000\n"
+"PO-Revision-Date: 2023-02-26 15:48+0000\n"
 "Last-Translator: Primož Svetek <primoz.svetek@gmail.com>\n"
 "Language-Team: Slovenian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
-"sl_SI/>\n"
-"Language: sl_SI\n"
+"sl/>\n"
+"Language: sl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -358,3 +358,38 @@ msgstr ""
 
 msgid "plugins.generic.pln"
 msgstr "PKP PN vtičnik"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"Deponiranje je bilo neuspešno, preverite, da niste presegli največjo "
+"dovoljeno velikost, ki jo Preservation Network podpira"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Ponovno pakiranje depozita ni uspelo, postopek bo ponovljen"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr "Depozit ni prestal preverjanje vsebine, poskusite ga ponovno poslati"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr "Depozit ni prestal preverjanje vsebine, poskusite ga ponovno poslati"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr "Depozit ni prestal preverjanje ovojnice, poskusite ga ponovno poslati"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr "Depozit je bil zadržan, verzija vašega sistema je višja od pričakovane"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"Neuspel prenos podatkov iz vašega sistema. Operacija bo ponovila, medtem pa "
+"lahko preverite, če je vas sistem za požarnim zidom"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"Depozit ni prestal protivirusnega preverjanja, preverite datoteke in jih "
+"ponovno pošljite"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"Depozit je bil uspešno ohranjen, a ni bilo mogoče preveriti statusa, "
+"operacija bo ponovljena"
