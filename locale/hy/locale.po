@@ -2,7 +2,7 @@
 # Tigran Zargaryan <tigran@flib.sci.am>, 2022, 2023, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-06-26 11:40+0000\n"
+"PO-Revision-Date: 2024-07-25 06:40+0000\n"
 "Last-Translator: Tigran Zargaryan <tigran@flib.sci.am>\n"
 "Language-Team: Armenian <http://translate.pkp.sfu.ca/projects/plugins/pln/hy/"
 ">\n"
@@ -151,10 +151,10 @@ msgstr "PN սերվերը վերադարձրեց HTTP սխալ {$error} ավան
 "{$message}"
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "\n"
-"{$message}"
+msgstr ""
 "PN սերվերը վերադարձրեց HTTP սխալ {$error}, երբ փորձում էր ստանալ ծառայողական "
-"փաստաթուղթը:"
+"փաստաթուղթը:\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr ""
