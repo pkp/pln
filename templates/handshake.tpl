@@ -19,7 +19,6 @@
 		<current>{$pluginVersion.version->getCurrent()|escape}</current>
 		<php>{$phpVersion|escape}</php>
 		<zipArchive>{$hasZipArchive|escape}</zipArchive>
-		<tasks>{$hasTasks|escape}</tasks>
 		<terms termsAccepted="{$termsAccepted|escape}">
 			{iterate from=termsDisplay item=term}
 			<term key="{$term.key|escape}" updated="{$term.updated|escape}" accepted="{$term.accepted|escape}">{$term.term|escape}</term>

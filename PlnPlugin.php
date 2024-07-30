@@ -47,9 +47,11 @@ use PKP\plugins\PluginRegistry;
 use PKP\security\Role;
 use PKP\session\SessionManager;
 use PKP\userGroup\UserGroup;
+use PKP\plugins\interfaces\HasTaskScheduler;
+use PKP\scheduledTask\PKPScheduler;
 use SimpleXMLElement;
 
-class PlnPlugin extends GenericPlugin
+class PlnPlugin extends GenericPlugin implements HasTaskScheduler
 {
     public const DEFAULT_NETWORK_URL = 'https://pkp-pn.lib.sfu.ca';
 
@@ -103,8 +105,7 @@ class PlnPlugin extends GenericPlugin
             Hook::add('LoadComponentHandler', [$this, 'setupComponentHandler']);
             $this->disableRestrictions();
         }
-        // The plugin might be disabled for this context, but the task can be executed to check other contexts.
-        Hook::add('AcronPlugin::parseCronTab', [$this, 'callbackParseCronTab']);
+
         return true;
     }
 
@@ -275,13 +276,15 @@ class PlnPlugin extends GenericPlugin
     }
 
     /**
-     * @copydoc AcronPlugin::parseCronTab()
+     * @copydoc \PKP\plugins\interfaces\HasTaskScheduler::registerSchedules()
      */
-    public function callbackParseCronTab(string $hookName, array $args): bool
+    public function registerSchedules(PKPScheduler $scheduler): void
     {
-        $taskFilesPath = & $args[0];
-        $taskFilesPath[] = $this->getPluginPath() . '/xml/scheduledTasks.xml';
-        return Hook::CONTINUE;
+        $scheduler
+            ->addSchedule(new Depositor(['autoStage']))
+            ->daily()
+            ->name(Depositor::class)
+            ->withoutOverlapping();
     }
 
     /**
@@ -508,27 +511,6 @@ class PlnPlugin extends GenericPlugin
     public function hasZipArchive(): bool
     {
         return class_exists('ZipArchive');
-    }
-
-    /**
-     * Check if the Acron plugin is enabled, or if the scheduled task has been running lately.
-     */
-    public function hasScheduledTasks(): bool
-    {
-        $application = Application::get();
-        $products = $application->getEnabledProducts('plugins.generic');
-        return isset($products['acron']) || (($lastRun = $this->getLastExecutionDate()) && Carbon::now()->diffInWeeks($lastRun) < 1);
-    }
-
-    /**
-     * Retrieves the last time the depositor task was executed
-     */
-    public function getLastExecutionDate(): ?DateTimeImmutable
-    {
-        $lastRun = DB::table('scheduled_tasks')
-            ->where('class_name', Depositor::class)
-            ->soleValue('last_run');
-        return $lastRun ? new DateTimeImmutable($lastRun) : null;
     }
 
     /**
