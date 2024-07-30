@@ -281,7 +281,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     public function registerSchedules(PKPScheduler $scheduler): void
     {
         $scheduler
-            ->addSchedule(new Depositor(['autoStage']))
+            ->addSchedule(new Depositor())
             ->daily()
             ->name(Depositor::class)
             ->withoutOverlapping();
