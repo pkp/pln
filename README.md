@@ -89,7 +89,6 @@ not necessary.)
 - Execute `composer install` from console, being in the cloned `pln` folder.
   (This process is going to produce a `vendor` folder containing the depending
   library.)
-- Enable Acron plugin and change `config.inc.php` variable `scheduled_tasks = On`
 - Enable the PN plugin
 
 ## Other useful hints / Troubleshooting hints
@@ -103,9 +102,11 @@ not necessary.)
   be present. If absent, the task is probably not being executed daily or
   there might be permission issues to create them.
 
-- The `APP\plugins\generic\pln\classes\tasks\Depositor` task must be present in the
-  `scheduled_tasks` table. If it's not, try to reload the scheduled tasks at the
-  Acron plugin (the option `Reload Scheduled Tasks` at the plugin settings).
+- Make sure that crontab or web based task scheduler is enabled and properly configured. 
+  To configure the crontab in a *nix system, add the following lines to crontab
+  `* * * * * php lib/pkp/tools/scheduler.php run >> /dev/null 2>&1` .
+  To configure the web based task sechdule runner, make sure that `task_runner`
+  is set to `On` in application's `config.inc.php` file.
 
 - Every log file should end with an entry like `[*date time*] [Notice] Task process stopped.`.
   If absent, it means the process has been halted unexpectedly due to errors, check

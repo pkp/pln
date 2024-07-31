@@ -148,7 +148,6 @@ class PLNGatewayPlugin extends GatewayPlugin
             'termsAccepted' => $termsAccepted ? 'yes' : 'no',
             'phpVersion' => PHP_VERSION,
             'hasZipArchive' => $plugin->hasZipArchive() ? 'Yes' : 'No',
-            'hasTasks' => $plugin->hasScheduledTasks() ? 'Yes' : 'No',
             'termsDisplay' => new ArrayItemIterator($termsDisplay),
             'ojsVersion' => Application::get()->getCurrentVersion()->getVersionString(),
             'publications' => $publications,
