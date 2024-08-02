@@ -1,8 +1,9 @@
 # Emilija Andonoska <emilija-andonoska@hotmail.com>, 2023.
+# Mirko Spiroski <mspiroski@id-press.eu>, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-03-15 10:48+0000\n"
-"Last-Translator: Emilija Andonoska <emilija-andonoska@hotmail.com>\n"
+"PO-Revision-Date: 2024-08-03 04:22+0000\n"
+"Last-Translator: Mirko Spiroski <mspiroski@id-press.eu>\n"
 "Language-Team: Macedonian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "mk/>\n"
 "Language: mk\n"
@@ -10,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n==1 || n%10==1 ? 0 : 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.pln.status.description.title"
 msgstr "Опис на статус"
@@ -144,9 +145,10 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Не е пронајдена спакуваната датотека {$file}."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "\n"
+msgstr ""
+"PN серверот врати HTTP грешка {$error} при проверка на статусот за "
+"складирање.\n"
 "{$message}"
-"PN серверот врати HTTP грешка {$error} при проверка на статусот на депозит."
 
 msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr ""
@@ -168,10 +170,10 @@ msgstr "PN серверот врати HTTP грешка {$error} при исп�
 "{$message}"
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "\n"
+msgstr ""
+"PN серверот врати HTTP грешка {$error} при обид да добие докуметот за услуги."
+"\n"
 "{$message}"
-"PN серверот врати HTTP грешка {$error} при обидување да го добие докуметот "
-"за услуги."
 
 msgid "plugins.generic.pln.error.include.bagit"
 msgstr ""
