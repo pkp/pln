@@ -1,11 +1,12 @@
 # Pia Piontkowitz <pia.piontkowitz@rub.de>, 2023.
+# Renate Voget <renate.voget@hbz-nrw.de>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2023-04-26 14:49+0000\n"
-"Last-Translator: Pia Piontkowitz <pia.piontkowitz@rub.de>\n"
+"PO-Revision-Date: 2024-08-15 04:33+0000\n"
+"Last-Translator: Renate Voget <renate.voget@hbz-nrw.de>\n"
 "Language-Team: German <http://translate.pkp.sfu.ca/projects/plugins/pln/de/>"
 "\n"
 "Language: de\n"
@@ -13,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.pln"
 msgstr "PKP-PN-Plug-In"
@@ -376,3 +377,14 @@ msgid "plugins.generic.pln.status.error.bag-error"
 msgstr ""
 "Die Ablieferung hat die bag validation nicht bestanden, bitte versuchen Sie "
 "es erneut"
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Verwaiste Bestände entfernen."
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "Folgende Bestände konnten nicht entfernt werden: {$depositIds}."
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"Gehen Sie zu den Einstellungen des PKP PN Plugins, um zu den AGBs zu "
+"gelangen und diesen zuzustimmen."
