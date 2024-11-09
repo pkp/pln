@@ -240,15 +240,15 @@ class DAO extends EntityDAO
      */
     public function pruneOrphaned(): void
     {
-        DB::table('pln_deposit_objects AS do')
+        DB::table('pln_deposit_objects')
             ->whereNotIn(
-                'do.journal_id',
+                'journal_id',
                 fn (Builder $q) => $q
                     ->from('journals AS j')
                     ->select('j.journal_id')
             )
             ->orWhereNotIn(
-                'do.deposit_id',
+                'deposit_id',
                 fn (Builder $q) => $q
                     ->from('pln_deposits AS d')
                     ->select('d.deposit_id')
