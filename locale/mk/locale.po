@@ -2,7 +2,7 @@
 # Mirko Spiroski <mspiroski@id-press.eu>, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-08-03 04:22+0000\n"
+"PO-Revision-Date: 2024-11-16 09:40+0000\n"
 "Last-Translator: Mirko Spiroski <mspiroski@id-press.eu>\n"
 "Language-Team: Macedonian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
 "mk/>\n"
@@ -412,3 +412,14 @@ msgid "plugins.generic.pln.status.error.status-error"
 msgstr ""
 "Депозитот се зачувува, но не беше можно да се провери неговиот статус, "
 "операцијата ќе се обиде повторно"
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"Пристап до PKP PN плагин подесувања за да се видат и прифатат поимите и "
+"сервисите."
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Кастрење на депозити без родители."
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "Отстранувањето на следните депозити не успеа: {$depositIds}."
