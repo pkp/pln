@@ -1,12 +1,13 @@
 # Salam Al-Khammasi <salam.alshemmari@uokufa.edu.iq>, 2023.
 # M. Ali <vorteem@gmail.com>, 2023.
+# "M. Ali" <vorteem@gmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2023-03-30 15:48+0000\n"
-"Last-Translator: M. Ali <vorteem@gmail.com>\n"
+"PO-Revision-Date: 2024-07-25 06:40+0000\n"
+"Last-Translator: \"M. Ali\" <vorteem@gmail.com>\n"
 "Language-Team: Arabic <http://translate.pkp.sfu.ca/projects/plugins/pln/ar/>"
 "\n"
 "Language: ar\n"
@@ -15,7 +16,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.pln"
 msgstr "إضافة مشروع المعرفة العامة PN"
@@ -214,10 +215,14 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "تعذر العثور على ملف حزمة {$file}."
 
 msgid "plugins.generic.pln.error.depositor.export.articles.error"
-msgstr "حصل خطأ ما عند تصدير المؤلفات. قد يتضمن ملف توثيق الملقم المزيد من المعلومات."
+msgstr ""
+"حصل خطأ ما عند تصدير المؤلفات. قد يتضمن ملف توثيق أخطاء الملقم المزيد من "
+"المعلومات."
 
 msgid "plugins.generic.pln.error.depositor.export.issue.error"
-msgstr "حصل خطأ ما عند تصدير العدد. قد يتضمن ملف توثيق الملقم المزيد من المعلومات."
+msgstr ""
+"حصل خطأ ما عند تصدير العدد. قد يتضمن ملف توثيق أخطاء الملقم المزيد من "
+"المعلومات."
 
 msgid "plugins.generic.pln.error.handler.uuid.invalid"
 msgstr "الرمز التعريفي UUID غير صحيح، أو غير منسق كما ينبغي."
@@ -383,3 +388,14 @@ msgstr "الإيداع لم يجتز عملية التحقق من الحمولة
 msgid "plugins.generic.pln.status.error.status-error"
 msgstr ""
 "الإيداع يجري حفظه، ولكن لم يكن ممكنًا التحقق من حالته، ستتم إعادة محاولة ذلك"
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"إذهب إلى إعدادات إضافة PN لمشروع المعرفة العامة لمعاينة شروط الخدمة "
+"والموافقة عليها."
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "تقليم الإيداعات المُيتمة."
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "إزالة الإيداعات الآتية قد فشلت: {$depositIds}."

@@ -1,8 +1,8 @@
 # Weblate Admin <alec@smecher.bc.ca>, 2023.
-# José Carvalho <jcarvalho@keep.pt>, 2023.
+# José Carvalho <jcarvalho@keep.pt>, 2023, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-11-27 23:07+0000\n"
+"PO-Revision-Date: 2024-06-26 11:40+0000\n"
 "Last-Translator: José Carvalho <jcarvalho@keep.pt>\n"
 "Language-Team: Portuguese (Portugal) <http://translate.pkp.sfu.ca/projects/"
 "plugins/pln/pt_PT/>\n"
@@ -255,17 +255,20 @@ msgstr ""
 
 msgid "plugins.generic.pln.error.http.servicedocument"
 msgstr ""
-"O servidor PKP PN devolveu um erro HTTP {$error} ao tentar recuperar o "
-"documento do serviço."
+"O servidor PKP PN devolveu um erro HTTP ao tentar recuperar o documento do "
+"serviço.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.deposit"
 msgstr ""
-"O serviço PKP PN devolveu um erro HTTP {$error} quando enviou o depósito."
+"O serviço PKP PN devolveu um erro HTTP quando enviou o depósito.\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.http.swordstatement"
 msgstr ""
-"O serviço PKP PN devolveu um erro HTTP {$error} ao verificar a situação de "
-"um depósito."
+"O serviço PKP PN devolveu um erro HTTP ao verificar o estado de um depósito."
+"\n"
+"{$message}"
 
 msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Impossível encontrar ficheiro {$file}."
@@ -404,3 +407,14 @@ msgid "plugins.generic.pln.status.error.bag-error"
 msgstr ""
 "O depósito não passou na validação da bolsa (bag), pode tentar reenviar o "
 "depósito"
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"Aceda às configurações do plugin PKP PN para visualizar e aceitar os termos "
+"do serviço."
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Suprimir depósitos órfãos."
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "Falha na remoção dos seguintes depósitos: {$depositIds}."
