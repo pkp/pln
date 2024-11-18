@@ -1,15 +1,19 @@
+# Rodolphe Lemétayer <rlemetayer@protonmail.com>, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
+"POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
+"PO-Revision-Date: 2024-06-22 06:39+0000\n"
+"Last-Translator: Rodolphe Lemétayer <rlemetayer@protonmail.com>\n"
+"Language-Team: French <http://translate.pkp.sfu.ca/projects/plugins/pln/"
+"fr_FR/>\n"
+"Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2020-03-03T23:08:22+00:00\n"
-"Language: \n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.pln"
 msgstr "Plugiciel PKP PN"
@@ -30,7 +34,10 @@ msgid "plugins.generic.pln.settings.terms_of_use"
 msgstr "Conditions d'utilisation"
 
 msgid "plugins.generic.pln.settings.terms_of_use_help"
-msgstr "Avant de déposer sur le réseau, vous devez accepter toutes les conditions d'utilisation."
+msgstr ""
+"En tant que gestionnaire de revue, en toute bonne foi, j'accepte et confirme "
+"les termes et conditions de participation du Public Knowledge Project’s "
+"Preservation Network (PKP-PN) :"
 
 msgid "plugins.generic.pln.settings.terms_of_use_agree"
 msgstr "J'accepte"
@@ -63,7 +70,7 @@ msgid "plugins.generic.pln.objects.issue"
 msgstr "Numéro"
 
 msgid "plugins.generic.pln.status.network_status"
-msgstr "Statut du réseau: {$networkStatusMessage}"
+msgstr "Statut du réseau : {$networkStatusMessage}"
 
 msgid "plugins.generic.pln.status.deposits"
 msgstr "Dépôt"
@@ -117,7 +124,7 @@ msgid "plugins.generic.pln.depositorTask.name"
 msgstr "Tâche de dépôt PKP PN"
 
 msgid "plugins.generic.pln.notifications.processing_for"
-msgstr "Déposant en traitement de"
+msgstr "Déposant en traitement de {$title}."
 
 msgid "plugins.generic.pln.notifications.pln_not_accepting"
 msgstr "Le PKP PN n'accepte pas les dépôts actuellement."
@@ -231,7 +238,7 @@ msgid "plugins.generic.pln.depositor.updatedcontent"
 msgstr "Traitement de contenu mis à jour."
 
 msgid "plugins.generic.pln.depositor.newcontent"
-msgstr "Nouveau contenu en traitement"
+msgstr "Nouveau contenu en traitement."
 
 msgid "plugins.generic.pln.depositor.packagingdeposits"
 msgstr "Paquetage de contenu pour le dépôt en cours."
@@ -244,3 +251,152 @@ msgstr "Passerelle PN"
 
 msgid "plugins.generic.plngateway.description"
 msgstr "Rapporte le statut du PKP PN et les titres d'article récents pour le serveur de test."
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"Échec du dépôt, assurez-vous que le dépôt ne dépasse pas la taille maximum "
+"autorisée par le réseau de préservation"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Échec du repackaging du dépôt, l'opération sera relancée de nouveau"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr ""
+"Tentative de mise à jour du statut de {$depositId} ({$objectType} : "
+"{$objectId}) (Statut local : [{$statusLocal}], Statut de traitement : "
+"[{$statusProcessing}], Statut de Lockss : [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr ""
+"Le statut de traitement obtenu pour {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Le packaging pour le dépôt {$depositId} a échoué"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr ""
+"Tentative de transfert du dépôt {$depositId} ({$objectType} : {$objectId}) ("
+"Statut local : [{$statusLocal}], Statut de traitement  : "
+"[{$statusProcessing}], Statut Lockss  : [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr ""
+"Envoi du fichier Atom au serveur de transit pour le dépôt {$depositId} ("
+"Statut local : [{$statusLocal}], Statut de traitement : [{$statusProcessing}]"
+", Statut Lockss : [{$statusLockss}]) - (Url : [{$url}], AtomPath : "
+"[{$atomPath}], Méthode : [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr ""
+"Envoi du fichier Atom au serveur de transit pour le dépôt {$depositId} réussi"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Processus de dépôt en cours"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"Le dépôt a été stoppé suite à la vérification anti-virus, vous devriez "
+"vérifier le.s fichier.s et réessayer"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr ""
+"L'envoi du fichier Atom au serveur de transit pour le dépôt {$depositId} a "
+"échoué (Erreur : [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "En attente"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Le processus de dépôt n'a pas encore commencé"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Description du statut"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Processus de dépôt terminé"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr ""
+"Tentative de dépôt du paquet {$depositId} ({$objectType} : {$objectId}) ("
+"Statut local : [{$statusLocal}], Statut de traitement : [{$statusProcessing}]"
+", Statut Lockss : [{$statusLockss}])"
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Statut"
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Identifiant du numéro"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Identifiant du type d'objet"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Terminé"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Une erreur est survenue concernant le processus de dépôt"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Le traitement complet d'un dépôt peut prendre plusieurs jours."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Dernière mise à jour"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "Packaging du dépôt {$depositId} réussi"
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Élagage des dépôts orphelins."
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "En cours"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Erreur"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr ""
+"Le dépôt n'a pas passé l'étape de validation de contenu, vous devriez "
+"essayer de renvoyer le dépôt"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr ""
+"Le dépôt n'a pas passé la validation de charge utile, vous pouvez essayer de "
+"renvoyer le dépôt"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"Le dépôt est conservé, mais il n'a pas été possible de vérifier son statut, "
+"l'opération sera réessayée"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr ""
+"Le dépôt a été retenu, la version de votre système est supérieure à ses "
+"attentes"
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"Accéder aux paramètres du module PKP PN plugin pour voir et accepter les "
+"termes du service."
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Échec du packaging"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr ""
+"Le module d'importation et d'exportation natif a échoué pour le dépôt : "
+"{$depositId}, au moment du packaging"
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "La suppression des dépôts suivant a échoué : {$depositIds}."
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"Échec de téléchargement du dépôt à partir de votre système. L'opération sera "
+"tentée de nouveau, en attendant, vous pourriez vérifier si votre système est "
+"protégé par un pare-feu"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr ""
+"Le dépôt n'a pas passé l'étape de validation du sac de données, vous devriez "
+"essayer de renvoyer le dépôt"

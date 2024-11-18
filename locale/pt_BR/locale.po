@@ -1,11 +1,11 @@
 # Jonas Raoni Soares da Silva <weblate@raoni.org>, 2023.
-# Diego José Macêdo <diegojmacedo@gmail.com>, 2023.
+# Diego José Macêdo <diegojmacedo@gmail.com>, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2023-02-18 21:48+0000\n"
+"PO-Revision-Date: 2024-06-22 06:39+0000\n"
 "Last-Translator: Diego José Macêdo <diegojmacedo@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <http://translate.pkp.sfu.ca/projects/"
 "plugins/pln/pt_BR/>\n"
@@ -14,7 +14,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.pln"
 msgstr "Plugin PKP PN do PKP"
@@ -207,10 +207,14 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Impossível encontrar arquivo de pacote {$file}."
 
 msgid "plugins.generic.pln.error.depositor.export.articles.error"
-msgstr "Ocorreu um erro ao exportar artigos. O registro de erros do servidor pode conter mais informações."
+msgstr ""
+"Ocorreu um erro ao exportar artigos. O registro de erros do servidor pode "
+"conter mais informações."
 
 msgid "plugins.generic.pln.error.depositor.export.issue.error"
-msgstr "Ocorreu um erro ao exportar uma edição. O registro de erros do servidor pode conter mais informações."
+msgstr ""
+"Ocorreu um erro ao exportar uma edição. O registro de erros do servidor pode "
+"conter mais informações."
 
 msgid "plugins.generic.pln.error.handler.uuid.invalid"
 msgstr "o UUID solicitado é inválido ou não está formatado corretamente."
@@ -379,3 +383,14 @@ msgid "plugins.generic.pln.status.error.payload-error"
 msgstr ""
 "O depósito não passou na validação de carga, você pode tentar reenviar o "
 "depósito"
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Supressão de depósitos órfãos."
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"Acesse as configurações do plugin PKP PN para visualizar e aceitar os termos "
+"do serviço."
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "Falha na remoção dos seguintes depósitos: {$depositIds}."
