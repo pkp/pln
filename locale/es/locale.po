@@ -1,9 +1,10 @@
 # Jordi LC <jordi.lacruz@uab.cat>, 2021, 2024.
 # Marc Bria <marc.bria@gmail.com>, 2023.
+# Darío Hereñú <magallania@gmail.com>, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2024-11-08 13:40+0000\n"
-"Last-Translator: Jordi LC <jordi.lacruz@uab.cat>\n"
+"PO-Revision-Date: 2024-11-20 04:40+0000\n"
+"Last-Translator: Darío Hereñú <magallania@gmail.com>\n"
 "Language-Team: Spanish <http://translate.pkp.sfu.ca/projects/plugins/pln/es/>"
 "\n"
 "Language: es\n"
@@ -419,3 +420,6 @@ msgid "plugins.generic.pln.onPluginEnabledNotification"
 msgstr ""
 "Acceda a los ajustes del módulo PKP PN para ver y aceptar las condiciones "
 "del servicio."
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Poda de depósitos huérfanos."
