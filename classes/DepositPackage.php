@@ -262,7 +262,7 @@ class DepositPackage
                 // we need to add all of the relevant submissions to an array to export as a batch
                 foreach ($depositObjects as $depositObject) {
                     $submission = $submissionDao->getById($this->deposit->getObjectId());
-                    if ($submission->getContextId() !== $journal->getId()) {
+                    if ($submission->getData('contextId') !== $journal->getId()) {
                         continue;
                     }
                     if ($submission->getCurrentPublication()?->getData('status') !== PKPSubmission::STATUS_PUBLISHED) {
