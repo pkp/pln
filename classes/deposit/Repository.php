@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file classes/deposit/Repository.php
  *
@@ -84,6 +85,8 @@ class Repository
      * @param string $primaryLocale The submission's primary locale
      *
      * @return array A key/value array with validation errors. Empty if no errors
+     *
+     * @hook PreservationNetwork::Deposit::validate [[$errors, $deposit, $props, $allowedLocales, $primaryLocale]]
      */
     public function validate($deposit, $props, $allowedLocales, $primaryLocale): array
     {
@@ -120,6 +123,8 @@ class Repository
 
     /**
      * Adds a new deposit
+     *
+     * @hook PreservationNetwork::Deposit::add [[$deposit]]
      */
     public function add(Deposit $deposit): int
     {
@@ -136,6 +141,8 @@ class Repository
 
     /**
      * Edits a deposit
+     *
+     * @hook PreservationNetwork::Deposit::edit [[$newDeposit, $deposit, $params]]
      */
     public function edit(Deposit $deposit, array $params = []): void
     {
@@ -150,6 +157,8 @@ class Repository
 
     /**
      * Deletes a deposit
+     *
+     * @hook PreservationNetwork::Deposit::delete::before [[$deposit]]
      */
     public function delete(Deposit $deposit): bool
     {

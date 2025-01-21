@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file classes/deposit/Collector.php
  *
@@ -48,7 +49,7 @@ class Collector implements CollectorInterface
     /** @var int[]|null */
     public ?array $contextIds = null;
 
-    /** @var ?string */
+    /**  */
     public ?string $status = null;
 
     public string $orderBy = self::ORDER_BY_ERROR;
@@ -157,6 +158,8 @@ class Collector implements CollectorInterface
 
     /**
      * @copydoc CollectorInterface::getQueryBuilder()
+     *
+     * @hook PreservationNetwork::Deposit::Collector [[&$q, $this]]
      */
     public function getQueryBuilder(): Builder
     {
@@ -187,9 +190,11 @@ class Collector implements CollectorInterface
                     ),
                 }
             )
-            ->when($orderBy, fn (Builder $q) => $q
-                ->orderBy($orderBy, $this->orderDirection)
-                ->orderBy('d.deposit_id')
+            ->when(
+                $orderBy,
+                fn (Builder $q) => $q
+                    ->orderBy($orderBy, $this->orderDirection)
+                    ->orderBy('d.deposit_id')
             );
 
         // Add app-specific query statements

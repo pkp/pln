@@ -14,11 +14,9 @@
 
 namespace APP\plugins\generic\pln\classes\form;
 
-use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\PlnPlugin;
 use APP\template\TemplateManager;
 use PKP\form\Form;
-use PKP\handler\PKPHandler;
 
 class StatusForm extends Form
 {

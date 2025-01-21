@@ -24,31 +24,27 @@ use APP\plugins\generic\pln\classes\deposit\Schema as DepositSchema;
 use APP\plugins\generic\pln\classes\depositObject\Schema as DepositObjectSchema;
 use APP\plugins\generic\pln\classes\form\SettingsForm;
 use APP\plugins\generic\pln\classes\form\StatusForm;
+use APP\plugins\generic\pln\classes\migration\install\SchemaMigration;
 use APP\plugins\generic\pln\classes\PLNGatewayPlugin;
 use APP\plugins\generic\pln\classes\tasks\Depositor;
 use APP\plugins\generic\pln\pages\PageHandler;
-use APP\plugins\generic\pln\classes\migration\install\SchemaMigration;
-use Carbon\Carbon;
-use DateTimeImmutable;
 use DOMDocument;
 use DOMElement;
 use Exception;
 use GuzzleHttp\Exception\RequestException;
-use Illuminate\Support\Facades\DB;
 use PKP\config\Config;
 use PKP\core\JSONMessage;
 use PKP\core\PKPString;
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
-use PKP\notification\PKPNotification;
 use PKP\plugins\GenericPlugin;
 use PKP\plugins\Hook;
+use PKP\plugins\interfaces\HasTaskScheduler;
 use PKP\plugins\PluginRegistry;
+use PKP\scheduledTask\PKPScheduler;
 use PKP\security\Role;
 use PKP\session\SessionManager;
 use PKP\userGroup\UserGroup;
-use PKP\plugins\interfaces\HasTaskScheduler;
-use PKP\scheduledTask\PKPScheduler;
 use SimpleXMLElement;
 
 class PlnPlugin extends GenericPlugin implements HasTaskScheduler
@@ -58,7 +54,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     public const DEPOSIT_FOLDER = 'pln';
 
     // Notification types
-    public const NOTIFICATION_BASE = PKPNotification::NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000;
+    public const NOTIFICATION_BASE = Notification::NOTIFICATION_TYPE_PLUGIN_BASE + 0x10000000;
     public const NOTIFICATION_TERMS_UPDATED = self::NOTIFICATION_BASE + 1;
     public const NOTIFICATION_ISSN_MISSING = self::NOTIFICATION_BASE + 2;
     public const NOTIFICATION_HTTP_ERROR = self::NOTIFICATION_BASE + 3;
@@ -141,7 +137,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
         if ([$page, $operation] === ['pln', 'deposits'] || [$page, $operation, $arguments[0] ?? ''] === ['gateway', 'plugin', 'PLNGatewayPlugin']) {
             SessionManager::disable();
             Hook::add('RestrictedSiteAccessPolicy::_getLoginExemptions', function (string $hookName, array $args): bool {
-                $exemptions = & $args[0];
+                $exemptions = &$args[0];
                 array_push($exemptions, 'gateway', 'pln');
                 return Hook::CONTINUE;
             });
@@ -266,7 +262,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     public function callbackLoadCategory(string $hookName, array $args): bool
     {
         $category = $args[0];
-        $plugins = & $args[1];
+        $plugins = &$args[1];
         if ($category === 'gateways') {
             $gatewayPlugin = new PLNGatewayPlugin($this->getName());
             $plugins[$gatewayPlugin->getSeq()][$gatewayPlugin->getPluginPath()] = $gatewayPlugin;
@@ -294,7 +290,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     {
         /** @var Notification */
         $notification = $args[0];
-        $message = & $args[1];
+        $message = &$args[1];
 
         $message = match ($notification->getType()) {
             static::NOTIFICATION_TERMS_UPDATED => __('plugins.generic.pln.notifications.terms_updated'),
@@ -317,7 +313,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
             return Hook::CONTINUE;
         }
         define('HANDLER_CLASS', PageHandler::class);
-        $handlerFile = & $args[2];
+        $handlerFile = &$args[2];
         $handlerFile = "{$this->getHandlerPath()}/PageHandler.php";
         return Hook::CONTINUE;
     }
@@ -404,7 +400,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     /**
      * Request service document at specified URL
      *
-     * @return array{status:?int,result:?string,error:?string}
+     * @return array{status: ?int, result: ?string, error:? string}
      */
     public function getServiceDocument(int $contextId): array
     {
@@ -516,7 +512,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     /**
      * Get resource
      *
-     * @return array{status:?int,result:?string,error:?string}
+     * @return array{status: ?int, result: ?string, error: ?string}
      */
     public function curlGet(string $url, array $headers = []): array
     {

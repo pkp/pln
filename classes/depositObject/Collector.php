@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file classes/depositObject/Collector.php
  *
@@ -114,6 +115,8 @@ class Collector implements CollectorInterface
 
     /**
      * @copydoc CollectorInterface::getQueryBuilder()
+     *
+     * @hook PreservationNetwork::DepositObject::Collector [[&$q, $this]]
      */
     public function getQueryBuilder(): Builder
     {
