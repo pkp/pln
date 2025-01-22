@@ -1,16 +1,16 @@
-# Cyril Kamburov <cc@intermedia.bg>, 2022, 2023.
+# Cyril Kamburov <cc@intermedia.bg>, 2022, 2023, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2023-02-09 20:48+0000\n"
+"PO-Revision-Date: 2024-06-26 11:40+0000\n"
 "Last-Translator: Cyril Kamburov <cc@intermedia.bg>\n"
 "Language-Team: Bulgarian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
-"bg_BG/>\n"
-"Language: bg_BG\n"
+"bg/>\n"
+"Language: bg\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.13.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.pln.description"
 msgstr ""
@@ -364,3 +364,65 @@ msgstr ""
 
 msgid "plugins.generic.pln.settings"
 msgstr "Настройки"
+
+msgid "plugins.generic.pln.disabled"
+msgstr "Добавката (плъгин) PKP PN е деактивирана."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "Добавката (плъгин) PKP PN е активирана."
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr ""
+"Повторното пакетиране на депозита не бе успешно, операцията ще бъде "
+"изпробвана отново"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"Депозитът не е преминал антивирусната проверка, трябва да прегледате "
+"файловете му и да ги изпратите отново"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr ""
+"Депозитът не премина проверката на полезния товар, можете да опитате да "
+"изпратите депозита отново"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"Депозитът се запазва, но не беше възможно да се провери състоянието му, "
+"операцията ще бъде повторена"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr "Депозитът е задържан, версията на вашата система е над очакваната"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"Неуспешно изтегляне на депозита от вашата система. Операцията ще бъде "
+"изпробвана повторно, междувременно можете да проверите дали системата ви е "
+"зад защитна стена"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"Депозитът не бе успешен, уверете се, че не надвишава максималния размер, "
+"поддържан от Preservation Network"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr ""
+"Депозитът не премина проверката на съдържанието, можете да опитате да "
+"изпратите депозита отново"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr ""
+"Депозитът не премина проверката на пакетирането, можете да опитате да "
+"изпратите депозита отново"
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr ""
+"Премахването на следните депозирани материали не бе успешно: {$depositIds}."
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"Влезте в настройките на плъгина PKP PN, за да видите и приемете условията на "
+"услугата."
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Изтриване на непълни депозирани материали."
