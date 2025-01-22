@@ -1,19 +1,20 @@
+# Pavel Pisklakov <ppv1979@mail.ru>, 2023, 2024.
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
-"PO-Revision-Date: 2021-02-24 11:54+0000\n"
+"PO-Revision-Date: 2024-07-04 01:40+0000\n"
 "Last-Translator: Pavel Pisklakov <ppv1979@mail.ru>\n"
-"Language-Team: Russian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
-"ru_RU/>\n"
-"Language: ru_RU\n"
+"Language-Team: Russian <http://translate.pkp.sfu.ca/projects/plugins/pln/ru/>"
+"\n"
+"Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<="
-"4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 3.9.1\n"
+"Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
+"n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.pln"
 msgstr "Плагин «PKP PN»"
@@ -24,11 +25,32 @@ msgstr "Плагин «PKP PN» отправляет ваш опубликова
 msgid "plugins.generic.pln.manager.setup.description"
 msgstr "<strong>Частная сеть LOCKSS от PKP</strong><br /><br />Пожалуйста, прочитайте <a href=\"https://pkp.sfu.ca/pkp-pn/\" target=\"_blank\">обзор PKP PN</a> и заполните <a href=\"{$plnPluginURL}\">эту простую форму</a>. Эта настройка позволит включить ваш журналв Частную сеть LOCKSS, созданную Public Knowledge Project (PKP PN)."
 
+msgid "plugins.generic.pln.description"
+msgstr ""
+"Модуль «PKP PN» отправляет ваш опубликованный контент для депонирования в "
+"Сеть архивирования PKP."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr ""
+"<strong>Сеть архивирования PKP</strong><br /><br />Пожалуйста, прочитайте <a "
+"href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">обзор PKP PN</a> и "
+"заполните <a href=\"{$plnPluginURL}\">эту простую форму</a>. Эта настройка "
+"позволит включить ваш журнал в Сеть архивирования, созданную Public "
+"Knowledge Project (PKP PN)."
+
+msgid "plugins.generic.pln.enabled"
+msgstr "Модуль «PKP PN» был включен."
+
+msgid "plugins.generic.pln.disabled"
+msgstr "Модуль «PKP PN» был отключен."
+
 msgid "plugins.generic.pln.settings"
 msgstr "Настройки"
 
 msgid "plugins.generic.pln.settings.acron_required"
-msgstr "Плагин PKP PN требуется либо плагин Acron, либо инструменты периодического запуска по расписанию, например, «cron»."
+msgstr ""
+"Модулю PKP PN требуется либо модуль Acron, либо инструменты периодического "
+"запуска по расписанию, например, «cron»."
 
 msgid "plugins.generic.pln.settings.saved"
 msgstr "Настройки PKP PN сохранены."
@@ -175,7 +197,10 @@ msgid "plugins.generic.pln.notifications.zip_missing"
 msgstr "Для работы необходимо включить поддержку ZipArchive."
 
 msgid "plugins.generic.pln.notifications.issn_setting"
-msgstr "У вашего журнала должен быть ISSN до того, как вы примение условия использования. Вы можете ввести ISSN на странице «Настройка журнала». После того как будет введен ISSN журнал, условия использования будут показаны ниже."
+msgstr ""
+"У вашего журнала должен быть ISSN до того, как вы примете условия "
+"использования. Вы можете ввести ISSN на странице «Настройка журнала». После "
+"того как будет введен ISSN журнал, условия использования будут показаны ниже."
 
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr "Ошибка сети {$error} при подключении к PKP PN для получения служебного документа."
@@ -202,10 +227,14 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Не удается найти файл пакета {$file}."
 
 msgid "plugins.generic.pln.error.depositor.export.articles.error"
-msgstr "В процессе экспорта статей произошла ошибка. Более подробная информация может быть в журнале ошибок сервера."
+msgstr ""
+"В процессе экспорта статей произошла ошибка. Более подробная информация "
+"может быть в журнале ошибок сервера."
 
 msgid "plugins.generic.pln.error.depositor.export.issue.error"
-msgstr "При экспорте выпуска произошла ошибка. Более подробная информация может быть в журнале ошибок сервера."
+msgstr ""
+"При экспорте выпуска произошла ошибка. Более подробная информация может быть "
+"в журнале ошибок сервера."
 
 msgid "plugins.generic.pln.error.handler.uuid.invalid"
 msgstr "Запрошенный UUID является некорректным или имеет неправильный формат."
@@ -229,7 +258,7 @@ msgid "plugins.generic.pln.depositor.packagingdeposits"
 msgstr "Упаковка контента для депонирования."
 
 msgid "plugins.generic.pln.depositor.transferringdeposits"
-msgstr "Отправка депонируемых объектов в PN."
+msgstr "Отправка депонируемых объектов в PKP PN."
 
 msgid "plugins.generic.plngateway.displayName"
 msgstr "Шлюз PN"
@@ -301,7 +330,7 @@ msgstr "Упаковка депонируемого объекта {$depositId} 
 
 msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
 msgstr ""
-"Плагин «Собственный XML» потерпел неудачу при попытке упаковать депонируемый "
+"Модуль «Собственный XML» потерпел неудачу при попытке упаковать депонируемый "
 "объект {$depositId}"
 
 msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
@@ -330,3 +359,58 @@ msgstr "ID выпуска"
 
 msgid "plugins.generic.pln.objectId"
 msgstr "ID типа объекта"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"Депонирование объекта не удалось, убедитесь, что он не превышает "
+"максимальный размер, поддерживаемый Сетью архивирования"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Переупаковка депонируемого объекта не удалась, операция будет повторена"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr ""
+"Депонируемый объект не прошел валидацию контента, вы можете попробовать "
+"отправить его повторно"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr ""
+"Депонируемый объект не прошел проверку пакета, вы можете попробовать "
+"отправить его повторно"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr ""
+"Депонирование объекта было приостановлено, версия вашей системы выше, чем "
+"ожидалось"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"Не удалось загрузить депонируемый объект из вашей системы. Операция будет "
+"повторена, а пока вы можете проверить, не находится ли ваша система за "
+"брандмауэром"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"Депонируемый объект не прошел антивирусную проверку, вам следует проверить "
+"его файлы и отправить повторно"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr ""
+"Депонируемый объект не прошел проверку полезной нагрузки, вы можете "
+"попробовать отправить его повторно"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"Депонируемый объект находится в процессе сохранения, но не удалось проверить "
+"его состояние, операция будет повторена"
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Удаление ни с чем не связанных депонируемых объектов."
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "Не удалось удалить следующие депонируемые объекты: {$depositIds}."
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"Откройте настройки модуля PKP PN, чтобы просмотреть и принять условия "
+"обслуживания."

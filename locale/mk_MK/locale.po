@@ -1,15 +1,17 @@
+# Emilija Andonoska <emilija-andonoska@hotmail.com>, 2023.
+# Mirko Spiroski <mspiroski@id-press.eu>, 2024.
 msgid ""
 msgstr ""
-"PO-Revision-Date: 2021-03-07 12:54+0000\n"
+"PO-Revision-Date: 2024-11-16 09:40+0000\n"
 "Last-Translator: Mirko Spiroski <mspiroski@id-press.eu>\n"
 "Language-Team: Macedonian <http://translate.pkp.sfu.ca/projects/plugins/pln/"
-"mk_MK/>\n"
-"Language: mk_MK\n"
+"mk/>\n"
+"Language: mk\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n==1 || n%10==1 ? 0 : 1;\n"
-"X-Generator: Weblate 3.9.1\n"
+"X-Generator: Weblate 4.18.2\n"
 
 msgid "plugins.generic.pln.status.description.title"
 msgstr "Опис на статус"
@@ -143,9 +145,10 @@ msgid "plugins.generic.pln.error.depositor.missingpackage"
 msgstr "Не е пронајдена спакуваната датотека {$file}."
 
 msgid "plugins.generic.pln.error.http.swordstatement"
-msgstr "\n"
+msgstr ""
+"PN серверот врати HTTP грешка {$error} при проверка на статусот за "
+"складирање.\n"
 "{$message}"
-"PN серверот врати HTTP грешка {$error} при проверка на статусот на депозит."
 
 msgid "plugins.generic.pln.error.network.swordstatement"
 msgstr ""
@@ -167,10 +170,10 @@ msgstr "PN серверот врати HTTP грешка {$error} при исп�
 "{$message}"
 
 msgid "plugins.generic.pln.error.http.servicedocument"
-msgstr "\n"
+msgstr ""
+"PN серверот врати HTTP грешка {$error} при обид да добие докуметот за услуги."
+"\n"
 "{$message}"
-"PN серверот врати HTTP грешка {$error} при обидување да го добие докуметот "
-"за услуги."
 
 msgid "plugins.generic.pln.error.include.bagit"
 msgstr ""
@@ -346,7 +349,7 @@ msgstr "Зачувани се PKP PN поставките."
 msgid "plugins.generic.pln.settings.acron_required"
 msgstr ""
 "PKP PN плагинот бара или Acron плагин или алатки за периодично закажување "
-"како „cron.“"
+"како \"cron\"."
 
 msgid "plugins.generic.pln.settings"
 msgstr "Поставки"
@@ -366,3 +369,57 @@ msgstr ""
 
 msgid "plugins.generic.pln"
 msgstr "PKP PN Плагин"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr ""
+"Не успеа да се преземе депозитот од вашиот систем. Операцијата ќе се обиде "
+"повторно, во меѓувреме, може да проверите дали вашиот систем е зад заштитен "
+"ѕид"
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr ""
+"Депозитот не успеа, погрижете се да не ја надмине максималната големина "
+"поддржана од мрежата за зачувување"
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Препакувањето на депозитот не успеа, операцијата ќе се обиде повторно"
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr ""
+"Депозитот не ја помина антивирусната проверка, треба да ги прегледате "
+"неговите датотеки и повторно да испратите"
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr ""
+"Депозитот не ја помина валидацијата на содржината, може да се обидете "
+"повторно да го испратите депозитот"
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr ""
+"Депозитот не ја помина валидацијата на торба, може да се обидете повторно да "
+"го испратите депозитот"
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr ""
+"Депозитот е задржан, верзијата на вашиот систем е над нејзините очекувања"
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr ""
+"Депозитот не ја помина валидацијата на товарот, може да се обидете повторно "
+"да го испратите депозитот"
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr ""
+"Депозитот се зачувува, но не беше можно да се провери неговиот статус, "
+"операцијата ќе се обиде повторно"
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr ""
+"Пристап до PKP PN плагин подесувања за да се видат и прифатат поимите и "
+"сервисите."
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Кастрење на депозити без родители."
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "Отстранувањето на следните депозити не успеа: {$depositIds}."
