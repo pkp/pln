@@ -14,6 +14,7 @@
 
 namespace APP\plugins\generic\pln\classes\migration\install;
 
+use APP\plugins\generic\pln\classes\migration\upgrade\I102_ResetCompletedDeposits;
 use APP\plugins\generic\pln\classes\migration\upgrade\I28_FixDepositStatus;
 use APP\plugins\generic\pln\classes\migration\upgrade\I35_FixMissingField;
 use APP\plugins\generic\pln\classes\migration\upgrade\I57_UpdateSettings;
@@ -60,7 +61,7 @@ class SchemaMigration extends Migration
         }
 
         /** @var class-string<Migration> $class */
-        foreach ([I35_FixMissingField::class, I28_FixDepositStatus::class, I57_UpdateSettings::class] as $class) {
+        foreach ([I35_FixMissingField::class, I28_FixDepositStatus::class, I57_UpdateSettings::class, I102_ResetCompletedDeposits::class] as $class) {
             $migration = new $class();
             $migration->up();
         }
