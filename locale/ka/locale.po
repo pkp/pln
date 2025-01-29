@@ -302,7 +302,7 @@ msgstr ""
 "Lockss Status: [{$statusLockss}])"
 
 msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
-msgstr "დამუშავების სტატუსი მიიღო {$depositId} -> {{$processingState})"
+msgstr "დამუშავების სტატუსი მიიღო {$depositId} -> ({$processingState})"
 
 msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
 msgstr ""

@@ -99,7 +99,7 @@ msgstr ""
 
 msgid "plugins.generic.pln.depositor.statusupdates.processing"
 msgstr ""
-"{$depositId }-ի կարգավիճակի թարմացման փորձ սրա համար՝ (({$objectType}: "
+"{$depositId}-ի կարգավիճակի թարմացման փորձ սրա համար՝ (({$objectType}: "
 "{$objectId}) (Local Status: [{$statusLocal}], Processing Status: "
 "[{$statusProcessing}], Lockss Status: [{$statusLockss}])"
 
