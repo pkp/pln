@@ -50,7 +50,7 @@ msgstr "Status pemprosesan mendapat {$depositId} -> ({$processingState})"
 msgid "plugins.generic.pln.depositor.statusupdates.processing"
 msgstr ""
 "Mencuba kemas kini status untuk {$depositId} ({$objectType}: {$objectId}) ("
-"Status Tempatan [{$ statusLocal}], Status Pemprosesan: [{$statusProcessing}]"
+"Status Tempatan [{$statusLocal}], Status Pemprosesan: [{$statusProcessing}]"
 ", Status Kunci: [{$statusLockss}])"
 
 msgid "plugins.generic.pln.depositor.transferringdeposits"
@@ -114,11 +114,11 @@ msgstr ""
 
 msgid "plugins.generic.pln.error.network.deposit"
 msgstr ""
-"Ralat rangkaian {$ error} menyambung ke PKP PN untuk menghantar deposit."
+"Ralat rangkaian {$error} menyambung ke PKP PN untuk menghantar deposit."
 
 msgid "plugins.generic.pln.error.network.servicedocument"
 msgstr ""
-"Ralat rangkaian {$ error} menyambung ke PKP PN untuk mendapatkan dokumen "
+"Ralat rangkaian {$error} menyambung ke PKP PN untuk mendapatkan dokumen "
 "perkhidmatan."
 
 msgid "plugins.generic.pln.error.include.bagit"
