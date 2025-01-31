@@ -30,8 +30,8 @@ class I57_UpdateSettings extends Migration
         $settings = DB::table('plugin_settings')
             ->where('plugin_name', '=', 'plnplugin')
             ->whereIn('setting_name', ['terms_of_use', 'terms_of_use_agreement'])
-            ->pluck('setting_value', 'setting_name');
-        foreach ($settings as $name => $value) {
+            ->pluck('setting_value', 'plugin_setting_id');
+        foreach ($settings as $id => $value) {
             $isUpdateRequired = false;
             try {
                 $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
@@ -58,8 +58,7 @@ class I57_UpdateSettings extends Migration
 
             if ($isUpdateRequired) {
                 DB::table('plugin_settings')
-                    ->where('plugin_name', '=', 'plnplugin')
-                    ->where('setting_name', '=', $name)
+                    ->where('plugin_setting_id', '=', $id)
                     ->update(['setting_value' => json_encode($value)]);
             }
         }
