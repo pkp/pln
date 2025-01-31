@@ -32,20 +32,31 @@ class I57_UpdateSettings extends Migration
             ->whereIn('setting_name', ['terms_of_use', 'terms_of_use_agreement'])
             ->pluck('setting_value', 'setting_name');
         foreach ($settings as $name => $value) {
-            $isSerialized = false;
+            $isUpdateRequired = false;
             try {
                 $value = json_decode($value, true, 512, JSON_THROW_ON_ERROR);
             } catch (Exception) {
-                error_clear_last();
-                $value = unserialize($value);
-                $isSerialized = !error_get_last();
+                $value = @unserialize($value);
+                // It's safe to strictly compare with false, as we're never storing false on these settings
+                $isUpdateRequired = $value !== false;
             }
 
-            error_clear_last();
-            $value = unserialize((string) $value);
-            $isSerialized = !error_get_last() || $isSerialized;
+            // Attempt to unserialize again to catch an edge case
+            if (!is_array($value)) {
+                $newValue = @unserialize((string) $value);
+                if ($newValue !== false) {
+                    $isUpdateRequired = true;
+                    $value = $newValue;
+                }
+            }
 
-            if ($isSerialized) {
+            // The "terms" are not that important (the user might accept them again), so if we're still unable to decode it, a cleanup is acceptable
+            if (!is_array($value)) {
+                $value = [];
+                $isUpdateRequired = true;
+            }
+
+            if ($isUpdateRequired) {
                 DB::table('plugin_settings')
                     ->where('plugin_name', '=', 'plnplugin')
                     ->where('setting_name', '=', $name)
