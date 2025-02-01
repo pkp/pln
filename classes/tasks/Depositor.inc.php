@@ -16,7 +16,7 @@ import('lib.pkp.classes.scheduledTask.ScheduledTask');
 
 class Depositor extends ScheduledTask {
 
-	/** @var object */
+	/** @var PLNPlugin */
 	var $_plugin;
 
 	/**
@@ -41,6 +41,10 @@ class Depositor extends ScheduledTask {
 	 */
 	public function executeActions() {
 		if (!$this->_plugin) return false;
+
+		// @todo Re-running the plugin migrations shouldn't be needed. But users are having issues, so better to keep it until we can ensure plugin migrations are executed properly
+		$this->_plugin->import('classes.migration.install.PLNPluginSchemaMigration');
+		(new PLNPluginSchemaMigration())->up();
 
 		$this->addExecutionLogEntry('PKP Preservation Network Processor', SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
 
