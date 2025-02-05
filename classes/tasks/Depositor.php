@@ -20,6 +20,7 @@ use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\classes\deposit\Repository as DepositRepository;
 use APP\plugins\generic\pln\classes\depositObject\Repository as DepositObjectRepository;
 use APP\plugins\generic\pln\classes\DepositPackage;
+use APP\plugins\generic\pln\classes\migration\install\SchemaMigration;
 use APP\plugins\generic\pln\PlnPlugin;
 use Exception;
 use PKP\db\DAORegistry;
@@ -55,6 +56,9 @@ class Depositor extends ScheduledTask
     public function executeActions(): bool
     {
         $this->addExecutionLogEntry('PKP Preservation Network Processor', ScheduledTaskHelper::SCHEDULED_TASK_MESSAGE_TYPE_NOTICE);
+
+        // @todo Re-running the plugin migrations shouldn't be needed. But users are having issues, so better to keep it until we can ensure plugin migrations are executed properly
+        (new SchemaMigration())->up();
 
         /** @var JournalDAO */
         $journalDao = DAORegistry::getDAO('JournalDAO');
