@@ -28,10 +28,13 @@ use APP\plugins\generic\pln\classes\migration\install\SchemaMigration;
 use APP\plugins\generic\pln\classes\PLNGatewayPlugin;
 use APP\plugins\generic\pln\classes\tasks\Depositor;
 use APP\plugins\generic\pln\pages\PageHandler;
+use Carbon\Carbon;
+use DateTimeImmutable;
 use DOMDocument;
 use DOMElement;
 use Exception;
 use GuzzleHttp\Exception\RequestException;
+use Illuminate\Support\Facades\DB;
 use PKP\config\Config;
 use PKP\core\JSONMessage;
 use PKP\core\PKPString;
@@ -507,6 +510,43 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     public function hasZipArchive(): bool
     {
         return class_exists('ZipArchive');
+    }
+
+    /**
+     * Check if the Acron plugin is enabled, or if the scheduled task has been running lately.
+     */
+    public function hasScheduledTasks(): bool
+    {
+        try {
+            $application = Application::get();
+            $products = $application->getEnabledProducts('plugins.generic');
+            return isset($products['acron']) || (($lastRun = $this->getLastExecutionDate()) && $lastRun && Carbon::now()->diffInWeeks($lastRun) < 1);
+        } catch (\Exception $e) {
+            // If there's an error checking, assume no scheduled tasks are available
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves the last time the depositor task was executed
+     */
+    public function getLastExecutionDate(): ?DateTimeImmutable
+    {
+        try {
+            // Check if the scheduled_tasks table exists first
+            if (!DB::getSchemaBuilder()->hasTable('scheduled_tasks')) {
+                return null;
+            }
+            
+            $lastRun = DB::table('scheduled_tasks')
+                ->where('class_name', Depositor::class)
+                ->value('last_run');
+            
+            return $lastRun ? new DateTimeImmutable($lastRun) : null;
+        } catch (\Exception $e) {
+            // Table doesn't exist or query failed, return null
+            return null;
+        }
     }
 
     /**
