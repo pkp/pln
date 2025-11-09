@@ -17,7 +17,7 @@ namespace APP\plugins\generic\pln;
 use APP\core\Application;
 use APP\core\PageRouter;
 use APP\facades\Repo;
-use APP\notification\Notification;
+use PKP\notification\Notification;
 use APP\notification\NotificationManager;
 use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\classes\deposit\Schema as DepositSchema;
@@ -280,7 +280,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     public function registerSchedules(PKPScheduler $scheduler): void
     {
         $scheduler
-            ->addSchedule(new Depositor())
+            ->addSchedule(new Depositor([]))
             ->daily()
             ->name(Depositor::class)
             ->withoutOverlapping();
@@ -348,7 +348,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
                     $notificationContent = __('plugins.generic.pln.settings.saved');
                     $currentUser = $request->getUser();
                     $notificationMgr = new NotificationManager();
-                    $notificationMgr->createTrivialNotification($currentUser->getId(), PKPNotification::NOTIFICATION_TYPE_SUCCESS, ['contents' => $notificationContent]);
+                    $notificationMgr->createTrivialNotification($currentUser->getId(), Notification::NOTIFICATION_TYPE_SUCCESS, ['contents' => $notificationContent]);
 
                     return new JSONMessage(true);
                 }
@@ -654,7 +654,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
         if ($enabled) {
             (new NotificationManager())->createTrivialNotification(
                 Application::get()->getRequest()->getUser()->getId(),
-                PKPNotification::NOTIFICATION_TYPE_SUCCESS,
+                Notification::NOTIFICATION_TYPE_SUCCESS,
                 ['contents' => __('plugins.generic.pln.onPluginEnabledNotification')]
             );
         }
@@ -665,7 +665,8 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
      */
     public function getName(): string
     {
-        return substr(static::class, strlen(__NAMESPACE__) + 1);
+        // Return the canonical plugin name used by PluginRegistry lookups
+        return 'plnplugin';
     }
 
     /**
