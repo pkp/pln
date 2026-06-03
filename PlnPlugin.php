@@ -34,6 +34,7 @@ use Exception;
 use GuzzleHttp\Exception\RequestException;
 use PKP\config\Config;
 use PKP\core\JSONMessage;
+use PKP\core\PKPSessionGuard;
 use PKP\core\PKPString;
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\AjaxModal;
@@ -43,7 +44,6 @@ use PKP\plugins\interfaces\HasTaskScheduler;
 use PKP\plugins\PluginRegistry;
 use PKP\scheduledTask\PKPScheduler;
 use PKP\security\Role;
-use PKP\session\SessionManager;
 use PKP\userGroup\UserGroup;
 use SimpleXMLElement;
 
@@ -134,8 +134,12 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
         $page = $request->getRequestedPage();
         $operation = $request->getRequestedOp();
         $arguments = $request->getRequestedArgs();
-        if ([$page, $operation] === ['pln', 'deposits'] || [$page, $operation, $arguments[0] ?? ''] === ['gateway', 'plugin', 'PLNGatewayPlugin']) {
-            SessionManager::disable();
+        if (
+            [$page, $operation] === ['pln', 'deposits'] ||
+            [$page, $operation, $arguments[0] ?? ''] === ['gateway', 'plugin', 'PLNGatewayPlugin']
+        ) {
+            PKPSessionGuard::disableSession();
+
             Hook::add('RestrictedSiteAccessPolicy::_getLoginExemptions', function (string $hookName, array $args): bool {
                 $exemptions = &$args[0];
                 array_push($exemptions, 'gateway', 'pln');
@@ -277,7 +281,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     public function registerSchedules(PKPScheduler $scheduler): void
     {
         $scheduler
-            ->addSchedule(new Depositor())
+            ->addSchedule(new Depositor([]))
             ->daily()
             ->name(Depositor::class)
             ->withoutOverlapping();
@@ -320,6 +324,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
 
     /**
      * @copydoc Plugin::manage()
+     * @throws Exception
      */
     public function manage($args, $request): JSONMessage
     {
@@ -345,7 +350,11 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
                     $notificationContent = __('plugins.generic.pln.settings.saved');
                     $currentUser = $request->getUser();
                     $notificationMgr = new NotificationManager();
-                    $notificationMgr->createTrivialNotification($currentUser->getId(), PKPNotification::NOTIFICATION_TYPE_SUCCESS, ['contents' => $notificationContent]);
+                    $notificationMgr->createTrivialNotification(
+                        $currentUser->getId(),
+                        Notification::NOTIFICATION_TYPE_SUCCESS,
+                        ['contents' => $notificationContent]
+                    );
 
                     return new JSONMessage(true);
                 }
@@ -400,7 +409,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     /**
      * Request service document at specified URL
      *
-     * @return array{status: ?int, result: ?string, error:? string}
+     * @return array{status: ?int, result: ?string, error: ?string}
      */
     public function getServiceDocument(int $contextId): array
     {
@@ -449,9 +458,9 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
         $this->updateSetting($contextId, 'checksum_type', $element->nodeValue);
 
         // update the network status
-        /** @var DOMElement */
+        /** @var DOMElement $element */
         $element = $serviceDocument->getElementsByTagName('pln_accepting')->item(0);
-        $this->updateSetting($contextId, 'pln_accepting', (($element->getAttribute('is_accepting') == 'Yes') ? true : false));
+        $this->updateSetting($contextId, 'pln_accepting', $element->getAttribute('is_accepting') == 'Yes');
         $this->updateSetting($contextId, 'pln_accepting_message', $element->nodeValue);
 
         // update the terms of use
@@ -487,7 +496,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     {
         $userGroupIds = Repo::userGroup()
             ->getByRoleIds([Role::ROLE_ID_MANAGER], $contextId)
-            ->map(fn (UserGroup $userGroup) => $userGroup->getId())
+            ->map(fn (UserGroup $userGroup) => $userGroup->id)
             ->toArray();
 
         $managers = Repo::user()
@@ -614,7 +623,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
         if ($enabled) {
             (new NotificationManager())->createTrivialNotification(
                 Application::get()->getRequest()->getUser()->getId(),
-                PKPNotification::NOTIFICATION_TYPE_SUCCESS,
+                Notification::NOTIFICATION_TYPE_SUCCESS,
                 ['contents' => __('plugins.generic.pln.onPluginEnabledNotification')]
             );
         }
@@ -629,11 +638,11 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
     }
 
     /**
-     * Self loads and registers the plugin
+     * Self-loads and registers the plugin
      */
     public static function loadPlugin(): static
     {
-        /** @var static */
+        /** @var static $instance */
         static::$instance ??= PluginRegistry::loadPlugin('generic', 'PLN');
         return static::$instance;
     }

@@ -19,6 +19,7 @@ use APP\issue\Issue;
 use APP\plugins\generic\pln\classes\deposit\Deposit;
 use Exception;
 use PKP\controllers\grid\GridCellProvider;
+use PKP\controllers\grid\GridHandler;
 use PKP\linkAction\LinkAction;
 use PKP\linkAction\request\RemoteActionConfirmationModal;
 
@@ -26,6 +27,7 @@ class StatusGridCellProvider extends GridCellProvider
 {
     /**
      * @copydoc GridCellProvider::getTemplateVarsFromRowColumn()
+     * @throws Exception
      */
     public function getTemplateVarsFromRowColumn($row, $column): array
     {
@@ -59,7 +61,7 @@ class StatusGridCellProvider extends GridCellProvider
     /**
      * @copydoc GridColumn::getCellActions()
      */
-    public function getCellActions($request, $row, $column, $position = GRID_ACTION_POSITION_DEFAULT): array
+    public function getCellActions($request, $row, $column, $position = GridHandler::GRID_ACTION_POSITION_DEFAULT): array
     {
         if ($column->getId() !== 'actions') {
             return [];

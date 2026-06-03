@@ -73,7 +73,7 @@ class PLNGatewayPlugin extends GatewayPlugin
      */
     public function getPlugin(): PlnPlugin
     {
-        /** @var PlnPlugin */
+        /** @var PlnPlugin $plugin */
         $plugin = PluginRegistry::getPlugin('generic', $this->parentPluginName);
         return $plugin;
     }

@@ -91,7 +91,7 @@ class Repository
      */
     public function validate(?DepositObject $depositObject, array $props, array $allowedLocales, string $primaryLocale): array
     {
-        /** @var PKPSchemaService */
+        /** @var PKPSchemaService $schemaService */
         $schemaService = Services::get('schema');
 
         $validator = ValidatorFactory::make(
@@ -180,6 +180,7 @@ class Repository
 
     /**
      * Retrieve all deposit object objects with no deposit object id.
+     * @throws Exception
      */
     public function markHavingUpdatedContent(int $journalId, string $objectType): void
     {
@@ -217,35 +218,29 @@ class Repository
     }
 
     /**
-     * Create a new deposit object object for OJS content that doesn't yet have one
+     * Create a new deposit object for OJS content that doesn't yet have one
      *
      * @return DepositObject[] Deposit objects ordered by sequence
+     * @throws Exception
      */
     public function createNew(int $journalId, string $objectType): array
     {
-        $objects = [];
-        switch ($objectType) {
-            case 'PublishedArticle': // Legacy (OJS pre-3.2)
-            case PlnPlugin::DEPOSIT_TYPE_SUBMISSION:
-                $objects = $this->dao
-                    ->getNewSubmissions(
-                        Repo::submission()
-                            ->getCollector()
-                            ->filterByContextIds([$journalId])
-                    )
-                    ->toArray();
-                break;
-            case PlnPlugin::DEPOSIT_TYPE_ISSUE:
-                $objects = $this->dao
-                    ->getNewIssues(
-                        Repo::issue()
-                            ->getCollector()
-                            ->filterByContextIds([$journalId])
-                    )->toArray();
-                break;
-            default:
-                throw new Exception("Invalid object type \"{$objectType}\"");
-        }
+        $objects = match ($objectType) {
+            'PublishedArticle', PlnPlugin::DEPOSIT_TYPE_SUBMISSION => $this->dao
+                ->getNewSubmissions(
+                    Repo::submission()
+                        ->getCollector()
+                        ->filterByContextIds([$journalId])
+                )
+                ->toArray(),
+            PlnPlugin::DEPOSIT_TYPE_ISSUE => $this->dao
+                ->getNewIssues(
+                    Repo::issue()
+                        ->getCollector()
+                        ->filterByContextIds([$journalId])
+                )->toArray(),
+            default => throw new Exception("Invalid object type \"{$objectType}\""),
+        };
 
         $depositObjects = [];
         foreach ($objects as $object) {

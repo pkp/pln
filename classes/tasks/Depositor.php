@@ -9,7 +9,7 @@
  *
  * @class Depositor
  *
- * @brief Class to perform automated deposits of PLN object.
+ * @brief Class to perform automated deposits of PLN objects.
  */
 
 namespace APP\plugins\generic\pln\classes\tasks;
@@ -60,7 +60,7 @@ class Depositor extends ScheduledTask
         // @todo Re-running the plugin migrations shouldn't be needed. But users are having issues, so better to keep it until we can ensure plugin migrations are executed properly
         (new SchemaMigration())->up();
 
-        /** @var JournalDAO */
+        /** @var JournalDAO $journalDao */
         $journalDao = DAORegistry::getDAO('JournalDAO');
         // For all journals
         foreach ($journalDao->getAll(true)->toIterator() as $journal) {
@@ -251,6 +251,7 @@ class Depositor extends ScheduledTask
 
     /**
      * Create new deposits for deposit objects
+     * @throws Exception
      */
     protected function processNewDepositObjects(Journal $journal): void
     {
@@ -263,7 +264,6 @@ class Depositor extends ScheduledTask
         switch ($objectType) {
             case 'PublishedArticle': // Legacy (OJS pre-3.2)
             case PlnPlugin::DEPOSIT_TYPE_SUBMISSION:
-
                 // get the new object threshold per deposit and split the objects into arrays of that size
                 $objectThreshold = $this->plugin->getSetting($journal->getId(), 'object_threshold');
                 foreach (array_chunk($newObjects, $objectThreshold) as $newObject_array) {

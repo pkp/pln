@@ -51,7 +51,7 @@ class DepositPackage
 
     /**
      * Send a message to a log.
-     * If the deposit package is aware of a a scheduled task, the message will be sent to the task's log, otherwise it will be sent to error_log().
+     * If the deposit package is aware of a scheduled task, the message will be sent to the task's log, otherwise it will be sent to error_log().
      */
     protected function logMessage(string $message): void
     {
@@ -113,9 +113,9 @@ class DepositPackage
     public function generateAtomDocument(): string
     {
         $plugin = PlnPlugin::loadPlugin();
-        /** @var JournalDAO */
+        /** @var JournalDAO $journalDao */
         $journalDao = DAORegistry::getDAO('JournalDAO');
-        /** @var Journal */
+        /** @var Journal $journal */
         $journal = $journalDao->getById($this->deposit->getJournalId());
         $fileManager = new ContextFileManager($this->deposit->getJournalId());
 
@@ -162,7 +162,7 @@ class DepositPackage
                 foreach ($depositObjects as $depositObject) {
                     $submission = Repo::submission()->get($depositObject->getObjectId());
                     $publication = $submission->getCurrentPublication();
-                    $publicationDate = $publication ? $publication->getData('publicationDate') : null;
+                    $publicationDate = $publication?->getData('publicationDate');
                     if ($publicationDate && strtotime($publicationDate) > $objectPublicationDate) {
                         $objectPublicationDate = strtotime($publicationDate);
                     }
@@ -234,9 +234,9 @@ class DepositPackage
         require_once __DIR__ . '/../vendor/autoload.php';
 
         // get DAOs, plugins and settings
-        /** @var JournalDAO */
+        /** @var JournalDAO $journalDao */
         $journalDao = DAORegistry::getDAO('JournalDAO');
-        /** @var NativeImportExportPlugin */
+        /** @var NativeImportExportPlugin $exportPlugin*/
         $exportPlugin = PluginRegistry::loadPlugin('importexport', 'native');
         @ini_set('memory_limit', -1);
         $plugin = PlnPlugin::loadPlugin();

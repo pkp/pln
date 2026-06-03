@@ -96,7 +96,7 @@ class SettingsForm extends Form
     public function fetch($request, $template = null, $display = false): string
     {
         $context = $request->getContext();
-        $issn = $context->getSetting('onlineIssn') ?: $context->getSetting('printIssn');
+        $issn = $context->getData('onlineIssn') ?: $context->getData('printIssn');
         $templateMgr = TemplateManager::getManager($request);
         $templateMgr->assign([
             'pluginName' => $this->plugin->getName(),
@@ -119,7 +119,7 @@ class SettingsForm extends Form
         parent::execute(...$functionArgs);
         $this->plugin->updateSetting($this->contextId, 'terms_of_use_agreement', $this->getData('terms_of_use_agreement'), 'object');
 
-        /** @var PluginSettingsDAO */
+        /** @var PluginSettingsDAO $pluginSettingsDao */
         $pluginSettingsDao = DAORegistry::getDAO('PluginSettingsDAO');
         $pluginSettingsDao->installSettings($this->contextId, $this->plugin->getName(), $this->plugin->getContextSpecificPluginSettingsFile());
     }
