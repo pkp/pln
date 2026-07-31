@@ -656,7 +656,7 @@ class PlnPlugin extends GenericPlugin
     public static function loadPlugin(): static
     {
         /** @var static */
-        static::$instance ??= PluginRegistry::loadPlugin('generic', 'PLN');
+        static::$instance ??= PluginRegistry::loadPlugin('generic', 'pln');
         return static::$instance;
     }
 }
