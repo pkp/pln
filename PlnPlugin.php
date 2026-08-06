@@ -46,6 +46,7 @@ use PKP\security\Role;
 use PKP\session\SessionManager;
 use PKP\userGroup\UserGroup;
 use SimpleXMLElement;
+use PKP\notification\PKPNotification;
 
 class PlnPlugin extends GenericPlugin implements HasTaskScheduler
 {
