@@ -346,7 +346,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
                     $notificationContent = __('plugins.generic.pln.settings.saved');
                     $currentUser = $request->getUser();
                     $notificationMgr = new NotificationManager();
-                    $notificationMgr->createTrivialNotification($currentUser->getId(), PKPNotification::NOTIFICATION_TYPE_SUCCESS, ['contents' => $notificationContent]);
+                    $notificationMgr->createTrivialNotification($currentUser->getId(), Notification::NOTIFICATION_TYPE_SUCCESS, ['contents' => $notificationContent]);
 
                     return new JSONMessage(true);
                 }
@@ -615,7 +615,7 @@ class PlnPlugin extends GenericPlugin implements HasTaskScheduler
         if ($enabled) {
             (new NotificationManager())->createTrivialNotification(
                 Application::get()->getRequest()->getUser()->getId(),
-                PKPNotification::NOTIFICATION_TYPE_SUCCESS,
+                Notification::NOTIFICATION_TYPE_SUCCESS,
                 ['contents' => __('plugins.generic.pln.onPluginEnabledNotification')]
             );
         }
