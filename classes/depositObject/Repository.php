@@ -268,9 +268,15 @@ class Repository
      */
     public function pruneOrphaned(): void
     {
-        $this->getCollector()
+        $orphanIds = $this->getCollector()
             ->filterByOrphaned(true)
-            ->getQueryBuilder()
-            ->delete();
+            ->getIds();
+
+        foreach ($orphanIds as $orphanId) {
+            $depositObject = $this->get($orphanId);
+            if ($depositObject) {
+                $this->delete($depositObject);
+            }
+        }
     }
 }
