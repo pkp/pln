@@ -5,6 +5,7 @@
  *
  * Copyright (c) 2014-2023 Simon Fraser University
  * Copyright (c) 2000-2023 John Willinsky
+ * Copyright (c) 2026 Thuan Huynh
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class StatusGridHandler
@@ -17,9 +18,11 @@ namespace APP\plugins\generic\pln\controllers\grid;
 use APP\core\Request;
 use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\classes\deposit\Repository;
+use APP\plugins\generic\pln\PlnPlugin;
 use PKP\controllers\grid\feature\PagingFeature;
 use PKP\controllers\grid\GridColumn;
 use PKP\controllers\grid\GridHandler;
+use PKP\core\VirtualArrayIterator;
 use PKP\core\JSONMessage;
 use PKP\db\DAO;
 use PKP\security\authorization\ContextAccessPolicy;
@@ -72,6 +75,42 @@ class StatusGridHandler extends GridHandler
     }
 
     /**
+     * @copydoc GridHandler::getFilterForm()
+     */
+    protected function getFilterForm(): string
+    {
+        return PlnPlugin::loadPlugin()->getTemplateResource('statusGridFilter.tpl');
+    }
+
+    /**
+     * @copydoc GridHandler::renderFilter()
+     */
+    public function renderFilter($request, $filterData = []): string
+    {
+        return parent::renderFilter($request, array_merge($filterData, [
+            'gridId' => $this->getId(),
+            'statuses' => [
+                '' => __('common.all'),
+                \APP\plugins\generic\pln\classes\deposit\Collector::DISPLAY_STATUS_PENDING => __('plugins.generic.pln.displayedstatus.pending'),
+                \APP\plugins\generic\pln\classes\deposit\Collector::DISPLAY_STATUS_IN_PROGRESS => __('plugins.generic.pln.displayedstatus.inprogress'),
+                \APP\plugins\generic\pln\classes\deposit\Collector::DISPLAY_STATUS_COMPLETED => __('plugins.generic.pln.displayedstatus.completed'),
+                \APP\plugins\generic\pln\classes\deposit\Collector::DISPLAY_STATUS_ERROR => __('plugins.generic.pln.displayedstatus.error'),
+            ],
+        ]));
+    }
+
+    /**
+     * @copydoc GridHandler::getFilterSelectionData()
+     */
+    public function getFilterSelectionData($request): array
+    {
+        return [
+            'search' => trim((string) $request->getUserVar('search')),
+            'status' => (string) $request->getUserVar('status'),
+        ];
+    }
+
+    /**
      * @copydoc GridHandler::getRowInstance()
      */
     protected function getRowInstance(): StatusGridRow
@@ -93,18 +132,27 @@ class StatusGridHandler extends GridHandler
      *
      * @return iterable<Deposit>
      */
-    protected function loadData($request, $filter): iterable
+    protected function loadData($request, $filter)
     {
         $context = $request->getContext();
         $rangeInfo = $this->getGridRangeInfo($request, $this->getId());
-        $collector = Repository::instance()->getCollector();
-        return $collector
+        $collector = Repository::instance()
+            ->getCollector()
+            ->filterBySearchPhrase($filter['search'] ?: null)
+            ->filterByDisplayedStatus($filter['status'] ?: null);
+
+        $totalCount = $collector
             ->filterByContextIds([$context->getId()])
+            ->getCount();
+
+        $deposits = $collector
             ->orderBy($collector::ORDER_BY_ERROR, $collector::ORDER_DIR_DESC)
             ->limit($rangeInfo->getCount())
-            ->offset(($rangeInfo->getPage() - 1) * $rangeInfo->getCount())
+            ->offset($rangeInfo->getOffset() + max(0, $rangeInfo->getPage() - 1) * $rangeInfo->getCount())
             ->getMany()
-            ->all();
+            ->toArray();
+
+        return new VirtualArrayIterator($deposits, $totalCount, $rangeInfo->getPage(), $rangeInfo->getCount());
     }
 
     /**

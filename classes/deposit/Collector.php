@@ -5,6 +5,7 @@
  *
  * Copyright (c) 2023 Simon Fraser University
  * Copyright (c) 2023 John Willinsky
+ * Copyright (c) 2026 Thuan Huynh
  * Distributed under the GNU GPL v3. For full terms see the file docs/COPYING.
  *
  * @class Collector
@@ -35,6 +36,10 @@ class Collector implements CollectorInterface
     public const ORDER_BY_ERROR = 'error';
     public const ORDER_DIR_ASC = 'ASC';
     public const ORDER_DIR_DESC = 'DESC';
+    public const DISPLAY_STATUS_PENDING = 'pending';
+    public const DISPLAY_STATUS_IN_PROGRESS = 'inProgress';
+    public const DISPLAY_STATUS_COMPLETED = 'completed';
+    public const DISPLAY_STATUS_ERROR = 'error';
 
     public ?int $count = null;
 
@@ -50,6 +55,12 @@ class Collector implements CollectorInterface
     public ?array $contextIds = null;
 
     public ?string $status = null;
+
+    /** Search by deposit UUID, issue ID, or issue title */
+    public ?string $searchPhrase = null;
+
+    /** One of the DISPLAY_STATUS_* constants, or null for all statuses */
+    public ?string $displayedStatus = null;
 
     /** @var bool|null null = no filter, true = only orphans, false = exclude orphans */
     public ?bool $isOrphaned = false;
@@ -140,6 +151,29 @@ class Collector implements CollectorInterface
     }
 
     /**
+     * Limit results to deposits matching a UUID, issue ID, or issue title
+     */
+    public function filterBySearchPhrase(?string $searchPhrase): static
+    {
+        $this->searchPhrase = $searchPhrase;
+        return $this;
+    }
+
+    /**
+     * Limit results to a status as displayed in the deposits grid.
+     */
+    public function filterByDisplayedStatus(?string $displayedStatus): static
+    {
+        $this->displayedStatus = in_array($displayedStatus, [
+            static::DISPLAY_STATUS_PENDING,
+            static::DISPLAY_STATUS_IN_PROGRESS,
+            static::DISPLAY_STATUS_COMPLETED,
+            static::DISPLAY_STATUS_ERROR,
+        ]) ? $displayedStatus : null;
+        return $this;
+    }
+
+    /**
      * Include or exclude orphaned deposits
      *
      * A deposit is orphaned when its journal is missing, it has no deposit objects,
@@ -185,6 +219,47 @@ class Collector implements CollectorInterface
             ->when($this->ids !== null, fn (Builder $query) => $query->whereIn('d.deposit_id', $this->ids))
             ->when($this->uuids !== null, fn (Builder $query) => $query->whereIn('d.uuid', $this->uuids))
             ->when($this->contextIds !== null, fn (Builder $query) => $query->whereIn('d.journal_id', $this->contextIds))
+            ->when(
+                $this->searchPhrase !== null && $this->searchPhrase !== '',
+                function (Builder $q) {
+                    $searchPhrase = '%' . $this->searchPhrase . '%';
+                    $q->where(function (Builder $q) use ($searchPhrase) {
+                        $q->where('d.uuid', 'like', $searchPhrase)
+                            ->orWhereExists(
+                                fn (Builder $q) => $q
+                                    ->from('pln_deposit_objects AS do')
+                                    ->whereColumn('do.deposit_id', 'd.deposit_id')
+                                    ->where(function (Builder $q) use ($searchPhrase) {
+                                        $q->where('do.object_id', 'like', $searchPhrase)
+                                            ->orWhereExists(
+                                                fn (Builder $q) => $q
+                                                    ->from('issue_settings AS i_s')
+                                                    ->whereColumn('i_s.issue_id', 'do.object_id')
+                                                    ->where('do.object_type', PlnPlugin::DEPOSIT_TYPE_ISSUE)
+                                                    ->where('i_s.setting_name', 'title')
+                                                    ->where('i_s.setting_value', 'like', $searchPhrase)
+                                            );
+                                    })
+                            );
+                    });
+                }
+            )
+            ->when(
+                $this->displayedStatus !== null,
+                fn (Builder $q) => match ($this->displayedStatus) {
+                    static::DISPLAY_STATUS_ERROR => $q->whereNotNull('d.export_deposit_error')->where('d.export_deposit_error', '<>', ''),
+                    static::DISPLAY_STATUS_COMPLETED => $q
+                        ->where(fn (Builder $q) => $q->whereNull('d.export_deposit_error')->orWhere('d.export_deposit_error', ''))
+                        ->whereRaw('d.status & ? <> 0', [PlnPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT]),
+                    static::DISPLAY_STATUS_PENDING => $q
+                        ->where(fn (Builder $q) => $q->whereNull('d.export_deposit_error')->orWhere('d.export_deposit_error', ''))
+                        ->where(fn (Builder $q) => $q->whereNull('d.status')->orWhere('d.status', PlnPlugin::DEPOSIT_STATUS_NEW)),
+                    static::DISPLAY_STATUS_IN_PROGRESS => $q
+                        ->where(fn (Builder $q) => $q->whereNull('d.export_deposit_error')->orWhere('d.export_deposit_error', ''))
+                        ->where(fn (Builder $q) => $q->whereNull('d.status')->orWhereRaw('d.status & ? = 0', [PlnPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT]))
+                        ->where('d.status', '<>', PlnPlugin::DEPOSIT_STATUS_NEW),
+                }
+            )
             ->when(
                 $this->status !== null,
                 fn (Builder $q) =>
