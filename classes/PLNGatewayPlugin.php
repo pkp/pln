@@ -138,7 +138,7 @@ class PLNGatewayPlugin extends GatewayPlugin
             'networkUrl' => PlnPlugin::getNetworkUrl()
         ]);
 
-        header('content-type: text/xml; charset=utf-8');
+        $templateMgr->setHeaders(array_merge($templateMgr->getHeaders(), ['content-type: text/xml; charset=utf-8']));
         $templateMgr->display($plugin->getTemplateResource('handshake.tpl'));
         return true;
     }
