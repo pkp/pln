@@ -3,8 +3,8 @@
 /**
  * @file classes/form/SettingsForm.php
  *
- * Copyright (c) 2014-2023 Simon Fraser University
- * Copyright (c) 2000-2023 John Willinsky
+ * Copyright (c) 2016 Simon Fraser University
+ * Copyright (c) 2016 John Willinsky
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class SettingsForm

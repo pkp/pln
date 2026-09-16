@@ -7,6 +7,10 @@
         "whikloj/bagittools": "^6.0"
     },
     "config": {
+        "platform-check": true,
+        "platform": {
+            "php": "8.2.0"
+        },
         "classmap-authoritative": true,
         "optimize-autoloader": true,
         "prepend-autoloader": false,
