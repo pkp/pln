@@ -1,7 +1,11 @@
 {**
  * templates/statusGridFilter.tpl
  *
- * Filter form for the PLN deposits grid.
+ * Copyright (c) 2016 Simon Fraser University
+ * Copyright (c) 2016 John Willinsky
+ * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
+ *
+ * Filter form for the PN deposits grid.
  *}
 {assign var="formId" value="plnDepositsFilter-"|concat:$filterData.gridId}
 <script>
