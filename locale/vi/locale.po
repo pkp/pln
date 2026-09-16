@@ -1,0 +1,328 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PKP PN Plugin\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-03T23:08:22+00:00\n"
+"PO-Revision-Date: 2026-09-02 00:00+0700\n"
+"Last-Translator: Thuan Huynh <huynh@thuan.org>\n"
+"Language-Team: Vietnamese\n"
+"Language: vi\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+msgid "plugins.generic.pln"
+msgstr "Plugin PKP PN"
+
+msgid "plugins.generic.pln.description"
+msgstr "Plugin PKP PN sẽ gửi nội dung đã xuất bản của tạp chí vào Mạng lưới Bảo tồn PKP."
+
+msgid "plugins.generic.pln.onPluginEnabledNotification"
+msgstr "Truy cập phần cài đặt plugin PKP PN để xem và chấp nhận các điều khoản dịch vụ."
+
+msgid "plugins.generic.pln.manager.setup.description"
+msgstr "<strong>Mạng lưới Bảo tồn PKP</strong><br /><br />Vui lòng đọc <a href=\"https://pkp.sfu.ca/pkp-pn\" target=\"_blank\">tổng quan về PKP PN</a> và hoàn thành <a href=\"{$plnPluginURL}\">biểu mẫu đơn giản này</a>. Tùy chọn này cho phép đưa tạp chí của bạn vào Mạng lưới Bảo tồn của Public Knowledge Project (PKP PN)."
+
+msgid "plugins.generic.pln.settings"
+msgstr "Cài đặt"
+
+msgid "plugins.generic.pln.settings.acron_required"
+msgstr "Plugin PKP PN yêu cầu plugin Acron hoặc một công cụ lập lịch định kỳ như \"cron\"."
+
+msgid "plugins.generic.pln.settings.saved"
+msgstr "Đã lưu cài đặt PKP PN."
+
+msgid "plugins.generic.pln.settings.terms_of_use"
+msgstr "Điều khoản sử dụng"
+
+msgid "plugins.generic.pln.settings.terms_of_use_help"
+msgstr "Với tư cách Quản lý tạp chí, tôi thiện chí chấp nhận và xác nhận các điều khoản và điều kiện sau để tham gia Mạng lưới Bảo tồn của Public Knowledge Project (PKP PN):"
+
+msgid "plugins.generic.pln.settings.terms_of_use_agree"
+msgstr "Tôi đồng ý"
+
+msgid "plugins.generic.pln.settings.journal_uuid"
+msgstr "Mã định danh tạp chí"
+
+msgid "plugins.generic.pln.settings.journal_uuid_help"
+msgstr "Đây là mã định danh duy nhất của tạp chí trong PKP PN. Bạn có thể cần cung cấp mã này cho quản trị viên PKP PN khi yêu cầu hỗ trợ."
+
+msgid "plugins.generic.pln.settings.refresh"
+msgstr "Làm mới"
+
+msgid "plugins.generic.pln.settings.refresh_help"
+msgstr "Nếu không có điều khoản nào được liệt kê ở trên hoặc bạn biết các điều khoản đã được cập nhật, hãy nhấn Làm mới để cập nhật danh sách."
+
+msgid "plugins.generic.pln.required.object_type"
+msgstr "Vui lòng chọn loại đối tượng lưu chiểu."
+
+msgid "plugins.generic.pln.required.object_threshold"
+msgstr "Vui lòng chọn ngưỡng số đối tượng cho mỗi gói lưu chiểu."
+
+msgid "plugins.generic.pln.required.terms_of_use_agreement"
+msgstr "Bạn phải đồng ý với điều khoản sử dụng của mạng lưới trước khi gửi nội dung vào PKP PN."
+
+msgid "plugins.generic.pln.objects.article"
+msgstr "Bài báo"
+
+msgid "plugins.generic.pln.objects.issue"
+msgstr "Số tạp chí"
+
+msgid "plugins.generic.pln.status.network_status"
+msgstr "Trạng thái mạng lưới: {$networkStatusMessage}"
+
+msgid "plugins.generic.pln.status.deposits"
+msgstr "Các gói lưu chiểu"
+
+msgid "plugins.generic.pln.status"
+msgstr "Trạng thái"
+
+msgid "plugins.generic.pln.objectId"
+msgstr "Mã đối tượng"
+
+msgid "plugins.generic.pln.issueId"
+msgstr "Mã số tạp chí"
+
+msgid "plugins.generic.pln.status.docs"
+msgstr "Các <a href=\"{$statusDocsUrl}\">trạng thái lưu chiểu của PKP PN được mô tả tại đây</a>."
+
+msgid "plugins.generic.pln.status.id"
+msgstr "ID"
+
+msgid "plugins.generic.pln.status.type"
+msgstr "Loại"
+
+msgid "plugins.generic.pln.status.items"
+msgstr "Đối tượng"
+
+msgid "plugins.generic.pln.status.status"
+msgstr "Trạng thái"
+
+msgid "plugins.generic.pln.status.confirmReset"
+msgstr "Bạn có chắc muốn đặt lại gói lưu chiểu này không? Gói sẽ được đóng gói lại và gửi lại đến máy chủ xử lý."
+
+msgid "plugins.generic.pln.status.unknown"
+msgstr "Không xác định"
+
+msgid "plugins.generic.pln.status.new"
+msgstr "Mới"
+
+msgid "plugins.generic.pln.status.packaged"
+msgstr "Đã đóng gói"
+
+msgid "plugins.generic.pln.status.transferred"
+msgstr "Đã chuyển"
+
+msgid "plugins.generic.pln.status.received"
+msgstr "Đã nhận"
+
+msgid "plugins.generic.pln.status.validated"
+msgstr "Đã xác thực"
+
+msgid "plugins.generic.pln.status.sent"
+msgstr "Đã gửi đến LOCKSS"
+
+msgid "plugins.generic.pln.status.syncing"
+msgstr "Đang đồng bộ"
+
+msgid "plugins.generic.pln.status.agreement"
+msgstr "Đã đồng thuận"
+
+msgid "plugins.generic.pln.status.updated"
+msgstr "Đã cập nhật"
+
+msgid "plugins.generic.pln.status.local_failure"
+msgstr "Lỗi cục bộ"
+
+msgid "plugins.generic.pln.status.remote_failure"
+msgstr "Lỗi máy chủ từ xa"
+
+msgid "plugins.generic.pln.status.packagingFailed"
+msgstr "Đóng gói thất bại"
+
+msgid "plugins.generic.pln.depositorTask.name"
+msgstr "Tác vụ gửi lưu chiểu PKP PN"
+
+msgid "plugins.generic.pln.notifications.pruningOrphanedDeposits"
+msgstr "Đang dọn các gói lưu chiểu mồ côi."
+
+msgid "plugins.generic.pln.notifications.processing_for"
+msgstr "Đang xử lý lưu chiểu cho {$title}."
+
+msgid "plugins.generic.pln.notifications.getting_servicedocument"
+msgstr "Đang lấy tài liệu dịch vụ."
+
+msgid "plugins.generic.pln.notifications.pln_not_accepting"
+msgstr "PKP PN hiện không tiếp nhận gói lưu chiểu."
+
+msgid "plugins.generic.pln.notifications.pln_accepting"
+msgstr "PKP PN đang tiếp nhận gói lưu chiểu."
+
+msgid "plugins.generic.pln.notifications.check_status"
+msgstr "Kiểm tra trạng thái các gói lưu chiểu."
+
+msgid "plugins.generic.pln.notifications.issn_missing"
+msgstr "Tạp chí phải có ISSN để gửi nội dung vào PKP PN."
+
+msgid "plugins.generic.pln.notifications.http_error"
+msgstr "Đã xảy ra lỗi khi kết nối với PKP PN. Vui lòng liên hệ quản trị viên hệ thống."
+
+msgid "plugins.generic.pln.notifications.terms_updated"
+msgstr "Điều khoản sử dụng PKP PN đã được cập nhật. Bạn phải đồng ý với điều khoản mới để tiếp tục gửi lưu chiểu."
+
+msgid "plugins.generic.pln.notifications.zip_missing"
+msgstr "Phải bật hỗ trợ ZipArchive để tiếp tục."
+
+msgid "plugins.generic.pln.notifications.issn_setting"
+msgstr "Tạp chí phải có ISSN trước khi bạn có thể đồng ý với điều khoản dịch vụ. Bạn có thể nhập ISSN tại trang Cài đặt tạp chí. Sau khi nhập ISSN, các điều khoản dịch vụ sẽ hiển thị bên dưới."
+
+msgid "plugins.generic.pln.error.network.servicedocument"
+msgstr "Lỗi mạng {$error} khi kết nối với PKP PN để lấy tài liệu dịch vụ."
+
+msgid "plugins.generic.pln.error.network.deposit"
+msgstr "Lỗi mạng {$error} khi kết nối với PKP PN để gửi gói lưu chiểu."
+
+msgid "plugins.generic.pln.error.network.swordstatement"
+msgstr "Lỗi mạng {$error} khi kết nối với PKP PN để lấy trạng thái mới của gói lưu chiểu."
+
+msgid "plugins.generic.pln.error.http.servicedocument"
+msgstr "Máy chủ PN trả về lỗi HTTP {$error} khi lấy tài liệu dịch vụ.\n{$message}"
+
+msgid "plugins.generic.pln.error.http.deposit"
+msgstr "Máy chủ PN trả về lỗi HTTP {$error} khi gửi gói lưu chiểu.\n{$message}"
+
+msgid "plugins.generic.pln.error.http.swordstatement"
+msgstr "Máy chủ PN trả về lỗi HTTP {$error} khi kiểm tra trạng thái gói lưu chiểu.\n{$message}"
+
+msgid "plugins.generic.pln.error.depositor.missingpackage"
+msgstr "Không tìm thấy tệp gói lưu chiểu {$file}."
+
+msgid "plugins.generic.pln.error.depositor.export.articles.error"
+msgstr "Đã xảy ra lỗi khi xuất các bài báo. Nhật ký lỗi máy chủ có thể chứa thêm thông tin."
+
+msgid "plugins.generic.pln.error.depositor.export.issue.error"
+msgstr "Đã xảy ra lỗi khi xuất số tạp chí. Nhật ký lỗi máy chủ có thể chứa thêm thông tin."
+
+msgid "plugins.generic.pln.error.handler.uuid.invalid"
+msgstr "UUID được yêu cầu không hợp lệ hoặc không đúng định dạng."
+
+msgid "plugins.generic.pln.error.handler.uuid.notfound"
+msgstr "Không có gói lưu chiểu nào mang UUID được yêu cầu."
+
+msgid "plugins.generic.pln.error.handler.file.notfound"
+msgstr "Không tìm thấy tệp gói lưu chiểu. Gói có thể chưa được đóng gói hoặc tệp đã bị xóa."
+
+msgid "plugins.generic.pln.depositor.statusupdates"
+msgstr "Đang xử lý cập nhật trạng thái các gói lưu chiểu."
+
+msgid "plugins.generic.pln.depositor.updatedcontent"
+msgstr "Đang xử lý nội dung đã cập nhật."
+
+msgid "plugins.generic.pln.depositor.newcontent"
+msgstr "Đang xử lý nội dung mới."
+
+msgid "plugins.generic.pln.depositor.packagingdeposits"
+msgstr "Đang đóng gói nội dung để lưu chiểu."
+
+msgid "plugins.generic.pln.depositor.transferringdeposits"
+msgstr "Đang gửi các gói lưu chiểu đến PKP PN."
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing"
+msgstr "Đang cập nhật trạng thái cho {$depositId} ({$objectType}: {$objectId}) (Cục bộ: [{$statusLocal}], Xử lý: [{$statusProcessing}], LOCKSS: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.statusupdates.processing.processingState"
+msgstr "Đã nhận trạng thái xử lý cho {$depositId} -> ({$processingState})"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing"
+msgstr "Đang đóng gói gói lưu chiểu {$depositId} ({$objectType}: {$objectId}) (Cục bộ: [{$statusLocal}], Xử lý: [{$statusProcessing}], LOCKSS: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.error"
+msgstr "Plugin Nhập/Xuất Native thất bại khi đóng gói gói lưu chiểu {$depositId}"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageFailed"
+msgstr "Đóng gói gói lưu chiểu {$depositId} thất bại"
+
+msgid "plugins.generic.pln.depositor.packagingdeposits.processing.packageSucceeded"
+msgstr "Đóng gói gói lưu chiểu {$depositId} thành công"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing"
+msgstr "Đang chuyển gói lưu chiểu {$depositId} ({$objectType}: {$objectId}) (Cục bộ: [{$statusLocal}], Xử lý: [{$statusProcessing}], LOCKSS: [{$statusLockss}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.postAtom"
+msgstr "Đang gửi tệp Atom đến máy chủ trung gian cho gói lưu chiểu {$depositId} (Cục bộ: [{$statusLocal}], Xử lý: [{$statusProcessing}], LOCKSS: [{$statusLockss}]) - (URL: [{$url}], đường dẫn Atom: [{$atomPath}], phương thức: [{$method}])"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultSucceeded"
+msgstr "Đã gửi thành công tệp Atom của gói lưu chiểu {$depositId} đến máy chủ trung gian"
+
+msgid "plugins.generic.pln.depositor.transferringdeposits.processing.resultFailed"
+msgstr "Gửi tệp Atom của gói lưu chiểu {$depositId} đến máy chủ trung gian thất bại (Lỗi: [{$error} - [{$result}]])"
+
+msgid "plugins.generic.pln.depositor.pruningDeposits.error"
+msgstr "Không thể xóa các gói lưu chiểu sau: {$depositIds}."
+
+msgid "plugins.generic.plngateway.displayName"
+msgstr "Cổng PN"
+
+msgid "plugins.generic.plngateway.description"
+msgstr "Cung cấp trạng thái PKP PN và tiêu đề các bài báo gần đây cho máy chủ trung gian."
+
+msgid "plugins.generic.pln.displayedstatus.pending"
+msgstr "Đang chờ"
+
+msgid "plugins.generic.pln.displayedstatus.pending.description"
+msgstr "Quá trình lưu chiểu chưa bắt đầu"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress"
+msgstr "Đang xử lý"
+
+msgid "plugins.generic.pln.displayedstatus.inprogress.description"
+msgstr "Quá trình lưu chiểu đang được thực hiện"
+
+msgid "plugins.generic.pln.displayedstatus.completed"
+msgstr "Hoàn thành"
+
+msgid "plugins.generic.pln.displayedstatus.completed.description"
+msgstr "Quá trình lưu chiểu đã hoàn thành"
+
+msgid "plugins.generic.pln.displayedstatus.error"
+msgstr "Lỗi"
+
+msgid "plugins.generic.pln.displayedstatus.error.description"
+msgstr "Đã xảy ra lỗi trong quá trình lưu chiểu"
+
+msgid "plugins.generic.pln.status.warning"
+msgstr "Có thể mất vài ngày để một gói lưu chiểu được xử lý hoàn toàn."
+
+msgid "plugins.generic.pln.status.latestupdate"
+msgstr "Cập nhật gần nhất"
+
+msgid "plugins.generic.pln.status.description.title"
+msgstr "Mô tả trạng thái"
+
+msgid "plugins.generic.pln.status.error.harvest-error"
+msgstr "Không thể tải gói lưu chiểu từ hệ thống của bạn. Hệ thống sẽ thử lại; trong thời gian chờ, hãy kiểm tra xem máy chủ có bị tường lửa chặn hay không."
+
+msgid "plugins.generic.pln.status.error.deposit-error"
+msgstr "Lưu chiểu thất bại. Hãy đảm bảo gói không vượt quá kích thước tối đa mà Mạng lưới Bảo tồn hỗ trợ."
+
+msgid "plugins.generic.pln.status.error.reserialize-error"
+msgstr "Đóng gói lại gói lưu chiểu thất bại; hệ thống sẽ thử lại."
+
+msgid "plugins.generic.pln.status.error.virus-error"
+msgstr "Gói lưu chiểu không vượt qua kiểm tra chống vi-rút. Bạn nên kiểm tra các tệp rồi gửi lại."
+
+msgid "plugins.generic.pln.status.error.xml-error"
+msgstr "Gói lưu chiểu không vượt qua bước xác thực nội dung XML. Hãy kiểm tra metadata của số/bài báo rồi gửi lại."
+
+msgid "plugins.generic.pln.status.error.payload-error"
+msgstr "Gói lưu chiểu không vượt qua bước xác thực payload. Bạn có thể thử gửi lại gói."
+
+msgid "plugins.generic.pln.status.error.bag-error"
+msgstr "Gói lưu chiểu không vượt qua bước xác thực BagIt. Bạn có thể thử gửi lại gói."
+
+msgid "plugins.generic.pln.status.error.status-error"
+msgstr "Gói đang được bảo tồn nhưng không thể kiểm tra trạng thái; hệ thống sẽ thử lại."
+
+msgid "plugins.generic.pln.status.error.hold"
+msgstr "Gói lưu chiểu đang bị tạm giữ vì phiên bản hệ thống của bạn cao hơn phiên bản mà mạng lưới hỗ trợ."
