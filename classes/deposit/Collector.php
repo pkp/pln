@@ -232,11 +232,11 @@ class Collector implements CollectorInterface
                                         $q->where('do.object_id', 'like', $searchPhrase)
                                             ->orWhereExists(
                                                 fn (Builder $q) => $q
-                                                    ->from('issue_settings AS i_s')
-                                                    ->whereColumn('i_s.issue_id', 'do.object_id')
+                                                    ->from('issue_settings AS is')
+                                                    ->whereColumn('is.issue_id', 'do.object_id')
                                                     ->where('do.object_type', PlnPlugin::DEPOSIT_TYPE_ISSUE)
-                                                    ->where('i_s.setting_name', 'title')
-                                                    ->where('i_s.setting_value', 'like', $searchPhrase)
+                                                    ->where('is.setting_name', 'title')
+                                                    ->where('is.setting_value', 'like', $searchPhrase)
                                             );
                                     })
                             );
@@ -246,16 +246,14 @@ class Collector implements CollectorInterface
             ->when(
                 $this->displayedStatus !== null,
                 fn (Builder $q) => match ($this->displayedStatus) {
-                    static::DISPLAY_STATUS_ERROR => $q->whereNotNull('d.export_deposit_error')->where('d.export_deposit_error', '<>', ''),
-                    static::DISPLAY_STATUS_COMPLETED => $q
-                        ->where(fn (Builder $q) => $q->whereNull('d.export_deposit_error')->orWhere('d.export_deposit_error', ''))
-                        ->whereRaw('d.status & ? <> 0', [PlnPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT]),
+                    static::DISPLAY_STATUS_ERROR => $q->where('d.export_deposit_error', '<>', ''),
+                    static::DISPLAY_STATUS_COMPLETED => $q->whereRaw('d.status & ? <> 0', [PlnPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT]),
                     static::DISPLAY_STATUS_PENDING => $q
                         ->where(fn (Builder $q) => $q->whereNull('d.export_deposit_error')->orWhere('d.export_deposit_error', ''))
                         ->where(fn (Builder $q) => $q->whereNull('d.status')->orWhere('d.status', PlnPlugin::DEPOSIT_STATUS_NEW)),
                     static::DISPLAY_STATUS_IN_PROGRESS => $q
                         ->where(fn (Builder $q) => $q->whereNull('d.export_deposit_error')->orWhere('d.export_deposit_error', ''))
-                        ->where(fn (Builder $q) => $q->whereNull('d.status')->orWhereRaw('d.status & ? = 0', [PlnPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT]))
+                        ->where(fn (Builder $q) => $q->whereRaw('COALESCE(d.status, 0) & ? = 0', [PlnPlugin::DEPOSIT_STATUS_LOCKSS_AGREEMENT]))
                         ->where('d.status', '<>', PlnPlugin::DEPOSIT_STATUS_NEW),
                 }
             )

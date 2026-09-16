@@ -5,7 +5,6 @@
  *
  * Copyright (c) 2016 Simon Fraser University
  * Copyright (c) 2016 John Willinsky
- * Copyright (c) 2026 Thuan Huynh
  * Distributed under the GNU GPL v3. For full terms see the file LICENSE.
  *
  * @class StatusGridHandler
@@ -16,6 +15,7 @@
 namespace APP\plugins\generic\pln\controllers\grid;
 
 use APP\core\Request;
+use APP\plugins\generic\pln\classes\deposit\Collector;
 use APP\plugins\generic\pln\classes\deposit\Deposit;
 use APP\plugins\generic\pln\classes\deposit\Repository;
 use APP\plugins\generic\pln\PlnPlugin;
@@ -91,10 +91,10 @@ class StatusGridHandler extends GridHandler
             'gridId' => $this->getId(),
             'statuses' => [
                 '' => __('common.all'),
-                \APP\plugins\generic\pln\classes\deposit\Collector::DISPLAY_STATUS_PENDING => __('plugins.generic.pln.displayedstatus.pending'),
-                \APP\plugins\generic\pln\classes\deposit\Collector::DISPLAY_STATUS_IN_PROGRESS => __('plugins.generic.pln.displayedstatus.inprogress'),
-                \APP\plugins\generic\pln\classes\deposit\Collector::DISPLAY_STATUS_COMPLETED => __('plugins.generic.pln.displayedstatus.completed'),
-                \APP\plugins\generic\pln\classes\deposit\Collector::DISPLAY_STATUS_ERROR => __('plugins.generic.pln.displayedstatus.error'),
+                Collector::DISPLAY_STATUS_PENDING => __('plugins.generic.pln.displayedstatus.pending'),
+                Collector::DISPLAY_STATUS_IN_PROGRESS => __('plugins.generic.pln.displayedstatus.inprogress'),
+                Collector::DISPLAY_STATUS_COMPLETED => __('plugins.generic.pln.displayedstatus.completed'),
+                Collector::DISPLAY_STATUS_ERROR => __('plugins.generic.pln.displayedstatus.error'),
             ],
         ]));
     }
